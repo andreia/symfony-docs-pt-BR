@@ -37,6 +37,11 @@ Utilizando o Git e o Github
 6. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem para que ele faça um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
    Mais informações sobre o `Pull Request`_ 
 
+Mensagens dos Commits
+---------------------
+
+As mensagens dos commits devem ser todas em INGLÊS, para mantermos o padrão.
+
 Mantendo seu repositório local atualizado
 -----------------------------------------
 
