@@ -1,5 +1,5 @@
-Validation Constraints Reference
-================================
+Referência das Constraints de Validação 
+=======================================
 
 .. toctree::
    :maxdepth: 1
@@ -25,15 +25,15 @@ Validation Constraints Reference
    constraints/Url
    constraints/Valid
 
-The Validator is designed to validate objects against *constraints*.
-In real life, a constraint could be: "The cake must not be burned". In
-Symfony2, constraints are similar: They are assertions that a condition is 
-true.
+O Validator é projetado para validar objetos comparando com *constraints*.
+Na vida real, uma constraint poderia ser: "O bolo não deve ser queimado". No
+Symfony2, as constraints são semelhantes: Elas são afirmações de que uma condição 
+é verdadeira.
 
-Supported Constraints
----------------------
+Constraints Suportadas
+----------------------
 
-The following constraints are natively available in Symfony2:
+As seguintes constraints estão disponíveis nativamente no Symfony2:
 
 * :doc:`False <constraints/False>`
 * :doc:`True <constraints/True>`

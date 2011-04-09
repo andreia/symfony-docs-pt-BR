@@ -1,8 +1,8 @@
 .. index::
    pair: Monolog; Configuration Reference
 
-Configuration Reference
-=======================
+Referência de Configuração
+==========================
 
 .. configuration-block::
 
@@ -64,7 +64,7 @@ Configuration Reference
         </container>
 
 .. note::
-
-    When the profiler is enabled, a handler is added to store the logs'
-    messages in the profiler. The profiler uses the name "debug" so it
-    is reserved and cannot be used in the configuration.
+  
+    Quando o profiler é ativado, um handler é adicionado para armazenar as 
+    mensagens dos logs' no profiler. O Profiler usa o nome "debug", então, ele
+    é reservado e não pode ser utilizado na configuração.

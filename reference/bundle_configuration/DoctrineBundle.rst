@@ -2,8 +2,8 @@
    single: Doctrine; ORM Configuration Reference
    single: Configuration Reference; Doctrine ORM
 
-Configuration Reference
-=======================
+Referência de Configuração
+==========================
 
 .. configuration-block::
 
@@ -40,11 +40,11 @@ Configuration Reference
                 proxy_dir:                      %kernel.cache_dir%/doctrine/orm/Proxies
                 default_entity_manager:         default # Required
                 entity_managers:
-                    # At least one has to be defined
+                    # Pelo menos um deve ser definido
                     default:
-                        # The name of a DBAL connection (the one marked as default is used if not set)
+                        # O nome da conexão DBAL (se não for definido, o marcado como padrão é usado)
                         connection:                     conn1
-                        mappings: # Required
+                        mappings: # Obrigatório
                             AcmeHelloBundle: ~
                         class_metadata_factory_name:    Doctrine\ORM\Mapping\ClassMetadataFactory
                         # All cache drivers have to be array, apc, xcache or memcache
