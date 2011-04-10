@@ -15,7 +15,7 @@ The Model description in this section is the one used when talking about
 Se você queria aprender mais sobre desfiles e top models, então esta seção
 não vai ser útil para você. Mas se você está procurando aprender sobre o 
 modelo - a camada da sua aplicação que gerencia dados - então continue lendo.
-A descrição de Model nesta seção é a única usada para falar sobre aplicações 
+A descrição de Model nesta seção é uma das usadas para falar sobre aplicações 
 *Model-View-Controller*.
 
 .. note::
@@ -31,7 +31,7 @@ A descrição de Model nesta seção é a única usada para falar sobre aplicaç
    
    Model-View-Controller (MVC) é um padrão de projeto de aplicação, que 
    foi originalmente introduzido por Trygve Reenskaug para a plataforma Smalltalk.
-   A idéia principal é separar a apresentação dos dados separando o controlador
+   A idéia principal do MVC é separar a apresentação dos dados e separar o controlador
    da apresentação. Esse tipo de separação faz cada parte da aplicação focar em
    exatamente um ponto. O Controller foca na mudança dos dados do Model, o Model
    expõe seus dados para a View, e a View foca em criar a representação do Model.
@@ -167,10 +167,29 @@ Doctrine_ and Propel_, deixando que você escolha utilizar a qual preferir.
    is the *document oriented database* (e.g. MongoDB), for which we invented a
    new term "ODM" or "Object Document Mapping".
 
+   O acrônimo "ORM" significa "Object Relational Mapping" e representa uma
+   técnica de programação de converter dados entre sistemas de tipos 
+   incompatíveis. Dizer que temos um ``Post``, qual é armazenado como
+   um conjunto de colunas em um banco de dados, mas representado pela 
+   instância da classe ``Post`` na sua aplicação. O processo de transformar
+   uma tabela de banco de dados em um objeto é chamado *object relation mapping*.
+   Veremos também que esse termo é um pouco desatualizado pois ele é usado
+   para lidar com sistemas gerenciadores de bancos de dados relacionais.
+   Hoje em dia existem toneladas de mecanismos de armazenamento de dados
+   não relacionais disponíveis. Um desses mecanismos é o *document oriented database*
+   (ex. MongoDB), para qual nós inventamos um novo termo "ODM" or 
+   "Object Document Mapping".
+   
+
 Going forward, you'll learn about the `Doctrine2 ORM`_ and Doctrine2
 `MongoDB ODM`_ (which serves as an ODM for MongoDB_ - a popular document
 store) as both have the deepest integration with Symfony2 at the time of
 this writing.
+
+Indo afrente, você vai aprender sobre o `Doctrine2 ORM`_ and Doctrine2
+`MongoDB ODM`_ (qual serve como um ODM para MongoDB_ - um popular armazenador 
+de documentos, como ambos possuem profunda integração com o Symfony2 até o
+presente momento em que estou escrevendo.
 
 A Model is not a Table
 ---------------------------------
