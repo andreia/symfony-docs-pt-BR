@@ -51,8 +51,8 @@ em branco:
 
 .. code-block:: bash
 
-    $ php console doctrine:migrations:generate --bundle="Application\HelloBundle"
-    Generated new migration class to "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations/Version20100621140655.php"
+    $ php app/console doctrine:migrations:generate
+    Generated new migration class to "/path/to/project/app/DoctrineMigrations/Version20100621140655.php"
 
 .. tip::
 
@@ -80,7 +80,7 @@ semelhante ao seguinte::
         }
     }
 
-Se você executar o comando ``status`` para o ``HelloBundle`` ele irá mostrar que 
+Se você executar o comando ``status`` ele irá mostrar que 
 você tem uma nova migração para executar:
 
 .. code-block:: bash
