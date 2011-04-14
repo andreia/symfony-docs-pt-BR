@@ -22,7 +22,7 @@ A descrição de Model nesta seção é uma das usadas para falar sobre aplicaç
 
 Por exemplo, quando um usuário vai para a homepage do seu blog, o navegador do usuário
 envia uma requisição, que é passada ao Controlador responsável por renderizar postagens.
-O Controlador calcula quais postagens devem ser exibidas, recupera os Modelos de ``Postagem`` da
+O Controlador calcula quais postagens devem ser exibidas, recupera os Modelos de ``Post`` da
 base de dados e passa o array para a Visão. A Visão renderiza o HTML que é interpretado pelo
 navegador.
 
@@ -37,52 +37,52 @@ para a :doc:`visão </book/templating>`. Ele [o modelo] é o principal detentor 
 lógica da aplicação.
 
 Por exemplo, se você está construindo um blog, então você vai ter um modelo 
-``Postagem``. Se você está contruindo um sistema de gerenciamento de conteúdo (CMS), 
+``Post``. Se você está contruindo um sistema de gerenciamento de conteúdo (CMS), 
 então você vai precisar de um modelo ``Página``.
 
 .. code-block:: php
-    
+
     <?php
     
     namespace Blog;
     
-    class Postagem
+    class Post
     {
-        private $titulo;
-        private $corpo;
-        private $criadoEm;
-        private $atualizadoEm;
+        private $title;
+        private $body;
+        private $createdAt;
+        private $updatedAt;
         
-        public function __construct($titulo, $corpo)
+        public function __construct($title, $body)
         {
-            $this->titulo    = $titulo;
-            $this->corpo     = $corpo;
-            $this->criadoEm  = new \DateTime();
+            $this->title     = $title;
+            $this->body      = $body;
+            $this->createdAt = new \DateTime();
         }
         
-        public function setTitulo($titulo)
+        public function setTitle($title)
         {
-            $this->titulo       = $titulo;
-            $this->atualizadoEm = new \DateTime();
+            $this->title     = $title;
+            $this->updatedAt = new \DateTime();
         }
         
-        public function setCorpo($corpo)
+        public function setBody($body)
         {
-            $this->corpo        = $corpo
-            $this->atualizadoEm = new \DateTime();
+            $this->body      = $body;
+            $this->updatedAt = new \DateTime();
         }
         
-        public function getTitulo()
+        public function getTitle()
         {
-            return $this->titulo;
+            return $this->title;
         }
         
-        public function getCorpo()
+        public function getBody()
         {
-            return $this->corpo;
+            return $this->body;
         }
     }
-
+    
 É óbvio que a classe acima é bem simples e testável, no entanto está 
 quase completa e vai satisfazer todas as necessidades de um simples
 gerenciador de blogs. 
@@ -105,9 +105,9 @@ Doctrine_ and Propel_, deixando que você escolha utilizar a qual preferir.
    O acrônimo "ORM" significa "Object Relational Mapping" ou 
    "Mapeamento Objeto-Relacional" e representa uma
    técnica de programação de converter dados entre sistemas de tipos 
-   incompatíveis. Dizer que temos uma ``Postagem``, qual é armazenada como
+   incompatíveis. Dizer que temos um ``Post``, qual é armazenada como
    um conjunto de colunas em um banco de dados, mas representado pela 
-   instância da classe ``Postagem`` na sua aplicação. O processo de transformar
+   instância da classe ``Post`` na sua aplicação. O processo de transformar
    uma tabela de banco de dados em um objeto é chamado *object relation mapping* 
    ou *mapeamento de objeto-relação*. Veremos também que esse termo é um pouco 
    desatualizado pois ele é usado para lidar com sistemas gerenciadores de 
@@ -174,7 +174,7 @@ forma limpa e testável.
 
 .. code-block:: php
 
-   $postagem->salvar();
+   $post->save();
 
 Assim, o Doctrine2 não é mais uma típica implementação `Active Record`_.
 Ao invés Doctrine2 usa um diferente conjunto de padrões, sendo `Data Mapper`_ 
@@ -183,20 +183,20 @@ fazer o seguinte:
 
 .. code-block:: php
 
-   $gerenciador = //... pega uma instância do "object manager"
+   $manager = //... pega uma instância do "object manager"
 
-   $gerenciador->persist($postagem);
-   $gerenciador->flush();
+   $manager->persist($post);
+   $manager->flush();
 
 O "object manager" é um objeto central fornecido pelo Doctrine cujo papel
 é persistir objetos. Você vai em breve aprender muito mais sobre este serviço.
 Essa mudança de paradigma permite nos livrarmos de quaisquer classes de banco
-(ex. a ``Postagem`` não precisa estender classe de banco sequer) e dependências 
+(ex. o ``Post`` não precisa estender classe de banco sequer) e dependências 
 estáticas. Qualquer objeto pode ser salvo num banco de dados para recuperação
 futura. Mais que isso, uma vez persistido, um objeto é gerenciado pelo 
 object manager, até que o manager seja limpo explicitamente. Isso significa, todas
 as interações de objetos acontecem na memória sem nunca ir para o banco de dados
-até que ``$gerenciador->flush()`` seja chamado. Desnecessário dizer, que este tipo de
+até que ``$manager->flush()`` seja chamado. Desnecessário dizer, que este tipo de
 abordagem permite que você se preocupe menos ainda com banco de dados e 
 otimização de consultas, como todas as consultas são tão preguiçosas 
 quanto é possível (ou seja, a execução delas é atrasada até o momento 
