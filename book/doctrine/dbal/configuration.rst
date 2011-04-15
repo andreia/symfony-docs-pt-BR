@@ -2,11 +2,11 @@
    single: Configuration; Doctrine DBAL
    single: Doctrine; DBAL configuration
 
-Configuration
+Configuração
 =============
 
-One example configuration with a MySQL database could look like this following
-example:
+Um exemplo de configuração com banco de dados MySQL pode parecer como o 
+seguinte exemplo:
 
 .. code-block:: yaml
 
@@ -20,12 +20,11 @@ example:
                     user:     root
                     password: null
 
-The DoctrineBundle supports all parameters that all the default doctrine drivers
-accept, converted to the XML or YAML naming standards that Symfony enforces.
-See the Doctrine DBAL `documentation`_ for more information. Additionally
-there are some Symfony-related options that you can configure. The following
-block shows all possible configuration keys without explaining their meaning
-further:
+O DoctrineBundle suporta todos os parâmetros que todos os drivers padrões do doctrine
+aceitam, convertidos para os padrões de nomenclatura do XML ou YAML que o Symfony aplica.
+Veja a `documentation`_ do Doctrine DBAL para mais informações. Além disso, existem algumas 
+opções relacionadas ao Symfony que você pode configurar. O bloco a seguir mostra todas
+as chaves de configuração possíveis, sem maiores explicacações de seus significados.
 
 .. configuration-block::
 
@@ -79,8 +78,8 @@ further:
             </doctrine:dbal>
         </doctrine:config>
 
-There are also a bunch of dependency injection container parameters
-that allow you to specify which classes are used (with their default values):
+Também existem um monte de parâmetros do dependency injection container
+que permitem a você especificar quais classes são usadas (com seus valores padrões):
 
 .. code-block:: yaml
 
@@ -92,9 +91,9 @@ that allow you to specify which classes are used (with their default values):
         doctrine.dbal.events.mysql_session_init.class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
         doctrine.dbal.events.oracle_session_init.class: Doctrine\DBAL\Event\Listeners\OracleSessionInit
 
-If you want to configure multiple connections you can do so by simply listing
-them under the key named ``connections``. All the parameters shown above
-can also be specified in the connections subkeys.
+Se você quer configurar multiplas conexões, você pode fazer isso simplesmente listando
+elas sob a chave ``connections``. Todos os parâmetros mostrados acima podem
+também ser especificados nas sub-chaves da conexão.
 
 .. code-block:: yaml
 
@@ -113,10 +112,10 @@ can also be specified in the connections subkeys.
                     password:         null
                     host:             localhost
 
-If you have defined multiple connections you can use the
-``$this->get('doctrine.dbal.[connectionname]_connection')``
-as well but you must pass it an argument with the
-connection name that you want get
+Se você tem definidas multiplas conexões, você pode usar o 
+``$this->get('doctrine.dbal.[connectionname]_connection')`` também, 
+mas você deve passar a ele um argumento com o nome 
+da conexão que você quer ter
 
 .. code-block:: php
 
