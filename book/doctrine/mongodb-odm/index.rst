@@ -1,8 +1,8 @@
-MongoDB Object Document Mapper
+Object Document Mapper MongoDB
 ==============================
 
-Doctrine's MongoDB Object Document Mapper allows for PHP objects to be persisted
-to and retrieved from a MongoDB document database.
+O `Object Document Mapper` MongoDB do Doctrine permite que objetos PHP sejam persistidos 
+e recuperados de um banco de dados de documento MongoDB.
 
 .. toctree::
    :maxdepth: 2
