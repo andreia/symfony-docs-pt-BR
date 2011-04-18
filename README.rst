@@ -55,6 +55,8 @@ Mensagens dos Commits
 
 As mensagens dos commits devem ser todas em INGLÊS.
 
+Dica: Escrevendo boas mensagens de commit: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
+
 Código
 ~~~~~~
 

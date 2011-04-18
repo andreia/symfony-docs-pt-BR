@@ -1,20 +1,20 @@
 .. index::
    pair: Doctrine; MongoDB ODM
 
-MongoDB ODM
+ODM MongoDB
 ===========
 
-The `MongoDB`_ Object Document Mapper is much like the Doctrine2 ORM in the way
-it works and architecture. You only deal with plain PHP objects and they are
-persisted transparently without imposing on your domain model.
+O `Object Document Mapper` `MongoDB`_ é muito parecido com o ORM Doctrine2 na forma como
+ele funciona e na sua arquitetura. Você lida somente com objetos PHP simples e eles
+são persistidos transparente sem impor em seu modelo de domínio.
 
 .. tip::
 
-    You can read more about the Doctrine MongoDB Object Document Mapper on the
-    projects `documentation`_.
+   Você pode ler mais sobre o Doctrine `Object Document Mapper` MongoDB na 
+   `documentação`_ dos projetos.
 
-To get started working with Doctrine and the MongoDB Object Document Mapper you
-just need to enable it and specify the bundle that contains your mapped documents:
+Para começar a trabalhar com o Doctrine e o `Object Document Mapper` MongoDB basta 
+ativá-los e especificar o bundle que contém os documentos mapeados:
 
 .. code-block:: yaml
 
@@ -25,9 +25,6 @@ just need to enable it and specify the bundle that contains your mapped document
             default:
                 mappings:
                     AcmeHelloBundle: ~
-
-Now you can start writing documents and mapping them with annotations, xml or
-yaml.
 
 .. configuration-block::
 
@@ -113,16 +110,16 @@ yaml.
 
 .. note::
 
-    When using annotations in your Symfony2 project you have to namespace all
-    Doctrine MongoDB annotations with the ``mongodb:`` prefix.
+    Ao utilizar annotations em seu projeto com o Symfony2 você deve informar os namespaces 
+    de todas as annotations do Doctrine MongoDB com o prefixo ``mongodb:``.
 
 .. tip::
 
-    If you use YAML or XML to describe your documents, you can omit the creation
-    of the Document class, and let the ``doctrine:generate:documents`` command
-    do it for you.
+    Se você utiliza YAML ou XML para descrever seus documentos, você pode omitir a 
+    criação da classe Document, e deixar o comando ``doctrine:generate:documents``
+    fazer isso por você.
 
-Now, use your document and manage its persistent state with Doctrine:
+Agora, use o seu documento e gerencie a persistência com o Doctrine:
 
 .. code-block:: php
 
@@ -163,5 +160,5 @@ Now, use your document and manage its persistent state with Doctrine:
         }
     }
 
-.. _MongoDB:       http://www.mongodb.org/
-.. _documentation: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en
+.. _MongoDB:      http://www.mongodb.org/
+.. _documentação: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en
