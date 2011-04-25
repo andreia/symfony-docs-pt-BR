@@ -1,11 +1,11 @@
-.. index::
+ï»¿.. index::
    single: Configuration; Doctrine DBAL
    single: Doctrine; DBAL configuration
 
-Configuração
+ConfiguraÃ§Ã£o
 =============
 
-Um exemplo de configuração com banco de dados MySQL pode parecer como o 
+Um exemplo de configuraÃ§Ã£o com banco de dados MySQL pode parecer como o 
 seguinte exemplo:
 
 .. code-block:: yaml
@@ -20,11 +20,11 @@ seguinte exemplo:
                     user:     root
                     password: null
 
-O DoctrineBundle suporta todos os parâmetros que todos os drivers padrões do doctrine
-aceitam, convertidos para os padrões de nomenclatura do XML ou YAML que o Symfony aplica.
-Veja a `documentation`_ do Doctrine DBAL para mais informações. Além disso, existem algumas 
-opções relacionadas ao Symfony que você pode configurar. O bloco a seguir mostra todas
-as chaves de configuração possíveis, sem maiores explicacações de seus significados.
+O DoctrineBundle suporta todos os parÃ¢metros que todos os drivers padrÃµes do doctrine
+aceitam, convertidos para os padrÃµes de nomenclatura do XML ou YAML que o Symfony aplica.
+Veja a `documentation`_ do Doctrine DBAL para mais informaÃ§Ãµes. AlÃ©m disso, existem algumas 
+opÃ§Ãµes relacionadas ao Symfony que vocÃª pode configurar. O bloco a seguir mostra todas
+as chaves de configuraÃ§Ã£o possÃ­veis, sem maiores explicacaÃ§Ãµes de seus significados.
 
 .. configuration-block::
 
@@ -78,8 +78,8 @@ as chaves de configuração possíveis, sem maiores explicacações de seus significa
             </doctrine:dbal>
         </doctrine:config>
 
-Também existem um monte de parâmetros do dependency injection container
-que permitem a você especificar quais classes são usadas (com seus valores padrões):
+TambÃ©m existem um monte de parÃ¢metros do dependency injection container
+que permitem a vocÃª especificar quais classes sÃ£o usadas (com seus valores padrÃµes):
 
 .. code-block:: yaml
 
@@ -91,9 +91,9 @@ que permitem a você especificar quais classes são usadas (com seus valores padrõ
         doctrine.dbal.events.mysql_session_init.class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
         doctrine.dbal.events.oracle_session_init.class: Doctrine\DBAL\Event\Listeners\OracleSessionInit
 
-Se você quer configurar multiplas conexões, você pode fazer isso simplesmente listando
-elas sob a chave ``connections``. Todos os parâmetros mostrados acima podem
-também ser especificados nas sub-chaves da conexão.
+Se vocÃª quer configurar multiplas conexÃµes, vocÃª pode fazer isso simplesmente listando
+elas sob a chave ``connections``. Todos os parÃ¢metros mostrados acima podem
+tambÃ©m ser especificados nas sub-chaves da conexÃ£o.
 
 .. code-block:: yaml
 
@@ -112,10 +112,10 @@ também ser especificados nas sub-chaves da conexão.
                     password:         null
                     host:             localhost
 
-Se você tem definidas multiplas conexões, você pode usar o 
-``$this->get('doctrine.dbal.[connectionname]_connection')`` também, 
-mas você deve passar a ele um argumento com o nome 
-da conexão que você quer ter
+Se vocÃª tem definidas multiplas conexÃµes, vocÃª pode usar o 
+``$this->get('doctrine.dbal.[connectionname]_connection')`` tambÃ©m, 
+mas vocÃª deve passar a ele um argumento com o nome 
+da conexÃ£o que vocÃª quer ter
 
 .. code-block:: php
 
