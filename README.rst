@@ -37,10 +37,6 @@ Utilizando o Git e o Github
 6. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem para que ele faça um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
    Mais informações sobre o `Pull Request`_ 
 
-Mensagens dos Commits
----------------------
-
-As mensagens dos commits devem ser todas em INGLÊS, para mantermos o padrão.
 
 Mantendo seu repositório local atualizado
 -----------------------------------------
@@ -50,8 +46,24 @@ Sempre antes de fazer as suas alterações locais, lembrar de executar o comando
     $ git remote add upstream git@github.com:andreia/symfony-docs-pt-BR.git
     $ git pull upstream master
 
+
+Padrões a serem seguidos durante a tradução
+-------------------------------------------
+
+Mensagens dos Commits
+~~~~~~~~~~~~~~~~~~~~~
+
+As mensagens dos commits devem ser todas em INGLÊS.
+
+Dica: Escrevendo boas mensagens de commit: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
+
+Código
+~~~~~~
+
+Os códigos serão mantidos todos em inglês.
+
 Formato da documentação
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A documentação do Symfony2 utiliza a linguagem markup reStructuredText juntamente com o Sphinx. Segue a referência: http://symfony.com/doc/2.0/contributing/documentation/format.html
 Se preferir, existe um editor online, que pode auxiliar em: http://rst.ninjs.org/
