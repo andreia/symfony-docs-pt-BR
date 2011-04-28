@@ -1,9 +1,9 @@
-Database Abstraction Layer
+﻿Database Abstraction Layer
 ==========================
 
-Learn about Doctrine's Database Abstraction Layer and how it can help you
-perform almost any complex task in a database-agnostic, object-oriented
-way.
+Aprenda sobre Doctrine's Database Abstration Layer e como ela pode ajudá-lo a
+fazer praticamente qualquer tarefa complexa em uma forma orientada a objetos, 
+independente de banco de dados.
 
 .. toctree::
    :maxdepth: 2
