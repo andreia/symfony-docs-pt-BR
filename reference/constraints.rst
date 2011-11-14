@@ -1,56 +1,55 @@
-Referência das Constraints de Validação 
+ReferÃªncia das Constraints de ValidaÃ§Ã£o 
 =======================================
 
 .. toctree::
    :maxdepth: 1
    :hidden:
 
-   constraints/False
+   constraints/NotBlank
+   constraints/Blank
+   constraints/NotNull
+   constraints/Null
    constraints/True
+   constraints/False
    constraints/Type
-   constraints/Choice
-   constraints/Collection
+
+   constraints/Email
+   constraints/MinLength
+   constraints/MaxLength
+   constraints/Url
+   constraints/Regex
+   constraints/Ip
+
+   constraints/Max
+   constraints/Min
+
    constraints/Date
    constraints/DateTime
-   constraints/Email
-   constraints/File
-   constraints/Max
-   constraints/MaxLength
-   constraints/Min
-   constraints/MinLength
-   constraints/NotBlank
-   constraints/NotNull
-   constraints/Regex
    constraints/Time
-   constraints/Url
+
+   constraints/Choice
+   constraints/Collection
+   constraints/UniqueEntity
+   constraints/Language
+   constraints/Locale
+   constraints/Country
+
+   constraints/File
+   constraints/Image
+
+   constraints/Callback
+   constraints/All
+   constraints/UserPassword
    constraints/Valid
 
-O Validator é projetado para validar objetos comparando com *constraints*.
-Na vida real, uma constraint poderia ser: "O bolo não deve ser queimado". No
-Symfony2, as constraints são semelhantes: Elas são afirmações de que uma condição 
-é verdadeira.
+O Validator Ã© projetado para validar objetos comparando com *constraints*.
+Na vida real, uma constraint poderia ser: "O bolo nÃ£o deve ser queimado". No
+Symfony2, as constraints sÃ£o semelhantes: Elas sÃ£o afirmaÃ§Ãµes de que uma condiÃ§Ã£o 
+Ã© verdadeira.
 
 Constraints Suportadas
 ----------------------
 
-As seguintes constraints estão disponíveis nativamente no Symfony2:
+As seguintes constraints estÃ£o disponÃ­veis nativamente no Symfony2:
 
-* :doc:`False <constraints/False>`
-* :doc:`True <constraints/True>`
-* :doc:`Type <constraints/Type>`
-* :doc:`Choice <constraints/Choice>`
-* :doc:`Collection <constraints/Collection>`
-* :doc:`Date <constraints/Date>`
-* :doc:`DateTime <constraints/DateTime>`
-* :doc:`Email <constraints/Email>`
-* :doc:`File <constraints/File>`
-* :doc:`Max <constraints/Max>`
-* :doc:`MaxLength <constraints/MaxLength>`
-* :doc:`Min <constraints/Min>`
-* :doc:`MinLength <constraints/MinLength>`
-* :doc:`NotBlank <constraints/NotBlank>`
-* :doc:`NotNull <constraints/NotNull>`
-* :doc:`Regex <constraints/Regex>`
-* :doc:`Time <constraints/Time>`
-* :doc:`Url <constraints/Url>`
-* :doc:`Valid <constraints/Valid>`
+.. include:: /reference/constraints/map.rst.inc
