@@ -1,19 +1,19 @@
 .. index::
    single: Security
 
-Security
+Segurança
 ========
 
-Symfony2 comes with a built-in security layer. It secures your application by
-providing authentication and authorization.
+Symfony2 já possui uma camada de segurança embutida. Ela atua disponibilizando para
+ seu aplicativo autenticação e autorização.
 
-*Authentication* ensures that the user is who he claims to be. *Authorization*
-refers to the process of deciding whether a user is allowed to perform an
-action or not (authentication is always performed before authorization).
+*Autenticação* é o nome dado ao processo que garante que o usuário é que ele diz ser.
+*Autorização* se refere ao processo de decidir se o usuário tem permissão para
+executar determinada ação ou não. A autenticação é sempre executada antes da autorização.
 
-This document is a quick overview over these main concepts, but it barely scratches
-the surface. If you want to get to know the real power of Symfony2's security 
-layer, you should also read these more specific documents: 
+Este documento é uma rápida introdução sobre esses dois principais conceitos, mas
+é ainda muito pouco sobre o assunto. Se você realmente quiser saber mais sobre
+o sistema de segurança do Symfony2, leia também os documentos seguintes:
 :doc:`Users </book/security/users>`,
 :doc:`Authentication </book/security/authentication>`, and
 :doc:`Authorization </book/security/authorization>`.
@@ -21,11 +21,12 @@ layer, you should also read these more specific documents:
 .. index::
    pair: Security; Configuration
 
-Configuration
+Configuração
 -------------
 
-For most common use cases, the Symfony2 security can be easily configured from
-your main configuration file; here is a typical configuration:
+Para a maioria dos casos, pode-se configurar a segurança do Symfony2 a partir do
+ arquivo principal de configuração. A seguir está este arquivo com uma configuração
+ típica:
 
 .. configuration-block::
 
@@ -91,9 +92,9 @@ your main configuration file; here is a typical configuration:
             ),
         ));
 
-Most of the time, it is more convenient to outsource all security related
-configuration into an external file. If you use XML, the external file can use
-the security namespace as the default one to make it more readable:
+Na maioria das vezes, é mais conveniente separar todas as configurações relacionadas
+a seguança em um aruqivo externo. Se você utiliza XML, o arquivo externo pode usar
+ como nome de escopo (namespace) o utilizado como padrão para facilitar a leitura:
 
 .. code-block:: xml
 
@@ -121,20 +122,18 @@ the security namespace as the default one to make it more readable:
 
 .. note::
 
-    All examples in the documentation assume that you are using an external
-    file with the default security namespace as above.
+    Todos os exemplos neste documento assume que você esteja utilizando um arquivo
+    externo com o nome de escopo (namespace) de segurança padrão como acima.
 
-As you can see, the configuration has four sections:
+Como pode observar, a configuração é composta de quatro seções:
 
-* *encoder*: An encoder is used for hashing passwords of users;
+* *encoder*: Um encoder é utilizado para gerar o hash (código alfanumérico obtido através de uma função hash) das senhas dos usuários;
 
-* *provider*: A provider knows how to create users;
+* *provider*: Um provider sabe como buscar usuários;
 
-* *firewall*: A firewall defines the authentication mechanisms for the whole
-  application or for just a part of it;
+* *firewall*: Um firewall define o mecanismo de autenticação para toda aplicação ou para apenas parte dela;
 
-* *access-control*: Access control rules secure parts of your application with
-  roles.
+* *access-control*: São as regras de controle de acesso de sua aplicação através dos diferentes perfis (roles).
 
 To sum up the workflow, the firewall authenticates the client based on the
 submitted credentials and the user created by the user provider. Finally, 
