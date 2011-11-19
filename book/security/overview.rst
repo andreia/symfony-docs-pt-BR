@@ -135,22 +135,22 @@ Como pode observar, a configuração é composta de quatro seções:
 
 * *access-control*: São as regras de controle de acesso de sua aplicação através dos diferentes perfis (roles).
 
-To sum up the workflow, the firewall authenticates the client based on the
-submitted credentials and the user created by the user provider. Finally, 
-access control is used to protect specific resources.
+Em resumo, o firewall autentica o cliente baseado nas credenciais enviadas (tipicamente login/senha)
+e o usuário é criado na sessão pelo provedor de usuários (user provider). Finalmente o controle de acesso
+é utilizado para proteger partes específicas da ou toda a aplicação.
 
-Authentication
+Autenticação
 --------------
 
-Symfony2 supports many different authentication mechanisms out of the box, and
-more can be easily added if needed; main ones are:
+Symfony2 suporta de fábrica vários mecanismos de autenticação e outros podem ser adicionados facilmente
+se necessário. Os principais que já estão disponíveis estão listados abaixo.
 
 * HTTP Basic;
 * HTTP Digest;
 * Form based authentication;
 * X.509 certificates.
 
-Here is how you can secure your application with HTTP basic authentication:
+Abaixo está um exemplo de configuração de como você pode adicionar autenticação por HTTP Basic a sua aplicação.
 
 .. configuration-block::
 
@@ -180,8 +180,8 @@ Here is how you can secure your application with HTTP basic authentication:
             ),
         ));
 
-Several firewalls can also be defined if you need different authentication
-mechanisms for different parts of the application:
+É possível utilizar vários firewalls trabalhando em conjunto se necessário para diferentes partes
+de sua aplicação. Veja um exemplo a seguir.
 
 .. configuration-block::
 
@@ -220,14 +220,15 @@ mechanisms for different parts of the application:
 
 .. tip::
 
-    Using HTTP basic is the easiest, but read the :doc:`Authentication
-    </book/security/authentication>` document to learn how to configure
-    other authentication mechanisms, how to configure a stateless
-    authentication, how you can impersonate another user, how you can enforce
-    https, and much more.
+    O HTTP Basic é o mais fácil mecanismo de autenticação de se utilizar. Certifique-se
+    de ler o documento :doc:`Authentication </book/security/authentication>` para
+    aprender como configurar outros mecanismos, como configurar autenticação sem sessão
+    (stateless, que significa que nenhum cookie será criado pelo Symfony2), como se
+    passar por outro usuário, como garantir a utilização do aplicativo através de HTTPS,
+    e outras coisas.
 
-Users
------
+Usuários
+--------
 
 During authentication, Symfony2 asks a user provider to create the user object
 matching the client request (via credentials like a username and a password).
