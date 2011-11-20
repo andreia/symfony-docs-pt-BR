@@ -75,12 +75,15 @@ defines what you want to *do* with the resource. The HTTP methods are the
 *verbs* of the request and define the few common ways that you can act upon
 the resource:
 
-========  ====================  
-*GET*     Retrieve the resource from the server
-*POST*    Create a resource on the server
-*PUT*     Update the resource on the server
-*DELETE*  Delete the resource from the server
-========  ====================
++----------+---------------------------------------+
+| *GET*    | Retrieve the resource from the server |
++----------+---------------------------------------+
+| *POST*   | Create a resource on the server       |
++----------+---------------------------------------+
+| *PUT*    | Update the resource on the server     |
++----------+---------------------------------------+
+| *DELETE* | Delete the resource from the server   |
++----------+---------------------------------------+
 
 With this in mind, you can imagine what an HTTP request might look like to
 delete a specific blog entry, for example:
@@ -267,7 +270,7 @@ The Journey from the Request to the Response
 --------------------------------------------
 
 Like HTTP itself, the ``Request`` and ``Response`` objects are pretty simple.
-The hard part of building an application is writing what's comes in between.
+The hard part of building an application is writing what comes in between.
 In other words, the real work comes in writing the code that interprets the
 request information and creates the response.
 
@@ -299,11 +302,13 @@ the "look" of the site can remain consistent.
 A much better solution is to use a :term:`front controller`: a single PHP
 file that handles every request coming into your application. For example:
 
-======================  ===========
-``/index.php``          executes ``index.php``
-``/index.php/contact``  executes ``index.php``
-``/index.php/blog``     executes ``index.php``
-======================  ===========
++------------------------+------------------------+
+| ``/index.php``         | executes ``index.php`` |
++------------------------+------------------------+
+| ``/index.php/contact`` | executes ``index.php`` |
++------------------------+------------------------+
+| ``/index.php/blog``    | executes ``index.php`` |
++------------------------+------------------------+
 
 .. tip::
 
@@ -315,7 +320,7 @@ Now, every request is handled exactly the same. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally. This solves both problems with the original approach.
-Almost all modern web apps do this - including apps like Wordpress.
+Almost all modern web apps do this - including apps like WordPress.
 
 Stay Organized
 ~~~~~~~~~~~~~~
@@ -387,7 +392,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
     contact:
         pattern:  /contact
-        defaults: { _controller: AcmeDemo:Main:contact }
+        defaults: { _controller: AcmeDemoBundle:Main:contact }
 
 .. note::
 
@@ -397,7 +402,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
-the ``AcmeDemo:Main:contact`` string is a short syntax that points to a
+the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``:
 
 .. code-block:: php
@@ -454,7 +459,7 @@ regardless of how your project is developed. To name a few:
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handing form submissions;
 
-* `Validation`_ A system for creating rules about data and then validating
+* `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
 * `ClassLoader`_ An autoloading library that allows PHP classes to be used
@@ -504,7 +509,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`HttpFoundation`: https://github.com/symfony/HttpFoundation
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Form`: https://github.com/symfony/Form
-.. _`Validation`: https://github.com/symfony/Validation
+.. _`Validator`: https://github.com/symfony/Validator
 .. _`ClassLoader`: https://github.com/symfony/ClassLoader
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`Security`: https://github.com/symfony/Security

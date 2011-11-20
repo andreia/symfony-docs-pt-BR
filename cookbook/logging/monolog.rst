@@ -33,13 +33,13 @@ To log a message simply get the logger service from the container in
 your controller::
 
     $logger = $this->get('logger');
-    $logger->info('We just go the logger');
-    $logger->err('An error occured');
+    $logger->info('We just got the logger');
+    $logger->err('An error occurred');
 
 .. tip::
 
     Using only the methods of the
-    :class:`Symfony\Component\HttpKernel\Log\LoggerInterface` interface
+    :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` interface
     allows to change the logger implementation without changing your code.
 
 Using several handlers
@@ -117,7 +117,7 @@ The handler uses a ``Formatter`` to format the record before logging
 it. All Monolog handlers use an instance of
 ``Monolog\Formatter\LineFormatter`` by default but you can replace it
 easily. Your formatter must implement
-``Monolog\Formatter\LineFormatterInterface``.
+``Monolog\Formatter\FormatterInterface``.
 
 .. configuration-block::
 
@@ -161,55 +161,77 @@ Monolog allows to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
-A processor is simply a callable receiving the record as first argument
-and a second argument which is either the logger or the handler
-depending of the level where the processor is called.
+A processor is simply a callable receiving the record as it's first argument.
+
+Processors are configured using the ``monolog.processor`` DIC tag. See the
+:ref:`reference about it<dic_tags-monolog-processor>`.
+
+Adding a Session/Request Token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes it is hard to tell which entries in the log belong to which session
+and/or request. The following example will add a unique token for each request
+using a processor.
+
+.. code-block:: php
+
+    namespace Acme\MyBundle;
+
+    use Symfony\Component\HttpFoundation\Session;
+
+    class SessionRequestProcessor
+    {
+        private $session;
+        private $token;
+
+        public function __construct(Session $session)
+        {
+            $this->session = $session;
+        }
+
+        public function processRecord(array $record)
+        {
+            if (null === $this->token) {
+                try {
+                    $this->token = substr($this->session->getId(), 0, 8);
+                } catch (\RuntimeException $e) {
+                    $this->token = '????????';
+                }
+                $this->token .= '-' . substr(uniqid(), -8);
+            }
+            $record['extra']['token'] = $this->token;
+
+            return $record;
+        }
+    }
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            my_processor:
-                class: Monolog\Processor\WebProcessor
+            monolog.formatter.session_request:
+                class: Monolog\Formatter\LineFormatter
+                arguments:
+                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n"
+
+            monolog.processor.session_request:
+                class: Acme\MyBundle\SessionRequestProcessor
+                arguments:  [ @session ]
+                tags:
+                    - { name: monolog.processor, method: processRecord }
+
         monolog:
             handlers:
-                file:
+                main:
                     type: stream
+                    path: %kernel.logs_dir%/%kernel.environment%.log
                     level: debug
-                    processors:
-                        - Acme\MyBundle\MyProcessor::process
-            processors:
-                - @my_processor
+                    formatter: monolog.formatter.session_request
 
-    .. code-block:: xml
+.. note::
 
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+    If you use several handlers, you can also register the processor at the
+    handler level instead of globally.
 
-            <services>
-                <service id="my_processor" class="Monolog\Processor\WebProcessor" />
-            </services>
-            <monolog:config>
-                <monolog:handler
-                    name="file"
-                    type="stream"
-                    level="debug"
-                    formatter="my_formatter"
-                >
-                    <monolog:processor callback="Acme\MyBundle\MyProcessor::process" />
-                </monolog:handler />
-                <monolog:processor callback="@my_processor" />
-            </monolog:config>
-        </container>
-
-.. tip::
-
-    If you need some dependencies in your processor you can define a
-    service and implement the ``__invoke`` method on the class to make
-    it callable. You can then add it in the processor stack.
-
-.. _Monolog https://github.com/Seldaek/monolog
+.. _Monolog: https://github.com/Seldaek/monolog

@@ -1,5 +1,5 @@
-When Flat PHP meets Symfony
-===========================
+Symfony2 versus Flat PHP
+========================
 
 **Why is Symfony2 better than just opening up a file and writing flat PHP?**
 
@@ -242,9 +242,9 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that that allows for the reuse of the
+You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
-PHP functions (``ob_start()``, ``ob_end_clean()``) in the template. Symfony2
+PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
 uses a ``Templating`` component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
 
@@ -286,7 +286,7 @@ page:
     require 'templates/show.php';
 
 Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog:
+the individual blog post:
 
 .. code-block:: html+php
 
@@ -328,12 +328,12 @@ application change slightly, but start to become more flexible:
 .. code-block:: text
 
     Without a front controller
-    /index.php          => Blog list page (index.php executed)
-    /show.php           => Blog show page (show.php executed)
+    /index.php          => Blog post list page (index.php executed)
+    /show.php           => Blog post show page (show.php executed)
 
     With index.php as the front controller
-    /index.php          => Blog list page (index.php executed)
-    /index.php/show     => Blog show page (index.php executed)
+    /index.php          => Blog post list page (index.php executed)
+    /index.php/show     => Blog post show page (index.php executed)
 
 .. tip::
     The ``index.php`` portion of the URI can be removed if using Apache
@@ -341,7 +341,7 @@ application change slightly, but start to become more flexible:
     blog show page would be simply ``/show``.
 
 When using a front controller, a single PHP file (``index.php`` in this case)
-renders *every* request. For the blog show page, ``/index.php/show`` will
+renders *every* request. For the blog post show page, ``/index.php/show`` will
 actually execute the ``index.php`` file, which is now responsible for routing
 requests internally based on the full URI. As you'll see, a front controller
 is a very powerful tool.
@@ -352,8 +352,8 @@ Creating the Front Controller
 You're about to take a **big** step with the application. With one file handling
 all requests, you can centralize things such as security handling, configuration
 loading, and routing. In this application, ``index.php`` must now be smart
-enough to render the blog list page *or* the blog show page based on the
-requested URI:
+enough to render the blog post list page *or* the blog post show page based
+on the requested URI:
 
 .. code-block:: html+php
 
@@ -365,7 +365,7 @@ requested URI:
     require_once 'controllers.php';
 
     // route the request internally
-    $uri = $_REQUEST['REQUEST_URI'];
+    $uri = $_SERVER['REQUEST_URI'];
     if ($uri == '/index.php') {
         list_action();
     } elseif ($uri == '/index.php/show' && isset($_GET['id'])) {
@@ -401,7 +401,7 @@ act a lot like Symfony2's mechanism for handling and routing requests.
 .. tip::
 
    Another advantage of a front controller is flexible URLs. Notice that
-   the URL to the blog show page could be changed from ``/show`` to ``/read``
+   the URL to the blog post show page could be changed from ``/show`` to ``/read``
    by changing code in only one location. Before, an entire file needed to
    be renamed. In Symfony2, URLs are even more flexible.
 
@@ -438,7 +438,7 @@ files in the application and to configure the autoloader:
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                        => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/vendor/symfony/src',
     ));
 
     $loader->register();
@@ -490,7 +490,7 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     function list_action()
     {
         $posts = get_all_posts();
-        $html = render_template('templates/list.php');
+        $html = render_template('templates/list.php', array('posts' => $posts));
 
         return new Response($html);
     }
@@ -498,17 +498,18 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     function show_action($id)
     {
         $post = get_post_by_id($id);
-        $html = render_template('templates/show.php');
+        $html = render_template('templates/show.php', array('post' => $post));
 
         return new Response($html);
     }
 
     // helper function to render templates
-    function render_template($path)
+    function render_template($path, array $args)
     {
+        extract($args);
         ob_start();
         require $path;
-        $html = ob_end_clean();
+        $html = ob_get_clean();
 
         return $html;
     }
@@ -530,7 +531,7 @@ The Sample Application in Symfony2
 
 The blog has come a *long* way, but it still contains a lot of code for such
 a simple application. Along the way, we've also invented a simple routing
-system and a method using ``ob_start()`` and ``ob_end_clean()`` to render
+system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
@@ -550,21 +551,26 @@ them for you. Here's the same sample application, now built in Symfony2:
     {
         public function listAction()
         {
-            $blogs = $this->container->get('doctrine.orm.entity_manager')
-                ->createQuery('SELECT b FROM AcmeBlog:Blog b')
+            $posts = $this->get('doctrine')->getEntityManager()
+                ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('blogs' => $blogs));
+            return $this->render('AcmeBlogBundle:Post:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
         {
-            $blog = $this->container->get('doctrine.orm.entity_manager')
-                ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
-                ->setParameter('id', $id)
-                ->getSingleResult();
+            $post = $this->get('doctrine')
+                ->getEntityManager()
+                ->getRepository('AcmeBlogBundle:Post')
+                ->find($id);
+            
+            if (!$post) {
+                // cause the 404 page not found to be displayed
+                throw $this->createNotFoundException();
+            }
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('blog' => $blog));
+            return $this->render('AcmeBlogBundle:Post:show.html.php', array('post' => $post));
         }
     }
 
@@ -612,7 +618,9 @@ The layout is nearly identical:
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format::
+A routing configuration map provides this information in a readable format:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     blog_list:
@@ -738,6 +746,6 @@ Learn more from the Cookbook
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: http://www.varnish-cache.org
 .. _`PHPUnit`: http://www.phpunit.de

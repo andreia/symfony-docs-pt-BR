@@ -4,11 +4,19 @@ The Dependency Injection Tags
 Tags:
 
 * ``data_collector``
-* ``kernel.listener``
+* ``form.type``
+* ``form.type_extension``
+* ``form.type_guesser``
+* ``kernel.cache_warmer``
+* ``kernel.event_listener``
+* ``kernel.event_subscriber``
+* ``monolog.logger``
+* ``monolog.processor``
 * ``templating.helper``
-* ``templating.renderer``
 * ``routing.loader``
+* ``translation.loader``
 * ``twig.extension``
+* ``validator.initializer``
 
 Enabling Custom PHP Template Helpers
 ------------------------------------
@@ -41,6 +49,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _reference-dic-tags-twig-extension:
+
 Enabling Custom Twig Extensions
 -------------------------------
 
@@ -70,13 +80,19 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
-.. _dic-tags-kernel-listener:
+For information on how to create the actual Twig Extension class, see
+`Twig's documentation`_ on the topic.
+
+
+.. _dic-tags-kernel-event-listener:
 
 Enabling Custom Listeners
 -------------------------
 
 To enable a custom listener, add it as a regular service in one of your
-configuration, and tag it with ``kernel.listener``:
+configuration, and tag it with ``kernel.event_listener``. You must provide
+the name of the event your service listens to, as well as the method that
+will be called:
 
 .. configuration-block::
 
@@ -86,20 +102,74 @@ configuration, and tag it with ``kernel.listener``:
             kernel.listener.your_listener_name:
                 class: Fully\Qualified\Listener\Class\Name
                 tags:
-                    - { name: kernel.listener }
+                    - { name: kernel.event_listener, event: xxx, method: onXxx }
 
     .. code-block:: xml
 
         <service id="kernel.listener.your_listener_name" class="Fully\Qualified\Listener\Class\Name">
-            <tag name="kernel.listener" />
+            <tag name="kernel.event_listener" event="xxx" method="onXxx" />
         </service>
 
     .. code-block:: php
 
         $container
             ->register('kernel.listener.your_listener_name', 'Fully\Qualified\Listener\Class\Name')
-            ->addTag('kernel.listener')
+            ->addTag('kernel.event_listener', array('event' => 'xxx', 'method' => 'onXxx'))
         ;
+
+.. note::
+
+    You can also specify priority as an attribute of the kernel.event_listener 
+    tag (much like the method or event attributes), with either a positive 
+    or negative integer. This allows you to make sure your listener will always 
+    be called before or after another listener listening for the same event.
+
+
+
+.. _dic-tags-kernel-event-subscriber:
+
+Enabling Custom Subscribers
+---------------------------
+
+.. versionadded:: 2.1
+
+   The ability to add kernel event subscribers is new to 2.1.
+
+To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with ``kernel.event_subscriber``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.subscriber.your_subscriber_name:
+                class: Fully\Qualified\Subscriber\Class\Name
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <service id="kernel.subscriber.your_subscriber_name" class="Fully\Qualified\Subscriber\Class\Name">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->addTag('kernel.event_subscriber')
+        ;
+
+.. note::
+
+    Your service must implement the :class:`Symfony\Component\EventDispatcher\EventSubscriberInterface`
+    interface.
+
+.. note::
+
+    If your service is created by a factory, you **MUST** correctly set the ``class``
+    parameter for this tag to work correctly.
 
 Enabling Custom Template Engines
 --------------------------------
@@ -164,7 +234,7 @@ of your configuration, and tag it with ``routing.loader``:
 Using a custom logging channel with Monolog
 -------------------------------------------
 
-Monolog allows to share the handlers between several logging channels.
+Monolog allows you to share its handlers between several logging channels.
 The logger service uses the channel ``app`` but you can change the
 channel when injecting the logger in a service.
 
@@ -196,3 +266,103 @@ channel when injecting the logger in a service.
 
     This works only when the logger service is a constructor argument,
     not when it is injected through a setter.
+
+.. _dic_tags-monolog-processor:
+
+Adding a processor for Monolog
+------------------------------
+
+Monolog allows you to add processors in the logger or in the handlers to add
+extra data in the records. A processor receives the record as an argument and
+must return it after adding some extra data in the ``extra`` attribute of
+the record.
+
+Let's see how you can use the built-in ``IntrospectionProcessor`` to add
+the file, the line, the class and the method where the logger was triggered.
+
+You can add a processor globally:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor');
+        $container->register('my_service', $definition);
+
+.. tip::
+
+    If your service is not a callable (using ``__invoke``) you can add the
+    ``method`` attribute in the tag to use a specific method.
+
+You can add also a processor for a specific handler by using the ``handler``
+attribute:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor, handler: firephp }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" handler="firephp" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor', array('handler' => 'firephp');
+        $container->register('my_service', $definition);
+
+You can also add a processor for a specific logging channel by using the ``channel``
+attribute. This will register the processor only for the ``security`` logging
+channel used in the Security component:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor, channel: security }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" channel="security" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor', array('channel' => 'security');
+        $container->register('my_service', $definition);
+
+.. note::
+
+    You cannot use both the ``handler`` and ``channel`` attributes for the
+    same tag as handlers are shared between all channels.
+
+..  _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html
