@@ -230,10 +230,11 @@ de sua aplicação. Veja um exemplo a seguir.
 Usuários
 --------
 
-During authentication, Symfony2 asks a user provider to create the user object
-matching the client request (via credentials like a username and a password).
-To get started fast, you can define an in-memory provider directly in your
-configuration:
+Durante a autenticação, Symfony2 solicitar ao provedor de usuários (user provider)
+para criar um objeto usuário que corresponda a solicitação do cliente (através de
+credenciais como login e senha). Para iniciar rapidamente, você pode definir a
+configuração de um provedor de usuários in-memory (as credenciais dos usuários do
+sistema são definidas no próprio arquivo de configuração). Veja um exemplo a seguir.
 
 .. configuration-block::
 
