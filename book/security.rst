@@ -24,14 +24,14 @@ Como a melhor maneira de aprender é com um exemplo, vamos para ele.
     O `componente de segurança`_ do Symfony está disponível como uma biblioteca
     PHP podendo ser utilizada em qualquer projeto PHP.
 
-Exemplo simples: HTTP Authentication
-----------------------------------
+Exemplo: Autenticação Básica HTTP
+---------------------------------
 
 O componente de segurança pode ser configurado através da configuração de
  sua aplicação. Na verdade, a maioria dos esquemas comuns de segurança podem
  ser conseguidos apenas configurando adequadamente sua aplicação. A configuração
  a seguir diz ao Symfony para proteger qualquer URL que satisfaça ``/admin/*``
- através da autenticação simples HTTP, solicitando do usuário credenciais (login/senha).
+ através da autenticação básica HTTP, solicitando do usuário credenciais (login/senha).
 
 .. configuration-block::
 
@@ -116,10 +116,10 @@ O componente de segurança pode ser configurado através da configuração de
 
 .. tip::
 
-    A standard Symfony distribution separates the security configuration
-    into a separate file (e.g. ``app/config/security.yml``). If you don't
-    have a separate security file, you can put the configuration directly
-    into your main config file (e.g. ``app/config/config.yml``).
+    A distribuição padrão do Symfony coloca a configuração de segurança em
+    um arquivo separado (e.g. ``app/config/security.yml``). Se você não
+    tem um arquivo separado para as configurações de segurança, pode colocar
+    diretamente no arquivo de configuração principal (por exemplo, ``app/config/config.yml``).
 
 The end result of this configuration is a fully-functional security system
 that looks like the following:
