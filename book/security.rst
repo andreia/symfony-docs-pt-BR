@@ -1,37 +1,37 @@
-Security
-========
+Segurança
+=========
 
-Security is a two-step process whose goal is to prevent a user from accessing
-a resource that he/she should not have access to.
+Segurança é um processo em dois passos principais. Seu objetivo é evitar que
+um usuário tenha acesso a um recurso que ele não deveria ter.
 
-In the first step of the process, the security system identifies who the user
-is by requiring the user to submit some sort of identification. This is called
-**authentication**, and it means that the system is trying to find out who
-you are.
+No primeiro passo do processo, o sistema de segurança identifica quem o usuário é
+exigindo que o mesmo envie algum tipo de identificação. Este primeiro passo é
+chamado **autenticação** e signifcica que o sistema está tentando identificar
+que é o usuário.
 
-Once the system knows who you are, the next step is to determine if you should
-have access to a given resource. This part of the process is called **authorization**,
-and it means that the system is checking to see if you have privileges to
-perform a certain action.
+Uma vez que o sistema sabe quem está acessando, o próximo passo é determinar se o
+usuário pode acessar determinado recurso. Este segundo passo é chamado
+de **autorização** e significa que o sistema irá checar se o usuário tem permissão para
+executar determinada ação.
 
 .. image:: /images/book/security_authentication_authorization.png
    :align: center
 
-Since the best way to learn is to see an example, let's dive right in.
+Como a melhor maneira de aprender é com um exemplo, vamos para ele.
 
 .. note::
 
-    Symfony's `security component`_ is available as a standalone PHP library
-    for use inside any PHP project.
+    O `componente de segurança`_ do Symfony está disponível como uma biblioteca
+    PHP podendo ser utilizada em qualquer projeto PHP.
 
-Basic Example: HTTP Authentication
+Exemplo simples: HTTP Authentication
 ----------------------------------
 
-The security component can be configured via your application configuration.
-In fact, most standard security setups are just matter of using the right
-configuration. The following configuration tells Symfony to secure any URL
-matching ``/admin/*`` and to ask the user for credentials using basic HTTP
-authentication (i.e. the old-school username/password box):
+O componente de segurança pode ser configurado através da configuração de
+ sua aplicação. Na verdade, a maioria dos esquemas comuns de segurança podem
+ ser conseguidos apenas configurando adequadamente sua aplicação. A configuração
+ a seguir diz ao Symfony para proteger qualquer URL que satisfaça ``/admin/*``
+ através da autenticação simples HTTP, solicitando do usuário credenciais (login/senha).
 
 .. configuration-block::
 
