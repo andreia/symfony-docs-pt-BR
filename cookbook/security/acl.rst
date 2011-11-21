@@ -1,39 +1,42 @@
 .. index::
    single: Security; Access Control Lists (ACLs)
 
-Access Control Lists (ACLs)
-===========================
+Listas de controle de acesso (ACLs)
+===================================
 
-In complex applications, you will often face the problem that access decisions
-cannot only be based on the person (``Token``) who is requesting access, but
-also involve a domain object that access is being requested for. This is where
-the ACL system comes in.
+Em aplicativos complexos, comumente existem o problema que as decisões de permitir
+ou negar acesso não podem ser tomadas somente baseada no usuário (``Token``)
+solicitando acesso, mas também deve levar em consideração o objeto de domínio
+que está tendo o acesso solicitado. É aí que o sistema ACL entra em ação.
 
-Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not those
-of other users; besides, you yourself want to be able to edit all comments. In
-this scenario, ``Comment`` would be our domain object that you want to
-restrict access to. You could take several approaches to accomplish this using
-Symfony2, two basic approaches are (non-exhaustive):
+Imagine que está projetando um sistema de blog onde seus usuário podem comentar
+os textos (posts) publicados. Agora, você deseja que um usuário possa editar
+seus próprios comentários, mas não os comentários dos outros usuários. Além
+disso, você como administrador deseja pode editar todos os comentários. Neste
+cenário, ``Comment`` seria seu objeto de domínio ao qual você quer restringir
+acesso. Você poderia usar várias abordagens para conseguir o mesmo resultado.
+Duas dessas seriam:
 
-- *Enforce security in your business methods*: Basically, that means keeping a
-  reference inside each ``Comment`` to all users who have access, and then
-  compare these users to the provided ``Token``.
-- *Enforce security with roles*: In this approach, you would add a role for
-  each ``Comment`` object, i.e. ``ROLE_COMMENT_1``, ``ROLE_COMMENT_2``, etc.
+- *Impor segurança em seus métodos*: Basicamente, isso significa que deverá
+  manter referências em cada ``Comment`` de todos os usuários que têm acesso
+  e depois comparar com o usuário ``Token`` solicitando acesso.
+- *Impor segurança com perfis*: Nesta abordagem, você adicionaria um perfil
+  para cada objeto ``Comment``, isto é, ``ROLE_COMMENT_1``, ``ROLE_COMMENT_2``, etc.
 
-Both approaches are perfectly valid. However, they couple your authorization
-logic to your business code which makes it less reusable elsewhere, and also
-increases the difficulty of unit testing. Besides, you could run into
-performance issues if many users would have access to a single domain object.
+Ambas abordagens são perfeitamnete válidas. Elas, porém, amarram sua lógica
+de autorização de acesso com seu código, deixando-o mais difícil de reusar
+em outros contextos. Também aumenta a dificuldade de criar testes unitários.
+Além disso, pode-se ter problemas de performance caso muitos usuários tenham
+acesso a um único objeto de domínio.
 
-Fortunately, there is a better way, which we will talk about now.
+Felizmente, há uma maneira melhor que veremos a seguir.
 
-Bootstrapping
--------------
+Configuração
+------------
 
-Now, before we finally can get into action, we need to do some bootstrapping.
-First, we need to configure the connection the ACL system is supposed to use:
+Agora, antes de realmente começarmos, precisamos fazer algumas configurações.
+Primeiramente, precisamos configurar a conexão de banco de dados queo sistema ACL
+utilizará.
 
 .. configuration-block::
 
@@ -61,27 +64,27 @@ First, we need to configure the connection the ACL system is supposed to use:
 
 .. note::
 
-    The ACL system requires at least one Doctrine DBAL connection to be
-    configured. However, that does not mean that you have to use Doctrine for
-    mapping your domain objects. You can use whatever mapper you like for your
-    objects, be it Doctrine ORM, Mongo ODM, Propel, or raw SQL, the choice is 
-    yours.
+    O sistema ACL requer que ao menos uma conexão Doctrine DBAL esteja configurada.
+    Isto, porém, não significa que você tem que utilizar o Doctrine para mapear
+    seus objetos de domínio. Você pode utilizar qualquer mapeamento que quiser
+    para seus objetos, seja ele Doctrine ORM, Mongo ODM, Propel, ou SQL puro.
+    A escolha é sua.
 
-After the connection is configured, we have to import the database structure.
-Fortunately, we have a task for this. Simply run the following command:
+Depois de configurar a conexão, temos que importar a estrutura do banco de dados.
+Felizmente, temos um comando para isto. Rode o seguinte comando.
 
 .. code-block:: text
 
     php app/console init:acl
 
-Getting Started
----------------
+Começando
+---------
 
-Coming back to our small example from the beginning, let's implement ACL for
-it.
+Voltando ao nosso pequeno exemplo do início, vamos implementar o sistema
+ACL dele.
 
-Creating an ACL, and adding an ACE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Criando uma ACL, e adicionando uma entrada (ACE)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -120,30 +123,31 @@ Creating an ACL, and adding an ACE
         }
     }
 
-There are a couple of important implementation decisions in this code snippet.
-For now, I only want to highlight two:
+Há algumas importantes decisões de implementação neste trecho de código. Por
+enquanto, gostaria de destacar duas.
 
-First, you may have noticed that ``->createAcl()`` does not accept domain
-objects directly, but only implementations of the ``ObjectIdentityInterface``.
-This additional step of indirection allows you to work with ACLs even when you
-have no actual domain object instance at hand. This will be extremely helpful
-if you want to check permissions for a large number of objects without
-actually hydrating these objects.
+Primeiro, note que o método ``->createAcl()`` não aceita objetos de domínio
+diretamente, mas somente implementações de ``ObjectIdentityInterface``. Este
+passo adicional permite que trabalhe com ACLs mesmo quando não tiver uma instância
+do objeto de domínio disponível. Isto será extremamente útil se você quiser
+verificar permissões para um grande número de objetos sem realmente criar os
+objetos.
 
-The other interesting part is the ``->insertObjectAce()`` call. In our
-example, we are granting the user who is currently logged in owner access to
-the Comment. The ``MaskBuilder::MASK_OWNER`` is a pre-defined integer bitmask;
-don't worry the mask builder will abstract away most of the technical details,
-but using this technique we can store many different permissions in one
-database row which gives us a considerable boost in performance.
+Outra parte interessante é a chamada ``->insertObjectAce()``. Em nosso exemplo,
+estamos concedendo ao usuário que está autenticado permissão de proprietário
+do objeto Comment. ``MaskBuilder::MASK_OWNER`` é uma máscara (integer bitmask)
+pré-definida. Não se preocupe que MaskBuilder abstrai a maior parte dos detalhes
+técnicos, mas saiba que utilizando esta técnica é possível armazenar muitas
+permissões diferentes em apenas uma linha do banco de dados, o que significa
+uma considerável melhora na performance.
 
 .. tip::
 
-    The order in which ACEs are checked is significant. As a general rule, you
-    should place more specific entries at the beginning.
+    A ordem em que as entradas de controle (ACE) são checadas é importante.
+    Como regra geral, você deve colocar as entradas mais específicas no início.
 
-Checking Access
-~~~~~~~~~~~~~~~
+Verificando o acesso
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -162,26 +166,25 @@ Checking Access
         // ...
     }
 
-In this example, we check whether the user has the ``EDIT`` permission.
-Internally, Symfony2 maps the permission to several integer bitmasks, and
-checks whether the user has any of them.
+Neste exemplo, verificamos se o usuário tem permissão de edição (``EDIT``).
+Internamente, Symfony2 mapea a permissão para várias máscaras (integer bitmasks)
+e verifica se o usuário tem alguma delas.
 
 .. note::
 
-    You can define up to 32 base permissions (depending on your OS PHP might
-    vary between 30 to 32). In addition, you can also define cumulative
-    permissions.
+    Você pode definir até 32 permissões base (dependendo do seu SO,
+    pode variar entre 30 e 32). Você ainda pode definir permisões cumulativas.
 
-Cumulative Permissions
+Permissões Cumulativas
 ----------------------
 
-In our first example above, we only granted the user the ``OWNER`` base
-permission. While this effectively also allows the user to perform any
-operation such as view, edit, etc. on the domain object, there are cases where
-we want to grant these permissions explicitly.
+No nosso primeiro exemplo acima, nós concedemos somente a permissão base ``OWNER``.
+Apesar disso significar que o usuário pode executar qualquer operação no
+objeto de domínio tais como exibir, editar, etc, em alguns casos você pode
+querer conceder essas permissões explicitamente.
 
-The ``MaskBuilder`` can be used for creating bit masks easily by combining
-several base permissions:
+O ``MaskBuilder`` pode ser usado para criar máscaras (bit masks) facilmente através
+da combinação de várias permissões base.
 
 .. code-block:: php
 
@@ -194,11 +197,11 @@ several base permissions:
     ;
     $mask = $builder->get(); // int(15)
 
-This integer bitmask can then be used to grant a user the base permissions you
-added above:
+Este inteiro (integer bitmask) pode então ser usado para conceder a um usuário
+todas as permissões base que você adicionou acima.
 
 .. code-block:: php
 
     $acl->insertObjectAce(new UserSecurityIdentity('johannes'), $mask);
 
-The user is now allowed to view, edit, delete, and un-delete objects.
+O usuário agora poderá exibir, editar, deletar e desfazer a deleção dos objetos.

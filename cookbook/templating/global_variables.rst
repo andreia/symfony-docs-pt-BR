@@ -1,11 +1,11 @@
 .. index::
    single: Templating; Global variables
 
-Injecting variables into all templates (i.e. Global Variables)
-==============================================================
+Utilizando variáveis em todas templates (Variáveis globais)
+===========================================================
 
-Sometimes you want a variable to be accessible to all the templates you use.
-This is possible inside your ``app/config/config.yml`` file:
+Algumas vezes você quer que uma variável esteja disponível em todas as templates que utiliza.
+Isto é possível configurando o twig dentro do arquivo ``app/config/config.yml`` :
 
 .. code-block:: yaml
 
@@ -15,14 +15,15 @@ This is possible inside your ``app/config/config.yml`` file:
         globals:
             ga_tracking: UA-xxxxx-x
 
-Now, the variable ``ga_tracking`` is available in all Twig templates:
+Agora a variável ``ga_tracking`` está disponível em todas templates Twig e pode ser acessada
+da seguinte forma.
 
 .. code-block:: html+jinja
 
     <p>Our google tracking code is: {{ ga_tracking }} </p>
 
-It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
-system, which lets you isolate or reuse the value:
+É fácil! Você também pode utilizar do sistema de parâmetros (:ref:`book-service-container-parameters`),
+que permite você isolar e reutilizar o valor como a seguir.
 
 .. code-block:: ini
 
@@ -37,12 +38,12 @@ system, which lets you isolate or reuse the value:
         globals:
             ga_tracking: %ga_tracking%
 
-The same variable is available exactly as before.
+A mesma variável está disponível exatamente como antes.
 
-More Complex Global Variables
------------------------------
+Variáveis globais mais complexas
+--------------------------------
 
-If the global variable you want to set is more complicated - say an object -
-then you won't be able to use the above method. Instead, you'll need to create
-a :ref:`Twig Extension<reference-dic-tags-twig-extension>` and return the
-global variable as one of the entries in the ``getGlobals`` method.
+Se a variável global que deseja definir é mais complexa, como um objeto por exemplo,
+então você não poderá utilizar o método acima. Ao invés disso, precisa criar uma
+extensão Twig (:ref:`Twig Extension<reference-dic-tags-twig-extension>`) e retornar
+a variável global como uma das entradas no método ``getGlobals``.
