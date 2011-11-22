@@ -1,27 +1,27 @@
-Symfony2 versus Flat PHP
-========================
+Symfony2 versus o PHP puro
+==========================
 
-**Why is Symfony2 better than just opening up a file and writing flat PHP?**
+**Por que usar o Symfony2 é melhor do que abrir um arquivo e sair escrevendo PHP puro?**
 
-If you've never used a PHP framework, aren't familiar with the MVC philosophy,
-or just wonder what all the *hype* is around Symfony2, this chapter is for
-you. Instead of *telling* you that Symfony2 allows you to develop faster and
-better software than with flat PHP, you'll see for yourself.
+Se você nunca utilizou um framework PHP, não está familiarizado com a filosofia
+MVC ou está apenas interessado em entender todo esse *hype* sobre o Symfony2, este
+capítulo é para você. Em vez de *dizer* que o Symfony2 permite que você
+desenvolva mais rápido e melhor do que com PHP puro, você vai ver por si mesmo.
 
-In this chapter, you'll write a simple application in flat PHP, and then
-refactor it to be more organized. You'll travel through time, seeing the
-decisions behind why web development has evolved over the past several years
-to where it is now. 
+Nesse capítulo, você irá escrever uma simples aplicação em PHP puro, e, então,
+refatora-la para deixa-la mais organizada. Você vai viajar no tempo, vendo as
+decisões sobre o porquê o desenvolvimento web evoluiu com o passar dos tempos
+para onde ele está agora.
 
-By the end, you'll see how Symfony2 can rescue you from mundane tasks and
-let you take back control of your code.
+Ao final, você verá como o Symfony2 pode resgata-lo das tarefas simples e coloca-lo
+de volta no controle do seu código.
 
-A simple Blog in flat PHP
--------------------------
+Um simples Blog em PHP puro
+---------------------------
 
-In this chapter, you'll build the token blog application using only flat PHP.
-To begin, create a single page that displays blog entries that have been
-persisted to the database. Writing in flat PHP is quick and dirty:
+Nesse capítulo, você vai construir uma aplicação para um blog utilizando apenas o
+PHP puro. Para começar, crie uma única página que exibe as postagens armazenadas
+no banco de dados. Escrever isso em PHP puro é rápido e simples:
 
 .. code-block:: html+php
 
@@ -55,31 +55,31 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     <?php
     mysql_close($link);
 
-That's quick to write, fast to execute, and, as your app grows, impossible
-to maintain. There are several problems that need to be addressed:
+Simples de escrever, rápido de executar e, conforme sua aplicação crescer, impossível
+de manter. Existem diversos problemas que precisam ser tratados:
 
-* **No error-checking**: What if the connection to the database fails?
+* **Sem verificações de erros**: E se a conexão com o banco de dados falhar?
 
-* **Poor organization**: If the application grows, this single file will become
-  increasingly unmaintainable. Where should you put code to handle a form
-  submission? How can you validate data? Where should code go for sending
-  emails?
+* **Organização pobre**: Se a aplicação crescer, esse arquivo também irá crescer
+  e ficará impossível de dar manutenção. Onde você deve colocar o código que cuida
+  de tratar os envios de formulários? Como você valida os dados? Onde você deve
+  colocar o código que envia emails?
 
-* **Difficult to reuse code**: Since everything is in one file, there's no
-  way to reuse any part of the application for other "pages" of the blog.
+* **Dificuldade para reutilizar código**: Uma vez que tudo está em um único arquivo,
+  não há como reutilizar qualquer parte dele em outras "páginas" do blog.
 
 .. note::
-    Another problem not mentioned here is the fact that the database is
-    tied to MySQL. Though not covered here, Symfony2 fully integrates `Doctrine`_,
-    a library dedicated to database abstraction and mapping.
+    Um outro problema não mencionado aqui é o fato do banco de dados estar amarrado
+    ao MySQL. Apesar de não ser tratado aqui, o Symfony2 integra-se totalmente com
+    o `Doctrine`_, uma biblioteca dedicada a abstração de banco de dados e mapeamento.
 
-Let's get to work on solving these problems and more.
+Vamos ao trabalho de resolver esses problemas e mais ainda.
 
-Isolating the Presentation
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Isolando a Apresentação
+~~~~~~~~~~~~~~~~~~~~~~~
 
-The code can immediately gain from separating the application "logic" from
-the code that prepares the HTML "presentation":
+O código pode ter ganhos imediatos ao separar a "lógica" da aplicação do código
+que prepara o HTML para "apresentação":
 
 .. code-block:: html+php
 
@@ -101,8 +101,8 @@ the code that prepares the HTML "presentation":
     // include the HTML presentation code
     require 'templates/list.php';
 
-The HTML code is now stored in a separate file (``templates/list.php``), which
-is primarily an HTML file that uses a template-like PHP syntax:
+Agora o código HTML está armazenado em um arquivo separado (``templates/list.php``),
+que é um arquivo HTML que utiliza um sintaxe PHP parecida com a de templates:
 
 .. code-block:: html+php
 
@@ -124,23 +124,25 @@ is primarily an HTML file that uses a template-like PHP syntax:
         </body>
     </html>
 
-By convention, the file that contains all of the application logic - ``index.php`` -
-is known as a "controller". The term :term:`controller` is a word you'll hear
-a lot, regardless of the language or framework you use. It refers simply
-to the area of *your* code that processes user input and prepares the response.
+Por convenção, o arquivo que contém toda a lógica da aplicação - ``index.php`` -
+é conhecido como "controller". O termo :term:`controller` é uma palavra que você
+vai escutar bastante, independente da linguagem ou framework você utilize. Ela
+refere-se a área do *seu* código que processa as entradas do usuário e prepara uma
+resposta.
 
-In this case, our controller prepares data from the database and then includes
-a template to present that data. With the controller isolated, you could
-easily change *just* the template file if you needed to render the blog
-entries in some other format (e.g. ``list.json.php`` for JSON format). 
+Nesse caso, nosso controller prepara os dados do banco de dados e então inclui um
+template para apresenta-los. Com o controller isolado, você pode facilmente mudar
+*apenas* o arquivo de template caso precise renderizar os posts de blog em algum
+outro formato (por exemplo, ``list.json.php`` para o formato JSON).
 
-Isolating the Application (Domain) Logic
+Isolando a Lógica (Domínio) da Aplicacão
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far the application contains only one page. But what if a second page
-needed to use the same database connection, or even the same array of blog
-posts? Refactor the code so that the core behavior and data-access functions
-of the application are isolated in a new file called ``model.php``:
+Por enquanto a aplicação tem apenas uma página. Mas e se uma segunda página
+precisar utilizar a mesma conexão com o banco de dados, ou até o mesmo array de
+posts do blog? Refatore o código de forma que o comportamento principal e as
+funções de acesso aos dados da aplicação fiquem isolados em um novo arquivo chamado
+``model.php``:
 
 .. code-block:: html+php
 
@@ -176,14 +178,14 @@ of the application are isolated in a new file called ``model.php``:
 
 .. tip::
 
-   The filename ``model.php`` is used because the logic and data access of
-   an application is traditionally known as the "model" layer. In a well-organized
-   application, the majority of the code representing your "business logic"
-   should live in the model (as opposed to living in a controller). And unlike
-   in this example, only a portion (or none) of the model is actually concerned
-   with accessing a database.
+   O nome ``model.php`` foi utilizado porque a lógica e o acesso aos dados de
+   uma aplicação são tradicionalmente conhecidos como a camada de "modelo". Em
+   uma aplicação bem organizada, a maioria do código representando as suas
+   "regras de negócio" devem estar apenas no model (em vez de estar em um controller). 
+   Ao contrário desse exemplo, somente uma parte do model (ou nenhuma) está realmente
+   relacionada ao banco de dados.
 
-The controller (``index.php``) is now very simple:
+Agora o controller (``index.php``) ficou bem simples:
 
 .. code-block:: html+php
 
@@ -194,19 +196,19 @@ The controller (``index.php``) is now very simple:
 
     require 'templates/list.php';
 
-Now, the sole task of the controller is to get data from the model layer of
-the application (the model) and to call a template to render that data.
-This is a very simple example of the model-view-controller pattern.
+Agora, a única tarefa do controller é recuperar os dados da camada de modelo da
+sua aplicação (o model) e chamar o template para renderiza-los. Esse é um exemplo
+bem simples do padrão model-view-controller.
 
-Isolating the Layout
-~~~~~~~~~~~~~~~~~~~~
+Isolando o Layout
+~~~~~~~~~~~~~~~~~
 
-At this point, the application has been refactored into three distinct pieces
-offering various advantages and the opportunity to reuse almost everything
-on different pages.
+Até esse ponto a aplicação foi refatorada em três partes distintas, oferecendo
+várias vantagens e a oportunidade de reutilizar quase qualquer coisa em outras
+páginas.
 
-The only part of the code that *can't* be reused is the page layout. Fix
-that by creating a new ``layout.php`` file:
+A única parte do código que *não pode* ser reutilizada é o layout da página.
+Conserte isso criando um novo arquivo chamado ``layout.php``:
 
 .. code-block:: html+php
 
@@ -220,8 +222,8 @@ that by creating a new ``layout.php`` file:
         </body>
     </html>
 
-The template (``templates/list.php``) can now be simplified to "extend"
-the layout:
+Assim o template (``templates/list.php``) pode ficar mais simples "extendendo" o
+layout:
 
 .. code-block:: html+php
 
@@ -242,21 +244,21 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that allows for the reuse of the
-layout. Unfortunately, to accomplish this, you're forced to use a few ugly
-PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
-uses a ``Templating`` component that allows this to be accomplished cleanly
-and easily. You'll see it in action shortly.
+Agora você foi apresentado a uma metodologia que permite a reutilização do layout.
+Infelizmente, para fazer isso, você é forçado a utilizar no template algumas funções
+feias do PHP (``ob_start()``, ``ob_get_clean()``). O Symfony2 utiliza o componente
+``Templating`` que permite realizar isso de uma maneira limpa e fácil. Logo você
+verá esse componente em ação.
 
-Adding a Blog "show" Page
--------------------------
+Adicionando a página "show" ao Blog
+-----------------------------------
 
-The blog "list" page has now been refactored so that the code is better-organized
-and reusable. To prove it, add a blog "show" page, which displays an individual
-blog post identified by an ``id`` query parameter.
+A página "list" foi refatorada para que o código fique mais organizado e reutilizável.
+Para provar isso, adicione ao blog uma página chamada "show", que exibe um único post
+identificado pelo parâmetro ``id``.
 
-To begin, create a new function in the ``model.php`` file that retrieves
-an individual blog result based on a given id::
+Para começar, crie uma nova função no arquivo ``model.php`` que recupera o post
+com base no id informado::
 
     // model.php
     function get_post_by_id($id)
@@ -273,8 +275,8 @@ an individual blog result based on a given id::
         return $row;
     }
 
-Next, create a new file called ``show.php`` - the controller for this new
-page:
+Em seguida, crie um novo arquivo chamado ``show.php`` - o controller para essa nova
+página:
 
 .. code-block:: html+php
 
@@ -285,8 +287,8 @@ page:
 
     require 'templates/show.php';
 
-Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog post:
+Por fim, crie um novo arquivo de template - ``templates/show.php`` - para renderizar
+individualmente o post do blog:
 
 .. code-block:: html+php
 
@@ -303,27 +305,27 @@ the individual blog post:
 
     <?php include 'layout.php' ?>
 
-Creating the second page is now very easy and no code is duplicated. Still,
-this page introduces even more lingering problems that a framework can solve
-for you. For example, a missing or invalid ``id`` query parameter will cause
-the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the ``mysql_real_escape_string()`` function, your
-entire database would be at risk for an SQL injection attack.
+Criar a segunda página foi bastante fácil e nenhum código foi duplicado. Ainda
+assim, essa página criou mais alguns problemas persistentes que um framework pode
+resolver para você. Por exemplo, se o parâmetro ``id`` não for informado, ou for
+inválido, a página irá quebrar. Seria mais interessante exibir uma página de erro
+404, mas isso ainda não pode ser feito de uma maneira fácil. Pior ainda, caso
+você esqueça de tratar o ``id`` utilizando a função ``mysql_real_escape_string()``,
+todo o seu banco de dados estará correndo o risco de sofrer ataques de SQL injection. 
 
-Another major problem is that each individual controller file must include
-the ``model.php`` file. What if each controller file suddenly needed to include
-an additional file or perform some other global task (e.g. enforce security)?
-As it stands now, that code would need to be added to every controller file.
-If you forget to include something in one file, hopefully it doesn't relate
-to security...
+Um problema ainda maior é que cada controller deve incluir o arquivo ``model.php``
+individualmente. O que acontece se cada controller, de repente, precisar incluir
+um arquivo adicional para executar alguma outra tarefa global (impor segurança,
+por exemplo)? Da maneira como está agora, esse código teria que ser adicionado em
+cada arquivo controller. Se você esquecer de incluir algo em algum arquivo
+espero que não seja algo relacionado a segurança...
 
-A "Front Controller" to the Rescue
-----------------------------------
+Um "Front Controller" para a salvação
+-------------------------------------
 
-The solution is to use a :term:`front controller`: a single PHP file through
-which *all* requests are processed. With a front controller, the URIs for the
-application change slightly, but start to become more flexible:
+A solução é utilizar um :term:`front controller`: um único arquivo PHP que irá
+processar *todas* as requisições. Com um front controller, as URIs vão mudar um
+pouco, mas começam a ficar mais flexíveis:
 
 .. code-block:: text
 
@@ -336,24 +338,24 @@ application change slightly, but start to become more flexible:
     /index.php/show     => Blog post show page (index.php executed)
 
 .. tip::
-    The ``index.php`` portion of the URI can be removed if using Apache
-    rewrite rules (or equivalent). In that case, the resulting URI of the
-    blog show page would be simply ``/show``.
+    O ``index.php`` pode ser removido da URI se você estiver utilizando regras
+    de rewrite no Apache (ou algo equivalente). Nesse caso, a URI resultante para
+    a página show será simplesmente ``/show``.
 
-When using a front controller, a single PHP file (``index.php`` in this case)
-renders *every* request. For the blog post show page, ``/index.php/show`` will
-actually execute the ``index.php`` file, which is now responsible for routing
-requests internally based on the full URI. As you'll see, a front controller
-is a very powerful tool.
+Ao utilizar um front controller, um único arquivo PHP (nesse caso o ``index.php``)
+irá renderizar *todas* as requisições. Para a página show do blog, o endereço ``/index.php/show``
+irá, na verdade, executar o arquivo ``index.php``, que agora é responsável por
+redirecionar as requisições internamente baseado na URI completa. Como você pode ver, 
+um front controller é uma ferramente bastante poderosa.
 
-Creating the Front Controller
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Criando o Front Controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You're about to take a **big** step with the application. With one file handling
-all requests, you can centralize things such as security handling, configuration
-loading, and routing. In this application, ``index.php`` must now be smart
-enough to render the blog post list page *or* the blog post show page based
-on the requested URI:
+Você está prestes a dar um **grande** passo com a sua aplicação. Com um arquivo
+para gerenciar todas as suas requisições, você pode centralizar coisas como segurança,
+configurações e roteamento. Nessa aplicação, o arquivo ``index.php`` deve ser esperto
+o suficiente para renderizar a página com a lista de posts *ou* a página com um único
+post baseado na URI da requisição:
 
 .. code-block:: html+php
 
@@ -375,8 +377,9 @@ on the requested URI:
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
-For organization, both controllers (formerly ``index.php`` and ``show.php``)
-are now PHP functions and each has been moved into a separate file, ``controllers.php``:
+Por questão de organização, ambos os controllers (os antigos arquivos ``index.php``
+e ``show.php``) agora são funções e cada uma foi movida para um arquivo separado,
+chamado ``controllers.php``:
 
 .. code-block:: php
 
@@ -392,41 +395,42 @@ are now PHP functions and each has been moved into a separate file, ``controller
         require 'templates/show.php';
     }
 
-As a front controller, ``index.php`` has taken on an entirely new role, one
-that includes loading the core libraries and routing the application so that
-one of the two controllers (the ``list_action()`` and ``show_action()``
-functions) is called. In reality, the front controller is beginning to look and
-act a lot like Symfony2's mechanism for handling and routing requests.
+Sendo um front controller, ``index.php`` agora tem um papel inteiramente novo, que
+inclui carregar as bibliotecas principais e rotear a aplicação de forma que um dos
+controllers (as funções ``list_action()`` e ``show_action()``) seja chamado. Na
+verdade, o front controller está começando a ficar bastante parecido com o mecanismo
+do Symfony2 utilizado para tratar e redirecionar as requisições:
 
 .. tip::
 
-   Another advantage of a front controller is flexible URLs. Notice that
-   the URL to the blog post show page could be changed from ``/show`` to ``/read``
-   by changing code in only one location. Before, an entire file needed to
-   be renamed. In Symfony2, URLs are even more flexible.
+   Uma outra vantagem do front controller é ter URLs flexíveis. Note que a URL para
+   a página que exibe um post no blog pode mudar de ``/show`` para ``/read``
+   alterando o código apenas em um único lugar. Antes, um arquivo teria que ser
+   renomeado. No Symfony2 as URLs podem ser ainda mais flexíveis.
 
-By now, the application has evolved from a single PHP file into a structure
-that is organized and allows for code reuse. You should be happier, but far
-from satisfied. For example, the "routing" system is fickle, and wouldn't
-recognize that the list page (``/index.php``) should be accessible also via ``/``
-(if Apache rewrite rules were added). Also, instead of developing the blog,
-a lot of time is being spent working on the "architecture" of the code (e.g.
-routing, calling controllers, templates, etc.). More time will need to be
-spent to handle form submissions, input validation, logging and security.
-Why should you have to reinvent solutions to all these routine problems?
+Até agora, a aplicação evoluiu de um único arquivo PHP para para uma estrutura
+organizada que permite a reutilização de código. Você deve estar mais feliz, mas
+longe de estar satisfeito. Por exemplo, o sistema de "roteamento" ainda não é
+consistente e não reconhece que a página de listagem (``index.php``) também pode
+ser acessada via ``/`` (se as regras de rewrite foram adicionadas no Apache). Além
+disso, em vez de desenvolver o blog, boa parte do tempo foi gasto trabalhando na
+"arquitetura" do código (por exemplo, roteamento, execução de controllers, templates
+etc). Mais tempo ainda será necessário para tratar o envio de formulários, validação
+das entradas, logs e segurança. Por que você tem que reinventar soluções para todos
+esses problemas?
 
-Add a Touch of Symfony2
-~~~~~~~~~~~~~~~~~~~~~~~
+Adicione um toque de Symfony2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.
+Symfony2 para a salvação. Antes de realmente utilizar o Symfony2, você precisa
+ter certeza que o PHP sabe onde encontrar as classes do framework. Isso pode ser
+feito com o autoloader fornecido pelo Symfony. Um autoloader é uma ferramenta que
+permite a utilização de classes PHP sem a necessidade de incluir os seus arquivos
+explicitamente.
 
-First, `download symfony`_ and place it into a ``vendor/symfony/`` directory.
-Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
-files in the application and to configure the autoloader:
+Primeiro, `faça o download do symfony`_ e o coloque no diretório ``vendor/symfony/``.
+A seguir, crie um o arquivo ``app/bootstrap.php``. Utilize-o para dar ``require`` 
+dos dois arquivos da aplicação e para configurar o autoloader:
 
 .. code-block:: html+php
 
@@ -443,16 +447,16 @@ files in the application and to configure the autoloader:
 
     $loader->register();
 
-This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
-the files that contain them.
+Esse código diz ao autoloader onde estão as classes do ``Symfony``. Com isso, você
+pode começar a utilizar as classes sem precisar de um ``require`` para os arquivos
+que as contém.
 
-Core to Symfony's philosophy is the idea that an application's main job is
-to interpret each request and return a response. To this end, Symfony2 provides
-both a :class:`Symfony\\Component\\HttpFoundation\\Request` and a
-:class:`Symfony\\Component\\HttpFoundation\\Response` class. These classes are
-object-oriented representations of the raw HTTP request being processed and
-the HTTP response being returned. Use them to improve the blog:
+Dentro da filosofia do Symfony está a idéia de que a principal tarefa de uma aplicação
+é interpretar cada requisição e retornar uma resposta. Para essa finalidade, o
+Symfony2 fornece as classes :class:`Symfony\\Component\\HttpFoundation\\Request` e
+:class:`Symfony\\Component\\HttpFoundation\\Response`. Elas são representações
+orientadas a objetos da requisição HTTP pura sendo processada e da resposta HTTP
+sendo retornada. Utilize-as para melhorar o blog:
 
 .. code-block:: html+php
 
@@ -478,9 +482,10 @@ the HTTP response being returned. Use them to improve the blog:
     // echo the headers and send the response
     $response->send();
 
-The controllers are now responsible for returning a ``Response`` object.
-To make this easier, you can add a new ``render_template()`` function, which,
-incidentally, acts quite a bit like the Symfony2 templating engine:
+Agora os controller são responsáveis por retornar um objeto ``Response``. Para 
+tornar isso mais fácil, você pode adicionar uma nova função chamada ``render_template()``,
+que, a propósito, funciona de forma um pouco parecida com o mecanismo de template
+do Symfony2:
 
 .. code-block:: php
 
@@ -514,30 +519,30 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
         return $html;
     }
 
-By bringing in a small part of Symfony2, the application is more flexible and
-reliable. The ``Request`` provides a dependable way to access information
-about the HTTP request. Specifically, the ``getPathInfo()`` method returns
-a cleaned URI (always returning ``/show`` and never ``/index.php/show``).
-So, even if the user goes to ``/index.php/show``, the application is intelligent
-enough to route the request through ``show_action()``.
+Ao adicionar uma pequena parte do Symfony2, a aplicação ficou mais flexível e
+confiável. A classe ``Request`` fornece uma maneira segura para acessar informações
+sobre a requisição HTTP. Especificamente, o método ``getPathInfo()`` retorna a URI
+limpa (sempre retornando ``/show`` e nunca ``/index.php/show``). Assim, mesmo que
+o usuário utilize ``/index.php/show``, a aplicação é inteligente o suficiente para
+direcionar a requisição para ``show_action()``.
 
-The ``Response`` object gives flexibility when constructing the HTTP response,
-allowing HTTP headers and content to be added via an object-oriented interface.
-And while the responses in this application are simple, this flexibility
-will pay dividends as your application grows.
+O objeto ``Response`` dá flexibilidade ao construir a resposta HTTP, permitindo a
+adição de cabeçalhos HTTP e conteúdo através de um interface orientada a objetos.
+Apesar das respostas nessa aplicação ainda serem simples, essa flexibilidade será
+útil conforme a aplicação crescer.
 
-The Sample Application in Symfony2
+A aplicação de exemplo no Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, we've also invented a simple routing
-system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
-templates. If, for some reason, you needed to continue building this "framework"
-from scratch, you could at least use Symfony's standalone `Routing`_ and
-`Templating`_ components, which already solve these problems.
+O blog já passou por um *longo* caminho, mas ele ainda tem muito código para uma aplicação
+tão simples. Por esse caminho, nós também inventamos um simples sistema de roteamento
+e um método utilizando ``ob_start()`` e ``ob_get_clean()`` para renderiar templates.
+Se, por alguma razão, você precisasse continuar a construir esse "framework" do zero,
+você poderia pelo menos utilizar isoladamente os components `Routing`_ e `Templating`_
+do Symfony, que já resolveriam esses problemas.
 
-Instead of re-solving common problems, you can let Symfony2 take care of
-them for you. Here's the same sample application, now built in Symfony2:
+Em vez de re-resolver problemas comuns, você pode deixar que o Symfony2 cuide deles
+pra você. Aqui está um exemplo da mesma aplicação, agora feito com o Symfony2:
 
 .. code-block:: html+php
 
@@ -574,10 +579,10 @@ them for you. Here's the same sample application, now built in Symfony2:
         }
     }
 
-The two controllers are still lightweight. Each uses the Doctrine ORM library
-to retrieve objects from the database and the ``Templating`` component to
-render a template and return a ``Response`` object. The list template is
-now quite a bit simpler:
+Os dois controller ainda estão bastante leves. Cada um utiliza a biblioteca de ORM
+Doctrine para recuperar objetos do banco de dados e o componente ``Templating``
+para renderizar e retornar um objeto `Response`. O template list ficou um pouco
+mais simples:
 
 .. code-block:: html+php
 
@@ -597,7 +602,7 @@ now quite a bit simpler:
         <?php endforeach; ?>
     </ul>
 
-The layout is nearly identical:
+O layout está praticamente idêntico:
 
 .. code-block:: html+php
 
@@ -613,12 +618,12 @@ The layout is nearly identical:
 
 .. note::
 
-    We'll leave the show template as an exercise, as it should be trivial to
-    create based on the list template.
+    Vamos deixar o template da página show como um exercício para você, uma vez
+    que é trivial cria-lo com base no template da página list
 
-When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
-that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format:
+Quando o mecanismo do Symfony2 (chamado de ``Kernel``) é iniciado, ele precisa de
+um mapa que indique quais controllers devem ser executados de acordo com a requisição.
+A configuração de roteamento contém essa informação em um formato legível:
 
 .. code-block:: yaml
 
@@ -631,10 +636,10 @@ A routing configuration map provides this information in a readable format:
         pattern:  /blog/show/{id}
         defaults: { _controller: AcmeBlogBundle:Blog:show }
 
-Now that Symfony2 is handling all the mundane tasks, the front controller
-is dead simple. And since it does so little, you'll never have to touch
-it once it's created (and if you use a Symfony2 distribution, you won't
-even need to create it!):
+Agora que o Symfony2 está cuidando dessas tarefas simples, o front controller
+ficou extremamente simples. Uma vez que ele faz tão pouco, você nunca mais terá
+que mexer nele depois de criado (e se você estiver utilizando uma distribuição do
+Symfony2, você nem mesmo precisará cria-lo!):
 
 .. code-block:: html+php
 
@@ -648,53 +653,53 @@ even need to create it!):
     $kernel = new AppKernel('prod', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
-The front controller's only job is to initialize Symfony2's engine (``Kernel``)
-and pass it a ``Request`` object to handle. Symfony2's core then uses the
-routing map to determine which controller to call. Just like before, the
-controller method is responsible for returning the final ``Response`` object.
-There's really not much else to it.
+A única tarefa do front controller é iniciar o mecanismo (``Kernel``) do Symfony2
+e passar para ele o objeto ``Request`` que deve ser manuseado. Então o Symfony
+utiliza o mapa de rotas para determinar qual controller chamar. Assim como antes,
+o método controller é responsável por retornar o objeto ``Response``. Não há muito
+mais que ele precise fazer. 
 
-For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+Para uma representação visual de como o Symfony2 trata cada requisição, veja o
+:ref:`diagrama de fluxo da requisição<request-flow-figure>`.
 
-Where Symfony2 Delivers
-~~~~~~~~~~~~~~~~~~~~~~~
+Onde é vantagem utilizar o Symfony2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and the recommended organization of a project. For now, let's see how
-migrating the blog from flat PHP to Symfony2 has improved life:
+Nos próximos capítulos você irá aprender mais sobre cada parte do Symfony funciona
+e a organização recomendada para um projeto. Por enquanto, vamos ver como a
+migração do PHP puro para o Symfony2 facilitou a sua vida:
 
-* Your application now has **clear and consistently organized code** (though
-  Symfony doesn't force you into this). This promotes **reusability** and
-  allows for new developers to be productive in your project more quickly.
+* A sua aplicação agora tem um **código limpo e organizado de forma consistente**
+  apesar do Symfony não te forçar a isso). Isso aumenta a **usabilidade** e permite
+  que novos desenvolvedores sejam produtivos no seu projeto de uma maneira mais rápida.
 
-* 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`.
+* 100% do código que você escreveu é para a *sua* aplicação. Você **não precisa
+  desenvolver ou manter ferramentas de baixo nível** como :ref:`autoloading<autoloading-introduction-sidebar>`,
+  :doc:`roteamento</book/routing>`, ou renderização nos :doc:`controllers</book/controller>`.
 
-* Symfony2 gives you **access to open source tools** such as Doctrine and the
-  Templating, Security, Form, Validation and Translation components (to name
-  a few).
+* O Symfony2 te dá **acesso a ferramentas open source** como Doctrine e os 
+  componentes Templating, Security, Form, Validation e Translation (só para citar
+  alguns).
 
-* The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
-  component.
+* A aplicação agora faz uso de **URLs totalmente flexíveis** graças ao componente
+  ``Routing``.
 
-* Symfony2's HTTP-centric architecture gives you access to powerful tools
-  such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
-  more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching</book/http_cache>`.
+* A arquitetura do Symfony2 centrada no HTTP te dá acesso a poderosas ferramentas 
+  como **HTTP caching** feito pelo **cache interno de HTTP do Symfony2** ou por 
+  ferramentas ainda mais poderosas como o ``Varnish`_. Esse assunto será tratado
+  em um próximo capítulo sobre :doc:`caching</book/http_cache>`.
 
-And perhaps best of all, by using Symfony2, you now have access to a whole
-set of **high-quality open source tools developed by the Symfony2 community**!
-For more information, check out `Symfony2Bundles.org`_
+E talvez o melhor de tudo, ao utilizar o Symfony2, você tem acesso a todo um conjunto
+de **ferramentas open source de alta qualidade desenvolvidas pela comunidade do 
+Symfony2**! Para mais informações, visite o site `Symfony2Bundles.org`_
 
-Better templates
-----------------
+Melhores templates
+------------------
 
-If you choose to use it, Symfony2 comes standard with a templating engine
-called `Twig`_ that makes templates faster to write and easier to read.
-It means that the sample application could contain even less code! Take,
-for example, the list template written in Twig:
+Se você optar por utiliza-lo, o Symfony2 vem com um sistema de template padrão
+chamado `Twig`_ que torna mais fácil a tarefa de escrever templates e os deixa
+mais fácil de ler. Isso significa que a aplicação de exemplo pode ter ainda menos
+código! Pegue como exemplo o template list escrito com o Twig:
 
 .. code-block:: html+jinja
 
@@ -716,7 +721,7 @@ for example, the list template written in Twig:
         </ul>
     {% endblock %}
 
-The corresponding ``layout.html.twig`` template is also easier to write:
+O template ``layout.html.twig`` correspondente também fica mais fácil de escrever:
 
 .. code-block:: html+jinja
 
@@ -731,18 +736,18 @@ The corresponding ``layout.html.twig`` template is also easier to write:
         </body>
     </html>
 
-Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we'll continue to discuss the many advantages of
-Twig. For more information, see the :doc:`templating chapter</book/templating>`.
+O Twig é bem suportado no Symfony2. E, mesmo que os templates em PHP sempre serão
+suportados pelo framework, continuaremos a discutir sobre as muitas vantagens do
+Twig. Para mais informações, veja o :doc:`capítulo sobre templates</book/templating>`.
 
-Learn more from the Cookbook
-----------------------------
+Aprenda mais no Cookbook
+------------------------
 
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download symfony`: http://symfony.com/download
+.. _`faça o download do symfony`: http://symfony.com/download
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
