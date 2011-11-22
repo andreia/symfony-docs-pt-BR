@@ -1,62 +1,63 @@
 .. index::
    single: Symfony2 Fundamentals
 
-Symfony2 and HTTP Fundamentals
-==============================
+Fundamentos de Symfony e HTTP
+=============================
 
-Congratulations! By learning about Symfony2, you're well on your way towards
-being a more *productive*, *well-rounded* and *popular* web developer (actually,
-you're on your own for the last part). Symfony2 is built to get back to
-basics: to develop tools that let you develop faster and build more robust
-applications, while staying out of your way. Symfony is built on the best
-ideas from many technologies: the tools and concepts you're about to learn
-represent the efforts of thousands of people, over many years. In other words,
-you're not just learning "Symfony", you're learning the fundamentals of the
-web, development best practices, and how to use many amazing new PHP libraries,
-inside or independent of Symfony2. So, get ready.
+Parabéns! Aprendendo sobre o Symfony2, você está no caminho certo para ser um 
+desenvolvedor web mais *produtivo*, *bem preparado* e *popular* (na verdade, 
+este último é por sua própria conta). O Symfony2 foi criado para voltar ao básico: 
+desenvolver ferramentas para ajuda-lo a criar aplicações mais robustas de 
+uma maneira mais rápida sem ficar no seu caminho. Ele foi construído baseando-se  
+nas melhores ideias de diversas tecnologias: as ferramentas e conceitos que você 
+está prestes a aprender representam o esforço de milhares de pessoas, realizado 
+durante muitos anos. Em outras palavras, você não está apenas aprendendo o "Symfony", 
+você está aprendendo os fundamentos da web, boas práticas de desenvolvimento e 
+como usar diversas biblotecas PHP impressionantes, dentro e fora do Symfony2. Então, 
+prepare-se.
 
-True to the Symfony2 philosophy, this chapter begins by explaining the fundamental
-concept common to web development: HTTP. Regardless of your background or
-preferred programming language, this chapter is a **must-read** for everyone.
+Seguindo a filosofia do Symfony2, este capítulo começa explicando o conceito fundamental 
+para o desenvolvimento web: o HTTP. Independente do seu conhecimento anterior ou 
+linguagem de programação preferida, esse capítulo é uma **leitura obrigatória** 
+para todos.
 
-HTTP is Simple
+HTTP é simples
 --------------
 
-HTTP (Hypertext Transfer Protocol to the geeks) is a text language that allows
-two machines to communicate with each other. That's it! For example, when
-checking for the latest `xkcd`_ comic, the following (approximate) conversation
-takes place:
+HTTP (Hypertext Transfer Protocol, para os geeks) é uma linguagem textual que 
+permite que duas máquinas se comuniquem entre si. É só isso! Por exemplo, quando 
+você vai ler a última tirinha do `xkcd`_, acontece mais ou menos a seguinte conversa:
 
 .. image:: /images/http-xkcd.png
    :align: center
 
-And while the actual language used is a bit more formal, it's still dead-simple.
-HTTP is the term used to describe this simple text-based language. And no
-matter how you develop on the web, the goal of your server is *always* to
-understand simple text requests, and return simple text responses.
+Apesar da linguagem real ser um pouco mais formal, ainda assim ela é bastante simples. 
+HTTP é o termo usado para descrever essa linguagem simples baseada em texto. Não 
+importa como você desenvolva para a web, o objetivo do seu servidor *sempre* será 
+entender simples requisições de texto e enviar simples respostas de texto.
 
-Symfony2 is built from the ground-up around that reality. Whether you realize
-it or not, HTTP is something you use everyday. With Symfony2, you'll learn
-how to master it.
+O Symfony2 foi criado fundamentado nessa realidade. Você pode até não perceber,
+mas o HTTP é algo que você utilizada todos os dias. Com o Symfony2 você irá
+aprender a domina-lo.
 
 .. index::
    single: HTTP; Request-response paradigm
 
-Step1: The Client sends a Request
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Primeiro Passo: O Cliente envia uma Requisição
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Every conversation on the web starts with a *request*. The request is a text
-message created by a client (e.g. a browser, an iPhone app, etc) in a
-special format known as HTTP. The client sends that request to a server,
-and then waits for the response.
+Toda comunicação na web começa com uma *requisição*. Ela é uma mensagem de texto 
+criada por um cliente (por exemplo, um navegador, um app para iPhone etc) em um 
+formato especial conhecido como HTTP. O cliente envia essa requisição para um
+servidor e, então, espera pela resposta.
 
-Take a look at the first part of the interaction (the request) between a
-browser and the xkcd web server:
+Veja a primeira parte da interação (a requisição) entre um navegador e o servidor
+web do xkcd:
 
 .. image:: /images/http-xkcd-request.png
    :align: center
 
-In HTTP-speak, this HTTP request would actually look something like this:
+No linguajar do HTTP, essa requisição se parece com isso:
 
 .. code-block:: text
 
@@ -65,28 +66,27 @@ In HTTP-speak, this HTTP request would actually look something like this:
     Accept: text/html
     User-Agent: Mozilla/5.0 (Macintosh)
 
-This simple message communicates *everything* necessary about exactly which
-resource the client is requesting. The first line of an HTTP request is the
-most important and contains two things: the URI and the HTTP method.
+Essa simples mensagem comunica *tudo* o que é necessário sobre o recurso exato
+que o cliente está requisitando. A primeira linha de uma requisição HTTP é a mais
+importante e contém duas coisas: a URI e o método HTTP.
 
-The URI (e.g. ``/``, ``/contact``, etc) is the unique address or location
-that identifies the resource the client wants. The HTTP method (e.g. ``GET``)
-defines what you want to *do* with the resource. The HTTP methods are the
-*verbs* of the request and define the few common ways that you can act upon
-the resource:
+A URI (por exemplo, ``/``, ``/contact`` etc) é um endereço único ou localização que
+identifica o recurso que o cliente quer. O método HTTP (por exemplo, ``GET``)
+define o que você quer *fazer* com o recurso. Os métodos HTTP são os *verbos* da
+requisição e definem algumas maneiras comuns de agir em relação ao recurso:
 
 +----------+---------------------------------------+
-| *GET*    | Retrieve the resource from the server |
+| *GET*    | Recupera o recurso do servidor        |
 +----------+---------------------------------------+
-| *POST*   | Create a resource on the server       |
+| *POST*   | Cria um recurso no servidor           |
 +----------+---------------------------------------+
-| *PUT*    | Update the resource on the server     |
+| *PUT*    | Atualiza um recurso no servidor       |
 +----------+---------------------------------------+
-| *DELETE* | Delete the resource from the server   |
+| *DELETE* | Exclui um recurso do servidor         |
 +----------+---------------------------------------+
 
-With this in mind, you can imagine what an HTTP request might look like to
-delete a specific blog entry, for example:
+Tendo isso em mente, você pode imaginar como seria uma requisição HTTP para excluir
+uma postagem específica de um blog, por exemplo:
 
 .. code-block:: text
 
@@ -94,31 +94,31 @@ delete a specific blog entry, for example:
 
 .. note::
 
-    There are actually nine HTTP methods defined by the HTTP specification,
-    but many of them are not widely used or supported. In reality, many modern
-    browsers don't support the ``PUT`` and ``DELETE`` methods.
+    Existem na verdade nove métodos definidos pela especificação HTTP, mas 
+    a maioria deles não são muito utilizados ou suportados. Na realidade, muitos dos 
+    navegadores modernos não suportam os métodos ``PUT`` e ``DELETE``.
 
-In addition to the first line, an HTTP request invariably contains other
-lines of information called request headers. The headers can supply a wide
-range of information such as the requested ``Host``, the response formats
-the client accepts (``Accept``) and the application the client is using to
-make the request (``User-Agent``). Many other headers exist and can be found
-on Wikipedia's `List of HTTP header fields`_ article.
+Além da primeira linha, uma requisição HTTP invariavelmente contém outras linhas
+de informação chamadas de cabeçalhos da requisição. Os cabeçalhos podem fornecer
+uma vasta quantidade de informações, tais como o ``Host`` que foi requisitado, os
+formatos de resposta que o cliente aceita (``Accept``) e a aplicação que o
+cliente está utilizando para enviar a requisição (``User-Agent``). Muitos outros
+cabeçalhos existem e podem ser encontrados na Wikipedia, no artigo 
+`List of HTTP header fields`_
 
-Step 2: The Server returns a Response
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Segundo Passo: O Servidor envia uma resposta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once a server has received the request, it knows exactly which resource the
-client needs (via the URI) and what the client wants to do with that resource
-(via the method). For example, in the case of a GET request, the server
-prepares the resource and returns it in an HTTP response. Consider the response
-from the xkcd web server:
+Uma vez que o servidor recebeu uma requisição, ele sabe exatamente qual recurso
+o cliente precisa (através do URI) e o que o cliente quer fazer com ele (através
+do método). Por exemplo, no caso de uma requisição GET, o servidor prepara o
+o recurso e o retorna em uma resposta HTTP. Considere a resposta do servidor web
+do xkcd:
 
 .. image:: /images/http-xkcd.png
    :align: center
 
-Translated into HTTP, the response sent back to the browser will look something
-like this: 
+Traduzindo para HTTP, a resposta enviada para o navegador será algo como:
 
 .. code-block:: text
 
@@ -131,53 +131,56 @@ like this:
       <!-- HTML for the xkcd comic -->
     </html>
 
-The HTTP response contains the requested resource (the HTML content in this
-case), as well as other information about the response. The first line is
-especially important and contains the HTTP response status code (200 in this
-case). The status code communicates the overall outcome of the request back
-to the client. Was the request successful? Was there an error? Different
-status codes exist that indicate success, an error, or that the client needs
-to do something (e.g. redirect to another page). A full list can be found
-on Wikipedia's `List of HTTP status codes`_ article.
+A resposta HTTP contém o recurso requisitado (nesse caso, o conteúdo HTML), bem
+como outras informações. A primeira linha é especialmente importante e contém o
+código de status da resposta HTTP (nesse caso, 200). Esse código de status é uma 
+representação geral da resposta enviada à requisição do cliente. A requisição
+foi bem sucedida? Ocorreu algum erro? Existem diferentes códigos de status para
+indentificar sucesso, um erro, ou que o cliente precisa fazer alguma coisa (por
+exemplo, redirecionar para outra página). Uma lista completa pode ser encontrada
+na Wikipedia, no artigo `List of HTTP status codes`_.
 
-Like the request, an HTTP response contains additional pieces of information
-known as HTTP headers. For example, one important HTTP response header is
-``Content-Type``. The body of the same resource could be returned in multiple
-different formats including HTML, XML, or JSON to name a few. The ``Content-Type``
-header tells the client which format is being returned.
+Assim como uma requisição, uma resposta HTTP também contém informações adicionais
+conhecidas como cabeçalhos HTTP. Por exemplo, um cabeçalho importante nas respostas
+HTTP é o ``Content-Type``. O conteúdo de um mesmo recurso pode ser retornado em
+vários formatos diferentes, incluindo HTML, XML ou JSON, só para citar alguns. 
+O cabeçalho ``Content-Type`` diz ao cliente qual é o formato que está sendo 
+retornado.
 
-Many other headers exist, some of which are very powerful. For example, certain
-headers can be used to create a powerful caching system.
+Existem diversos outros cabeçalhos, alguns deles bastante poderosos. Certos
+cabeçalhos, por exemplo, podem ser utilizados para criar um poderoso sistema de 
+cache.
 
-Requests, Responses and Web Development
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Requisições, Respostas e o Desenvolvimento Web
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This request-response conversation is the fundamental process that drives all
-communication on the web. And as important and powerful as this process is,
-it's inescapably simple.
+Essa conversação de requisição-resposta é o processo fundamental que dirige toda a
+comunicação na web. Apesar de tão importante e poderoso esse processo, ainda assim,
+é inevitavelmente simples.
 
-The most important fact is this: regardless of the language you use, the
-type of application you build (web, mobile, JSON API), or the development
-philosophy you follow, the end goal of an application is **always** to understand
-each request and create and return the appropriate response.
+O fato mais importante é: independente da linguagem que você utiliza, o tipo de
+aplicação que você desenvolva (web, mobile, API em JSON) ou a filosofia de
+desenvolvimento que você segue, o objetivo final da aplicação **sempre** será 
+entender cada requisição e criar e enviar uma resposta apropriada.
 
-Symfony is architected to match this reality.
+O Symfony foi arquitetado para atender essa realidade.
 
 .. tip::
 
-    To learn more about the HTTP specification, read the original `HTTP 1.1 RFC`_
-    or the `HTTP Bis`_, which is an active effort to clarify the original
-    specification. A great tool to check both the request and response headers
-    while browsing is the `Live HTTP Headers`_ extension for Firefox.
+    Para aprender mais sobre a especificação HTTP, leia o original `HTTP 1.1 RFC`_
+    ou `HTTP Bis`_, que trata-se de um esforço para facilitar o entendimento da
+    especificação original. Para verificar as requisições e respostas enviadas
+    enquanto navega em um site, você pode utilizar a extensão do Firefox chamada
+    `Live HTTP Headers`_.
 
 .. index::
    single: Symfony2 Fundamentals; Requests and responses
 
-Requests and Responses in PHP
------------------------------
+Requisições e Respostas no PHP
+------------------------------
 
-So how do you interact with the "request" and create a "response" when using
-PHP? In reality, PHP abstracts you a bit from the whole process:
+Como interagir com a "requisição" e criar uma "resposta" utilizando o PHP? Na 
+verdade, o PHP abstrai um pouco desse processo:
 
 .. code-block:: php
 
@@ -189,14 +192,14 @@ PHP? In reality, PHP abstracts you a bit from the whole process:
     echo 'The URI requested is: '.$uri;
     echo 'The value of the "foo" parameter is: '.$foo;
 
-As strange as it sounds, this small application is in fact taking information
-from the HTTP request and using it to create an HTTP response. Instead of
-parsing the raw HTTP request message, PHP prepares superglobal variables
-such as ``$_SERVER`` and ``$_GET`` that contain all the information from
-the request. Similarly, instead of returning the HTTP-formatted text response,
-you can use the ``header()`` function to create response headers and simply
-print out the actual content that will be the content portion of the response
-message. PHP will create a true HTTP response and return it to the client:
+Por mais estranho que possa parecer, essa pequena aplicação, de fato, lê
+informações da requisição HTTP e a está utilizando para criar um resposta HTTP. Em 
+vez de interpretar a requisição pura, o PHP prepara algumas variáveis superglobais
+, tais como ``$_SERVER`` e ``$_GET``, que contém toda a informação da requisição.
+Da mesma forma, em vez de retornar o texto da resposta no formato do HTTP, você
+pode utilizar a função ``header()`` para criar os cabeçalhos e simplesmente 
+imprimir o que será o conteúdo da mensagem da reposta. O PHP irá criar uma 
+reposta HTTP verdadeira que será retornada para o cliente.
 
 .. code-block:: text
 
@@ -208,14 +211,14 @@ message. PHP will create a true HTTP response and return it to the client:
     The URI requested is: /testing?foo=symfony
     The value of the "foo" parameter is: symfony
 
-Requests and Responses in Symfony
----------------------------------
+Requisições e Respostas no Symfony
+----------------------------------
 
-Symfony provides an alternative to the raw PHP approach via two classes that
-allow you to interact with the HTTP request and response in an easier way.
-The :class:`Symfony\\Component\\HttpFoundation\\Request` class is a simple
-object-oriented representation of the HTTP request message. With it, you
-have all the request information at your fingertips::
+O Symfony fornece uma alternativa à abordagem feita com o PHP puro, utilizando 
+duas classes que permitem a interação com as requisições e respostas HTTP de uma
+maneira mais fácil. A classe :class:`Symfony\\Component\\HttpFoundation\\Request` 
+é uma simples representação orientada a objetos de uma requisição HTTP. Com ela,
+você tem todas as informações da requisição nas pontas dos dedos::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -234,14 +237,14 @@ have all the request information at your fingertips::
     $request->getMethod();          // GET, POST, PUT, DELETE, HEAD
     $request->getLanguages();       // an array of languages the client accepts
 
-As a bonus, the ``Request`` class does a lot of work in the background that
-you'll never need to worry about. For example, the ``isSecure()`` method
-checks the *three* different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. ``https``).
+Como um bônus, a classe ``Request`` faz um monte de trabalho com o qual você
+nunca precisará se preocupar. Por exemplo, o método ``isSecure()`` verifica os
+três valores diferentes que o PHP utiliza para indicar ser o usuário está
+utilizando uma conexão segura (``https``, por exemplo).
 
-Symfony also provides a ``Response`` class: a simple PHP representation of
-an HTTP response message. This allows your application to use an object-oriented
-interface to construct the response that needs to be returned to the client::
+O Symfony também fornece a classe ``Response``: uma simples representação em PHP de
+uma resposta HTTP. Assim é possível que sua aplicação utilize uma interface
+orientada a objetos para construir a resposta que precisa ser enviada ao cliente::
 
     use Symfony\Component\HttpFoundation\Response;
     $response = new Response();
@@ -253,39 +256,40 @@ interface to construct the response that needs to be returned to the client::
     // prints the HTTP headers followed by the content
     $response->send();
 
-If Symfony offered nothing else, you would already have a toolkit for easily
-accessing request information and an object-oriented interface for creating
-the response. Even as you learn the many powerful features in Symfony, keep
-in mind that the goal of your application is always *to interpret a request
-and create the appropriate response based on your application logic*.
+Com tudo isso, mesmo que o Symfony não oferecesse mais nada, você já teria um kit de
+ferramentas para facilmente acessar informações sobre a requisição e uma interface 
+orientada a objetos para criar a resposta. Mesmo depois de aprender muitos dos
+poderosos recursos do Symfony, tenha em mente que o objetivo da sua aplicação 
+sempre será *interpretar uma requisição e criar a resposta apropriada baseada na 
+lógica da sua aplicação*.
 
 .. tip::
 
-    The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
-    used entirely independent of Symfony and also provides classes for handling
-    sessions and file uploads.
+    As classes ``Request`` e ``Response`` fazem parte de um componente do Symfony 
+    chamado ``HttpFoundation``. Esse componente pode ser utilizado de forma
+    independente ao framework e também possui classes para tratar sessões e 
+    upload de arquivos.
 
-The Journey from the Request to the Response
---------------------------------------------
+A Jornada da Requisição até a Resposta
+--------------------------------------
 
-Like HTTP itself, the ``Request`` and ``Response`` objects are pretty simple.
-The hard part of building an application is writing what comes in between.
-In other words, the real work comes in writing the code that interprets the
-request information and creates the response.
+Como o próprio HTTP, os objetos ``Request`` e ``Response`` são bastante simples.
+A parte difícil de se construir uma aplicação é escrever o que acontece entre eles.
+Em outras palavras, o trabalho de verdade é escrever o código que interpreta a
+a requisição e cria a resposta.
 
-Your application probably does many things, like sending emails, handling
-form submissions, saving things to a database, rendering HTML pages and protecting
-content with security. How can you manage all of this and still keep your
-code organized and maintainable?
+A sua aplicação provavelmente faz muitas coisas como enviar emails, tratar do
+envio de formulários, salvar coisas no banco de dados, renderizar páginas HTML e
+proteger o conteúdo com segurança. Como cuidar de tudo isso e ainda ter um código
+organizado e de fácil manutenção?
 
-Symfony was created to solve these problems so that you don't have to.
+O Symfony foi criado para que ele resolva esses problemas, não você.
 
-The Front Controller
+O Front Controller
 ~~~~~~~~~~~~~~~~~~~~
 
-Traditionally, applications were built so that each "page" of a site was
-its own physical file:
+Tradicionalmente, aplicações são construídas para que cada página do site seja
+um arquivo físico:
 
 .. code-block:: text
 
@@ -293,42 +297,42 @@ its own physical file:
     contact.php
     blog.php
 
-There are several problems with this approach, including the inflexibility
-of the URLs (what if you wanted to change ``blog.php`` to ``news.php`` without
-breaking all of your links?) and the fact that each file *must* manually
-include some set of core files so that security, database connections and
-the "look" of the site can remain consistent.
+Existem diversos problemas para essa abordagem, incluindo a falta de flexibilidade
+das URLs (e se você quiser mudar o arquivo ``blog.php`` para ``news.php`` sem
+quebrar todos os seus links?) e o fato de que cada arquivo *deve* ser alterado
+manualmente para incluir um certo conjunto de arquivos essenciais de forma que a 
+segurança, conexões com banco de dados e a "aparência" do site continue consistente.
 
-A much better solution is to use a :term:`front controller`: a single PHP
-file that handles every request coming into your application. For example:
+Uma solução muito melhor é utilizar um :term:`front controller`: um único arquivo
+PHP que trata todas as requisições enviadas para a sua aplicação. Por exemplo:
 
 +------------------------+------------------------+
-| ``/index.php``         | executes ``index.php`` |
+| ``/index.php``         | executa  ``index.php`` |
 +------------------------+------------------------+
-| ``/index.php/contact`` | executes ``index.php`` |
+| ``/index.php/contact`` | executa  ``index.php`` |
 +------------------------+------------------------+
-| ``/index.php/blog``    | executes ``index.php`` |
+| ``/index.php/blog``    | executa  ``index.php`` |
 +------------------------+------------------------+
 
 .. tip::
 
-    Using Apache's ``mod_rewrite`` (or equivalent with other web servers),
-    the URLs can easily be cleaned up to be just ``/``, ``/contact`` and
-    ``/blog``.
+    Utilizando o ``mod_rewrite`` do Apache (ou o equivalente em outros servidores 
+    web), as URLs podem ser simplificadas facilmente para ser somente ``/``, ``/contact``
+    e ``/blog``.
 
-Now, every request is handled exactly the same. Instead of individual URLs
-executing different PHP files, the front controller is *always* executed,
-and the routing of different URLs to different parts of your application
-is done internally. This solves both problems with the original approach.
-Almost all modern web apps do this - including apps like WordPress.
+Agora, cada requisição é tratada exatamente do mesmo jeito. Em vez de arquivos
+PHP individuais para executar cada URL, o front controller *sempre* será executado,
+e o roteamento de cada URL para diferentes partes da sua aplicação é feito internamente.
+Assim resolve-se os dois problemas da abordagem original. Quase todas as aplicações
+modernas fazem isso - incluindo apps como o Wordpress.
 
-Stay Organized
-~~~~~~~~~~~~~~
+Mantenha-se Organizado
+~~~~~~~~~~~~~~~~~~~~~~
 
-But inside your front controller, how do you know which page should
-be rendered and how can you render each in a sane way? One way or another, you'll need to
-check the incoming URI and execute different parts of your code depending
-on that value. This can get ugly quickly:
+Dentro do front controller, como você sabe qual página deve ser renderizada e como 
+renderiza-las de uma maneira sensata? De um jeito ou de outro, você precisará 
+verificar a URI requisitada e executar partes diferentes do seu código dependendo 
+do seu valor. Isso pode acabar ficando feio bem rápido:
 
 .. code-block:: php
 
@@ -346,14 +350,14 @@ on that value. This can get ugly quickly:
     }
     $response->send();
 
-Solving this problem can be difficult. Fortunately it's *exactly* what Symfony
-is designed to do.
+Resolver esse problema pode ser difícil. Felizmente é *exatamente* o que o Symfony
+foi projetado para fazer.
 
-The Symfony Application Flow
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+O Fluxo de uma Aplicação Symfony
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you let Symfony handle each request, life is much easier. Symfony follows
-the same simple pattern for every request:
+Quando você deixa que o Symfony cuide de cada requisição, sua vida fica muito mais
+fácil. O framework segue um simples padrão para toda requisição:
 
 .. _request-flow-figure:
 
@@ -361,32 +365,32 @@ the same simple pattern for every request:
    :align: center
    :alt: Symfony2 request flow
 
-   Incoming requests are interpreted by the routing and passed to controller
-   functions that return ``Response`` objects.
+   As requisições recebidas são interpretadas pelo roteamento e passadas para as 
+   funções controller que retornam objetos do tipo ``Response``.
 
-Each "page" of your site is defined in a routing configuration file that
-maps different URLs to different PHP functions. The job of each PHP function,
-called a :term:`controller`, is to use information from the request - along
-with many other tools Symfony makes available - to create and return a ``Response``
-object. In other words, the controller is where *your* code goes: it's where
-you interpret the request and create a response.
+Cada "página" do seu site é definida no arquivo de configuração de roteamento que
+mapeia diferentes URLs para diferentes funções PHP. O trabalho de cada função, 
+chamadas de :term:`controller`, é usar a informação da requisição - junto com
+diversas outras ferramentas disponíveis no Symfony - para criar e retornar um 
+objeto ``Response``. Em outras palavras, o *seu* código deve estar nas funções controller: 
+lá é onde você interpreta a requisição e cria uma resposta.
 
-It's that easy! Let's review:
+É fácil! Vamos fazer uma revisão:
 
-* Each request executes a front controller file;
+* Cada requisição executa um arquivo front controller;
 
-* The routing system determines which PHP function should be executed based
-  on information from the request and routing configuration you've created;
+* O sistema de roteamento determina qual função PHP deve ser executada, baseado
+  na informação da requisição e na configuração de roteamento que você criou;
 
-* The correct PHP function is executed, where your code creates and returns
-  the appropriate ``Response`` object.
+* A função PHP correta é executada, onde o seu código cria e retorna o objeto 
+  ``Response`` apropriado.
 
-A Symfony Request in Action
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Uma Requisição Symfony em Ação
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Without diving into too much detail, let's see this process in action. Suppose
-you want to add a ``/contact`` page to your Symfony application. First, start
-by adding an entry for ``/contact`` to your routing configuration file:
+Sem entrar em muitos detalhes, vamos ver esse processo em ação. Suponha que
+você quer adicionar a página ``/contact`` na sua aplicação Symfony. Primeiro, 
+adicione uma entrada para ``/contact`` no seu arquivo de configuração de roteamento:
 
 .. code-block:: yaml
 
@@ -396,14 +400,14 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</reference/YAML>` to define the routing configuration.
-   Routing configuration can also be written in other formats such as XML
-   or PHP.
+   Esse exemplo utiliza :doc:`YAML</reference/YAML>` para definir a configuração de
+   roteamento. Essa configuração também pode ser escrita em outros formatos, tais
+   como XML ou PHP.
 
-When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
-the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
-specific PHP method ``contactAction`` inside a class called ``MainController``:
+Quando alguém visitar a página ``/contact``, essa rota será encontrada e o
+controller específico será executado. Como você irá aprender no :doc:`capítulo sobre roteamento</book/routing>`,
+a string ``AcmeDemoBundle:Main:contact`` é uma sintaxe encurtada para apontar para
+o método ``contactAction`` dentro de uma classe chamada ``MainController``:
 
 .. code-block:: php
 
@@ -415,90 +419,92 @@ specific PHP method ``contactAction`` inside a class called ``MainController``:
         }
     }
 
-In this very simple example, the controller simply creates a ``Response``
-object with the HTML "<h1>Contact us!</h1>". In the :doc:`controller chapter</book/controller>`,
-you'll learn how a controller can render templates, allowing your "presentation"
-code (i.e. anything that actually writes out HTML) to live in a separate
-template file. This frees up the controller to worry only about the hard
-stuff: interacting with the database, handling submitted data, or sending
-email messages. 
+Nesse exemplo extremamente simples, o controller simplesmente cria um objeto
+``Response`` com o HTML "<h1>Contact us!</h1>". No :doc:`capítulo sobre controller</book/controller>`,
+você irá aprender como um controller pode renderizar templates, fazendo com que o seu código de 
+"apresentação" (por exemplo, qualquer coisa que gere HTML) fique em um arquivo de
+template separado. Assim deixamos o controller livre para se preocupar apenas com
+a parte complicada: interagir com o banco de dados, tratar os dados enviados ou
+enviar emails.
 
-Symfony2: Build your App, not your Tools.
------------------------------------------
+Symfony2: Construa sua aplicação, não suas Ferramentas
+------------------------------------------------------
 
-You now know that the goal of any app is to interpret each incoming request
-and create an appropriate response. As an application grows, it becomes more
-difficult to keep your code organized and maintainable. Invariably, the same
-complex tasks keep coming up over and over again: persisting things to the
-database, rendering and reusing templates, handling form submissions, sending
-emails, validating user input and handling security.
+Agora você sabe que o objetivo de qualquer aplicação é interpretar cada requisição
+recebida e criar uma resposta apropriada. Conforme uma aplicação cresce, torna-se
+mais difícil de manter o seu código organizado e de fácil manutenção. Invariavelmente,
+as mesmas tarefas complexas continuam a aparecer: persistir dados no banco,
+renderizar e reutilizar templates, tratar envios de formulários, enviar emails,
+validar entradas dos usuários e cuidar da segurança.
 
-The good news is that none of these problems is unique. Symfony provides
-a framework full of tools that allow you to build your application, not your
-tools. With Symfony2, nothing is imposed on you: you're free to use the full
-Symfony framework, or just one piece of Symfony all by itself.
+A boa notícia é que nenhum desses problemas é único. O Symfony é um framework cheio
+de ferramentas para você construir a sua aplicação e não as suas ferramentas.
+Com o Symfony2, nada é imposto: você é livre para utilizar o framework completo ou
+apenas uma parte dele.
 
 .. index::
    single: Symfony2 Components
 
-Standalone Tools: The Symfony2 *Components*
+Ferramentas Independentes: Os *Componentes* do Symfony2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Então, o que *é* o Symfony2? Primeiramente, trata-se de uma coleção de vinte
+bibliotecas independentes que podem ser utilizadas dentro de *qualquer* projeto
+PHP. Essas bibliotecas, chamadas de *Components do Symfony2*, contém coisas úteis
+para praticamente qualquer situação, independente de como o seu projeto é desenvolvido.
+Alguns desses componentes são:
+
+* `HttpFoundation`_ - Contém as classes ``Request`` e ``Response``, bem como outras
+  classes para tratar de sessões e upload de arquivos;
+
+* `Routing`_ - Um poderoso e rápido sistema de roteamento que permite mapear uma
+  URI específica (por exemplo, ``/contact``) para uma informação sobre como a
+  requisição deve ser tratada (por exemplo, executar o método ``contactAction()``);
+
+* `Form`_ - Um framework completo e flexível para criar formulários e tratar os
+  dados enviados por eles;
+
+* `Validator`_ Um sistema para criar regras sobre dados e validar se os dados
+  enviados pelos usuários seguem ou não essas regras;
+
+* `ClassLoader`_ Uma biblioteca de autoloading que faz com que classes PHP possam
+  ser utilizadas sem precisar adicionar manualmente um ``require`` para cada arquivo
+  que as contém;
+
+* `Templating`_ Um conjunto de ferramentas para renderizar templates, tratar da 
+  herança de templates (por exemplo, um template decorado com um layout) e executar 
+  outras tarefas comuns relacionadas a templates;
+
+* `Security`_ - Uma biblioteca poderosa para tratar qualquer tipo de segurança 
+  dentro de sua aplicação;
+
+* `Translation`_ Um framework para traduzir strings na sua aplicação.
+
+Cada um desses componentes funcionam de forma independente e podem ser utilizados 
+em *qualquer* projeto PHP, não importa se você utiliza o Symfony2 ou não. Cada 
+parte foi feita para ser utilizada e substituída quando for necessário.
+
+A solução completa: O *framework* Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So what *is* Symfony2? First, Symfony2 is a collection of over twenty independent
-libraries that can be used inside *any* PHP project. These libraries, called
-the *Symfony2 Components*, contain something useful for almost any situation,
-regardless of how your project is developed. To name a few:
+Então, o que *é* o *framework* Symfony2? Ele é uma biblioteca PHP que realiza
+duas tarefas distintas:
 
-* `HttpFoundation`_ - Contains the ``Request`` and ``Response`` classes, as
-  well as other classes for handling sessions and file uploads;
+#. Fornecer uma seleção de componentes (os componentes do Symfony2, por exemplo) e
+   bibliotecas de terceiros (por exemplo, a ``Swiftmailer``, utilizada para enviar emails);
 
-* `Routing`_ - Powerful and fast routing system that allows you to map a
-  specific URI (e.g. ``/contact``) to some information about how that request
-  should be handled (e.g. execute the ``contactAction()`` method);
+#. Fornecer as configurações necessárias e uma "cola" para manter todas as peças 
+   juntas.
 
-* `Form`_ - A full-featured and flexible framework for creating forms and
-  handing form submissions;
+O objetivo do framework é integrar várias ferramentas independentes para criar
+uma experiência consistente para o desenvolvedor. Até próprio próprio framework é 
+um pacote Symfony2 (um plugin, por exemplo) que pode ser configurado ou completamente
+substituído.
 
-* `Validator`_ A system for creating rules about data and then validating
-  whether or not user-submitted data follows those rules;
-
-* `ClassLoader`_ An autoloading library that allows PHP classes to be used
-  without needing to manually ``require`` the files containing those classes;
-
-* `Templating`_ A toolkit for rendering templates, handling template inheritance
-  (i.e. a template is decorated with a layout) and performing other common
-  template tasks;
-
-* `Security`_ - A powerful library for handling all types of security inside
-  an application;
-
-* `Translation`_ A framework for translating strings in your application.
-
-Each and every one of these components is decoupled and can be used in *any*
-PHP project, regardless of whether or not you use the Symfony2 framework.
-Every part is made to be used if needed and replaced when necessary.
-
-The Full Solution: The Symfony2 *Framework*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
-a PHP library that accomplishes two distinct tasks:
-
-#. Provides a selection of components (i.e. the Symfony2 Components) and
-   third-party libraries (e.g. ``Swiftmailer`` for sending emails);
-
-#. Provides sensible configuration and a "glue" library that ties all of these
-   pieces together.
-
-The goal of the framework is to integrate many independent tools in order
-to provide a consistent experience for the developer. Even the framework
-itself is a Symfony2 bundle (i.e. a plugin) that can be configured or replaced
-entirely.
-
-Symfony2 provides a powerful set of tools for rapidly developing web applications
-without imposing on your application. Normal users can quickly start development
-by using a Symfony2 distribution, which provides a project skeleton with
-sensible defaults. For more advanced users, the sky is the limit.
+O Symfony2 fornece um poderoso conjunto de ferramentas para desenvolver aplicações
+web rapidamente sem impor nada. Usuários normais podem iniciar o desenvolvimento rapidamente 
+utilizando uma distribuição do Symfony2, que contém o esqueleto de um projeto com 
+as princpais itens padrão. Para os usuários mais avançados, o céu é o limite.
 
 .. _`xkcd`: http://xkcd.com/
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
