@@ -1,20 +1,19 @@
 .. index::
    single: Bundle; Inheritance
 
-How to use Bundle Inheritance to Override parts of a Bundle
-===========================================================
+Como usar herança para substituir partes de um Bundle
+=====================================================
 
-When working with third-party bundles, you'll probably come across a situation
-where you want to override a file in that third-party bundle with a file
-in one of your own bundles. Symfony gives you a very convenient way to override
-things like controllers, templates, translations, and other files in a bundle's
-``Resources/`` directory.
+Ao trabalhar com bundles de terceiros, você frequentemente precisará substituir
+um arquivo dele por um próprio seu para personalizar seu comportarmento ou aparência.
+Symfony possui uma maneira bem conveniente de personalizar controllers, templates,
+Traduções e outros arquivos do diretório ``Resources/`` de um bundle.
 
-For example, suppose that you're installing the `FOSUserBundle`_, but you
-want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own ``AcmeUserBundle``
-where you want the overridden files to live. Start by registering the ``FOSUserBundle``
-as the "parent" of your bundle::
+Por exemplo, suponha que você está instalando `FOSUserBundle`_, mas você quer
+que a template ``layout.html.twig` o um dos seus controllers seja aqueles
+que você personalizou e colocou no seu bundle. No exemplo a seguinte estamos assumindo
+que você já tenha o bundle ``AcmeUserBundle`` e coloque os arquivos personalizados nele.
+O primeiro passo é registrar o bundle ``FOSUserBundle`` como pai do seu bundle::
 
     // src/Acme/UserBundle/AcmeUserBundle.php
     namespace Acme\UserBundle;
@@ -29,16 +28,16 @@ as the "parent" of your bundle::
         }
     }
 
-By making this simple change, you can now override several parts of the ``FOSUserBundle``
-simply by creating a file with the same name.
+Esta simples alteração permitirá que substitua vários partes de ``FOSUserBundle``
+simplesmente criando um arquivo com o mesmo nome.
 
-Overriding Controllers
-~~~~~~~~~~~~~~~~~~~~~~
+Substituindo controladores
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you want to add some functionality to the ``registerAction`` of a
-``RegistrationController`` that lives inside ``FOSUserBundle``. To do so,
-just create your own ``RegistrationController.php`` file, override the bundle's
-original method, and change its functionality::
+Suponha que você queira adicionar alguma funcionalidade a ação ``registerAction``
+do controlador ``RegistrationController`` que está dentro do bundle ``FOSUserBundle``.
+Para fazê-lo, basta criar o seu próprio ``RegistrationController.php``, crie um método
+que substitua o do bundle original e mude sua funcionalidade como mostrado a seguir.
 
     // src/Acme/UserBundle/Controller/RegistrationController.php
     namespace Acme\UserBundle\Controller;
@@ -59,36 +58,35 @@ original method, and change its functionality::
 
 .. tip::
 
-    Depending on how severely you need to change the behavior, you might
-    call ``parent::registerAction()`` or completely replace its logic with
-    your own.
+    Dependendo do tipo de personalização que precisa fazer no controlador, você
+    pode substituir completamente o método com lógica própria sem nem mesmo
+    chamar ``parent::registerAction()``.
 
 .. note::
 
-    Overriding controllers in this way only works if the bundle refers to
-    the controller using the standard ``FOSUserBundle:Registration:register``
-    syntax in routes and templates. This is the best practice.
+    Substituir controladores desta maneira somente funciona se o bundle referencia
+    o controlador utilizando sintaxe padrão ``FOSUserBundle:Registration:register``
+    nas rotas e nas templates. Este é a sintaxe recomendada.
 
-Overriding Resources: Templates, Routing, Translations, Validation, etc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Substituindo recursos: Templates, Rotas, Traduções, Validação, etc
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most resources can also be overridden, simply by creating a file in the same
-location as your parent bundle.
+A maioria dos recursos também podem ser substituídas, simples criando um arquivo
+no mesmo caminho relativo que estiver no bundle pai.
 
-For example, it's very common to need to override the ``FOSUserBundle``'s
-``layout.html.twig`` template so that it uses your application's base layout.
-Since the file lives at ``Resources/views/layout.html.twig`` in the ``FOSUserBundle``,
-you can create your own file in the same location of ``AcmeUserBundle``.
-Symfony will ignore the file that lives inside the ``FOSUserBundle`` entirely,
-and use your file instead.
+Por exemplo, é muito comum precisar de substituir o arquivo de template ``layout.html.twig``
+do bundle ``FOSUserBundle`` para utilizar o layout base de sua própria aplicação.
+Uma vez que o arquivo fica no caminho ``Resources/views/layout.html.twig`` dentro do bundle
+``FOSUserBundle`` você pode seu próprio aruqivo no mesmo lugar relativo (por exemplo,
+``Resources/views/layout.html.twig`` do bundle ``FOSUserBundle``). O Symfony vai
+ignorar o arquivo dentro do ``FOSUserBundle`` e utilizar o seu no lugar.
 
-The same goes for routing files, validation configuration and other resources.
+O mesmo vale para arquivos de rotas, configuração de Validação e outros recursos.
 
 .. note::
 
-    The overriding of resources only works when you refer to resources with
-    the ``@FosUserBundle/Resources/config/routing/security.xml`` method.
-    If you refer to resources without using the @BundleName shortcut, they
-    can't be overridden in this way.
+    A substituição de recursos só funciona quando você se refere a recursos utilizando
+    a sintaxe recomendada ``@FosUserBundle/Resources/config/routing/security.xml``.
+    Se você se referir a recursos sem o atalho @FosUserBundle, eles não serão substituídos.
 
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle
