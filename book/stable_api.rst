@@ -1,25 +1,26 @@
-The Symfony2 Stable API
-=======================
+A API Estável do Symfony2
+=========================
 
-The Symfony2 stable API is a subset of all Symfony2 published public methods
-(components and core bundles) that share the following properties:
+A API estável do Symfony2 é um subconjunto de todos os métodos públicos
+publicados no Symfony2 (componentes e core bundles) que compartilham as
+seguintes propriedades:
 
-* The namespace and class name won't change;
-* The method name won't change;
-* The method signature (arguments and return value type) won't change;
-* The semantic of what the method does won't change.
+* O namespace e nome de classe não mudarão;
+* O nome do método não mudará;
+* A assinatura do método (argumentos e tipo de valor de retorno) não mudará;
+* A semântica do que é o método não mudará.
 
-The implementation itself can change though. The only valid case for a change
-in the stable API is in order to fix a security issue.
+A implementação em si pode ser alterada. O caso só é válido para uma mudança na
+API estável para corrigir algum problema de segurança.
 
-The stable API is based on a whitelist, tagged with `@api`. Therefore,
-everything not tagged explicitly is not part of the stable API.
+A API estável é baseada em uma whitelist, marcada com `@api`. Então, tudo não
+marcado explícitamente não faz parte da API estável.
 
 .. tip::
 
-    Any third party bundle should also publish its own stable API.
+    Qualquer bundle de terceiros também devem publicar sua própria API estável.
 
-As of Symfony 2.0, the following components have a public tagged API:
+A partir do Symfony 2.0, os seguintes componentes têm uma API pública estável marcada:
 
 * BrowserKit
 * ClassLoader
