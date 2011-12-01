@@ -16,7 +16,7 @@ API estável para corrigir algum problema de segurança.
 A API estável é baseada em uma whitelist, marcada com `@api`. Então, tudo não
 marcado explícitamente não faz parte da API estável.
 
-.. Tip::
+.. tip::
 
     Qualquer bundle de terceiros também devem publicar sua própria API estável.
 
