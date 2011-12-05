@@ -1,18 +1,18 @@
 .. index::
    single: Templating
 
-Creating and using Templates
-============================
+Criando e usando Templates
+==========================
 
-As you know, the :doc:`controller </book/controller>` is responsible for
-handling each request that comes into a Symfony2 application. In reality,
-the controller delegates the most of the heavy work to other places so that
-code can be tested and reused. When a controller needs to generate HTML,
-CSS or any other content, it hands the work off to the templating engine.
-In this chapter, you'll learn how to write powerful templates that can be
-used to return content to the user, populate email bodies, and more. You'll
-learn shortcuts, clever ways to extend templates and how to reuse template
-code.
+Como já foi visto, o :doc:`controller </book/controller>` é responsável por
+lidar com cada requisição feita a um aplicativo Symfony2. Na verdade, o
+controller delega a maior parte do trabalho pesado a outras partes para que
+o código possa ser testado e reutilizado. Quando um controller precisa produzir
+HTML, CSS ou qualquer outro conteúdo, ele passa delega o trabalho ao mecanismo
+de templates. Neste capítulo, você aprenderá como criar templates que podem
+ser utilizadas para retornar conteúdo ao usuário, preencher o corpo de um e-mail, etc.
+Você aprenderá macetes, ou seja, maneiras mais inteligentes de estender templates e
+reutilizar o código delas.
 
 .. index::
    single: Templating; What is a template?
@@ -20,9 +20,10 @@ code.
 Templates
 ---------
 
-A template is simply a text file that can generate any text-based format
-(HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code::
+Uma template é simplesmente um arquivo texto que pode gerar qualquer formato
+baseado em texto (HTML, XML, CSV, LaTeX ...). O tipo mais comum de template é
+uma template *PHP*, que é um arquivo texto interpretado pelo PHP e que contém
+uma mistura de texto e código PHP. Veja um exemplo a seguir.
 
     <!DOCTYPE html>
     <html>
@@ -46,9 +47,10 @@ template - a text file parsed by PHP that contains a mix of text and PHP code::
 
 .. index:: Twig; Introduction
 
-But Symfony2 packages an even more powerful templating language called `Twig`_.
-Twig allows you to write concise, readable templates that are more friendly
-to web designers and, in several ways, more powerful than PHP templates:
+Symfony2 distribui uma linguagem de templates ainda mais poderosa chamda `Twig`_.
+Twig permite que você escreva templates objetivas e mais fáceis de ler que são mais
+amigáveis oas web designers e mais poderosas, em vários sentidos, do que templates
+em PHP.
 
 .. code-block:: html+jinja
 
@@ -68,40 +70,39 @@ to web designers and, in several ways, more powerful than PHP templates:
         </body>
     </html>
 
-Twig defines two types of special syntax:
+Twig define dois tipos especiais de marcação:
 
-* ``{{ ... }}``: "Says something": prints a variable or the result of an
-  expression to the template;
+* ``{{ ... }}``: "Fale algo": imprime a variável ou o resultado de uma expressão
+  na template;
 
-* ``{% ... %}``: "Does something": a **tag** that controls the logic of the
-  template; it is used to execute statements such as for-loops for example.
+* ``{% ... %}``: "Faça algo": uma **marcação** que controla a lógica da template.
+  É utilizada para executar estruturas tais como de repetição (for, while) e condicionais (if).
 
 .. note::
 
-   There is a third syntax used for creating comments: ``{# this is a comment #}``.
-   This syntax can be used across multiple lines like the PHP-equivalent
-   ``/* comment */`` syntax.
+   Existe uma terceira marcação usada para criar comentários: ``{# this is a comment #}``.
+   Esta marcação pode ser utilizada se expandindo em várias linhas como seu equivalente em
+   PHP ``/* comment */`` .
 
-Twig also contains **filters**, which modify content before being rendered.
-The following makes the ``title`` variable all uppercase before rendering
-it:
+Twig também contém **filtros**, que modificam o conteúdo antes de imprimí-lo. O código
+seguinte transforma o conteúdo da variável ``title`` todo em maiúscula antes de o imprimir.
 
 .. code-block:: jinja
 
     {{ title | upper }}
 
-Twig comes with a long list of `tags`_ and `filters`_ that are available
-by default. You can even `add your own extensions`_ to Twig as needed.
+Twig possui uma longa lista de `tags`_ and `filtros`_ que estão disponíveis por padrão.
+Você pode  até adicionar sua própria extensão (`add your own extensions`_) ao Twig se precisar.
 
 .. tip::
 
-    Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
+    Registrar uma extensão Twig é tão fácil quanto criar um novo serviço e marcá-lo
+    com ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
 
-As you'll see throughout the documentation, Twig also supports functions
-and new functions can be easily added. For example, the following uses a
-standard ``for`` tag and the ``cycle`` function to print ten div tags, with
-alternating ``odd``, ``even`` classes:
+Como verá pela documentação, Twig também possui funções e permite que novas
+sejam facilmente adicionadas. Por exemplo, o trecho seguinte utiliza a tag ``for``
+e a função ``cycle`` para imprimir dez tags div, alternando sua classe entre
+``odd`` e ``even``.
 
 .. code-block:: html+jinja
 

@@ -121,143 +121,143 @@ O componente de segurança pode ser configurado através da configuração de
     tem um arquivo separado para as configurações de segurança, pode colocar
     diretamente no arquivo de configuração principal (por exemplo, ``app/config/config.yml``).
 
-The end result of this configuration is a fully-functional security system
-that looks like the following:
+O resultado final desta configuração é um completo sistema de segurança funcional
+com as seguintes características:
 
-* There are two users in the system (``ryan`` and ``admin``);
-* Users authenticate themselves via the basic HTTP authentication prompt;
-* Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
-  can access it;
-* All URLs *not* matching ``/admin/*`` are accessible by all users (and the
-  user is never prompted to login).
+* Há dois usuários no sistema (``ryan`` e ``admin``);
+* Os usuários se autenticam através da janela de autenticação básica HTTP;
+* Qualquer URL que comece com ``/admin/*`` será protegida e somente o usuário ``admin``
+  terá acesso;
+* Todas URLs que *não* comecem com ``/admin/*`` são acessíveis a todos usuários
+  (e ao usuário nunca serão solicitadas as credenciais de acesso).
 
-Let's look briefly at how security works and how each part of the configuration
-comes into play.
+Vamos dar uma olhada como funciona a segurança e como cada parte da configuração influencia
+no sistema.
 
-How Security Works: Authentication and Authorization
-----------------------------------------------------
+Como funciona a segurança: Autenticação e Autorização
+-----------------------------------------------------
 
-Symfony's security system works by determining who a user is (i.e. authentication)
-and then checking to see if that user should have access to a specific resource
-or URL.
+O sistema de segurança do Symfony funciona determinando quem um usuário é (autenticação)
+e depois checando se o usuário tem acesso ao recurso específico ou URL solicitado.
 
-Firewalls (Authentication)
+Firewalls (Autenticação)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a user makes a request to a URL that's protected by a firewall, the
-security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if he does, to send a response
-back to the user initiating the authentication process.
+Quando um usuário requisita uma URL que está protegida por um firewall,
+o sistema de segurança é ativado. O trabalho do firewall é determinar
+se o usuário precisa ou não ser autenticado. Se ele precisar, envia a resposta
+de volta e inicia o processo de autenticação.
 
-A firewall is activated when the URL of an incoming request matches the configured
-firewall's regular expression ``pattern`` config value. In this example, the
-``pattern`` (``^/``) will match *every* incoming request. The fact that the
-firewall is activated does *not* mean, however, that the HTTP authentication
-username and password box is displayed for every URL. For example, any user
-can access ``/foo`` without being prompted to authenticate.
+Um firewall será ativado quando a URL requisitada corresponda ao ``padrão de caracteres`` da
+expressão regular configurada na configuração de segurança. Neste exemplo, o
+``padrão de caracteres`` (``^/``) corresponde a qualquer solicitação. O fato do
+firewall ser ativado *não* significa, porém, que a janela de autenticação básica HTTP
+(solicitando login e senha) será exibida para todas requisições. Por exemplo,
+qualquer usuário poderá acessar ``/foo`` sem que seja solicitada sua autenticação.
 
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
 
-This works first because the firewall allows *anonymous users* via the ``anonymous``
-configuration parameter. In other words, the firewall doesn't require the
-user to fully authenticate immediately. And because no special ``role`` is
-needed to access ``/foo`` (under the ``access_control`` section), the request
-can be fulfilled without ever asking the user to authenticate.
+Isto funciona primeiramente por que o firewall permite *usuários anônimos* através
+do parâmetro ``anonymous`` da configuração. Em outras palavras,  o firewall não
+exige que o usuário se autentique completamente. E por que nenhum ``perfil`` (``role``)
+é necessário para acessar ``/foo`` (na seção ``access_control``), a solicitação
+pode ser realizada sem que o usuário sequer se identifique.
 
-If you remove the ``anonymous`` key, the firewall will *always* make a user
-fully authenticate immediately.
+Se você remover a chave ``anonymous``, o firewall *sempre* fará o usuário se identificar
+por completo imediatamente.
 
-Access Controls (Authorization)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Controles de acesso (Autorização)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a user requests ``/admin/foo``, however, the process behaves differently.
-This is because of the ``access_control`` configuration section that says
-that any URL matching the regular expression pattern ``^/admin`` (i.e. ``/admin``
-or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
-are the basis for most authorization: a user can access ``/admin/foo`` only
-if it has the ``ROLE_ADMIN`` role.
+Se o usuário solicitar ``/admin/foo``, porém, o processo toma um rumo diferente.
+Isto acontecerá por que a seção ``access_control`` da configuração indica
+que qualquer URL que se encaixe no padrão de caracteres ``^/admin`` (isto é, ``/admin``
+ou qualquer coisa do tipo ``/admin/*``) deve ser acessada somente por usuários
+com o perfil ``ROLE_ADMIN``. Perfis são a base para a maioria das autorizações:
+o usuário pode acessar ``/admin/foo`` somente se tiver o perfil ``ROLE_ADMIN``.
 
 .. image:: /images/book/security_anonymous_user_denied_authorization.png
    :align: center
 
-Like before, when the user originally makes the request, the firewall doesn't
-ask for any identification. However, as soon as the access control layer
-denies the user access (because the anonymous user doesn't have the ``ROLE_ADMIN``
-role), the firewall jumps into action and initiates the authentication process.
-The authentication process depends on the authentication mechanism you're
-using. For example, if you're using the form login authentication method,
-the user will be redirected to the login page. If you're using HTTP authentication,
-the user will be sent an HTTP 401 response so that the user sees the username
-and password box.
+Como antes, o firewall não solicita credenciais de acesso. Assim que a camada
+de controle de acesso nega o acesso (por que o usuário não tem o perfil ``ROLE_ADMIN``),
+porém, o firewall inicia o processo de autenticação. Este processo depende
+do mecanismo de autenticação que estiver utilizando. Por exemplo, se estiver utilizando
+o método de formulário de autenticação (``form login``), o usuário será redirecionado
+para a página de login. Se estiver utilizando o método básico de autenticação HTTP,
+o navegador recebe uma resposta do tipo HTTP 401 para que ao usuário seja exibida
+a janela de login/senha do navegador.
 
-The user now has the opportunity to submit its credentials back to the application.
-If the credentials are valid, the original request can be re-tried.
+O usuário agora tem a oportunidade de digitar suas credenciais no aplicativo. Se as
+credenciais forem válidas, a requisição original será solicitada novamente.
 
 .. image:: /images/book/security_ryan_no_role_admin_access.png
    :align: center
 
-In this example, the user ``ryan`` successfully authenticates with the firewall.
-But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
-access to ``/admin/foo``. Ultimately, this means that the user will see some
-sort of message indicating that access has been denied.
+No exemplo, o usuário ``ryan`` se autentica com sucesso pelo firewall. Como, porém,
+``ryan`` não tem o perfil ``ROLE_ADMIN``, ele ainda terá seu acesso negado ao
+recurso ``/admin/foo``. Infelizmente, isto significa que o usuário verá
+uma mensagem indicando que o acesso foi negado.
 
 .. tip::
 
-    When Symfony denies the user access, the user sees an error screen and
-    receives a 403 HTTP status code (``Forbidden``). You can customize the
-    access denied error screen by following the directions in the
-    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
-    to customize the 403 error page.
+    Quando o Symfony nega acesso a um usuário, o usuário vê uma tela de
+    erro e o navegador recebe uma resposta com o HTTP status code 403 (``Forbidden``).
+    É possível personalizar a tela de erro de acesso negado seguindo as
+    instruções em :ref:`Error Pages<cookbook-error-pages-by-status-code>` do
+    do texto do Symfony 2 - Passo-a-passo que ensina a personalizar a página
+    de erro 403.
 
-Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
-takes place, except now, after being authenticated, the access control layer
-will let the request pass through:
+Finalmente, se o usuário ``admin`` requisitar ``/admin/foo``, um processo similar
+entra em ação, mas neste caso, após a autenticação, a camada de controle de acesso
+permitirá que a requisição seja completada:
 
 .. image:: /images/book/security_admin_role_access.png
    :align: center
 
-The request flow when a user requests a protected resource is straightforward,
-but incredibly flexible. As you'll see later, authentication can be handled
-in any number of ways, including via a form login, X.509 certificate, or by
-authenticating the user via Twitter. Regardless of the authentication method,
-the request flow is always the same:
+O fluxo de requisição quando um usuário solicita um recurso protegido é direto,
+mas muito flexível. Como verá mais tarde, a autenticação pode acontecer de
+diversas maneiras, incluindo formulário de login, certificado X.509, ou
+autenticação pelo Twitter. Independente do método de autenticação, o fluxo
+de requisiçao é sempre o mesmo:
 
-#. A user accesses a protected resource;
-#. The application redirects the user to the login form;
-#. The user submits its credentials (e.g. username/password);
-#. The firewall authenticates the user;
-#. The authenticated user re-tries the original request.
+#. Um usuário acessa um recurso protegido;
+#. O aplicativo redireciona o usuário para o formulário de login;
+#. O usuário envia suas credenciais (e.g. login/senha);
+#. O firewall autentica o usuário;
+#. O usuário autenticado é redirecionado para o recurso solicitado originalmente.
 
 .. note::
 
-    The *exact* process actually depends a little bit on which authentication
-    mechanism you're using. For example, when using form login, the user
-    submits its credentials to one URL that processes the form (e.g. ``/login_check``)
-    and then is redirected back to the originally requested URL (e.g. ``/admin/foo``).
-    But with HTTP authentication, the user submits its credentials directly
-    to the original URL (e.g. ``/admin/foo``) and then the page is returned
-    to the user in that same request (i.e. no redirect).
+    O processo *exato* na verdade depende um pouco do mecanismo de autenticação
+    que estiver usando. Por exemplo, quando estiver utilizando formulário de login,
+    o usuário envia suas credenciais para a URL que processa o formulário (por exemplo,
+    ``/login_check``) e depois é redirecionado de volta para a URL solicitada
+    originalmente (por exemplo, ``/admin/foo``). Se utilizar autenticação básica
+    HTTP, porém, o usuário envia suas credenciais diretamente para a URL original
+    (por exemplo, ``/admin/foo``) e depois a página é retornada para o usuário
+    na mesma requisição (isto significa que não há redirecionamentos).
 
-    These types of idiosyncrasies shouldn't cause you any problems, but they're
-    good to keep in mind.
+    Estes detalhes técnicos não devem ser relevantes no uso do sistema de
+    segurança, mas é bom ter uma idéia a respeito.
 
 .. tip::
 
-    You'll also learn later how *anything* can be secured in Symfony2, including
-    specific controllers, objects, or even PHP methods.
+    Você aprenderá mais tarde como *qualquer coisa* pode ser protegida no Symfony2,
+    incluindo controladores específicos, objetos, ou até métodos PHP.
 
 .. _book-security-form-login:
 
-Using a Traditional Login Form
-------------------------------
+Usando o tradicional formulário de login
+----------------------------------------
 
-So far, you've seen how to blanket your application beneath a firewall and
-then protect access to certain areas with roles. By using HTTP Authentication,
-you can effortlessly tap into the native username/password box offered by
-all browsers. However, Symfony supports many authentication mechanisms out
-of the box. For details on all of them, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+Até agora, você viu como cobrir seu aplicativo depois do firewall e assim
+restringir o acesso de certas áreas a certos perfis. Utilizando a autenticação
+básica HTTP, é possível, sem esforços, submeter login/senha através da
+janela do navegador. O Symfony, porém, suporta de fábrica muitos outros
+mecanismos de autenticação. Para detalhes sobre todos eles, consulte
+:doc:`Referência Da Configuração De Segurança</reference/configuration/security>`.
 
 In this section, you'll enhance this process by allowing the user to authenticate
 via a traditional HTML login form.
@@ -1732,7 +1732,7 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`security component`: https://github.com/symfony/Security
+.. _`componente de segurança`: https://github.com/symfony/Security
 .. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php

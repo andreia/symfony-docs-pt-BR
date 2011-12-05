@@ -10,10 +10,12 @@ Symfony possui uma maneira bem conveniente de personalizar controllers, template
 Traduções e outros arquivos do diretório ``Resources/`` de um bundle.
 
 Por exemplo, suponha que você está instalando `FOSUserBundle`_, mas você quer
-que a template ``layout.html.twig` o um dos seus controllers seja aqueles
+que a template ``layout.html.twig`` o um dos seus controllers seja aqueles
 que você personalizou e colocou no seu bundle. No exemplo a seguinte estamos assumindo
 que você já tenha o bundle ``AcmeUserBundle`` e coloque os arquivos personalizados nele.
-O primeiro passo é registrar o bundle ``FOSUserBundle`` como pai do seu bundle::
+O primeiro passo é registrar o bundle ``FOSUserBundle`` como pai do seu bundle:
+
+.. code-block:: php
 
     // src/Acme/UserBundle/AcmeUserBundle.php
     namespace Acme\UserBundle;
@@ -38,6 +40,8 @@ Suponha que você queira adicionar alguma funcionalidade a ação ``registerActi
 do controlador ``RegistrationController`` que está dentro do bundle ``FOSUserBundle``.
 Para fazê-lo, basta criar o seu próprio ``RegistrationController.php``, crie um método
 que substitua o do bundle original e mude sua funcionalidade como mostrado a seguir.
+
+.. code-block:: php
 
     // src/Acme/UserBundle/Controller/RegistrationController.php
     namespace Acme\UserBundle\Controller;
