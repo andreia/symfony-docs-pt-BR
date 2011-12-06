@@ -39,8 +39,8 @@ Referência para Tipos de Form
    types/url
 
 Um form é composto por *campos*, cada um deles é construido com a ajuda de um campo do *tipo* 
-(ex: um tipo ``text``, tipo ``choice``, etc). Symfony2 tem por padrão uma vasta lista de tipos 
-de campos que podem ser usados em sua aplicação.
+(ex: um tipo ``text``, tipo ``choice``, etc). Symfony2 tem por padrão uma vasta lista de tipos de 
+campos que podem ser usados em sua aplicação.
 
 Tipos de campos suportados
 --------------------------

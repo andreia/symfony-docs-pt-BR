@@ -6,9 +6,9 @@ Requisitos para o funcionamento do Symfony2
 
 Para funcionar o Symfony2, seu sistema precisa seguir uma lista de requisitos. Você pode
 facilmente verificar se o sistema passa por todos os requisitos executando o ``web/config.php``
-em sua distribuição Symfony. Desde a CLI, muitas vezes usa-se um arquivo de configuração 
-do ``php.ini`` é diferente, também é interessante verificar as usuas necessidade para a linha de
-comando via:
+em sua distribuição Symfony. Uma vez que a CLI geralmente utiliza um arquivo de 
+configuração ``php.ini`` diferente, também é uma boa idéia verificar as necessidades a partir 
+da linha de comando via:
 
 .. code-block:: bash
 
