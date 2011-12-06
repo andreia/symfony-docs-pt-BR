@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Types Reference
 
-Form Types Reference
-====================
+Referência para Tipos de Form
+=============================
 
 .. toctree::
    :maxdepth: 1
@@ -38,13 +38,13 @@ Form Types Reference
    types/timezone
    types/url
 
-A form is composed of *fields*, each of which are built with the help of
-a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes
-standard with a large list of field types that can be used in your application.
+Um form é composto por *campos*,A form is composed of *fields*, cada um deles é construido com a 
+ajuda de um campo do *tipo* (ex: um tipo ``text``, tipo ``choice``, etc). Symfony2 tem por padrão
+uma vasta lista de tipos de campos que podem ser usados em sua aplicação.
 
-Supported Field Types
----------------------
+Tipos de campos suportados
+--------------------------
 
-The following field types are natively available in Symfony2:
+Os tipos de campo seguintes estão disponíveis nativamente no Symfony2:
 
 .. include:: /reference/forms/types/map.rst.inc
