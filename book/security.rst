@@ -249,8 +249,8 @@ de requisiçao é sempre o mesmo:
 
 .. _book-security-form-login:
 
-Usando o tradicional formulário de login
-----------------------------------------
+Usando um formulário de login em HTML
+-------------------------------------
 
 Até agora, você viu como cobrir seu aplicativo depois do firewall e assim
 restringir o acesso de certas áreas a certos perfis. Utilizando a autenticação
@@ -259,10 +259,10 @@ janela do navegador. O Symfony, porém, suporta de fábrica muitos outros
 mecanismos de autenticação. Para detalhes sobre todos eles, consulte
 :doc:`Referência Da Configuração De Segurança</reference/configuration/security>`.
 
-In this section, you'll enhance this process by allowing the user to authenticate
-via a traditional HTML login form.
+Nesta seção, você aprimorará o processo permitindo que o usuário se autentique através
+de um formulário de login tradicional em HTML.
 
-First, enable form login under your firewall:
+Primeiro habilite o formulário no seu firewall:
 
 .. configuration-block::
 
@@ -312,9 +312,9 @@ First, enable form login under your firewall:
 
 .. tip::
 
-    If you don't need to customize your ``login_path`` or ``check_path``
-    values (the values used here are the default values), you can shorten
-    your configuration:
+    Se não precisar de personlizar os valores de ``login_path`` ou ``check_path``
+    (os valores utilizados acima são os valores padrão), você pode encurtar
+    seu configuração:
 
     .. configuration-block::
 
@@ -330,11 +330,11 @@ First, enable form login under your firewall:
 
             'form_login' => array(),
 
-Now, when the security system initiates the authentication process, it will
-redirect the user to the login form (``/login`` by default). Implementing
-this login form visually is your job. First, create two routes: one that
-will display the login form (i.e. ``/login``) and one that will handle the
-login form submission (i.e. ``/login_check``):
+Agora, quando o sistema de segurança inicia o processo de autenticação,
+ele redirecionará o usuário para o formulário de login (``/login`` por padrão).
+É sua tarefa implementar o visual desse formulário. Primeiro, crie duas rotas:
+uma para a exibição do formulário de login (no caso, ``/login``) e outra
+para processar a submissão do formulário (no caso, ``/login_check``):
 
 .. configuration-block::
 
@@ -379,17 +379,17 @@ login form submission (i.e. ``/login_check``):
 
 .. note::
 
-    You will *not* need to implement a controller for the ``/login_check``
-    URL as the firewall will automatically catch and process any form submitted
-    to this URL. It's optional, but helpful, to create a route so that you
-    can use it to generate the form submission URL in the login template below.
+    *Não* é preciso implementar o controller para a URL ``/login_check``
+    pois o firewall interceptará e processará o que foi submitido para essa URL.
+    É opcional, porém útil, criar uma rota para que você possa gerar o link
+    de submissão na template do formulário de login.
 
-Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``login_path`` config
-value, as that's where the security system will redirect users that need
-to login.
+Observe que o nome da rota ``login`` não é importante. O que importa é que a
+URL da rota corresponda o que foi colocado na configuração  ``login_path``, pois
+é para onde o sistema de segurança redirecionará os usuários que precisarem
+se autenticar.
 
-Next, create the controller that will display the login form:
+O próximo passo é criar o controller que exibirá o formulário de login:
 
 .. code-block:: php
 
@@ -421,17 +421,16 @@ Next, create the controller that will display the login form:
         }
     }
 
-Don't let this controller confuse you. As you'll see in a moment, when the
-user submits the form, the security system automatically handles the form
-submission for you. If the user had submitted an invalid username or password,
-this controller reads the form submission error from the security system so
-that it can be displayed back to the user.
+Não se confunda com esse controller. Como verá, quando o usuário submete o formulário,
+o sistema de segurança automaticamente processar a submissão para você. Se o usuário
+entrou com login e/ou senha inválidos, este controller pega o erro ocorrido do sistema
+de segurança para poder exibir ao usuário.
 
-In other words, your job is to display the login form and any login errors
-that may have occurred, but the security system itself takes care of checking
-the submitted username and password and authenticating the user.
+Em outras palavras, seu trabalho é exibir o formulário de login e qualquer
+erro ocorrido durante a tentativa de autenticação, mas o sistema de segurança
+já toma conta de checar se as credenciais são válidas e de autenticar o usuário.
 
-Finally, create the corresponding template:
+Finalmente crie a template correspondente:
 
 .. configuration-block::
 
@@ -481,63 +480,65 @@ Finally, create the corresponding template:
 
 .. tip::
 
-    The ``error`` variable passed into the template is an instance of
+    A variável ``error`` passada para a template é uma instância de
     :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
-    It may contain more information - or even sensitive information - about
-    the authentication failure, so use it wisely!
+    Esta pode conter mais informações - ou até informações sensíveis - sobre a
+    falha na autenticação, por isso use-a com sabedoria!
 
-The form has very few requirements. First, by submitting the form to ``/login_check``
-(via the ``login_check`` route), the security system will intercept the form
-submission and process the form for you automatically. Second, the security
-system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
+O formulário tem que atender alguns requisitos. Primeiro, ao submeter o formulário
+para ``/login_check`` (através da rota  ``login_check``), o sistema de segurança
+interceptará a submissão do formulário e o processará. Segundo, o sistema de segurança
+espera que os campos submetidos sejam chamados ``_username`` e ``_password``
+(estes nomes podem ser :ref:`configured<reference-security-firewall-form-login>`).
 
-And that's it! When you submit the form, the security system will automatically
-check the user's credentials and either authenticate the user or send the
-user back to the login form where the error can be displayed.
+E é isso! Quando submeter um formulário, o sistema de segurança irá automaticamente
+checar as credenciais do usuário e autenticá-lo ou enviar o ele de volta ao
+formulário de login para o erro ser exibido.
 
-Let's review the whole process:
+Vamos revisar o processo inteiro:
 
-#. The user tries to access a resource that is protected;
-#. The firewall initiates the authentication process by redirecting the
-   user to the login form (``/login``);
-#. The ``/login`` page renders login form via the route and controller created
-   in this example;
-#. The user submits the login form to ``/login_check``;
-#. The security system intercepts the request, checks the user's submitted
-   credentials, authenticates the user if they are correct, and sends the
-   user back to the login form if they are not.
+#. O usuário tenta acessar um recurso que está protegido;
+#. O firewall inicia o processo de autenticação redirecionando o
+   usuário para o formulário de login(``/login``);
+#. A página ``/login`` produz o formulário de login através da rota
+   e controlador criados neste exemplo;
+#. O usuário submete o formulário de login para ``/login_check``;
+#. O sistema de segurança intercepta a solicitação, verifica as credenciais
+   submetidas pelo usuário, autentica o mesmo se tiverem corretas ou envia
+   de volta para o formulário de login caso contrário;
 
-By default, if the submitted credentials are correct, the user will be redirected
-to the original page that was requested (e.g. ``/admin/foo``). If the user
-originally went straight to the login page, he'll be redirected to the homepage.
-This can be highly customized, allowing you to, for example, redirect the
-user to a specific URL.
+Por padrão, se as credenciais estiverem corretas, o usuário será redirecionado
+para a página que solicitou originalmente (e.g. ``/admin/foo``). Se o usuário
+originalmente solicitar a página de login, ele será redirecionado para a página
+principal. Isto pode ser modificado se necessário, o que permitiria você
+redirecionar o usuário para um outra URL específica.
 
-For more details on this and how to customize the form login process in general,
-see :doc:`/cookbook/security/form_login`.
+Para maiores detalhes sobre isso e como personalizar o processamento do
+formulário de login acesse
+:doc:`/cookbook/security/form_login`.
 
 .. _book-security-common-pitfalls:
 
-.. sidebar:: Avoid Common Pitfalls
+.. sidebar:: Evite os erros comuns
 
-    When setting up your login form, watch out for a few common pitfalls.
+    Quando estiver configurando seu formulário de login, fique atendo
+    aos seguintes erros comuns.
 
-    **1. Create the correct routes**
+    **1. Crie as rotas corretas**
 
-    First, be sure that you've defined the ``/login`` and ``/login_check``
-    routes correctly and that they correspond to the ``login_path`` and
-    ``check_path`` config values. A misconfiguration here can mean that you're
-    redirected to a 404 page instead of the login page, or that submitting
-    the login form does nothing (you just see the login form over and over
-    again).
+    Primeiro, tenha certeza que definiu as rotas ``/login`` e ``/login_check``
+    corretamente e que elas correspondem aos calores das configurações
+    ``login_path`` e ``check_path``. A configuração errada pode significar que
+    você será redirecionado para a página de erro 404 ao invés da página
+    de login ou a submissão do formulário de login não faça nada (você
+    sempre vê o formulário sem sair dele).
 
-    **2. Be sure the login page isn't secure**
+    **2. Tenha certeza que a página de login não é protegida**
 
-    Also, be sure that the login page does *not* require any roles to be
-    viewed. For example, the following configuration - which requires the
-    ``ROLE_ADMIN`` role for all URLs (including the ``/login`` URL), will
-    cause a redirect loop:
+    Também tenha certeza que a página de login *não* precisa de qualquer
+    perfil para ser vizualizada. Por exemplo, a seguinte configuração,
+    que exige o perfil ``ROLE_ADMIN`` para todas as URLs (incluindo a
+    URL ``/login``), causará um redirecionamento circular:
 
     .. configuration-block::
 
@@ -558,7 +559,7 @@ see :doc:`/cookbook/security/form_login`.
                 array('path' => '^/', 'role' => 'ROLE_ADMIN'),
             ),
 
-    Removing the access control on the ``/login`` URL fixes the problem:
+    Removendo o controle de acesso para a URL ``/login`` resolve o problema:
 
     .. configuration-block::
 
@@ -582,9 +583,8 @@ see :doc:`/cookbook/security/form_login`.
                 array('path' => '^/', 'role' => 'ROLE_ADMIN'),
             ),
 
-    Also, if your firewall does *not* allow for anonymous users, you'll need
-    to create a special firewall that allows anonymous users for the login
-    page:
+    Além disso, se o seu firewall *não* permite usuários anônimos, você precisará
+    criar um firewall especial para permitir usuários anônimos para a página de login:
 
     .. configuration-block::
 
@@ -620,20 +620,21 @@ see :doc:`/cookbook/security/form_login`.
                 ),
             ),
 
-    **3. Be sure ``/login_check`` is behind a firewall**
+    **3. Tenha certeza que ``/login_check`` está protegida por um firewall**
 
-    Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
-    is behind the firewall you're using for your form login (in this example,
-    the single firewall matches *all* URLs, including ``/login_check``). If
-    ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
-    to find the controller for path "/login_check"`` exception.
+    Certifique-se que a URL indicada em ``check_path`` (no caso, ``/login_check``)
+    esteja protegida por um firewall que está utilizando seu formulário de login
+    (neste exemplo, um único firewall filtra *todas* as URLs, incluindo ``/login_check``).
+    Se ``/login_check`` não estiver atrás de nenhum firewall, uma exceção
+    será gerada ``Unable to find the controller for path "/login_check"``.
 
-    **4. Multiple firewalls don't share security context**
+    **4. Múltiplos firewalls não compartilham o mesmo contexto de segurança**
 
-    If you're using multiple firewalls and you authenticate against one firewall,
-    you will *not* be authenticated against any other firewalls automatically.
-    Different firewalls are like different security systems. That's why,
-    for most applications, having one main firewall is enough.
+    Se estiver utilizando múltiplos firewalls e se autenticar em um firewall,
+    você *não* estará autenticado nos outros firewalls automaticamente.
+    Firewalls diferentes funcionam como sistemas de segurança diferente. Isto
+    acontece por que para a maioria dos aplicativos ter somente um
+    firewall é o suficiente.
 
 Authorization
 -------------
