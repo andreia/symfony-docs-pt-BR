@@ -4,15 +4,15 @@
 Controller
 ==========
 
-A controller is a PHP function you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony2
-``Response`` object). The response could be an HTML page, an XML document,
-a serialized JSON array, an image, a redirect, a 404 error or anything else
-you can dream up. The controller contains whatever arbitrary logic *your
-application* needs to render the content of a page.
+Um Controller é uma função PHP criada para pegar informações de
+requisições HTTP e retornar uma resposta(como um objeto ``Response`` no
+Symfony 2). A resposta pode ser um página HTML, um documento XML, uma
+matriz serializada JSON, uma imagem, um redirecionamento, um erro 404 ou qualquer
+coisa que você possa imaginar. O Controller contém qualquer lógica arbitrária
+que a *sua aplicação* precisa para mostrar o conteúdo de uma página.
 
-To see how simple this is, let's look at a Symfony2 controller in action.
-The following controller would render a page that simply prints ``Hello world!``::
+Para ver o quão simples isto é, vamos dar uma olhada no Controller do Symfony2
+em ação. O Controller a seguir mostraria uma página com o nosso amigo ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -21,28 +21,27 @@ The following controller would render a page that simply prints ``Hello world!``
         return new Response('Hello world!');
     }
 
-The goal of a controller is always the same: create and return a ``Response``
-object. Along the way, it might read information from the request, load a
-database resource, send an email, or set information on the user's session.
-But in all cases, the controller will eventually return the ``Response`` object
-that will be delivered back to the client.
+O objetivo de um Controller é sempre o mesmo: criar e retornar um objeto ``Response``.
+Em seu caminho, ele pode ler informações da requisição, carregar recursos do banco
+de dados, enviar um e-mail ou alterar informações na sessão do usuário.
+Mas em todos os casos, o Controller vai eventualmente retornar o objeto ``Response``
+de volta para quem chamou.
 
-There's no magic and no other requirements to worry about! Here are a few
-common examples:
+Não há magica nem outros aspectos a se preocupar! Aqui estão alguns exemplos:
 
-* *Controller A* prepares a ``Response`` object representing the content
-  for the homepage of the site.
+* *Controller A* prepara um objeto ``Response`` representando o conteúdo
+  para a página principal do site.
 
-* *Controller B* reads the ``slug`` parameter from the request to load a
-  blog entry from the database and create a ``Response`` object displaying
-  that blog. If the ``slug`` can't be found in the database, it creates and
-  returns a ``Response`` object with a 404 status code.
+* *Controller B* lê o parâmetro ``slug`` da requisição para carrega um post
+  no blog do banco de dados e criar um objeto ``Response`` mostrando o blog.
+  Se o parâmetro ``slug`` não for encontrado no banco de dados, o Controller
+  cria um objeto ``Response`` com a mensagem de status 404.
 
-* *Controller C* handles the form submission of a contact form. It reads
-  the form information from the request, saves the contact information to
-  the database and emails the contact information to the webmaster. Finally,
-  it creates a ``Response`` object that redirects the client's browser to
-  the contact form "thank you" page.
+* *Controller C* Recebe a submissão de um formulário de contato. Lê a 
+  informação da requisição, salva as informações de contato no banco e envia
+  um e-mail com as informações para o webmaster. Enfim cria um objeto 
+  ``Response`` que irá redirecionar o browser do usuário para a página
+  de contato dizendo "Obrigado pelo Contato".
 
 .. index::
    single: Controller; Request-controller-response lifecycle
