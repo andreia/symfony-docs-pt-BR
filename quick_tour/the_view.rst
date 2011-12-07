@@ -8,7 +8,7 @@ de templates para PHP flexível, rápido e seguro. Ele faz com que seus template
 sejam mais legíveis e concisos e também os torna mais amigáveis para os web
 designers.
 
-.. nota::
+.. note::
 
     Em vez do Twig, você também pode usar :doc:`PHP </cookbook/templating/PHP>`
     para os seus templates. Ambos são suportados pelo Symfony2.
@@ -17,7 +17,7 @@ designers.
 Familiarizando-se com o Twig
 ----------------------------
 
-.. dica::
+.. tip::
 	
 	Se quiser aprender a usar o Twig, nós recomendamos fortemente que leia a
 	`documentação`_ oficial dele. Essa seção é apenas uma visão geral sobre os
@@ -54,7 +54,7 @@ template:
     </html>
 
 
-.. dica::
+.. tip::
 
    Podem ser incluídos comentários nos templates usando o delimitador 
    ``{# ... #}``.
@@ -92,7 +92,7 @@ variável usando dot notation (``.``):
     {# pass arguments to a method #}
     {{ user.date('Y-m-d') }}
 
-.. nota::
+.. note::
 
 	É importante saber que as chaves não fazem parte da variável mas sim do
 	comando de impressão. Se você acessar variáveis em tags não coloque as 
@@ -245,7 +245,7 @@ parâmetros são os valores dos marcadores definidos no padrão da rota::
         return array('name' => $name);
     }
 
-.. dica::
+.. tip::
 
     A função ``url`` cria URLs *absolutas*: ``{{ url('_demo_hello', {
     'name': 'Thomas' }) }}``.
@@ -287,7 +287,7 @@ e logo você aprenderá que essa simplicidade está escondida debaixo de uma
 arquitetura muito flexível.
 
 Mas eu já estou me adiantando. Primeiro, você precisa aprender mais sobre o
-controller e esse é exatamente o assunto da :doc:próxima parte do tutorial<the_controller>.
+controller e esse é exatamente o assunto da :doc:`próxima parte do tutorial<the_controller>`.
 Pronto para mais 10 minutos de Symfony2?
 
 .. _Twig:          http://twig.sensiolabs.org/
