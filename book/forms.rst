@@ -1,30 +1,30 @@
 .. index::
-   single: Forms
+   single: Formulários
 
-Forms
-=====
+Formulários
+===========
 
-Dealing with HTML forms is one of the most common - and challenging - tasks for
-a web developer. Symfony2 integrates a Form component that makes dealing with
-forms easy. In this chapter, you'll build a complex form from the ground-up,
-learning the most important features of the form library along the way.
+Lidar com formulários HTML é uma das mais comuns - e desafiadoras - tarefas para um 
+desenvolvedor web. O Symfony2 integra um componente de formulário que torna fácil a tarefa de lidar 
+com formulários. Neste capítulo, você vai construir um formulário complexo a partir do zero,
+aprendendo as características mais importantes da biblioteca de formulários ao longo do caminho.
 
 .. note::
 
-   The Symfony form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form Component`_
-   on Github.
+   O componente de formulário do Symfony é uma biblioteca independente que pode ser utilizada fora
+   de projetos Symfony2. Para mais informações, consulte o `Componente de Formulário do Symfony2`_
+   no Github.
 
 .. index::
-   single: Forms; Create a simple form
+   single: Formulários; Criando um formulário simples
 
-Creating a Simple Form
-----------------------
+Criando um formulário simples
+-----------------------------
 
-Suppose you're building a simple todo list application that will need to
-display "tasks". Because your users will need to edit and create tasks, you're
-going to need to build a form. But before you begin, first focus on the generic
-``Task`` class that represents and stores the data for a single task:
+Suponha que você está construindo uma aplicação simples de lista de tarefas que precisará
+exibir "tarefas". Devido aos seus usuários terem que editar e criar tarefas, você precisará 
+construir um formulário. Mas, antes de começar, primeiro vamos focar na classe genérica ``Task`` 
+que representa e armazena os dados de uma única tarefa:
 
 .. code-block:: php
 
@@ -58,31 +58,31 @@ going to need to build a form. But before you begin, first focus on the generic
 
 .. note::
 
-   If you're coding along with this example, create the ``AcmeTaskBundle``
-   first by running the following command (and accepting all of the default
-   options):
+   Se você está codificando junto com este exemplo, crie o ``AcmeTaskBundle``
+   primeiro, executando o seguinte comando (e aceite todas as opções
+   padrão):
 
    .. code-block:: bash
 
         php app/console generate:bundle --namespace=Acme/TaskBundle
 
-This class is a "plain-old-PHP-object" because, so far, it has nothing
-to do with Symfony or any other library. It's quite simply a normal PHP object
-that directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). Of course, by the end of this chapter,
-you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
-its data, and persist it to the database.
+Essa classe é um "antigo objeto PHP simples", porque, até agora, não tem nada
+a ver com Symfony ou qualquer outra biblioteca. É simplesmente um objeto PHP normal
+que, diretamente resolve um problema no interior da *sua* aplicação (ou seja, a necessidade de
+representar uma tarefa na sua aplicação). Claro, até o final deste capítulo,
+você será capaz de enviar dados para uma instância ``Task`` (através de um formulário HTML), validar
+os seus dados, e persisti-los para o banco de dados.
 
 .. index::
-   single: Forms; Create a form in a controller
+   single: Formulários; Criando um formulário no controlador
 
-Building the Form
-~~~~~~~~~~~~~~~~~
+Construindo o Formulário
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you've created a ``Task`` class, the next step is to create and
-render the actual HTML form. In Symfony2, this is done by building a form
-object and then rendering it in a template. For now, this can all be done
-from inside a controller::
+Agora que você já criou a classe ``Task``, o próximo passo é criar e renderizar 
+o formulário HTML real. No Symfony2, isto é feito através da construção de um objeto 
+de formulário e, em seguida, renderizando em um template. Por ora, tudo isso pode 
+ser feito dentro de um controlador::
 
     // src/Acme/TaskBundle/Controller/DefaultController.php
     namespace Acme\TaskBundle\Controller;
@@ -113,34 +113,34 @@ from inside a controller::
 
 .. tip::
 
-   This examples shows you how to build your form directly in the controller.
-   Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
-   how to build your form in a standalone class, which is recommended as
-   your form becomes reusable.
+   Este exemplo mostra como construir o seu formulário diretamente no controlador.
+   Mais tarde, na seção ":ref:`book-form-creating-form-classes`", você aprenderá
+   como construir o seu formulário em uma classe independente, que é o recomendado 
+   pois torna o seu formulário reutilizável.
 
-Creating a form requires relatively little code because Symfony2 form objects
-are built with a "form builder". The form builder's purpose is to allow you
-to write simple form "recipes", and have it do all the heavy-lifting of actually
-building the form.
+A criação de um formulário requer relativamente pouco código porque os objetos de formulário do Symfony2
+são construídos com um "construtor de formulários". A finalidade do construtor de formulários é permitir 
+que você escreva "receitas" simples de formulários, e ele fazer todo o trabalho pesado, de, realmente,
+construir o formulário.
 
-In this example, you've added two fields to your form - ``task`` and ``dueDate`` -
-corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
-You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
-other things, determines which HTML form tag(s) is rendered for that field.
+Neste exemplo, você acrescentou dois campos ao seu formulário - ``task`` e ``dueDate`` -
+que correspondem as propriedades ``task`` e ``dueDate`` da classe ``Task``.
+Você também atribuiu a cada um deles um "type" (exemplo: ``text``, ``date``), que, entre
+outras coisas, determina qual(ais) tag(s) HTML de formulário serão renderizadas para esse campo.
 
-Symfony2 comes with many built-in types that will be discussed shortly
-(see :ref:`book-forms-type-reference`).
+O Symfony2 vem com muitos tipos embutidos, que serão discutidos em breve
+(veja :ref:`book-forms-type-reference`).
 
 .. index::
-  single: Forms; Basic template rendering
+  single: Forms; Renderização básica do template
 
-Rendering the Form
-~~~~~~~~~~~~~~~~~~
+Renderizando o Formulário
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that the form has been created, the next step is to render it. This is
-done by passing a special form "view" object to your template (notice the
-``$form->createView()`` in the controller above) and using a set of form
-helper functions:
+Agora que o formulário foi criado, o próximo passo é renderizá-lo. Isto é
+feito passando um objeto "view" especial para o seu template (note o
+``$form->createView()`` no controlador acima) e usando um conjunto de funções helper
+para o formulário:
 
 .. configuration-block::
 
@@ -169,40 +169,40 @@ helper functions:
 
 .. note::
 
-    This example assumes that you've created a route called ``task_new``
-    that points to the ``AcmeTaskBundle:Default:new`` controller that
-    was created earlier.
+    Este exemplo assume que você criou uma rota chamada ``task_new``
+    que aponta para o controlador ``AcmeTaskBundle:Default:new`` o qual 
+    foi criado anteriormente.
 
-That's it! By printing ``form_widget(form)``, each field in the form is
-rendered, along with a label and error message (if there is one). As easy
-as this is, it's not very flexible (yet). Usually, you'll want to render each
-form field individually so you can control how the form looks. You'll learn how
-to do that in the ":ref:`form-rendering-template`" section.
+É isso! Ao imprimir o ``form_widget(form)``, cada campo do formulário é
+renderizado, juntamente com uma label e uma mensagem de erro (se houver). Fácil
+assim, embora não muito flexível (ainda). Normalmente, você desejará renderizar cada
+campo do formulário individualmente, pois poderá controlar como será a aparência do formulário. 
+Você aprenderá como fazer isso na seção ":ref:`form-rendering-template`".
 
-Before moving on, notice how the rendered ``task`` input field has the value
-of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
-This is the first job of a form: to take data from an object and translate
-it into a format that's suitable for being rendered in an HTML form.
+Antes de prosseguirmos, observe como o campo input ``task`` renderizado tem o valor
+da propriedade ``task`` do objeto ``$task`` (Ex. "Write a blog post").
+Este é o primeiro trabalho de um formulário: pegar os dados de um objeto e traduzi-lo 
+em um formato que seja adequado para ser renderizado em um formulário HTML.
 
 .. tip::
 
-   The form system is smart enough to access the value of the protected
-   ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
-   ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the form component can get and put data onto the
-   property. For a Boolean property, you can use an "isset" method (e.g.
-   ``isPublished()``) instead of a getter (e.g. ``getPublished()``).
+   O sistema de formulários é inteligente o suficiente para acessar o valor da propriedade protegida
+   ``task`` através dos métodos ``getTask()`` e ``setTask()`` na classe ``Task``. A menos que a 
+   propriedade seja pública, ela *deve* ter um método "getter" e "setter" para que o componente de 
+   formulário possa obter e definir os dados na propriedade. Para uma propriedade Boolean, você pode 
+   usar um método "isser" (por exemplo, ``isPublished()``) em vez de um getter 
+   (Ex. ``getPublished()``).
 
 .. index::
   single: Forms; Handling form submission
 
-Handling Form Submissions
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Manipulando o envio de formulários
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The second job of a form is to translate user-submitted data back to the
-properties of an object. To make this happen, the submitted data from the
-user must be bound to the form. Add the following functionality to your
-controller::
+O segundo trabalho de um formulário é traduzir os dados enviados pelo usuário de volta as
+propriedades de um objeto. Para que isso aconteça, os dados enviados pelo
+usuário devem ser vinculados (bound) ao formulário. Adicione as seguintes funcionalidades 
+no seu controlador::
 
     // ...
 
@@ -229,53 +229,53 @@ controller::
         // ...
     }
 
-Now, when submitting the form, the controller binds the submitted data to the
-form, which translates that data back to the ``task`` and ``dueDate`` properties
-of the ``$task`` object. This all happens via the ``bindRequest()`` method.
+Agora, quando enviar o formulário, o controlador vincula (bind) ao formulário os dados enviados, 
+que traduz os dados de volta as propriedades ``task`` e ``dueDate``
+do objeto ``$task``. Isso tudo acontece através do método ``bindRequest()``.
 
 .. note::
 
-    As soon as ``bindRequest()`` is called, the submitted data is transferred
-    to the underlying object immediately. This happens regardless of whether
-    or not the underlying data is actually valid.
+    Assim que o ``bindRequest()`` é chamado, os dados enviados são transferidos
+    imediatamente para o objeto implícito. Isso acontece independentemente de
+    os dados implícitos serem realmente válidos.
 
-This controller follows a common pattern for handling forms, and has three
-possible paths:
+Este controlador segue um padrão comum para a manipulação de formulários, e possui três
+caminhos possíveis:
 
-#. When initially loading the page in a browser, the request method is ``GET``
-   and the form is simply created and rendered;
+#. Inicialmente quando se carrega a página em um navegador, o método de solicitação (request) é 
+   ``GET`` e o formulário é simplesmente criado e renderizado;
 
-#. When the user submits the form (i.e. the method is ``POST``) with invalid
-   data (validation is covered in the next section), the form is bound and
-   then rendered, this time displaying all validation errors;
+#. Quando o usuário envia o formulário (Ex., o método é ``POST``) mas os dados não são válidos
+   (a validação será discutida na próxima seção), o formulário é vinculado (bound) e
+   então processado, desta vez exibindo todos os erros de validação;
 
-#. When the user submits the form with valid data, the form is bound and
-   you have the opportunity to perform some actions using the ``$task``
-   object (e.g. persisting it to the database) before redirecting the user
-   to some other page (e.g. a "thank you" or "success" page).
+#. Quando o usuário envia o formulário com dados válidos, o formulário é vinculado (bound) e
+   você tem a oportunidade de executar algumas ações usando o objeto ``$task``
+   (por exemplo, persisti-lo para o banco de dados) antes de redirecionar o usuário
+   para outra página (por exemplo, uma página de "obrigado" ou "sucesso").
 
 .. note::
 
-   Redirecting a user after a successful form submission prevents the user
-   from being able to hit "refresh" and re-post the data.
+   Redirecionar o usuário após o envio bem sucedido do formulário impede que o usuário,
+   ao clicar no "atualizar", reenvie os dados do formulário.
 
 .. index::
-   single: Forms; Validation
+   single: Formulários; Validação
 
-Form Validation
----------------
+Validação do formulário
+-----------------------
 
-In the previous section, you learned how a form can be submitted with valid
-or invalid data. In Symfony2, validation is applied to the underlying object
-(e.g. ``Task``). In other words, the question isn't whether the "form" is
-valid, but whether or not the ``$task`` object is valid after the form has
-applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
-that asks the ``$task`` object whether or not it has valid data.
+Na seção anterior, você aprendeu como um formulário pode ser enviado com dados 
+válidos ou inválidos. No Symfony2, a validação é aplicada ao objeto implícito
+(Ex., ``Task``). Em outras palavras, a questão não é se o "formulário" é
+válido, mas se o objeto ``$task`` é válido após a aplicação dos dados enviados pelo
+formulário. Chamando ``$form->isValid()`` é um atalho
+que pergunta ao objeto ``$task`` se ele possui ou não dados válidos.
 
-Validation is done by adding a set of rules (called constraints) to a class. To
-see this in action, add validation constraints so that the ``task`` field cannot
-be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
-object.
+A validação é feita adicionando um conjunto de regras (chamadas constraints) à uma classe. Para
+ver isso em ação, adicione constraints de validação para que o campo ``task`` não deve 
+ser vazio e o campo ``dueDate`` não deve ser vazio e deve ser um objeto \DateTime 
+válido.
 
 .. configuration-block::
 
@@ -344,54 +344,54 @@ object.
             }
         }
 
-That's it! If you re-submit the form with invalid data, you'll see the
-corresponding errors printed out with the form.
+É isso! Se você reenviar o formulário com dados inválidos, verá os
+erros correspondentes exibidos com o formulário.
 
 .. _book-forms-html5-validation-disable:
 
-.. sidebar:: HTML5 Validation
+.. sidebar:: Validação HTML5
 
-   As of HTML5, many browsers can natively enforce certain validation constraints
-   on the client side. The most common validation is activated by rendering
-   a ``required`` attribute on fields that are required. For browsers that
-   support HTML5, this will result in a native browser message being displayed
-   if the user tries to submit the form with that field blank.
+   Com o HTML5, muitos navegadores podem, nativamente, impor certas constraints de validação 
+   no lado do cliente. A validação mais comum é ativada renderizando
+   um atributo ``required`` em campos que são obrigatórios. Para navegadores que
+   suportam HTML5, isso irá resultar em uma mensagem nativa do navegador sendo exibida
+   se o usuário tentar enviar o formulário com o campo em branco.
    
-   Generated forms take full advantage of this new feature by adding sensible
-   HTML attributes that trigger the validation. The client-side validation,
-   however, can be disabled by adding the ``novalidate`` attribute to the
-   ``form`` tag or ``formnovalidate`` to the submit tag. This is especially
-   useful when you want to test your server-side validation constraints,
-   but are being prevented by your browser from, for example, submitting
-   blank fields.
+   Os formulários gerados podem aproveitar ao máximo esta nova funcionalidade, adicionando 
+   atributos HTML que disparam a validação. A validação ao lado do cliente,
+   entretanto, pode ser desativada ao adicionar o atributo ``novalidate`` na
+   tag ``form`` ou ``formnovalidate`` na tag submit. Isto é especialmente
+   útil quando você quiser testar suas constraints de validação ao lado do servidor,
+   mas estão sendo impedidas pelo seu navegador, por exemplo, ao enviar 
+   campos em branco.
 
-Validation is a very powerful feature of Symfony2 and has its own
-:doc:`dedicated chapter</book/validation>`.
+A validação é um recurso muito poderoso do Symfony2 e tem seu próprio
+:doc:`capítulo dedicado</book/validation>`.
 
 .. index::
-   single: Forms; Validation Groups
+   single: Formulários; Grupos de Validação
 
 .. _book-forms-validation-groups:
 
-Validation Groups
-~~~~~~~~~~~~~~~~~
+Grupos de Validação
+~~~~~~~~~~~~~~~~~~~
 
 .. tip::
 
-    If you're not using :ref:`validation groups <book-validation-validation-groups>`,
-    then you can skip this section.
+    Se você não estiver usando :ref:`grupos de validação<book-validation-validation-groups>`,
+    então, você pode pular esta seção.
 
-If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
-you'll need to specify which validation group(s) your form should use::
+Se o seu objeto aproveita a :ref:`grupos de validação<book-validation-validation-groups>`,
+você precisa especificar qual(ais) grupo(s) de validação seu formulário deve usar::
 
     $form = $this->createFormBuilder($users, array(
         'validation_groups' => array('registration'),
     ))->add(...)
     ;
 
-If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``getDefaultOptions()``
-method::
+Se você está criando :ref:`classes de formulário<book-form-creating-form-classes>` (uma
+boa prática), então você precisa adicionar o seguinte ao método 
+``getDefaultOptions()``::
 
     public function getDefaultOptions(array $options)
     {
@@ -400,76 +400,113 @@ method::
         );
     }
 
-In both of these cases, *only* the ``registration`` validation group will
-be used to validate the underlying object.
+Em ambos os casos, *apenas* o grupo de validação ``registration`` será
+usado para validar o objeto implícito.
+
+Grupos com base nos dados submetidos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   A capacidade de especificar um callback ou Closure no ``validation_groups``
+   é novo na versão 2.1
+
+Se você precisar de alguma lógica avançada para determinar os grupos de validação (por exemplo,
+com base nos dados submetidos), você pode definir a opção ``validation_groups``
+para um ``array callback`` ou uma ``Closure``::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+Isso irá chamar o método estático ``determineValidationGroups()`` na
+classe ``Client`` após o formulário ser vinculado (bound), mas antes da validação ser executada.
+O objeto do formulário é passado como um argumento para esse método (veja o exemplo seguinte).
+Você também pode definir toda a lógica inline usando uma Closure::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
 
 .. index::
-   single: Forms; Built-in Field Types
+   single: Formulários; Tipos de campos integrados
 
 .. _book-forms-type-reference:
 
-Built-in Field Types
---------------------
+Tipos de campos integrados (Built-in)
+-------------------------------------
 
-Symfony comes standard with a large group of field types that cover all of
-the common form fields and data types you'll encounter:
+O Symfony vem, por padrão, com um grande grupo de tipos de campos que cobrem todos os
+os campos comuns de formulário e tipos de dados que você vai encontrar:
 
 .. include:: /reference/forms/types/map.rst.inc
 
-You can also create your own custom field types. This topic is covered in
-the ":doc:`/cookbook/form/create_custom_field_type`" article of the cookbook.
+Você também pode criar os seus próprios tipos de campo personalizados. Este tópico é abordado
+no artigo ":doc:`/cookbook/form/create_custom_field_type`" do cookbook.
 
 .. index::
-   single: Forms; Field type options
+   single: Formulários; Opções dos tipos de campos
 
-Field Type Options
-~~~~~~~~~~~~~~~~~~
+Opções dos tipos de campos
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each field type has a number of options that can be used to configure it.
-For example, the ``dueDate`` field is currently being rendered as 3 select
-boxes. However, the :doc:`date field</reference/forms/types/date>` can be
-configured to be rendered as a single text box (where the user would enter
-the date as a string in the box)::
+Cada tipo de campo possui um número de opções que podem ser usadas ​​para configurá-lo.
+Por exemplo, o campo ``dueDate`` é atualmente processado como 3 select
+boxes. No entanto, o :doc:`campo date</reference/forms/types/date>` pode ser
+configurado para ser renderizado como uma caixa de texto simples (onde o usuário deve 
+digitar a data como uma string na caixa)::
 
     ->add('dueDate', 'date', array('widget' => 'single_text'))
 
 .. image:: /images/book/form-simple2.png
     :align: center
 
-Each field type has a number of different options that can be passed to it.
-Many of these are specific to the field type and details can be found in
-the documentation for each type.
+Cada tipo de campo tem um número de opções diferentes que podem ser passadas à ele.
+Muitas delas são específicas para o tipo de campo e os detalhes podem ser encontrados 
+na documentação de cada tipo.
 
-.. sidebar:: The ``required`` option
+.. sidebar:: A opção ``required`` 
 
-    The most common option is the ``required`` option, which can be applied to
-    any field. By default, the ``required`` option is set to ``true``, meaning
-    that HTML5-ready browsers will apply client-side validation if the field
-    is left blank. If you don't want this behavior, either set the ``required``
-    option on your field to ``false`` or :ref:`disable HTML5 validation<book-forms-html5-validation-disable>`.
+    A opção mais comum é a opção ``required``, que pode ser aplicada à
+    qualquer campo. Por padrão, a opção ``required`` é definida como ``true``, o que significa
+    que os navegadores prontos para o HTML5 aplicarão a validação ao lado do cliente se o campo
+    for deixado em branco. Se você não deseja esse comportamento, defina a opção ``required``
+    em seu campo para ``false`` ou :ref:`desabilite a validação HTML5<book-forms-html5-validation-disable>`.
     
-    Also note that setting the ``required`` option to ``true`` will **not**
-    result in server-side validation to be applied. In other words, if a
-    user submits a blank value for the field (either with an old browser
-    or web service, for example), it will be accepted as a valid value unless
-    you use Symfony's ``NotBlank`` or ``NotNull`` validation constraint.
+    Além disso, note que a configuração da opção ``required`` para ``true`` **não**
+    resultará em validação aplicada ao lado do servidor. Em outras palavras, se um
+    usuário enviar um valor em branco para o campo (ou usar um navegador antigo
+    ou web service, por exemplo), ela será aceita como um valor válido, a menos
+    que você utilize a constraint de validação do Symfony ``NotBlank`` ou ``NotNull``.
     
-    In other words, the ``required`` option is "nice", but true server-side
-    validation should *always* be used.
+    Em outras palavras, a opção ``required`` é "agradável", mas a validação verdadeira 
+    ao lado do servidor *sempre* deverá ser usada.
 
 .. index::
-   single: Forms; Field type guessing
+   single: Formulários; Adivinhando o tipo do campo
 
 .. _book-forms-field-guessing:
 
-Field Type Guessing
--------------------
+Adivinhando o tipo do campo
+---------------------------
 
-Now that you've added validation metadata to the ``Task`` class, Symfony
-already knows a bit about your fields. If you allow it, Symfony can "guess"
-the type of your field and set it up for you. In this example, Symfony can
-guess from the validation rules that both the ``task`` field is a normal
-``text`` field and the ``dueDate`` field is a ``date`` field::
+Agora que você adicionou metadados de validação na classe ``Task``, o Symfony
+já sabe um pouco sobre os seus campos. Se você permitir, o Symfony pode "adivinhar"
+o tipo do seu campo e configurá-lo para você. Neste exemplo, o Symfony pode
+adivinhar a partir das regras de validação que o campo ``task`` é um campo ``texto`` 
+normal e o campo ``dueDate`` é um campo ``data``::
 
     public function newAction()
     {
@@ -481,67 +518,67 @@ guess from the validation rules that both the ``task`` field is a normal
             ->getForm();
     }
 
-The "guessing" is activated when you omit the second argument to the ``add()``
-method (or if you pass ``null`` to it). If you pass an options array as the
-third argument (done for ``dueDate`` above), these options are applied to
-the guessed field.
+A "adivinhação" é ativada quando você omitir o segundo argumento do método ``add()``
+(ou se você passar ``null`` para ele). Se você passar um array de opções como o
+terceiro argumento (feito para o ``dueDate`` acima), estas opções são aplicadas ao
+campo adivinhado.
 
 .. caution::
 
-    If your form uses a specific validation group, the field type guesser
-    will still consider *all* validation constraints when guessing your
-    field types (including constraints that are not part of the validation
-    group(s) being used).
+    Se o formulário usa um grupo de validação específico, o adivinhador do tipo de campo
+    ainda vai considerar *todas* as constraints de validação quando estiver adivinhando os seus 
+    tipos de campos (incluindo as constraints que não fazem parte dos grupos de validação
+    sendo utilizados).
 
 .. index::
-   single: Forms; Field type guessing
+   single: Formulários; Adivinhando o tipo do campo
 
-Field Type Options Guessing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adivinhando as opções dos tipos de campos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to guessing the "type" for a field, Symfony can also try to guess
-the correct values of a number of field options.
+Além de adivinhar o "tipo" para um campo, o Symfony também pode tentar adivinhar
+os valores corretos de uma série de opções do campo.
 
 .. tip::
 
-    When these options are set, the field will be rendered with special HTML
-    attributes that provide for HTML5 client-side validation. However, it
-    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
-    And though you'll need to manually add your server-side validation, these
-    field type options can then be guessed from that information.
+    Quando essas opções são definidas, o campo será renderizado com atributos HTML especiais
+    que fornecem para a validação HTML5 ao lado do cliente. Entretanto, ele
+    não gera as constraints equivalentes ao lado do servidor (Ex. ``Assert\MaxLength``).
+    E, embora você precisará adicionar manualmente a validação ao lado do servidor, essas
+    opções de tipo de campo podem, então, ser adivinhadas a partir dessa informação.
 
-* ``required``: The ``required`` option can be guessed based off of the validation
-  rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
-  (i.e. is the field ``nullable``). This is very useful, as your client-side
-  validation will automatically match your validation rules.
+* ``required``: A opção ``required`` pode ser adivinhada com base nas regras de 
+  validação (ou seja, o campo é ``NotBlank`` ou ``NotNull``) ou metadados do Doctrine
+  (ou seja, é o campo é ``nullable``). Isto é muito útil, pois a sua validação ao lado
+  do cliente irá corresponder automaticamente as suas regras de validação.
 
-* ``min_length``: If the field is some sort of text field, then the ``min_length``
-  option can be guessed from the validation constrains (if ``MinLength``
-  or ``Min`` is used) or from the Doctrine metadata (via the field's length).
+* ``min_length``: Se o campo é uma espécie de campo de texto, então, a opção ``min_length``
+  pode ser adivinhada a partir das constraints de validação (se o ``MinLength``
+  ou ``Min`` é usado) ou a partir dos metadados do Doctrine (através do tamanho do campo).
 
-* ``max_length``: Similar to ``min_length``, the maximum length can also 
-  be guessed.
+* ``max_length``: Semelhante ao ``min_length``, o tamanho máximo também pode 
+  ser adivinhado.
 
 .. note::
 
-  These field options are *only* guessed if you're using Symfony to guess
-  the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
+  Estas opções de campo são adivinhadas *apenas* se você estiver usando o Symfony para adivinhar
+  o tipo de campo (ou seja, omitir ou passar ``null`` como o segundo argumento para o ``add()``).
 
-If you'd like to change one of the guessed values, you can override it by
-passing the option in the options field array::
+Se você desejar modificar um dos valores adivinhados, você pode sobrescrevê-lo
+passando a opção no array de opções do campo::
 
     ->add('task', null, array('min_length' => 4))
 
 .. index::
-   single: Forms; Rendering in a Template
+   single: Formulários; Renderizando em um Template
 
 .. _form-rendering-template:
 
-Rendering a Form in a Template
-------------------------------
+Renderizando um formulário em um Template
+-----------------------------------------
 
-So far, you've seen how an entire form can be rendered with just one line
-of code. Of course, you'll usually need much more flexibility when rendering:
+Até agora, você viu como um formulário inteiro pode ser renderizado com apenas uma linha
+de código. Claro, você geralmente precisará de muito mais flexibilidade quando estiver renderizando:
 
 .. configuration-block::
 
@@ -575,32 +612,32 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <input type="submit" />
         </form>
 
-Let's take a look at each part:
+Vamos dar uma olhada em cada parte:
 
-* ``form_enctype(form)`` - If at least one field is a file upload field, this
-  renders the obligatory ``enctype="multipart/form-data"``;
+* ``form_enctype(form)`` - Se pelo menos um campo for um campo para upload de arquivo, ele irá 
+  renderizar o ``enctype="multipart/form-data"`` obrigatório;
 
-* ``form_errors(form)`` - Renders any errors global to the whole form
-  (field-specific errors are displayed next to each field);
+* ``form_errors(form)`` - Renderiza quaisquer erros globais para todo o formulário
+  (erros específicos de campos são exibidos ao lado de cada campo);
 
-* ``form_row(form.dueDate)`` - Renders the label, any errors, and the HTML
-  form widget for the given field (e.g. ``dueDate``) inside, by default, a
-  ``div`` element;
+* ``form_row(form.dueDate)`` - Renderiza a label, qualquer erro, e o widget 
+  HTML do formulário para o campo informado (Ex. ``dueDate``), por padrão, um
+  elemento ``div``;
 
-* ``form_rest(form)`` - Renders any fields that have not yet been rendered.
-  It's usually a good idea to place a call to this helper at the bottom of
-  each form (in case you forgot to output a field or don't want to bother
-  manually rendering hidden fields). This helper is also useful for taking
-  advantage of the automatic :ref:`CSRF Protection<forms-csrf>`.
+* ``form_rest(form)`` - Renderiza quaisquer campos que ainda não tenham sido renderizados.
+  Geralmente é uma boa idéia fazer uma chamada deste helper na parte inferior de
+  cada formulário (no caso de você ter esquecido algum campo ou não quer se preocupar
+  em renderizar manualmente os campos ocultos). Este helper também é útil para aproveitar
+  a :ref:`Proteção CSRF<forms-csrf>` automática.
 
-The majority of the work is done by the ``form_row`` helper, which renders
-the label, errors and HTML form widget of each field inside a ``div`` tag
-by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
-output can be customized on many different levels.
+A maioria do trabalho é feito pelo helper ``form_row``, que renderiza
+a label, os erros e widgets HTML do formulário para cada campo dentro de uma tag ``div``
+por padrão. Na seção :ref:`form-theming`, você aprenderá como a saída do ``form_row``
+pode ser personalizada em muitos níveis diferentes.
 
 .. tip::
 
-    You can access the current data of your form via ``form.vars.value``:
+    Você pode acessar os dados atuais do seu formulário via ``form.vars.value``:
     
     .. configuration-block::
 
@@ -613,16 +650,16 @@ output can be customized on many different levels.
             <?php echo $view['form']->get('value')->getTask() ?>
 
 .. index::
-   single: Forms; Rendering each field by hand
+   single: Fromulários; Renderizando cada campo manualmente
 
-Rendering each Field by Hand
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Renderizando cada campo manualmente
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``form_row`` helper is great because you can very quickly render each
-field of your form (and the markup used for the "row" can be customized as
-well). But since life isn't always so simple, you can also render each field
-entirely by hand. The end-product of the following is the same as when you
-used the ``form_row`` helper:
+O helper ``form_row`` é ótimo porque você pode renderizar rapidamente cada
+campo de seu formulário (e também é possível personalizar a marcação utilizada para a "linha"
+). Mas, como a vida nem sempre é tão simples, você também pode renderizar cada campo
+inteiramente à mão. O produto final do que segue é o mesmo de quando você
+usou o helper ``form_row``:
 
 .. configuration-block::
 
@@ -662,8 +699,8 @@ used the ``form_row`` helper:
 
         <?php echo $view['form']->rest($form) ?>
 
-If the auto-generated label for a field isn't quite right, you can explicitly
-specify it:
+Se a label auto-gerada para um campo não estiver correta, você pode especificá-la
+explicitamente:
 
 .. configuration-block::
 
@@ -675,11 +712,11 @@ specify it:
 
         <?php echo $view['form']->label($form['task'], 'Task Description') ?>
 
-Finally, some field types have additional rendering options that can be passed
-to the widget. These options are documented with each type, but one common
-options is ``attr``, which allows you to modify attributes on the form element.
-The following would add the ``task_field`` class to the rendered input text
-field:
+Finalmente, alguns tipos de campos tem opções de renderização adicionais que podem ser passadas
+para o widget. Estas opções estão documentadas com cada tipo, mas uma opção em comum
+é o ``attr``, que permite modificar atributos no elemento do formulário.
+O seguinte código adiciona a classe ``task_field`` para o campo texto de entrada
+renderizado:
 
 .. configuration-block::
 
@@ -693,26 +730,26 @@ field:
             'attr' => array('class' => 'task_field'),
         )) ?>
 
-Twig Template Function Reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Referência de funções dos templates Twig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using Twig, a full reference of the form rendering functions is
-available in the :doc:`reference manual</reference/forms/twig_reference>`.
-Read this to know everything about the helpers available and the options
-that can be used with each.
+Se você está usando o Twig, uma referência completa das funções de renderização do formulário 
+está disponível no :doc:`manual de referência</reference/forms/twig_reference>`.
+Leia ele para saber tudo sobre os helpers disponíveis e as opções
+que podem ser usadas ​​com cada um.
 
 .. index::
-   single: Forms; Creating form classes
+   single: Formulários; Criando classes de formulário
 
 .. _book-form-creating-form-classes:
 
-Creating Form Classes
----------------------
+Criando classes de formulário
+-----------------------------
 
-As you've seen, a form can be created and used directly in a controller.
-However, a better practice is to build the form in a separate, standalone PHP
-class, which can then be reused anywhere in your application. Create a new class
-that will house the logic for building the task form:
+Como você viu, um formulário pode ser criado e usado diretamente em um controlador.
+No entanto, uma prática melhor é construir o formulário separadamente, em uma classe PHP independente, 
+que poderá, então, ser reutilizada em qualquer lugar na sua aplicação. Crie uma nova classe
+que vai abrigar a lógica da construção do formulário de tarefas:
 
 .. code-block:: php
 
@@ -737,9 +774,9 @@ that will house the logic for building the task form:
         }
     }
 
-This new class contains all the directions needed to create the task form
-(note that the ``getName()`` method should return a unique identifier for this
-form "type"). It can be used to quickly build a form object in the controller:
+Esta nova classe contém todas as orientações necessárias para criar o formulário de tarefas
+(Note que o método ``getName()`` deve retornar um identificador exclusivo para esse
+"tipo" do formulário). Ele pode ser usado para construir rapidamente um objeto de formulário no controlador:
 
 .. code-block:: php
 
@@ -756,21 +793,21 @@ form "type"). It can be used to quickly build a form object in the controller:
         // ...
     }
 
-Placing the form logic into its own class means that the form can be easily
-reused elsewhere in your project. This is the best way to create forms, but
-the choice is ultimately up to you.
+Colocando a lógica do formulário em sua própria classe significa que o formulário pode ser facilmente
+reutilizado em outros lugares no seu projeto. Esta é a melhor forma de criar formulários, mas,
+a decisão final depende de você.
 
 .. _book-forms-data-class:
 
-.. sidebar:: Setting the ``data_class``
+.. sidebar:: Setando o ``data_class``
 
-    Every form needs to know the name of the class that holds the underlying
-    data (e.g. ``Acme\TaskBundle\Entity\Task``). Usually, this is just guessed
-    based off of the object passed to the second argument to ``createForm``
-    (i.e. ``$task``). Later, when you begin embedding forms, this will no
-    longer be sufficient. So, while not always necessary, it's generally a
-    good idea to explicitly specify the ``data_class`` option by add the
-    following to your form type class::
+    Todo formulário precisa saber o nome da classe que contém os dados implícitos
+    (Ex. ``Acme\TaskBundle\Entity\Task``). Normalmente, ele é apenas adivinhado
+    com base no objeto passado no segundo argumento para o ``createForm``
+    (Ex. ``$task``). Mais tarde, quando você iniciar nos formulários embutidos, isto 
+    não será suficiente. Então, embora nem sempre necessário, é geralmente uma
+    boa idéia especificar explicitamente a opção ``data_class`` adicionando
+    o seguinte à sua classe type de formulário::
 
         public function getDefaultOptions(array $options)
         {
@@ -780,18 +817,18 @@ the choice is ultimately up to you.
         }
 
 .. index::
-   pair: Forms; Doctrine
+   pair: Formulários; Doctrine
 
-Forms and Doctrine
-------------------
+Formulários e o Doctrine
+------------------------
 
-The goal of a form is to translate data from an object (e.g. ``Task``) to an
-HTML form and then translate user-submitted data back to the original object. As
-such, the topic of persisting the ``Task`` object to the database is entirely
-unrelated to the topic of forms. But, if you've configured the ``Task`` class
-to be persisted via Doctrine (i.e. you've added
-:ref:`mapping metadata<book-doctrine-adding-mapping>` for it), then persisting
-it after a form submission can be done when the form is valid::
+O objetivo de um formulário é traduzir os dados de um objeto (Ex. ``Task``) para um 
+formulário HTML e, em seguida, traduzir os dados enviados pelo usuário de volta ao objeto original. 
+Como tal, o tópico da persistência do objeto ``Task`` no banco de dados é totalmente
+não relacionado ao tópico de formulários. Mas, se você configurou a classe ``Task``
+para ser persistida através do Doctrine (ou seja, você adicionou
+:ref:`metadados de mapeamento<book-doctrine-adding-mapping>` à ele), então, a persistência
+após a submissão do formulário pode ser feita quando o formulário é válido::
 
     if ($form->isValid()) {
         $em = $this->getDoctrine()->getEntityManager();
@@ -801,34 +838,34 @@ it after a form submission can be done when the form is valid::
         return $this->redirect($this->generateUrl('task_success'));
     }
 
-If, for some reason, you don't have access to your original ``$task`` object,
-you can fetch it from the form::
+Se, por algum motivo, você não tem acesso ao seu objeto ``$task`` original,
+você pode buscá-lo a partir do formulário::
 
     $task = $form->getData();
 
-For more information, see the :doc:`Doctrine ORM chapter</book/doctrine>`.
+Para mais informações, consulte o :doc:`capítulo Doctrine ORM</book/doctrine>`.
 
-The key thing to understand is that when the form is bound, the submitted
-data is transferred to the underlying object immediately. If you want to
-persist that data, you simply need to persist the object itself (which already
-contains the submitted data).
+A chave para entender é que, quando o formulário é vinculado (bound), os dados submetidos
+são transferidos imediatamente para o objeto implícito. Se você quiser
+persistir esses dados, basta persistir o objeto em si (que já
+contém os dados submetidos).
 
 .. index::
-   single: Forms; Embedded forms
+   single: Formulários; Formulários embutidos
 
-Embedded Forms
---------------
+Formulários embutidos
+---------------------
 
-Often, you'll want to build a form that will include fields from many different
-objects. For example, a registration form may contain data belonging to
-a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the form component.
+Muitas vezes, você desejará criar um formulário que vai incluir campos de vários objetos 
+diferentes. Por exemplo, um formulário de inscrição pode conter dados que pertencem a
+um objeto ``User``, bem como, muitos objetos ``Address``. Felizmente, isto
+é fácil e natural com o componente de formulário.
 
-Embedding a Single Object
+Embutindo um único objeto
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
-of course, by creating the ``Category`` object::
+Suponha que cada ``Task`` pertence a um simples objeto ``Category``. Inicie, 
+é claro, criando o objeto ``Category``::
 
     // src/Acme/TaskBundle/Entity/Category.php
     namespace Acme\TaskBundle\Entity;
@@ -843,7 +880,7 @@ of course, by creating the ``Category`` object::
         public $name;
     }
 
-Next, add a new ``category`` property to the ``Task`` class::
+Em seguida, adicione uma nova propriedade ``category`` na classe ``Task``::
 
     // ...
 
@@ -869,8 +906,8 @@ Next, add a new ``category`` property to the ``Task`` class::
         }
     }
 
-Now that your application has been updated to reflect the new requirements,
-create a form class so that a ``Category`` object can be modified by the user::
+Agora que a sua aplicação foi atualizada para refletir as novas exigências,
+crie uma classe de formulário para que o objeto ``Category`` possa ser modificado pelo usuário::
 
     // src/Acme/TaskBundle/Form/Type/CategoryType.php
     namespace Acme\TaskBundle\Form\Type;
@@ -898,10 +935,10 @@ create a form class so that a ``Category`` object can be modified by the user::
         }
     }
 
-The end goal is to allow the ``Category`` of a ``Task`` to be modified right
-inside the task form itself. To accomplish this, add a ``category`` field
-to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
-class:
+O objetivo final é permitir que a ``Category`` de uma ``Task`` possa ser modificada direitamente
+dentro do próprio formulário da tarefa. Para fazer isso, adicione um campo ``category`` 
+ao objeto ``TaskType`` cujo tipo é uma instância da nova classe 
+``CategoryType``:
 
 .. code-block:: php
 
@@ -912,9 +949,9 @@ class:
         $builder->add('category', new CategoryType());
     }
 
-The fields from ``CategoryType`` can now be rendered alongside those from
-the ``TaskType`` class. Render the ``Category`` fields in the same way
-as the original ``Task`` fields:
+Os campos do ``CategoryType`` podem agora ser renderizados juntamente com os campos da
+classe ``TaskType``. Renderize os campos ``Category`` da mesma forma
+que os campos originais da ``Task``:
 
 .. configuration-block::
 
@@ -942,50 +979,50 @@ as the original ``Task`` fields:
         <?php echo $view['form']->rest($form) ?>
         <!-- ... -->
 
-When the user submits the form, the submitted data for the ``Category`` fields
-are used to construct an instance of ``Category``, which is then set on the
-``category`` field of the ``Task`` instance.
+Quando o usuário enviar o formulário, os dados submetidos para os campos ``Category``
+são usados ​​para construir uma instância de ``Category``, que é então definida
+no campo ``Category`` da instância ``Task``.
 
-The ``Category`` instance is accessible naturally via ``$task->getCategory()``
-and can be persisted to the database or used however you need.
+A instância ``Category`` é acessível naturalmente via ``$task->getCategory()``
+e pode ser persistida no banco de dados ou usada como você precisar.
 
-Embedding a Collection of Forms
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Embutindo uma coleção de formulários
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also embed a collection of forms into one form (imagine a ``Category``
-form with many ``Product`` sub-forms). This is done by using the ``collection``
-field type.
+Você também pode embutir uma coleção de formulários em um formulário (imagine um formulário
+``Category`` com muitos sub-formulários ``Product``). Isto é feito usando o tipo de 
+campo ``collection``.
 
-For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and  the :ref:`collection</reference/forms/types/collection>` field type reference.
+Para mais informações consulte no ":doc:`/cookbook/form/form_collections`" 
+e na :ref:`collection</reference/forms/types/collection>` referência dos tipos de campo.
 
 .. index::
-   single: Forms; Theming
-   single: Forms; Customizing fields
+   single: Formulários; Tematizando
+   single: Formulários; Personalizando os campos
 
 .. _form-theming:
 
-Form Theming
-------------
+Tematizando os formulários
+--------------------------
 
-Every part of how a form is rendered can be customized. You're free to change
-how each form "row" renders, change the markup used to render errors, or
-even customize how a ``textarea`` tag should be rendered. Nothing is off-limits,
-and different customizations can be used in different places.
+Cada parte de como um formulário é renderizado pode ser personalizada. Você está livre para mudar
+como cada "linha" do formulário é renderizada, alterar a marcação usada para renderizar os erros, ou
+até mesmo, personalizar como uma tag ``textarea` deve ser renderizada. Nada está fora dos limites,
+e é possível utilizar diferentes personalizações ​​em diferentes lugares.
 
-Symfony uses templates to render each and every part of a form, such as
-``label`` tags, ``input`` tags, error messages and everything else.
+O Symfony utiliza templates para renderizar todas e cada uma das partes de um formulário, tais como
+tags ``label``, tags ``input``, mensagens de erro e tudo mais.
 
-In Twig, each form "fragment" is represented by a Twig block. To customize
-any part of how a form renders, you just need to override the appropriate block.
+No Twig, cada "fragmento" do formulário é representado por um bloco Twig. Para personalizar
+qualquer parte de como um formulário é renderizado, você só precisa substituir o bloco apropriado.
 
-In PHP, each form "fragment" is rendered via an individual template file.
-To customize any part of how a form renders, you just need to override the
-existing template by creating a new one.
+No PHP, cada "fragmento" do formulário é renderizado por um arquivo de template individual.
+Para personalizar qualquer parte de como um formulário é renderizado, você só precisa sobrescrever o
+template já existente, criando um novo.
 
-To understand how this works, let's customize the ``form_row`` fragment and
-add a class attribute to the ``div`` element that surrounds each row. To
-do this, create a new template file that will store the new markup:
+Para entender como isso funciona, vamos personalizar o fragmento ``form_row`` e
+adicionar um atributo class para o elemento ``div`` que envolve cada linha. Para
+fazer isso, crie um novo arquivo template que irá armazenar a marcação nova:
 
 .. configuration-block::
 
@@ -1013,10 +1050,10 @@ do this, create a new template file that will store the new markup:
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``field_row``
-fragment defined above, add the following to the top of the template that
-renders the form:
+O fragmento ``field_row`` do formulário é utilizado para renderizar a maioria dos campos através da
+da função ``form_row``. Para dizer ao componente de formulário para utilizar o seu novo fragmento
+``field_row`` definido acima, adicione o seguinte no topo do template que
+renderiza o formulário:
 
 .. configuration-block:: php
 
@@ -1036,112 +1073,112 @@ renders the form:
 
         <form ...>
 
-The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
-template and uses them when rendering the form. In other words, when the
-``form_row`` function is called later in this template, it will use the ``field_row``
-block from your custom theme (instead of the default ``field_row`` block
-that ships with Symfony).
+A tag ``form_theme`` (no Twig) "importa" os fragmentos definidos no 
+template informado e utiliza-os quando renderiza o formulário. Em outras palavras, 
+quando a função ``form_row`` é chamada mais tarde neste template, ela usará o bloco
+``field_row`` de seu tema personalizado (ao invés do bloco padrão ``field_row``
+que vem com o Symfony).
 
-To customize any portion of a form, you just need to override the appropriate
-fragment. Knowing exactly which block or file to override is the subject of
-the next section.
+Para personalizar qualquer parte de um formulário, você só precisa substituir o fragmento
+apropriado. Saber exatamente qual bloco ou arquivo deve-se substituir é o tema da
+próxima seção.
 
-For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
+Para uma discussão mais extensiva, consulte :doc:`/cookbook/form/form_customization`.
 
 .. index::
-   single: Forms; Template fragment naming
+   single: Formulários; Nomeando os fragmentos do formulário
 
 .. _form-template-blocks:
 
-Form Fragment Naming
-~~~~~~~~~~~~~~~~~~~~
+Nomeando os fragmentos do formulário
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, every part of a form that is rendered - HTML form elements, errors,
-labels, etc - is defined in a base theme, which is a collection of blocks
-in Twig and a collection of template files in PHP.
+No Symfony, cada parte de um formulário que é renderizada - elementos de formulário HTML, erros,
+labels, etc - é definida em um tema base, que é uma coleção de blocos
+no Twig e uma coleção de arquivos de template no PHP.
 
-In Twig, every block needed is defined in a single template file (`form_div_layout.html.twig`_)
-that lives inside the `Twig Bridge`_. Inside this file, you can see every block
-needed to render a form and every default field type.
+No Twig, cada bloco necessário é definido em um único arquivo de template (`form_div_layout.html.twig`_)
+que encontra-se no interior do `Twig Bridge`_. Dentro desse arquivo, você pode ver todos os blocos
+necessários para renderizar um formulário e todo o tipo de campo padrão.
 
-In PHP, the fragments are individual template files. By default they are located in
-the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
+No PHP, os fragmentos são arquivos de template individuais. Por padrão, eles estão localizados no
+diretório `Resources/views/Form` do framework bundle (`veja no GitHub`_)..
 
-Each fragment name follows the same basic pattern and is broken up into two pieces,
-separated by a single underscore character (``_``). A few examples are:
+Cada nome de fragmento segue o mesmo padrão básico e é dividido em duas partes,
+separadas por um único caractere de sublinhado (``_``). Alguns exemplos são:
 
-* ``field_row`` - used by ``form_row`` to render most fields;
-* ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field
-  type;
-* ``field_errors`` - used by ``form_errors`` to render errors for a field;
+* ``field_row`` - usado pelo ``form_row`` para renderizar a maioria dos campos;
+* ``textarea_widget`` - usado pelo ``form_widget`` para renderizar um campo do tipo 
+  ``textarea``;
+* ``field_errors`` - usado pelo ``form_errors`` para renderizar os erros para um campo;
 
-Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
-corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
-``date``, etc) whereas the ``part`` portion corresponds to *what* is being
-rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
-are 4 possible *parts* of a form that can be rendered:
+Cada fragmento segue o mesmo padrão básico: ``type_part``. A porção ``type``
+corresponde ao *tipo* do campo sendo renderizado (Ex. ``textarea``, ``checkbox``,
+``date``, etc) enquanto a porção ``part`` corresponde a *o que* está sendo
+renderizado (Ex., ``label``, ``widget``, ``errors``, etc). Por padrão, existem
+4 *partes* possíveis de um formulário que podem ser renderizadas:
 
-+-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``field_label``)   | renders the field's label                               |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``field_widget``)  | renders the field's HTML representation                 |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``field_errors``)  | renders the field's errors                              |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``field_row``)     | renders the field's entire row (label, widget & errors) |
-+-------------+--------------------------+---------------------------------------------------------+
++-------------+--------------------------+------------------------------------------------------------+
+| ``label``   | (Ex. ``field_label``)    | renderiza label do campo                                   |
++-------------+--------------------------+------------------------------------------------------------+
+| ``widget``  | (Ex. ``field_widget``)   | renderiza a representação HTML do campo                    |
++-------------+--------------------------+------------------------------------------------------------+
+| ``errors``  | (Ex. ``field_errors``)   | renderiza os errors do campo                               |
++-------------+--------------------------+------------------------------------------------------------+
+| ``row``     | (Ex. ``field_row``)      | renderiza a linha inteira do campo (label, widget e erros) |
++-------------+--------------------------+------------------------------------------------------------+
 
 .. note::
 
-    There are actually 3 other *parts*  - ``rows``, ``rest``, and ``enctype`` -
-    but you should rarely if ever need to worry about overriding them.
+    Na verdade, existem outras três *partes* - ``rows``, ``rest`` e ``enctype`` -
+    mas você raramente ou nunca vai precisar se preocupar em sobrescrevê-las
 
-By knowing the field type (e.g. ``textarea``) and which part you want to
-customize (e.g. ``widget``), you can construct the fragment name that needs
-to be overridden (e.g. ``textarea_widget``).
+Ao conhecer o tipo do campo (Ex. `` textarea``) e qual parte você deseja
+personalizar (Ex. ``widget``), você pode construir o nome do fragmento que precisa
+ser sobrescrito (Ex. ``textarea_widget``).
 
 .. index::
-   single: Forms; Template Fragment Inheritance
+   single: Formulários; Herança dos fragmentos de template
 
-Template Fragment Inheritance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Herança dos fragmentos de template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In some cases, the fragment you want to customize will appear to be missing.
-For example, there is no ``textarea_errors`` fragment in the default themes
-provided with Symfony. So how are the errors for a textarea field rendered?
+Em alguns casos, o fragmento que você deseja personalizar parecerá estar faltando.
+Por exemplo, não existe um fragmento ``textarea_errors`` nos temas padrão
+fornecidos com o Symfony. Então, como são renderizados os erros de um campo textarea?
 
-The answer is: via the ``field_errors`` fragment. When Symfony renders the errors
-for a textarea type, it looks first for a ``textarea_errors`` fragment before
-falling back to the ``field_errors`` fragment. Each field type has a *parent*
-type (the parent type of ``textarea`` is ``field``), and Symfony uses the
-fragment for the parent type if the base fragment doesn't exist.
+A resposta é: através do fragmento ``field_errors``. Quando o Symfony renderiza os erros
+para um tipo textarea, ele procura primeiro por um fragmento ``textarea_errors`` antes
+de voltar para o fragmento ``field_errors``. Cada tipo de campo tem um tipo 
+*pai* (o tipo pai do ``textarea`` é ``field``), e o Symfony usa
+o fragmento para o tipo pai se o fragmento base não existir.
 
-So, to override the errors for *only* ``textarea`` fields, copy the
-``field_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
-override the default error rendering for *all* fields, copy and customize the
-``field_errors`` fragment directly.
+Então, para substituir os erros para *apenas* os campos ``textarea``, copie o
+fragmento ``field_errors``, renomeie para ``textarea_errors`` e personalize-o. Para
+sobrescrever a renderização de erro padrão para *todos* os campos, copie e personalize 
+diretamente o fragmento ``field_errors``.
 
 .. tip::
 
-    The "parent" type of each field type is available in the
-    :doc:`form type reference</reference/forms/types>` for each field type.
+    O tipo "pai" de cada tipo de campo está disponível na 
+    :doc:`referência de tipos do formulário</reference/forms/types>` para cada tipo de campo.
 
 .. index::
-   single: Forms; Global Theming
+   single: Formulários; Temas Globais
 
-Global Form Theming
-~~~~~~~~~~~~~~~~~~~
+Tematizando os formulários globalmente
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the above example, you used the ``form_theme`` helper (in Twig) to "import"
-the custom form fragments into *just* that form. You can also tell Symfony
-to import form customizations across your entire project.
+No exemplo acima, você usou o helper ``form_theme`` (no Twig) para "importar"
+os fragmentos personalizados *somente* para este formulário. Você também pode dizer 
+ao Symfony para importar as personalizações do formulário para todo o seu projeto.
 
 Twig
 ....
 
-To automatically include the customized blocks from the ``fields.html.twig``
-template created earlier in *all* templates, modify your application configuration
-file:
+Para incluir automaticamente os blocos personalizados do template ``fields.html.twig`` 
+criado anteriormente em *todos* os templates, modifique o seu arquivo de configuração 
+da aplicação:
 
 .. configuration-block::
 
@@ -1177,13 +1214,13 @@ file:
             // ...
         ));
 
-Any blocks inside the ``fields.html.twig`` template are now used globally
-to define form output.
+Quaisquer blocos dentro do template ``fields.html.twig`` agora são usados ​​globalmente
+para definir a saída do formulário.
 
-.. sidebar::  Customizing Form Output all in a Single File with Twig
+.. sidebar:: Personalizando toda a saída do formulário em um único arquivo com o Twig
 
-    In Twig, you can also customize a form block right inside the template
-    where that customization is needed:
+    No Twig, você também pode personalizar um bloco de formulário diretamente dentro do template
+    onde a personalização é necessária:
 
     .. code-block:: html+jinja
 
@@ -1203,17 +1240,17 @@ to define form output.
             {{ form_row(form.task) }}
         {% endblock %}
 
-    The ``{% form_theme form _self %}`` tag allows form blocks to be customized
-    directly inside the template that will use those customizations. Use
-    this method to quickly make form output customizations that will only
-    ever be needed in a single template.
+    A tag ``{% form_theme form _self %}`` permite que blocos de formulário sejam personalizados
+    diretamente dentro do template que usará essas personalizações. Utilize
+    este método para fazer personalizações de saída do formulário rapidamente, que, somente
+    serão necessárias em um único template.
 
 PHP
 ...
 
-To automatically include the customized templates from the ``Acme/TaskBundle/Resources/views/Form``
-directory created earlier in *all* templates, modify your application configuration
-file:
+Para incluir automaticamente os templates personalizados do diretório ``Acme/TaskBundle/Resources/views/Form``
+criado anteriormente em *todos* os templates, modifique o seu arquivo de configuração da
+aplicação:
 
 .. configuration-block::
 
@@ -1254,37 +1291,37 @@ file:
             // ...
         ));
 
-Any fragments inside the ``Acme/TaskBundle/Resources/views/Form`` directory
-are now used globally to define form output.
+Qualquer fragmento dentro do diretório ``Acme/TaskBundle/Resources/views/Form``
+agora será usado ​​globalmente para definir a saída do formulário.
 
 .. index::
-   single: Forms; CSRF Protection
+   single: Fromulários; Proteção CSRF
 
 .. _forms-csrf:
 
-CSRF Protection
----------------
+Proteção CSRF
+-------------
 
-CSRF - or `Cross-site request forgery`_ - is a method by which a malicious
-user attempts to make your legitimate users unknowingly submit data that
-they don't intend to submit. Fortunately, CSRF attacks can be prevented by
-using a CSRF token inside your forms.
+CSRF - ou `Cross-site request forgery`_ - é um método pelo qual um usuário mal-intencionado
+tenta fazer com que os seus usuários legítimos, sem saber, enviem dados que
+eles não pretendem enviar. Felizmente, os ataques CSRF podem ser prevenidos 
+usando um token CSRF dentro do seu formulário.
 
-The good news is that, by default, Symfony embeds and validates CSRF tokens
-automatically for you. This means that you can take advantage of the CSRF
-protection without doing anything. In fact, every form in this chapter has
-taken advantage of the CSRF protection!
+A boa notícia é que o Symfony, por padrão, incorpora e valida os tokens CSRF
+automaticamente para você. Isso significa que você pode aproveitar a proteção CSRF
+sem precisar fazer nada. Na verdade, todo formulário neste capítulo
+aproveitou a proteção CSRF!
 
-CSRF protection works by adding a hidden field to your form - called ``_token``
-by default - that contains a value that only you and your user knows. This
-ensures that the user - not some other entity - is submitting the given data.
-Symfony automatically validates the presence and accuracy of this token.
+A proteção CSRF funciona adicionando um campo oculto ao seu formulário - chamado ``_token``
+por padrão - que contém um valor que só você e seu usuário sabem. Isto
+garante que o usuário - e não alguma outra entidade - está enviando os dados.
+O Symfony automaticamente valida a presença e exatidão deste token.
 
-The ``_token`` field is a hidden field and will be automatically rendered
-if you include the ``form_rest()`` function in your template, which ensures
-that all un-rendered fields are output.
+O campo ``_token`` é um campo oculto e será automaticamente renderizado
+se você incluir a função ``form_rest()`` em seu template, que garante
+a saída de todos os campos não-renderizados.
 
-The CSRF token can be customized on a form-by-form basis. For example::
+O token CSRF pode ser personalizado formulário por formulário. Por exemplo,
 
     class TaskType extends AbstractType
     {
@@ -1304,30 +1341,30 @@ The CSRF token can be customized on a form-by-form basis. For example::
         // ...
     }
 
-To disable CSRF protection, set the ``csrf_protection`` option to false.
-Customizations can also be made globally in your project. For more information,
-see the :ref:`form configuration reference </reference-frameworkbundle-forms>`
-section.
+Para desativar a proteção CSRF, defina a opção ``csrf_protection`` para false.
+As personalizações também podem ser feitas globalmente em seu projeto. Para mais informações
+veja a seção :ref:`referência de configuração do formulário </reference-frameworkbundle-forms>`
+.
 
 .. note::
 
-    The ``intention`` option is optional but greatly enhances the security of
-    the generated token by making it different for each form.
+    A opção ``intention`` é opcional, mas aumenta muito a segurança do
+    token gerado, tornando-o diferente para cada formulário.
 
 .. index:
-   single: Forms; With no class
+   single: Fromulários; Sem uma classe
 
-Using a Form without a Class
-----------------------------
+Utilizando um formulário sem uma classe
+---------------------------------------
 
-In most cases, a form is tied to an object, and the fields of the form get
-and store their data on the properties of that object. This is exactly what
-you've seen so far in this chapter with the `Task` class.
+Na maioria dos casos, um formulário é vinculado a um objeto, e os campos do formulário obtêm
+e armazenam seus dados nas propriedades desse objeto. Isto foi exatamente o que
+você viu até agora neste capítulo com a classe `Task`.
 
-But sometimes, you may just want to use a form without a class, and get back
-an array of the submitted data. This is actually really easy::
+Mas às vezes, você pode desejar apenas utilizar um formulário sem uma classe, e receber
+um array dos dados submetidos. Isso é realmente muito fácil::
 
-    // make sure you've imported the Request namespace above the class
+    // Certifique-se que você importou o namespace Request acima da classe
     use Symfony\Component\HttpFoundation\Request
     // ...
 
@@ -1350,44 +1387,44 @@ an array of the submitted data. This is actually really easy::
         // ... render the form
     }
 
-By default, a form actually assumes that you want to work with arrays of
-data, instead of an object. There are exactly two ways that you can change
-this behavior and tie the form to an object instead:
+Por padrão, um formulário assume que você deseja trabalhar com arrays de
+dados, em vez de um objeto. Há exatamente duas maneiras que você pode mudar
+esse comportamento e amarrar o formulário à um objeto, em vez disso:
 
-1. Pass an object when creating the form (as the first argument to ``createFormBuilder``
-   or the second argument to ``createForm``);
+1. Passar um objeto ao criar o formulário (como o primeiro argumento para ``createFormBuilder``
+   ou o segundo argumento para ``createForm``);
 
-2. Declare the ``data_class`` option on your form.
+2. Declarar a opção ``data_class`` no seu formulário.
 
-If you *don't* do either of these, then the form will return the data as
-an array. In this example, since ``$defaultData`` is not an object (and
-no ``data_class`` option is set), ``$form->getData()`` ultimately returns
-an array.
+Se você *não* fizer qualquer uma destas, então o formulário irá retornar os dados como
+um array. Neste exemplo, uma vez que ``$defaultData`` não é um objeto (e
+não foi definida a opção ``data_class``), o ``$form->getData()`` retorna
+um array.
 
 .. tip::
 
-    You can also access POST values (in this case "name") directly through 
-    the request object, like so:
+    Você também pode acessar os valores POST (neste caso, "name") diretamente através 
+    do objeto do pedido (``request``), desta forma:
 
     .. code-block:: php
 
         $this->get('request')->request->get('name');
 
-    Be advised, however, that in most cases using the getData() method is 
-    a better choice, since it returns the data (usually an object) after
-    it's been transformed by the form framework.
+    Esteja ciente, no entanto, que, na maioria dos casos, usar o método getData() é 
+    uma melhor escolha, já que retorna os dados (geralmente um objeto), após
+    ele ser transformado pelo framework de formulário.
 
-Adding Validation
-~~~~~~~~~~~~~~~~~
+Adicionando a Validação
+~~~~~~~~~~~~~~~~~~~~~~~
 
-The only missing piece is validation. Usually, when you call ``$form->isValid()``,
-the object is validated by reading the constraints that you applied to that
-class. But without a class, how can you add constraints to the data of your
-form?
+A peça que falta é a validação. Normalmente, quando você chama ``$form->isValid()``,
+o objeto é validado através da leitura das constraints que você aplicou à
+classe. Mas, sem uma classe, como você pode adicionar constraints para os dados do seu
+formulário?
 
-The answer is to setup the constraints yourself, and pass them into your
-form. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
-but here's a short example::
+A resposta é configurar as constraints você mesmo, e passá-las para o seu
+formulário. A abordagem global é explicada um pouco mais no :ref:`validation chapter<book-validation-raw-values>`,
+mas aqui está um pequeno exemplo::
 
     // import the namespaces above your controller class
     use Symfony\Component\Validator\Constraints\Email;
@@ -1406,9 +1443,9 @@ but here's a short example::
         // ...
     ;
 
-Now, when you call `$form->isValid()`, the constraints setup here are run
-against your form's data. If you're using a form class, override the ``getDefaultOptions``
-method to specify the option::
+Agora, quando você chamar `$form->isValid()`, a configuração de constraints aqui será executada
+em relação aos dados do seu formulário. Se você estiver usando uma classe de formulário, sobrescreva 
+o método ``getDefaultOptions`` para especificar a opção::
 
     namespace Acme\TaskBundle\Form\Type;
 
@@ -1433,31 +1470,31 @@ method to specify the option::
         }
     }
 
-Now, you have the flexibility to create forms - with validation - that return
-an array of data, instead of an object. In most cases, it's better - and
-certainly more robust - to bind your form to an object. But for simple forms,
-this is a great approach. 
+Agora, você tem a flexibilidade de criar formulários - com validação - que retorna 
+um array de dados, em vez de um objeto. Na maioria dos casos, é melhor - e
+certamente mais robusto - ligar (bind) o seu formulário à um objeto. Mas, para formulários simples,
+esta é uma excelente abordagem. 
 
-Final Thoughts
---------------
+Considerações finais
+--------------------
 
-You now know all of the building blocks necessary to build complex and
-functional forms for your application. When building forms, keep in mind that
-the first goal of a form is to translate data from an object (``Task``) to an
-HTML form so that the user can modify that data. The second goal of a form is to
-take the data submitted by the user and to re-apply it to the object.
+Você já conhece todos os blocos de construção necessários para construir formulários complexos e
+e funcionais para a sua aplicação. Ao construir formulários, tenha em mente que
+a primeira meta de um formulário é traduzir os dados de um objeto (``Task``) para um 
+formulário HTML, para que o usuário possa modificar os dados. O segundo objetivo de um formulário é 
+pegar os dados enviados pelo usuário e reaplicá-los ao objeto.
 
-There's still much more to learn about the powerful world of forms, such as
-how to handle :doc:`file uploads with Doctrine
-</cookbook/doctrine/file_uploads>` or how to create a form where a dynamic
-number of sub-forms can be added (e.g. a todo list where you can keep adding
-more fields via Javascript before submitting). See the cookbook for these
-topics. Also, be sure to lean on the
-:doc:`field type reference documentation</reference/forms/types>`, which
-includes examples of how to use each field type and its options.
+Ainda há muito mais para aprender sobre o mundo poderoso das fromulários, tais como
+como lidar com :doc:`uploads de arquivos com o Doctrine </cookbook/doctrine/file_uploads>`
+ou como criar um formulário onde um número dinâmico de sub-formulários podem ser adicionados 
+(por exemplo, uma lista de tarefas onde você pode continuar a adicionar
+mais campos antes de enviar via Javascript). Veja estes tópicos no
+cookbook. Além disso, certifique-se de apoiar-se na 
+:doc:`documentação de referência de tipos de campo </reference/forms/types>`, que
+inclui exemplos de como usar cada tipo de campo e suas opções.
 
-Learn more from the Cookbook
-----------------------------
+Aprenda mais no Cookbook
+------------------------
 
 * :doc:`/cookbook/doctrine/file_uploads`
 * :doc:`File Field Reference </reference/forms/types/file>`
@@ -1466,9 +1503,9 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_generation`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form Component`: https://github.com/symfony/Form
+.. _`Componente de Formulário do Symfony2`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
+.. _`veja no GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
