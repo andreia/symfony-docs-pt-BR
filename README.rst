@@ -53,7 +53,10 @@ Padrões a serem seguidos durante a tradução
 Mensagens dos Commits
 ~~~~~~~~~~~~~~~~~~~~~
 
-As mensagens dos commits devem ser todas em INGLÊS.
+As mensagens dos commits devem ser todas em INGLÊS e devem ter o seguinte prefixo:
+[pt_BR][Livro][Capítulo] seguido da mensagem do commit.
+Ex.: Se você estiver traduzindo o capítulo 'Validation' do livro, a mensagem do commit poderia ser semelhante a seguinte:
+[pt_BR][Book][Validation] Fix typo.
 
 Dica: Escrevendo boas mensagens de commit: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
 
