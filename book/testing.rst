@@ -1,54 +1,56 @@
 .. index::
    single: Tests
 
-Testing
-=======
+Testes
+======
 
-Whenever you write a new line of code, you also potentially add new bugs.
-To build better and more reliable applications, you should test your code
-using both functional and unit tests.
+Sempre que você escrever uma nova linha de código, você também adiciona
+potenciais novos bugs. Para construir aplicações melhores e mais confiáveis,
+você deve testar seu código usando testes funcionais e unitários.
 
-The PHPUnit Testing Framework
+O Framework de testes PHPUnit
 -----------------------------
 
-Symfony2 integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This chapter won't cover PHPUnit itself, but
-it has its own excellent `documentation`_.
+O Symfony2 se integra com uma biblioteca independente - chamada PHPUnit - 
+para dar a você um rico framework de testes. Esse capitulo não vai abranger
+o PHPUnit propriamente dito, mas ele tem a sua excelente documentação `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later.
+    Symfony2 funciona com o PHPUnit 3.5.11 ou anterior.
 
-Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the `Tests/` subdirectory of your bundles. If you follow
-this rule, then you can run all of your application's tests with the following
-command:
+Cada teste - quer seja teste unitário ou teste funcional - é uma classe PHP 
+que deve residir no sub-diretório  `Tests/` de seus bundles. Se você seguir 
+essa regra, você pode executar todos os testes da sua aplicação com o 
+seguinte comando:
 
 .. code-block:: bash
 
-    # specify the configuration directory on the command line
+    # espefifique o diretório de configuração na linha de comando
     $ phpunit -c app/
 
-The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about how the PHPUnit options, check out the ``app/phpunit.xml.dist``
-file.
+A opção ``-c`` diz para o PHPUnit procurar no diretório ``app/`` por um 
+arquivo de configuração. Se você está curioso sobre as opções do PHPUnit,
+dê uma olhada no arquivo ``app/phpunit.xml.dist``.
 
 .. tip::
 
-    Code coverage can be generated with the ``--coverage-html`` option.
+    O Code coverage pode ser gerado com a opção ``--coverage-html``.
 
 .. index::
    single: Tests; Unit Tests
 
-Unit Tests
-----------
+Testes Unitários
+----------------
 
-A unit test is usually a test against a specific PHP class. If you want to
-test the overall behavior of your application, see the section about `Functional Tests`_.
+Um teste unitário é geralmente um teste de uma classe PHP especifica. Se
+você quer testar o comportamento global da sua aplicação, veja a seção sobre 
+`Testes Funcionais`_.
 
-Writing Symfony2 unit tests is no different than writing standard PHPUnit
-unit tests. Suppose, for example, that you have an *incredibly* simple class
-called ``Calculator`` in the ``Utility/`` directory of your bundle::
+Escrever testes unitários no Symfony2 não é nada diferente do que escrever um
+teste unitário padrão do PHPUnit. Vamos supor que, por exemplo, você tem uma 
+classe *incrivelmente* simples chamada ``Calculator`` no diretório ``Utility/``
+do seu bundle::
 
     // src/Acme/DemoBundle/Utility/Calculator.php
     namespace Acme\DemoBundle\Utility;
@@ -61,8 +63,8 @@ called ``Calculator`` in the ``Utility/`` directory of your bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``Tests/Utility`` directory
-of your bundle::
+Para testar isso, crie um arquivo chamado ``CalculatorTest`` no diretório ``Tests/Utility``
+do seu bundle::
 
     // src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
     namespace Acme\DemoBundle\Tests\Utility;
@@ -83,53 +85,53 @@ of your bundle::
 
 .. note::
 
-    By convention, the ``Tests/`` sub-directory should replicate the directory
-    of your bundle. So, if you're testing a class in your bundle's ``Utility/``
-    directory, put the test in the ``Tests/Utility/`` directory.
+    Por convenção, o sub-diretório ``Tests/`` deve replicar o diretório do seu bundle.
+    Então, se você estiver testando uma classe no diretório ``Utility/`` do seu bundle,
+    coloque o teste no diretório ``Tests/Utility/``.
 
-Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the ``phpunit.xml.dist``
-file).
+Assim como na rua aplicação verdadeira - o autoloading é automaticamente habilitado
+via o arquivo ``bootstrap.php.cache`` (como configurado por padrão no arquivo 
+``phpunit.xml.dist``).
 
-Running tests for a given file or directory is also very easy:
+Executar os testes para um determinado arquivo ou diretório também é muito fácil:
 
 .. code-block:: bash
 
-    # run all tests in the Utility directory
+    # executa todos os testes no diretório Utility 
     $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/
 
-    # run tests for the Article class
+    # executa os testes para a classe Article
     $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
 
-    # run all tests for the entire Bundle
+    # executa todos os testes para todo o Bundle
     $ phpunit -c app src/Acme/DemoBundle/
 
 .. index::
    single: Tests; Functional Tests
 
-Functional Tests
-----------------
+Testes Funcionais
+-----------------
 
-Functional tests check the integration of the different layers of an
-application (from the routing to the views). They are no different from unit
-tests as far as PHPUnit is concerned, but they have a very specific workflow:
+Testes funcionais verificam a integração das diferentes camadas de uma aplicação
+(do roteamento as views). Eles não são diferentes dos testes unitários levando
+em consideração o PHPUnit, mas eles tem um fluxo bem especifico:
 
-* Make a request;
-* Test the response;
-* Click on a link or submit a form;
-* Test the response;
-* Rinse and repeat.
+* Fazer uma requisição;
+* Testar a resposta;
+* Clicar em um link ou submeter um formulário;
+* Testar a resposta;
+* Repetir a operação.
 
-Your First Functional Test
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Seu Primeiro Teste Funcional
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests are simple PHP files that typically live in the ``Tests/Controller``
-directory of your bundle. If you want to test the pages handled by your
-``DemoController`` class, start by creating a new ``DemoControllerTest.php``
-file that extends a special ``WebTestCase`` class.
+Testes funcionais são arquivos PHP simples que estão tipicamente no diretório 
+``Tests/Controller`` do seu bundle. Se você quer testar as páginas controladas 
+pela  sua classe ``DemoController``, inicie criando um novo arquivo ``DemoControllerTest.php``
+que extende a classe especial ``WebTestCase``.
 
-For example, the Symfony2 Standard Edition provides a simple functional test
-for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
+Por exemplo, o Symfony2 Standard Edition fornece um teste funcional simples para
+o ``DemoController`` (`DemoControllerTest`_) descrito assim::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
     namespace Acme\DemoBundle\Tests\Controller;
@@ -150,11 +152,12 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
 .. tip::
 
-    To run your functional tests, the ``WebTestCase`` class bootstraps the
-    kernel of your application. In most cases, this happens automatically.
-    However, if your kernel is in a non-standard directory, you'll need
-    to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
-    variable to the directory of your kernel::
+    Para executar seus testes funcionais, a classe ``WebTestCase`` class 
+    inicializa o kernel da sua aplicação. Na maioria dos casos, isso 
+    acontece automaticamente. Entretando, se o seu kernel está em um diretório
+    diferente do padrão, você vai precisar modificar seu arquivo ``phpunit.xml.dist``
+    para alterar a variável de ambiente ``KERNEL_DIR`` para o diretório do 
+    seu kernel::
 
         <phpunit
             <!-- ... -->
@@ -164,65 +167,64 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
             <!-- ... -->
         </phpunit>
 
-The ``createClient()`` method returns a client, which is like a browser that
-you'll use to crawl your site::
+O método ``createClient()`` retorna um cliente, que é como um navegador que você
+vai usar para navegar no seu site::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-The ``request()`` method (see :ref:`more about the request method<book-testing-request-method-sidebar>`)
-returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
-be used to select elements in the Response, click on links, and submit forms.
+O método ``request()`` (veja :ref:`mais sobre o método request<book-testing-request-method-sidebar>`)
+retorna um objeto :class:`Symfony\\Component\\DomCrawler\\Crawler` que pode ser
+usado para selecionar um elemento na Response, clicar em links, e submeter formulários.
 
 .. tip::
 
-    The Crawler only works when the response is an XML or an HTML document.
-    To get the raw content response, call ``$client->getResponse()->getContent()``.
+    O Crawler só funciona se a resposta é um documento XML ou HTML. 
+    Para pegar a resposta bruta, use ``$client->getResponse()->getContent()``.
 
-Click on a link by first selecting it with the Crawler using either an XPath
-expression or a CSS selector, then use the Client to click on it. For example,
-the following code finds all links with the text ``Greet``, then selects
-the second one, and ultimately clicks on it::
+Clique em um link primeiramente selecionando-o com o Crawler usando uma expressão
+XPath ou um seletor CSS, então use o Client para clicar nele. Por exemplo, o 
+segunte código acha todos os links com o texto ``Greet``, então seleciona o 
+segundo, e então clica nele::
 
     $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
 
     $crawler = $client->click($link);
 
-Submitting a form is very similar; select a form button, optionally override
-some form values, and submit the corresponding form::
+Submeter um formulário é muito parecido, selecione um botão do formulário, 
+opcionalmente sobrescreva alguns valores do formulário, então submeta-o::
 
     $form = $crawler->selectButton('submit')->form();
 
-    // set some values
+    // pega alguns valores
     $form['name'] = 'Lucas';
     $form['form_name[subject]'] = 'Hey there!';
 
-    // submit the form
+    // submete o formulário
     $crawler = $client->submit($form);
 
 .. tip::
 
-    The form can also handle uploads and contains methods to fill in different types
-    of form fields (e.g. ``select()`` and ``tick()``). For details, see the
-    `Forms`_ section below.
+    O formulário também pode manipular uploads e tem métodos para preencher diferentes
+    tipos de campos (ex. ``select()`` e ``tick()``). Para mais detalhers, veja a seção
+    `Forms`_ abaixo.
 
-Now that you can easily navigate through an application, use assertions to test
-that it actually does what you expect it to. Use the Crawler to make assertions
-on the DOM::
+Agora que você pode facilmente navegar pela sua aplicação, use as afirmações para
+testar que ela realmente faz o que você espera que ela faça. Use o Crawler para 
+fazer afirmações no DOM::
 
-    // Assert that the response matches a given CSS selector.
+    // Afirma que a resposta casa com um seletor informado
     $this->assertTrue($crawler->filter('h1')->count() > 0);
 
-Or, test against the Response content directly if you just want to assert that
-the content contains some text, or if the Response is not an XML/HTML
-document::
+Ou, teste contra o conteúdo do Response diretamente se você só quer afirmar que
+o conteudo contém algum texto ou se o Response não é um documento XML/HTML::
 
     $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
 
 .. _book-testing-request-method-sidebar:
 
-.. sidebar:: More about the ``request()`` method:
+.. sidebar:: Mais sobre o método ``request()``:
 
-    The full signature of the ``request()`` method is::
+    A assinatura completa do método ``request()`` é::
 
         request(
             $method,
@@ -234,9 +236,9 @@ document::
             $changeHistory = true
         )
 
-    The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-    and `Referer` HTTP headers, you'd pass the following::
+    O array ``server`` são valores brutos que você espera encontrar normalmente na
+    variável superglobal do PHP `$_SERVER`_. Por exemplo, para setar os cabeçalhos 
+    HTTP `Content-Type` e `Referer`, você passará o seguinte::
 
         $client->request(
             'GET',
@@ -252,51 +254,51 @@ document::
 .. index::
    single: Tests; Assertions
 
-.. sidebar: Useful Assertions
+.. sidebar: Afirmações Úteis
 
-    To get you started faster, here is a list of the most common and
-    useful test assertions::
+    Para você começar mais rápido, aqui está uma lista com as afirmações
+    mais comuns e úteis::
 
-        // Assert that there is exactly one h2 tag with the class "subtitle"
+        // Afirma que tem exatamente uma tag h2 com a classe  "subtitle"
         $this->assertTrue($crawler->filter('h2.subtitle')->count() > 0);
 
-        // Assert that there are 4 h2 tags on the page
+        // Afirma que tem 4 tags h2 na página
         $this->assertEquals(4, $crawler->filter('h2')->count());
 
-        // Assert the the "Content-Type" header is "application/json"
+        // Afirma que o cabeçalho "Content-Type" é "application/json"
         $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
 
-        // Assert that the response content matches a regexp.
+        // Afirma que o conteúdo da resposta casa com  a regexp.
         $this->assertRegExp('/foo/', $client->getResponse()->getContent());
 
-        // Assert that the response status code is 2xx
+        // Afirma que o código do status da resposta é 2xx
         $this->assertTrue($client->getResponse()->isSuccessful());
-        // Assert that the response status code is 404
+        // Afirma que o código do status da resposta é 404
         $this->assertTrue($client->getResponse()->isNotFound());
-        // Assert a specific 200 status code
+        // Afirma um especifico código 200
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        // Assert that the response is a redirect to /demo/contact
+        // Afirma que a resposta é um redirecionamento para /demo/contact
         $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
-        // or simply check that the response is a redirect to any URL
+        // ou simplesmente checa que a resposta redireciona para qualquer URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
 .. index::
    single: Tests; Client
 
-Working with the Test Client
------------------------------
+Trabalhando com o Teste Client
+------------------------------
 
-The test Client simulates an HTTP client like a browser and makes requests
-into your Symfony2 application::
+O teste Client simula um cliente HTTP como um navegador e faz requisições na sua
+aplicação Symfony2::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
-The ``request()`` method takes the HTTP method and a URL as arguments and
-returns a ``Crawler`` instance.
+O método ``request()`` pega o método HTTP e a URL como argumentos e retorna uma 
+instancia de ``Crawler``.
 
-Use the Crawler to find DOM elements in the Response. These elements can then
-be used to click on links and submit forms::
+Utilize o Crawler para encontrar elementos DOM no Response. Esses elementos podem
+então ser usados para clicar em links e submeter formulários::
 
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $crawler = $client->click($link);
@@ -304,23 +306,23 @@ be used to click on links and submit forms::
     $form = $crawler->selectButton('validate')->form();
     $crawler = $client->submit($form, array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
-These methods are the best way to browse your application as it takes care
-of a lot of things for you, like detecting the HTTP method from a form and
-giving you a nice API for uploading files.
+Os métodos ``click()`` e ``submit()`` retornam um objeto ``Crawler``.
+Esses métodos são a melhor maneira de navegar na sua aplicação por tomarem
+conta de várias coisas para você, como detectar o método HTTP de um formulário
+e dar para você uma ótima API para upload de arquivos.
 
 .. tip::
 
-    You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler<book-testing-crawler>` section below.
+    Você vai aprende rmais sobre os objetos ``Link`` e ``Form`` na seção
+    :ref:`Crawler<book-testing-crawler>` abaixo.
 
-The ``request`` method can also be used to simulate form submissions directly
-or perform more complex requests::
+O método ``request`` pode também ser usado para simular submissões de formulários
+diretamente ou fazer requisições mais complexas::
 
-    // Directly submit a form (but using the Crawler is easier!)
+    // Submeter diretamente um formuário (mas utilizando o Crawler é mais fácil!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
-    // Form submission with a file upload
+    // Submissão de formulário com um upload de arquivo
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     $photo = new UploadedFile(
@@ -329,7 +331,7 @@ or perform more complex requests::
         'image/jpeg',
         123
     );
-    // or
+    // ou
     $photo = array(
         'tmp_name' => '/path/to/photo.jpg',
         'name' => 'photo.jpg',
@@ -344,7 +346,7 @@ or perform more complex requests::
         array('photo' => $photo)
     );
 
-    // Perform a DELETE requests, and pass HTTP headers
+    // Executa uma requisição de DELETE e passa os cabeçalhos HTTP
     $client->request(
         'DELETE',
         '/post/12',
@@ -353,90 +355,89 @@ or perform more complex requests::
         array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word')
     );
 
-Last but not least, you can force each request to be executed in its own PHP
-process to avoid any side-effects when working with several clients in the same
-script::
+Por último mas não menos importante, você pode forçar cara requisição para ser 
+executada em seu pŕoprio processo PHP para evitar qualquer efeito colateral quando
+estiver trabalhando com vários clientes no mesmo script::
 
     $client->insulate();
 
-Browsing
-~~~~~~~~
+Navegando
+~~~~~~~~~
 
-The Client supports many operations that can be done in a real browser::
+O Cliente suporta muitas operação que podem ser realizadas em um navegador real::
 
     $client->back();
     $client->forward();
     $client->reload();
 
-    // Clears all cookies and the history
+    // Limpa todos os cookies e histórico
     $client->restart();
 
-Accessing Internal Objects
+Acessando Objetos Internos
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you use the client to test your application, you might want to access the
-client's internal objects::
+Se você usa o cliente para testar sua aplicação, você pode querer acessar os
+objetos internos do cliente::
 
     $history   = $client->getHistory();
     $cookieJar = $client->getCookieJar();
 
-You can also get the objects related to the latest request::
+Você também pode pegar os objetos relacionados a requisição mais recente::
 
     $request  = $client->getRequest();
     $response = $client->getResponse();
     $crawler  = $client->getCrawler();
 
-If your requests are not insulated, you can also access the ``Container`` and
-the ``Kernel``::
+Se as suas requisição não são isoladas, você pode também acessar o ``Container``
+e o ``Kernel``::
 
     $container = $client->getContainer();
     $kernel    = $client->getKernel();
 
-Accessing the Container
-~~~~~~~~~~~~~~~~~~~~~~~
+Acessando o Container
+~~~~~~~~~~~~~~~~~~~~~
 
-It's highly recommended that a functional test only tests the Response. But
-under certain very rare circumstances, you might want to access some internal
-objects to write assertions. In such cases, you can access the dependency
+É altamente recomendado que um teste funcional teste somente o Response. Mas
+em circunstancias extremamente raras, você pode querer acessar algum objeto 
+interno para escrever afirmações. Nestes casos, você pode acessar o dependency
 injection container::
 
     $container = $client->getContainer();
 
-Be warned that this does not work if you insulate the client or if you use an
-HTTP layer. For a list of services available in your application, use the
-``container:debug`` console task.
+Esteja ciente que isso não funciona se você isolar o cliente ou se você usar
+uma camada HTTP. Para ver a lista de serviços disponíves na sua aplicação, utilize
+a task ``container:debug``.
 
 .. tip::
 
-    If the information you need to check is available from the profiler, use
-    it instead.
+    Se a informação que você precisa verificar está disponível no profiler, uso-o então
 
-Accessing the Profiler Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Acessando dados do Profiler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
-queries when loading.
+En cada requisição, o profiler do Symfony coleta e guarda uma grande quantidade de
+dados sobre a manipulação interna de cada request. Por exemplo, o profiler pode ser
+usado para verificar se uma determinada página executa menos consultas no banco 
+quando estiver carregando.
 
-To get the Profiler for the last request, do the following::
+Para acessar o Profiler da última requisição, faço o seguinte::
 
     $profile = $client->getProfile();
 
-For specific details on using the profiler inside a test, see the
-:doc:`/cookbook/testing/profiling` cookbook entry.
+Para detalhes especificos de como usar o profiler dentro de um teste, seja o artigo
+:doc:`/cookbook/testing/profiling` do cookbook.
 
-Redirecting
-~~~~~~~~~~~
+Redirecionamento
+~~~~~~~~~~~~~~~~
 
-When a request returns a redirect response, the client automatically follows
-it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  ``followRedirects()`` method::
+Quando uma requisição retornar uma redirecionamento como resposta, o cliente automaticamente
+segue o redirecionamento. Se você quer examinar o Response antes do redirecionamento use o 
+método ``followRedirects()``::
 
     $client->followRedirects(false);
 
-When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+Quando o cliente não segue os redirecionamentos, você pode forçar o redirecionamento com
+o método ``followRedirect()``::
 
     $crawler = $client->followRedirect();
 
@@ -445,18 +446,19 @@ the ``followRedirect()`` method::
 
 .. _book-testing-crawler:
 
-The Crawler
------------
+O Crawler
+---------
 
-A Crawler instance is returned each time you make a request with the Client.
-It allows you to traverse HTML documents, select nodes, find links and forms.
+Uma instancia do Crawler é retornada cada vez que você faz uma requisição com o Client.
+Ele permite que você examinar documentos HTML, selecionar nós, encontrar links e 
+formulários.
 
-Traversing
+Examinando
 ~~~~~~~~~~
 
-Like jQuery, the Crawler has methods to traverse the DOM of an HTML/XML
-document. For example, the following finds all ``input[type=submit]`` elements,
-selects the last one on the page, and then selects its immediate parent element::
+Como o jQuery, o Crawler tem metodos para examinar o DOM de um documento HTML/XML.
+Por exemplo, isso encontra todos os elementos ``input[type=submit]``, seleciona o 
+último da página, e então seleciona o elemento imediatamente acima dele::
 
     $newCrawler = $crawler->filter('input[type=submit]')
         ->last()
@@ -464,36 +466,36 @@ selects the last one on the page, and then selects its immediate parent element:
         ->first()
     ;
 
-Many other methods are also available:
+Muitos outros métodos também estão disponíveis:
 
 +------------------------+----------------------------------------------------+
-| Method                 | Description                                        |
+| Metodos                | Descrição                                          |
 +========================+====================================================+
-| ``filter('h1.title')`` | Nodes that match the CSS selector                  |
+| ``filter('h1.title')`` | Nós que casam com o seletor CSS                    |
 +------------------------+----------------------------------------------------+
-| ``filterXpath('h1')``  | Nodes that match the XPath expression              |
+| ``filterXpath('h1')``  | Nós que casam com a expressão XPath                |
 +------------------------+----------------------------------------------------+
-| ``eq(1)``              | Node for the specified index                       |
+| ``eq(1)``              | Nó para a posição especifica                       |
 +------------------------+----------------------------------------------------+
-| ``first()``            | First node                                         |
+| ``first()``            | Primeiro nó                                        |
 +------------------------+----------------------------------------------------+
-| ``last()``             | Last node                                          |
+| ``last()``             | Último nó                                          |
 +------------------------+----------------------------------------------------+
-| ``siblings()``         | Siblings                                           |
+| ``siblings()``         | Irmãos                                             |
 +------------------------+----------------------------------------------------+
-| ``nextAll()``          | All following siblings                             |
+| ``nextAll()``          | Todos os irmãos posteriores                        |
 +------------------------+----------------------------------------------------+
-| ``previousAll()``      | All preceding siblings                             |
+| ``previousAll()``      | Todos os irmãos anteriores                         |
 +------------------------+----------------------------------------------------+
-| ``parents()``          | Parent nodes                                       |
+| ``parents()``          | Nós de um nivel superior                           |
 +------------------------+----------------------------------------------------+
-| ``children()``         | Children                                           |
+| ``children()``         | Filhos                                             |
 +------------------------+----------------------------------------------------+
-| ``reduce($lambda)``    | Nodes for which the callable does not return false |
+| ``reduce($lambda)``    | Nós que a função não retorne false                 |
 +------------------------+----------------------------------------------------+
 
-Since each of these methods returns a new ``Crawler`` instance, you can
-narrow down your node selection by chaining the method calls::
+Como cada um desses métodos retorna uma nova instância de ``Crawler``, você pode
+restringir os nós selecionados encadeando a chamada de métodos::
 
     $crawler
         ->filter('h1')
@@ -507,25 +509,25 @@ narrow down your node selection by chaining the method calls::
 
 .. tip::
 
-    Use the ``count()`` function to get the number of nodes stored in a Crawler:
+    Utilize a função ``count()`` para pegar o número de nós armazenados no Crawler:
     ``count($crawler)``
 
-Extracting Information
-~~~~~~~~~~~~~~~~~~~~~~
+Extraindo Informações
+~~~~~~~~~~~~~~~~~~~~~
 
-The Crawler can extract information from the nodes::
+O Crawler pode extrair informações dos nós::
 
-    // Returns the attribute value for the first node
+    // Retornar o valor do atributo para o primeiro nó
     $crawler->attr('class');
 
-    // Returns the node value for the first node
+    // Retorna o valor do nó para o primeiro nó
     $crawler->text();
 
-    // Extracts an array of attributes for all nodes (_text returns the node value)
-    // returns an array for each element in crawler, each with the value and href
+    // Extrai um array de atributos para todos os nós (_text retorna o valor do nó)
+    // retorna um array para cara elemento no crawler, cara um com o valor e href
     $info = $crawler->extract(array('_text', 'href'));
 
-    // Executes a lambda for each node and return an array of results
+    // Executa a lambda para cada nó e retorna um array de resultados
     $data = $crawler->each(function ($node, $i)
     {
         return $node->attr('href');
@@ -534,118 +536,117 @@ The Crawler can extract information from the nodes::
 Links
 ~~~~~
 
-To select links, you can use the traversing methods above or the convenient
-``selectLink()`` shortcut::
+Para selecionar links, você pode usar os métodos acima ou o conveniente atalho
+``selectLink()``::
 
     $crawler->selectLink('Click here');
 
-This selects all links that contain the given text, or clickable images for
-which the ``alt`` attribute contains the given text. Like the other filtering
-methods, this returns another ``Crawler`` object.
+Isso seleciona todos os links que contém o texto, ou imagens que o atributo ``alt``
+contém o determinado texto. Como outros métodos de filtragem, esse retorna outro 
+objeto ``Crawler``.
 
-Once you've selected a link, you have access to a special ``Link`` object,
-which has helpful methods specific to links (such as ``getMethod()`` and
-``getUri()``). To click on the link, use the Client's ``click()`` method
-and pass it a ``Link`` object::
-
+Uma vez selecionado um link, você pode ter acesso a um objeto especial ``Link``,
+que tem métodos especificos muito úties para links (como ``getMethod()`` e 
+``getUri()``). Para clicar no link, use o método do Client ``click()`` e passe
+um objeto do tipo ``Link``::
+    
     $link = $crawler->selectLink('Click here')->link();
 
     $client->click($link);
 
-Forms
-~~~~~
+Formulários
+~~~~~~~~~~~
 
-Just like links, you select forms with the ``selectButton()`` method::
+Assim como nos links, você seleciona o form com o método ``selectButton()``::
 
     $buttonCrawlerNode = $crawler->selectButton('submit');
 
 .. note::
 
-    Notice that we select form buttons and not forms as a form can have several
-    buttons; if you use the traversing API, keep in mind that you must look for a
-    button.
+    Note que selecionamos os botões do formulário e não os forms, pois o form pode
+    ter vários botões; se você usar a API para examinar, tenha em mente que você deve
+    procurar por um botão.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several different parts of the buttons to find them:
+O método ``selectButton()`` pode selecionar tags ``button`` e submit tags ``input``.
+Ele usa diversas partes diferentes do botão para encontrá-los:
 
-* The ``value`` attribute value;
+* O atributo ``value``;
 
-* The ``id`` or ``alt`` attribute value for images;
+* O atributo ``id`` ou ``alt`` para imagens;
 
-* The ``id`` or ``name`` attribute value for ``button`` tags.
+* O valor do atributo ``id`` ou ``name`` para tags ``button``.
 
-Once you have a Crawler representing a button, call the ``form()`` method
-to get a ``Form`` instance for the form wrapping the button node::
+Uma vez que você tenha o Crawler representanto um botão, chame o método ``form()`` 
+para pegar a instancia de ``Form`` do form que envolve o nó do botão::
 
     $form = $buttonCrawlerNode->form();
 
-When calling the ``form()`` method, you can also pass an array of field values
-that overrides the default ones::
+Quando chamar o método ``form()``, você pode também passar uma array com valores
+dos campos para sobreescrever os valores padrões::
 
     $form = $buttonCrawlerNode->form(array(
         'name'              => 'Fabien',
         'my_form[subject]'  => 'Symfony rocks!',
     ));
 
-And if you want to simulate a specific HTTP method for the form, pass it as a
-second argument::
+E se você quiser simular algum método HTTP especifico para o form, passe-o como um
+segundo argumento::
 
     $form = $crawler->form(array(), 'DELETE');
 
-The Client can submit ``Form`` instances::
+O Client pode submeter instancias de ``Form``::
 
     $client->submit($form);
 
-The field values can also be passed as a second argument of the ``submit()``
-method::
+Os valores dos campos também posem ser passsados como um segundo argumento do 
+método ``submit()``::
 
     $client->submit($form, array(
         'name'              => 'Fabien',
         'my_form[subject]'  => 'Symfony rocks!',
     ));
 
-For more complex situations, use the ``Form`` instance as an array to set the
-value of each field individually::
+Para situações mais complexas, use a instancia de ``Form`` como um array para 
+setar o valor de cada campo individualmente::
 
-    // Change the value of a field
+    // Muda o valor do campo
     $form['name'] = 'Fabien';
     $form['my_form[subject]'] = 'Symfony rocks!';
 
-There is also a nice API to manipulate the values of the fields according to
-their type::
+Também existe uma API para manipular os valores do campo de acordo com o seu tipo::
 
-    // Select an option or a radio
+    // Seleciona um option ou um radio
     $form['country']->select('France');
 
-    // Tick a checkbox
+    // Marca um checkbox
     $form['like_symfony']->tick();
 
-    // Upload a file
+    // Faz o upload de um arquivo
     $form['photo']->upload('/path/to/lucas.jpg');
 
 .. tip::
 
-    You can get the values that will be submitted by calling the ``getValues()``
-    method on the ``Form`` object. The uploaded files are available in a
-    separate array returned by ``getFiles()``. The ``getPhpValues()`` and
-    ``getPhpFiles()`` methods also return the submitted values, but in the
-    PHP format (it converts the keys with square brackets notation - e.g.
-    ``my_form[subject]`` - to PHP arrays).
+    Você pode pegar os valores que serão submetidos chamando o método ``getValues()``
+    no objeto ``Form``. Os arquivos do upload estão disponiveis em um array
+    separado retornado por ``getFiles()``. Os métodos ``getPhpValues()`` e
+    ``getPhpFiles()`` também retorna valores submetidos, mas no formato
+    PHP (ele converte as chaves para a notação de colchetes - ex. 
+    ``my_form[subject]`` - para PHP arrays).
 
 .. index::
    pair: Tests; Configuration
 
-Testing Configuration
----------------------
+Configuração de Testes
+----------------------
 
-The Client used by functional tests creates a Kernel that runs in a special
-``test`` environment. Since Symfony loads the ``app/config/config_test.yml``
-in the ``test`` environment, you can tweak any of your application's settings
-specifically for testing.
+O Client usado pelos testes funcionais cria um Kernel que roda em um ambiente
+especial chamado ``test``. Uma vez que o Symfony carrega o ``app/config/config_test.yml``
+no ambiente ``test``, você pode ajustar qualquer configuração de sua aplicação 
+especificamente para testes.
 
-For example, by default, the swiftmailer is configured to *not* actually
-deliver emails in the ``test`` environment. You can see this under the ``swiftmailer``
-configuration option:
+Por exemplo, por padrão, o swiftmailer é configurado para *não* enviar realmente
+os e-mails no ambiente ``test``. Você pode ver isso na opção de configuração
+``swiftmailer``:
 
 .. configuration-block::
 
@@ -675,24 +676,24 @@ configuration option:
             'disable_delivery' => true
         ));
 
-You can also use a different environment entirely, or override the default
-debug mode (``true``) by passing each as options to the ``createClient()``
-method::
+Você também pode usar um ambiente completamente diferente, ou sobrescrever
+o modo de debug (``true``) passando cada um como uma opção para o método
+``createClient()``::
 
     $client = static::createClient(array(
         'environment' => 'my_test_env',
         'debug'       => false,
     ));
 
-If your application behaves according to some HTTP headers, pass them as the
-second argument of ``createClient()``::
+Se a sua aplicação se comporta de acordo com alguns cabeçalhos HTTP, passe eles
+como o segundo argumento de ``createClient()``::
 
     $client = static::createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
 
-You can also override HTTP headers on a per request basis::
+Você também pode sobrescrever cabeçalhos HTTP numa base por requisições::
 
     $client->request('GET', '/', array(), array(), array(
         'HTTP_HOST'       => 'en.example.com',
@@ -701,31 +702,32 @@ You can also override HTTP headers on a per request basis::
 
 .. tip::
 
-    The test client is available as a service in the container in the ``test``
-    environment (or wherever the :ref:`framework.test<reference-framework-test>`
-    option is enabled). This means you can override the service entirely
-    if you need to.
+    O cliente de testes está disponível como um serviço no container no ambiente
+    ``teste`` (ou em qualquer lugar que a opção :ref:`framework.test<reference-framework-test>`
+    esteja habilitada). Isso significa que você pode sobrescrever o serviço inteiramente
+    se você precisar.
 
 .. index::
    pair: PHPUnit; Configuration
 
-PHPUnit Configuration
-~~~~~~~~~~~~~~~~~~~~~
+Configuração do PHPUnit
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Each application has its own PHPUnit configuration, stored in the
-``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``phpunit.xml`` file to tweak the configuration for your local machine.
+Cada aplicação tem a sua própria configuração do PHPUnit, armazenada no arquivo
+``phpunit.xml.dist``. Você pode editar o arquivo para mudar os valores padrões
+ou criar um arquivo ``phpunit.xml``` para ajustar a configuração para sua máquina
+local.
 
 .. tip::
 
-    Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
-    ``phpunit.xml`` file.
+    Armazene o arquivo ``phpunit.xml.dist`` no seu repositório de códigos e ignore
+    o arquivo ``phpunit.xml``.
 
-By default, only the tests stored in "standard" bundles are run by the
-``phpunit`` command (standard being tests in the ``src/*/Bundle/Tests`` or
-``src/*/Bundle/*Bundle/Tests`` directories) But you can easily add more
-directories. For instance, the following configuration adds the tests from
-the installed third-party bundles:
+Por padrão, somente os testes armazenados nos bundles "standard" são rodados
+pelo comando ``phpunit`` (standard sendo os testes nos diretórios ``src/*/Bundle/Tests`` ou
+``src/*/Bundle/*Bundle/Tests``) Mas você pode facilmente adicionar mais diretórios.
+Por exemplo, a seguinte configuração adiciona os testes de um bundle de terceiros
+instalado:
 
 .. code-block:: xml
 
@@ -737,8 +739,7 @@ the installed third-party bundles:
         </testsuite>
     </testsuites>
 
-To include other directories in the code coverage, also edit the ``<filter>``
-section:
+Para incluir outros diretórios no code coverage, edite também a sessção ``<filter>``:
 
 .. code-block:: xml
 
@@ -754,8 +755,8 @@ section:
         </whitelist>
     </filter>
 
-Learn more from the Cookbook
-----------------------------
+Aprenda mais no Cookbook
+------------------------
 
 * :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
