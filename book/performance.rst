@@ -6,13 +6,13 @@ Performance
 
 O Symfony2 é rápido, logo após a sua instalação. Claro, se você realmente precisa de mais velocidade,
 há muitas maneiras para tornar o Symfony ainda mais rápido. Neste capítulo, 
-você vai explorar muitas das formas mais comuns e poderosa para tornar a sua aplicação 
+você vai explorar muitas das formas mais comuns e poderosas para tornar a sua aplicação 
 Symfony ainda mais rápida.
 
 .. index::
    single: Performance; Cache de Código Byte
 
-Use um Cache de Código Byte (ex.:, APC)
+Use um Cache de Código Byte (ex.: APC)
 --------------------------------------
 
 Uma das melhores (e mais fáceis) coisas que você deve fazer para melhorar a sua performance
