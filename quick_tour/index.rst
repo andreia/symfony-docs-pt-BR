@@ -1,4 +1,4 @@
-Guia de Início Rápido
+Guia de InÃ­cio RÃ¡pido
 =====================
 
 .. toctree::
