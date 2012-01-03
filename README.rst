@@ -72,3 +72,9 @@ A documentação do Symfony2 utiliza a linguagem markup reStructuredText juntame
 Se preferir, existe um editor online, que pode auxiliar em: http://rst.ninjs.org/
 
 .. _`Pull Request`: http://help.github.com/pull-requests/
+
+Referências
+-----------
+
+- SSH issues: Guia contendo as soluções para os problemas mais comuns referentes a conexão SSH no GitHub (chave pública, ...): http://help.github.com/ssh-issues/
+- Mencionar alguém em um ``pull request`` ou ``issue``: https://github.com/blog/1004-mention-autocompletion

@@ -256,8 +256,8 @@ caminhos possíveis:
 
 .. note::
 
-   Redirecionar o usuário após o envio bem sucedido do formulário impede que o usuário,
-   ao clicar no "atualizar", reenvie os dados do formulário.
+   Redirecionar o usuário após o envio bem sucedido do formulário impede que ele,
+   ao clicar em "atualizar", reenvie os dados do formulário.
 
 .. index::
    single: Formulários; Validação
@@ -272,8 +272,8 @@ válido, mas se o objeto ``$task`` é válido após a aplicação dos dados envi
 formulário. Chamando ``$form->isValid()`` é um atalho
 que pergunta ao objeto ``$task`` se ele possui ou não dados válidos.
 
-A validação é feita adicionando um conjunto de regras (chamadas constraints) à uma classe. Para
-ver isso em ação, adicione constraints de validação para que o campo ``task`` não deve 
+A validação é feita adicionando um conjunto de regras (chamadas *constraints*) à uma classe. Para
+ver isso em ação, adicione *constraints* de validação para que o campo ``task`` não deve 
 ser vazio e o campo ``dueDate`` não deve ser vazio e deve ser um objeto \DateTime 
 válido.
 
@@ -351,7 +351,7 @@ erros correspondentes exibidos com o formulário.
 
 .. sidebar:: Validação HTML5
 
-   Com o HTML5, muitos navegadores podem, nativamente, impor certas constraints de validação 
+   Com o HTML5, muitos navegadores podem, nativamente, impor certas *constraints* de validação 
    no lado do cliente. A validação mais comum é ativada renderizando
    um atributo ``required`` em campos que são obrigatórios. Para navegadores que
    suportam HTML5, isso irá resultar em uma mensagem nativa do navegador sendo exibida
@@ -361,7 +361,7 @@ erros correspondentes exibidos com o formulário.
    atributos HTML que disparam a validação. A validação ao lado do cliente,
    entretanto, pode ser desativada ao adicionar o atributo ``novalidate`` na
    tag ``form`` ou ``formnovalidate`` na tag submit. Isto é especialmente
-   útil quando você quiser testar suas constraints de validação ao lado do servidor,
+   útil quando você quiser testar suas *constraints* de validação ao lado do servidor,
    mas estão sendo impedidas pelo seu navegador, por exemplo, ao enviar 
    campos em branco.
 
@@ -526,8 +526,8 @@ campo adivinhado.
 .. caution::
 
     Se o formulário usa um grupo de validação específico, o adivinhador do tipo de campo
-    ainda vai considerar *todas* as constraints de validação quando estiver adivinhando os seus 
-    tipos de campos (incluindo as constraints que não fazem parte dos grupos de validação
+    ainda vai considerar *todas* as *constraints* de validação quando estiver adivinhando os seus 
+    tipos de campos (incluindo as *constraints* que não fazem parte dos grupos de validação
     sendo utilizados).
 
 .. index::
@@ -543,7 +543,7 @@ os valores corretos de uma série de opções do campo.
 
     Quando essas opções são definidas, o campo será renderizado com atributos HTML especiais
     que fornecem para a validação HTML5 ao lado do cliente. Entretanto, ele
-    não gera as constraints equivalentes ao lado do servidor (Ex. ``Assert\MaxLength``).
+    não gera as *constraints* equivalentes ao lado do servidor (Ex. ``Assert\MaxLength``).
     E, embora você precisará adicionar manualmente a validação ao lado do servidor, essas
     opções de tipo de campo podem, então, ser adivinhadas a partir dessa informação.
 
@@ -553,7 +553,7 @@ os valores corretos de uma série de opções do campo.
   do cliente irá corresponder automaticamente as suas regras de validação.
 
 * ``min_length``: Se o campo é uma espécie de campo de texto, então, a opção ``min_length``
-  pode ser adivinhada a partir das constraints de validação (se o ``MinLength``
+  pode ser adivinhada a partir das *constraints* de validação (se o ``MinLength``
   ou ``Min`` é usado) ou a partir dos metadados do Doctrine (através do tamanho do campo).
 
 * ``max_length``: Semelhante ao ``min_length``, o tamanho máximo também pode 
@@ -650,7 +650,7 @@ pode ser personalizada em muitos níveis diferentes.
             <?php echo $view['form']->get('value')->getTask() ?>
 
 .. index::
-   single: Fromulários; Renderizando cada campo manualmente
+   single: Formulários; Renderizando cada campo manualmente
 
 Renderizando cada campo manualmente
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1102,7 +1102,7 @@ que encontra-se no interior do `Twig Bridge`_. Dentro desse arquivo, você pode 
 necessários para renderizar um formulário e todo o tipo de campo padrão.
 
 No PHP, os fragmentos são arquivos de template individuais. Por padrão, eles estão localizados no
-diretório `Resources/views/Form` do framework bundle (`veja no GitHub`_)..
+diretório `Resources/views/Form` do framework bundle (`veja no GitHub`_).
 
 Cada nome de fragmento segue o mesmo padrão básico e é dividido em duas partes,
 separadas por um único caractere de sublinhado (``_``). Alguns exemplos são:
@@ -1295,7 +1295,7 @@ Qualquer fragmento dentro do diretório ``Acme/TaskBundle/Resources/views/Form``
 agora será usado ​​globalmente para definir a saída do formulário.
 
 .. index::
-   single: Fromulários; Proteção CSRF
+   single: Formulários; Proteção CSRF
 
 .. _forms-csrf:
 
@@ -1321,7 +1321,7 @@ O campo ``_token`` é um campo oculto e será automaticamente renderizado
 se você incluir a função ``form_rest()`` em seu template, que garante
 a saída de todos os campos não-renderizados.
 
-O token CSRF pode ser personalizado formulário por formulário. Por exemplo,
+O token CSRF pode ser personalizado formulário por formulário. Por exemplo::
 
     class TaskType extends AbstractType
     {
@@ -1352,7 +1352,7 @@ veja a seção :ref:`referência de configuração do formulário </reference-fr
     token gerado, tornando-o diferente para cada formulário.
 
 .. index:
-   single: Fromulários; Sem uma classe
+   single: Formulários; Sem uma classe
 
 Utilizando um formulário sem uma classe
 ---------------------------------------
@@ -1418,11 +1418,11 @@ Adicionando a Validação
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 A peça que falta é a validação. Normalmente, quando você chama ``$form->isValid()``,
-o objeto é validado através da leitura das constraints que você aplicou à
-classe. Mas, sem uma classe, como você pode adicionar constraints para os dados do seu
+o objeto é validado através da leitura das *constraints* que você aplicou à
+classe. Mas, sem uma classe, como você pode adicionar *constraints* para os dados do seu
 formulário?
 
-A resposta é configurar as constraints você mesmo, e passá-las para o seu
+A resposta é configurar as *constraints* você mesmo, e passá-las para o seu
 formulário. A abordagem global é explicada um pouco mais no :ref:`validation chapter<book-validation-raw-values>`,
 mas aqui está um pequeno exemplo::
 
@@ -1443,7 +1443,7 @@ mas aqui está um pequeno exemplo::
         // ...
     ;
 
-Agora, quando você chamar `$form->isValid()`, a configuração de constraints aqui será executada
+Agora, quando você chamar `$form->isValid()`, a configuração de *constraints* aqui será executada
 em relação aos dados do seu formulário. Se você estiver usando uma classe de formulário, sobrescreva 
 o método ``getDefaultOptions`` para especificar a opção::
 
@@ -1479,12 +1479,12 @@ Considerações finais
 --------------------
 
 Você já conhece todos os blocos de construção necessários para construir formulários complexos e
-e funcionais para a sua aplicação. Ao construir formulários, tenha em mente que
+funcionais para a sua aplicação. Ao construir formulários, tenha em mente que
 a primeira meta de um formulário é traduzir os dados de um objeto (``Task``) para um 
 formulário HTML, para que o usuário possa modificar os dados. O segundo objetivo de um formulário é 
 pegar os dados enviados pelo usuário e reaplicá-los ao objeto.
 
-Ainda há muito mais para aprender sobre o mundo poderoso das fromulários, tais como
+Ainda há muito mais para aprender sobre o mundo poderoso das formulários, tais como
 como lidar com :doc:`uploads de arquivos com o Doctrine </cookbook/doctrine/file_uploads>`
 ou como criar um formulário onde um número dinâmico de sub-formulários podem ser adicionados 
 (por exemplo, uma lista de tarefas onde você pode continuar a adicionar
