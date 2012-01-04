@@ -636,36 +636,35 @@ formulário de login acesse
     acontece por que para a maioria dos aplicativos ter somente um
     firewall é o suficiente.
 
-Authorization
+Autorização
 -------------
 
-The first step in security is always authentication: the process of verifying
-who the user is. With Symfony, authentication can be done in any way - via
-a form login, basic HTTP Authentication, or even via Facebook.
+O primeiro passo na segurança é sempre a autenticação: o processo de verficar quem
+o usuário é. No Symfony, a autenticação pode ser feita de várias maneiras -  via
+formulário de login, autenticação básica HTTP ou até mesmo pelo Facebook.
 
-Once the user has been authenticated, authorization begins. Authorization
-provides a standard and powerful way to decide if a user can access any resource
-(a URL, a model object, a method call, ...). This works by assigning specific
-roles to each user, and then requiring different roles for different resources.
+Uma vez que o usuário está autenticado, a autorização começa. Autorização fornece
+uma maneira padrão e poderosa de decidir se o usuário pode acessar algum recurso
+(uma  URL, um objeto do modelo, um método...). Isto funciona com perfis atribuídos
+para cada usuário e exigindo perfis diferentes para diferentes recursos.
 
-The process of authorization has two different sides:
+O processo de autorização tem dois lados diferentes:
 
-#. The user has a specific set of roles;
-#. A resource requires a specific role in order to be accessed.
+#. O usuário tem um conjunto de perfis específico;
+#. Um recurso requer um perfil específico para ser acessado.
 
-In this section, you'll focus on how to secure different resources (e.g. URLs,
-method calls, etc) with different roles. Later, you'll learn more about how
-roles are created and assigned to users.
+Nesta seção, o foco será em como tornar seguros diferentes recursos (por exemplo URLs,
+chamadas a métodos, etc) com diferentes perfis. Mais tarde, você aprenderá mais
+como perfis são criados e atribuídos aos usuários.
 
-Securing Specific URL Patterns
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo padrões de URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The most basic way to secure part of your application is to secure an entire
-URL pattern. You've seen this already in the first example of this chapter,
-where anything matching the regular expression pattern ``^/admin`` requires
-the ``ROLE_ADMIN`` role.
+A maneira mais básica de proteger seu aplicativo é proteger um padrão de URL.
+Você já viu no primeiro exemplo deste capítulo que qualquer requisição que
+se encaixasse na expressão regular ``^/admin`` exigiria o perfil ``ROLE_ADMIN``.
 
-You can define as many URL patterns as you need - each is a regular expression.
+Você pode definir quantos padrões precisar. Cada um é uma expressão regular.
 
 .. configuration-block::
 
@@ -700,38 +699,39 @@ You can define as many URL patterns as you need - each is a regular expression.
 
 .. tip::
 
-    Prepending the path with ``^`` ensures that only URLs *beginning* with
-    the pattern are matched. For example, a path of simply ``/admin`` (without
-    the ``^``) would correctly match ``/admin/foo`` but would also match URLs
-    like ``/foo/admin``.
+    Iniciando o padrão com ``^`` garante que somente URLs *começando* com o padrão
+    terá uma comparação positiva. Por exemplo, o padrão simples ``/admin`` (sem
+    o ``^``) resultaria em uma comparação positiva para ``/admin/foo``, mas
+    também para URLs como ``/foo/admin``.
 
-For each incoming request, Symfony2 tries to find a matching access control
-rule (the first one wins). If the user isn't authenticated yet, the authentication
-process is initiated (i.e. the user is given a chance to login). However,
-if the user *is* authenticated but doesn't have the required role, an
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-exception is thrown, which you can handle and turn into a nice "access denied"
-error page for the user. See :doc:`/cookbook/controller/error_pages` for
-more information.
+Para cada requisição que chega, o Symfony2 tenta encontrar uma regra de acesso
+correspondente, com comparação positiva do padrão (a primeira que encontrar ganha).
+Se o usuário não estiver autenticado ainda, a autenticação é iniciada (isto é,
+o usuário tem a chance de fazer login). Se o usuário, porém, já *estiver* autenticado,
+mas não tiver o perfil exigido, uma exceção é disparada
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException` ,
+que você pode tratar e transformar em uma apresentável página de "Acesso Negado"
+para o usuário. Veja :doc:`/cookbook/controller/error_pages` para mais informações.
 
-Since Symfony uses the first access control rule it matches, a URL like ``/admin/users/new``
-will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
-Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
+Como o Symfony utiliza a primeira regra de acesso que der uma comparação positiva, uma
+URL como ``/admin/users/new`` corresponderá a primeira regra e exigirá somente o perfil
+``ROLE_SUPER_ADMIN``. Qualquer URL como ``/admin/blog`` corresponderá a segunda regra e
+exigirá o perfil ``ROLE_ADMIN``.
 
 .. _book-security-securing-ip:
 
-Securing by IP
-~~~~~~~~~~~~~~
+Protegendo por IP
+~~~~~~~~~~~~~~~~~
 
-Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
-(ESI), for example, which utilize a route named "_internal". When
-ESI is used, the _internal route is required by the gateway cache to enable
-different caching options for subsections within a given page. This route
-comes with the ^/_internal prefix by default in the standard edition (assuming
-you've uncommented those lines from the routing file).
+Algumas situações podem exigir que você restrinja o acesso de uma determinada rota com base no IP.
+Isto é particularmente relevante no caso de :ref:`Edge Side Includes<edge-side-includes>` (ESI),
+por exemplo, que utiliza a rota com nome "_internal". Quanto ESI é utilizado, a rota
+_internal é requerida pelo gateway cache (gerente de cache) para possibilitar diferentes
+opções de caching para subseções dentro de uma determinada página. Esta rota vem com o
+prefixo ^/_internal por padrão na edição padrão (assumindo que você ativou estas linhas
+do seu arquivo de configuração de rotas - routing.yml).
 
-Here is an example of how you might secure this route from outside access:
+Aqui está um exemplo de como poderia proteger esta rota de acesso externo:
 
 .. configuration-block::
 
@@ -757,11 +757,11 @@ Here is an example of how you might secure this route from outside access:
 
 .. _book-security-securing-channel:
 
-Securing by Channel
-~~~~~~~~~~~~~~~~~~~
+Protegendo por canal
+~~~~~~~~~~~~~~~~~~~~
 
-Much like securing based on IP, requiring the use of SSL is as simple as
-adding a new access_control entry:
+Assim como a proteção por IP, exigir o uso de SSL é tão simples quanto adicionar uma
+nova entrar em access_control:
 
 .. configuration-block::
 
@@ -787,12 +787,12 @@ adding a new access_control entry:
 
 .. _book-security-securing-controller:
 
-Securing a Controller
-~~~~~~~~~~~~~~~~~~~~~
+Protegendo um Controller
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protecting your application based on URL patterns is easy, but may not be
-fine-grained enough in certain cases. When necessary, you can easily force
-authorization from inside a controller:
+Proteger seu aplicativo baseado em padrões de URL é fácil, mas este método pode não ser
+específico o bastante em certos casos. Quando necessário, você pode ainda facilmente
+forçar autorização de dentro de um controller:
 
 .. code-block:: php
 
@@ -810,8 +810,8 @@ authorization from inside a controller:
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
-which can secure your controller using annotations:
+Você pode ainda instalar e utilizar opcionalmente o ``JMSSecurityExtraBundle``,
+que te permite proteger controllers através de anotações:
 
 .. code-block:: php
 
@@ -825,37 +825,37 @@ which can secure your controller using annotations:
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
-using Symfony's Standard Distribution, this bundle is available by default.
-If not, you can easily download and install it.
+Para mais informações, veja a documentação `JMSSecurityExtraBundle`_ . Se você
+a distribuição Standard do Symfony, este bundle está habilitado por padrão.
+Se não estiver, você pode facilmente baixar e instalá-lo.
 
-Securing other Services
-~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo outros serviços
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In fact, anything in Symfony can be protected using a strategy similar to
-the one seen in the previous section. For example, suppose you have a service
-(i.e. a PHP class) whose job is to send emails from one user to another.
-You can restrict use of this class - no matter where it's being used from -
-to users that have a specific role.
+De fato, qualquer coisa pode ser protegida em Symfony utilizando uma estratégia
+similar a apresentada na seção anterior. Por exemplo, suponha que você tem
+um serviço (uma classe PHP, por exemplo) que seu trabalho é enviar e-mails
+de um usuário para outro. Você pode restringir o uso dessa classe - não
+importa de onde está sendo utilizada - a usuários que tenham um perfil específico.
 
-For more information on how you can use the security component to secure
-different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
+Para mais informações sobre como você pode utilizar o componente de segurança
+para proteger diferentes serviços e métodos de seu aplicativo, consulte :doc:`/cookbook/security/securing_services`.
 
-Access Control Lists (ACLs): Securing Individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Listas De Controle De Acesso (ACLs): Protegendo Objetos Específicos Do Banco De Dados
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not
-those of other users. Also, as the admin user, you yourself want to be able
-to edit *all* comments.
+Imagine que você está projetando um sistema de blog onde seus usuários podem
+comentar seus posts. Agora, você quer que um usuário tenha a possibilidade de editar
+seus próprios comentários, mas não aqueles de outros usuários. Além disso, como
+administrador, você quer poder editar *todos* os comentários.
 
-The security component comes with an optional access control list (ACL) system
-that you can use when you need to control access to individual instances
-of an object in your system. *Without* ACL, you can secure your system so that
-only certain users can edit blog comments in general. But *with* ACL, you
-can restrict or allow access on a comment-by-comment basis.
+O componente de segurança possui um sistema de listas de controle de acesso (ACL)
+que te permite controlar acesso a instâncias individuais de um objeto no seu
+sistema. *Sem* ACL, você consegue proteger seu sistema para que
+somente usuários específicos possam editar os comentários. *Com* ACL, porém, você
+pode restringir ou permitir o acesso por comentário.
 
-For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
+Para mais informação, veja o passo-a-passo: :doc:`/cookbook/security/acl`.
 
 Users
 -----
