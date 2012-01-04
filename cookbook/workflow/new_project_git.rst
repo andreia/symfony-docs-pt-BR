@@ -1,30 +1,30 @@
-How to Create and store a Symfony2 Project in git
+Como Criar e Armazenar um Projeto Symfony2 no git
 =================================================
 
 .. tip::
 
-    Though this entry is specifically about git, the same generic principles
-    will apply if you're storing your project in Subversion.
+    Embora este artigo seja especificamente sobre git, os mesmos princípios genéricos
+    aplicam-se caso você estiver armazenando o seu projeto no Subversion.
 
-Once you've read through :doc:`/book/page_creation` and become familiar with
-using Symfony, you'll no-doubt be ready to start your own project. In this
-cookbook article, you'll learn the best way to start a new Symfony2 project
-that's stored using the `git`_ source control management system.
+Uma vez que você leu :doc:`/book/page_creation` e familiarizou-se com 
+o Symfony, já está, sem dúvida, pronto para começar o seu próprio projeto. Neste artigo 
+do cookbook, você aprenderá a melhor maneira de iniciar um novo projeto Symfony2
+que será armazenado usando o sistema gerenciador de controle de versão `git`_.
 
-Initial Project Setup
----------------------
+Configuração Inicial do Projeto 
+-------------------------------
 
-To get started, you'll need to download Symfony and initialize your local
-git repository:
+Para começar, você precisa baixar o Symfony e inicializar o seu repositório 
+git local:
 
-1. Download the `Symfony2 Standard Edition`_ without vendors.
+1. Baixe a `Edição Standard do Symfony2`_ sem vendors.
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
-   your new project structure, config files, etc. Rename it to whatever you like.
+2. Descompacte a distribuição. Será criado um diretório chamado Symfony com
+   a sua nova estrutura do projeto, arquivos de configuração, etc. Renomeie-o como desejar.
 
-3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``deps`` file) and paste the following into it. Files
-   matching these patterns will be ignored by git:
+3. Crie um novo arquivo chamado ``.gitignore`` no raiz de seu novo projeto
+   (Ex.: junto com o arquivo ``deps``) e cole o conteúdo seguinte nele. Os arquivos
+   correspondentes a estes padrões serão ignorados pelo git:
 
     .. code-block:: text
 
@@ -35,122 +35,122 @@ git repository:
         /vendor/  
         /app/config/parameters.yml
 
-4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
-   The ``parameters.yml`` file is ignored by git (see above) so that machine-specific
-   settings like database passwords aren't committed. By creating the ``parameters.yml.dist``
-   file, new developers can quickly clone the project, copy this file to
-   ``parameters.yml``, customize it, and start developing.
+4. Copie ``app/config/parameters.yml`` para ``app/config/parameters.yml.dist``.
+   O arquivo ``parameters.yml`` é ignorado pelo git (veja acima), de modo que as configurações específicas da máquina, 
+   como senhas de banco de dados, não sejam comitadas. Criando o arquivo ``parameters.yml.dist``, 
+   novos desenvolvedores podem, rapidamente, clonar o projeto, copiar este arquivo para
+   ``parameters.yml``, personalizá-lo e iniciar o desenvolvimento.
 
-5. Initialize your git repository:
+5. Inicialize o seu repositório git:
 
     .. code-block:: bash
     
         $ git init
 
-6. Add all of the initial files to git:
+6. Adicione todos os arquivos iniciais ao git:
 
     .. code-block:: bash
     
         $ git add .
 
-7. Create an initial commit with your started project:
+7. Crie um commit inicial para o seu projeto:
 
     .. code-block:: bash
     
         $ git commit -m "Initial commit"
 
-8. Finally, download all of the third-party vendor libraries:
+8. Finalmente, baixe todas as bibliotecas vendor de terceiros:
 
     .. code-block:: bash
     
         $ php bin/vendors install
 
-At this point, you have a fully-functional Symfony2 project that's correctly
-committed to git. You can immediately begin development, committing the new
-changes to your git repository.
+Neste ponto, você tem um projeto Symfony2 totalmente funcional que está corretamente
+comitado com o git. Você pode iniciar imediatamente o desenvolvimento, comitando as novas
+alterações em seu repositório git.
 
-You can continue to follow along with the :doc:`/book/page_creation` chapter
-to learn more about how to configure and develop inside your application.
+Você pode continuar acompanhando o capítulo :doc:`/book/page_creation`
+para saber mais sobre como configurar e desenvolver dentro da sua aplicação.
 
 .. tip::
 
-    The Symfony2 Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions on the `Standard Edition Readme`_.
+    A Edição Standard do Symfony2 vem com algumas funcionalidades exemplo. Para
+    remover o código de exemplo, siga as instruções contidas no `Readme da Edição Standard`_.
 
 .. _cookbook-managing-vendor-libraries:
 
-Managing Vendor Libraries with bin/vendors and deps
----------------------------------------------------
+Gerenciando Bibliotecas Vendor com bin/vendors e deps
+-----------------------------------------------------
 
-Every Symfony project uses a large group of third-party "vendor" libraries.
+Cada projeto Symfony usa um grande grupo de bibliotecas "vendor" de terceiros.
 
-By default, these libraries are downloaded by running the ``php bin/vendors install``
-script. This script reads from the ``deps`` file, and downloads the given
-libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
-pinning each library listed there to the exact git commit hash.
+Por padrão, estas bibliotecas são baixadas executando o script 
+``php bin/vendors install``. Este script lê o arquivo ``deps``, e baixa as 
+bibliotecas ali informadas no diretório ``vendor/``. Ele também lê o arquivo ``deps.lock``, 
+fixando cada biblioteca listada ao respectivo hash do commit git.
 
-In this setup, the vendors libraries aren't part of your git repository,
-not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
-files and the ``bin/vendors`` script to manage everything. Those files are
-part of your repository, so the necessary versions of each third-party library
-are version-controlled in git, and you can use the vendors script to bring
-your project up to date.
+Nesta configuração, as bibliotecas vendor não fazem parte de seu repositório git,
+nem mesmo como sub-módulos. Em vez disso, contamos com os arquivos ``deps`` e ``deps.lock``
+e o script ``bin/vendors`` para gerenciar tudo. Esses arquivos são
+parte de seu repositório, então, as versões necessárias de cada biblioteca de terceiros
+tem controle de versão no git, e você pode usar o script vendors para trazer 
+o seu projeto atualizado.
 
-Whenever a developer clones a project, he/she should run the ``php bin/vendors install``
-script to ensure that all of the needed vendor libraries are downloaded.
+Sempre que um desenvolvedor clona um projeto, ele(a) deve executar o script ``php bin/vendors install``
+para garantir que todas as bibliotecas vendor necessárias foram baixadas.
 
-.. sidebar:: Upgrading Symfony
+.. sidebar:: Atualizando o Symfony
 
-    Since Symfony is just a group of third-party libraries and third-party
-    libraries are entirely controlled through ``deps`` and ``deps.lock``,
-    upgrading Symfony means simply upgrading each of these files to match
-    their state in the latest Symfony Standard Edition.
+    Uma vez que o Symfony é apenas um grupo de bibliotecas de terceiros e estas 
+    bibliotecas são totalmente controladas através do ``deps`` e ``deps.lock``,
+    atualizar o Symfony significa, simplesmente, atualizar cada um desses arquivos para combinar
+    seu estado na última Edição Standard do Symfony.
 
-    Of course, if you've added new entries to ``deps`` or ``deps.lock``, be sure
-    to replace only the original parts (i.e. be sure not to also delete any of
-    your custom entries).
+    Claro, se você adicionou novas entradas ao ``deps`` ou ``deps.lock``, certifique-se
+    de substituir apenas as partes originais (ou seja, não excluir as
+    suas entradas personalizadas).
 
 .. caution::
 
-    There is also a ``php bin/vendors update`` command, but this has nothing
-    to do with upgrading your project and you will normally not need to use
-    it. This command is used to freeze the versions of all of your vendor libraries
-    by updating them to the version specified in ``deps`` and recording it
-    into the ``deps.lock`` file.
+    Há também um comando ``php bin/vendors update``, mas isso não tem nada
+    a ver com a atualização do seu projeto e você normalmente não precisará 
+    utilizá-lo. Este comando é usado para congelar as versões de todas as suas bibliotecas vendor
+    atualizando-as para a versão especificada em ``deps`` e gravando-as
+    no arquivo ``deps.lock``.
 
-    Additionally, if you would simply like to update the ``deps.lock`` file
-    to what you already have installed, then you can simply run ``php bin/vendors lock``
-    to store the appropriate git SHA identifiers in the deps.lock file.
+    Além disso, se você deseja simplesmente atualizar o arquivo ``deps.lock``
+    para o que já tem instalado, então, você pode simplesmente executar ``php bin/vendors lock``
+    para armazenar os identificadores git SHA apropriados no arquivo deps.lock.
 
-Vendors and Submodules
-~~~~~~~~~~~~~~~~~~~~~~
+Vendors e sub-módulos
+~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using the ``deps``, ``bin/vendors`` system for managing your vendor
-libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``deps`` system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.
+Em vez de usar o sistema ``deps`` e ``bin/vendors`` para gerenciar suas blibliotecas vendor, 
+você pode optar por usar o `git submodules`_ nativo. Não há
+nada de errado com esta abordagem, embora o sistema ``deps`` é a forma oficial
+de resolver este problema e o ``git submodules`` pode ser difícil trabalhar 
+às vezes.
 
-Storing your Project on a Remote Server
----------------------------------------
+Armazenando o seu Projeto em um Servidor Remoto
+-----------------------------------------------
 
-You now have a fully-functional Symfony2 project stored in git. However,
-in most cases, you'll also want to store your project on a remote server
-both for backup purposes, and so that other developers can collaborate on
-the project.
+Agora, você tem um projeto Symfony2 totalmente funcional armazenado com o git. Entretanto,
+na maioria dos casos, você também vai querer guardar o seu projeto em um servidor remoto
+tanto para fins de backup quanto para que outros desenvolvedores possam colaborar com
+o projeto.
 
-The easiest way to store your project on a remote server is via `GitHub`_.
-Public repositories are free, however you will need to pay a monthly fee
-to host private repositories.
+A maneira mais fácil para armazenar o seu projeto em um servidor remoto é via `GitHub`_.
+Repositórios públicos são gratuitos, porém, você terá que pagar uma taxa mensal
+para hospedar repositórios privados.
 
-Alternatively, you can store your git repository on any server by creating
-a `barebones repository`_ and then pushing to it. One library that helps
-manage this is `Gitolite`_.
+Alternativamente, você pode armazenar seu repositório git em qualquer servidor, criando
+um `repositório barebones`_ e depois empurrar a ele. Uma biblioteca que ajuda
+a gerenciar isto é a `Gitolite`_.
 
 .. _`git`: http://git-scm.com/
-.. _`Symfony2 Standard Edition`: http://symfony.com/download
-.. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
+.. _`Edição Standard do Symfony2`: http://symfony.com/download
+.. _`Readme da Edição Standard`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`git submodules`: http://book.git-scm.com/5_submodules.html
 .. _`GitHub`: https://github.com/
-.. _`barebones repository`: http://progit.org/book/ch4-4.html
+.. _`repositório barebones`: http://progit.org/book/ch4-4.html
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
