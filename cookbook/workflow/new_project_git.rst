@@ -144,8 +144,8 @@ Repositórios públicos são gratuitos, porém, você terá que pagar uma taxa m
 para hospedar repositórios privados.
 
 Alternativamente, você pode armazenar seu repositório git em qualquer servidor, criando
-um `repositório barebones`_ e depois empurrar a ele. Uma biblioteca que ajuda
-a gerenciar isto é a `Gitolite`_.
+um `repositório barebones`_ e, então, enviá-lo. Uma biblioteca que ajuda
+neste gerenciamento é a `Gitolite`_.
 
 .. _`git`: http://git-scm.com/
 .. _`Edição Standard do Symfony2`: http://symfony.com/download
