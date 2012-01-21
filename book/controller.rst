@@ -4,15 +4,17 @@
 Controller
 ==========
 
-A controller is a PHP function you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony2
-``Response`` object). The response could be an HTML page, an XML document,
-a serialized JSON array, an image, a redirect, a 404 error or anything else
-you can dream up. The controller contains whatever arbitrary logic *your
-application* needs to render the content of a page.
+Um controller é uma função PHP que você cria e que pega informações da
+requisição HTTP para criar e retornar uma resposta HTTP (como um objeto
+``Response`` do Symfony2). A resposta pode ser uma página HTML, um documento
+XML, um array JSON serializado, uma imagem, um redirecionamento, um erro 404
+ou qualquer coisa que você imaginar. O controller contém toda e qualquer lógica
+arbritária que *sua aplicação* precisa para renderizar o conteúdo de uma
+página.
 
-To see how simple this is, let's look at a Symfony2 controller in action.
-The following controller would render a page that simply prints ``Hello world!``::
+Para ver quão simples é isso, vamos ver um controller do Symfony2 em ação.
+O seguinte controller deve rendereizar uma página que mostra apenas 
+``Hello world!``:
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -21,74 +23,76 @@ The following controller would render a page that simply prints ``Hello world!``
         return new Response('Hello world!');
     }
 
-The goal of a controller is always the same: create and return a ``Response``
-object. Along the way, it might read information from the request, load a
-database resource, send an email, or set information on the user's session.
-But in all cases, the controller will eventually return the ``Response`` object
-that will be delivered back to the client.
+O objetivo de um controller é sempre o mesmo: criar e retornar um objeto
+``Response``. Ao longo do caminho, ele pode ler informações da requisição,
+carregar um recurso do banco de dados, mandar um e-mail ou gravar informações
+na sessão do usuário. Mas em todos os casos, o controller acabará retornando
+o objeto ``Response`` que será mandado de volta para o cliente.
 
-There's no magic and no other requirements to worry about! Here are a few
-common examples:
+Não há nenhuma mágica e nenhum outro requisito para se preocupar! Aqui temos
+alguns exemplos comuns:
 
-* *Controller A* prepares a ``Response`` object representing the content
-  for the homepage of the site.
+* O *Controller A* prepara um objeto ``Response`` representando o conteúdo
+  da página inicial do site.
 
-* *Controller B* reads the ``slug`` parameter from the request to load a
-  blog entry from the database and create a ``Response`` object displaying
-  that blog. If the ``slug`` can't be found in the database, it creates and
-  returns a ``Response`` object with a 404 status code.
+* O *Controller B* lê o parâmetro ``slug`` da requisição para carregar uma
+  entrada do blog no banco de dados e cria um um objeto ``Response`` mostrando
+  o blog. Se o ``slug`` não for encontrado no banco de dados, ele cria e
+  retorna um objeto ``Response`` com um código de status 404.
 
-* *Controller C* handles the form submission of a contact form. It reads
-  the form information from the request, saves the contact information to
-  the database and emails the contact information to the webmaster. Finally,
-  it creates a ``Response`` object that redirects the client's browser to
-  the contact form "thank you" page.
+* O *Controller C* trata a o envio de um formulário de contato. Ele lê a
+  informação do formulário a partir da requisição, salva a informação de
+  contato no banco de dados e envia por e-mail a informação de contato
+  para o webmaster. Finalmente, ele cria um objeto ``Response`` que
+  redireciona o navegador do cliente para a página "thank you" do formulário
+  de contato.
 
 .. index::
    single: Controller; Request-controller-response lifecycle
 
-Requests, Controller, Response Lifecycle
-----------------------------------------
+O Ciclo de Vida da Requisição, Controller e Resposta
+----------------------------------------------------
 
-Every request handled by a Symfony2 project goes through the same simple lifecycle.
-The framework takes care of the repetitive tasks and ultimately executes a
-controller, which houses your custom application code:
+Toda requisição tratada por um projeto com Symfony 2 passa pelo mesmo ciclo de
+vida simples. O framework cuida das tarefas repetitivas e por fim executa um
+controller onde reside o código personalizado da sua aplicação:
 
-#. Each request is handled by a single front controller file (e.g. ``app.php``
-   or ``app_dev.php``) that bootstraps the application;
+#. Toda requisição é tratada por um único arquivo front controller (e.g.
+   ``app.php`` or ``app_dev.php``) que inicializa a aplicação;
 
-#. The ``Router`` reads information from the request (e.g. the URI), finds
-   a route that matches that information, and reads the ``_controller`` parameter
-   from the route;
+#. O ``Router`` lê a informação da requisição (e.g. a URI), encontra uma rota
+   que casa com aquela informação, e lê o parâmetro ``_controller`` da rota;
 
-#. The controller from the matched route is executed and the code inside the
-   controller creates and returns a ``Response`` object;
+#. O controller que casou com a rota é executado e o código dentro do
+   controller cria e retorna um objeto ``Response``;
 
-#. The HTTP headers and content of the ``Response`` object are sent back to
-   the client.
+#. Os cabeçalhos HTTP e o conteúdo do objeto ``Response`` são enviados de
+   volta para o cliente.
 
-Creating a page is as easy as creating a controller (#3) and making a route that
-maps a URL to that controller (#2).
+Criar uma página é tão fácil quanto criar um controller (#3) e fazer uma rota
+que mapeie uma URL para aquele controller (#2).
 
 .. note::
 
-    Though similarly named, a "front controller" is different from the
-    "controllers" we'll talk about in this chapter. A front controller
-    is a short PHP file that lives in your web directory and through which
-    all requests are directed. A typical application will have a production
-    front controller (e.g. ``app.php``) and a development front controller
-    (e.g. ``app_dev.php``). You'll likely never need to edit, view or worry
-    about the front controllers in your application.
+    Embora tenha um nome similar, um "front controller" é diferente dos
+    "controllers" dos quais vamos falar nesse capítulo. Um front controller é
+    um pequeno arquivo PHP que fica no seu diretório web e através do qual
+    todas as requisições são direcionadas. Uma aplicação típica terá um front
+    controller de produção (e.g. ``app.php``) e um front controller de
+    desenvolvimento (e.g. ``app_dev.php``). Provavelmente você nunca precisará
+    editar, visualizar ou se preocupar com os front controllers da sua
+    aplicação.
 
 .. index::
    single: Controller; Simple example
 
-A Simple Controller
--------------------
+Um Controller Simples
+---------------------
 
-While a controller can be any PHP callable (a function, method on an object,
-or a ``Closure``), in Symfony2, a controller is usually a single method inside
-a controller object. Controllers are also called *actions*.
+Embora um controller possa ser qualquer código PHP que possa ser chamado (uma
+função, um método em um objeto ou uma ``Closure``), no Symfony2 um controller
+geralmente é um único método dentro de um objeto controller. Os controllers
+também são chamados de *actions*:
 
 .. code-block:: php
     :linenos:
@@ -108,41 +112,42 @@ a controller object. Controllers are also called *actions*.
 
 .. tip::
 
-    Note that the *controller* is the ``indexAction`` method, which lives
-    inside a *controller class* (``HelloController``). Don't be confused
-    by the naming: a *controller class* is simply a convenient way to group
-    several controllers/actions together. Typically, the controller class
-    will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
-    etc).
+    Note que o *controller* é o método ``indexAction``, que fica dentro de
+    uma *classe controller* (``HelloController``). Não se confunda com a
+    nomenclatura: uma *classe controller* é apenas um forma conveniente de
+    agrupar vários controllers/actions juntos. Geralmente a classe controller
+    irá agrupar vários controllers/actions (e.g. ``updateAction``,
+    ``deleteAction`` etc).
+    
+Esse controller é bem simples, mas vamos explicá-lo:
 
-This controller is pretty straightforward, but let's walk through it:
+* *linha 3*: O Symfony2 se beneficia da funcionalidade de namespace do PHP 5.3
+  colocando a classe controller inteira dentro de um namespace. A palavra chave
+  ``use`` importa a classe ``Response`` que nosso controller tem que retornar.
 
-* *line 3*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
-  namespace the entire controller class. The ``use`` keyword imports the
-  ``Response`` class, which our controller must return.
+* *linha 6*: O nome da classe é a concatenação de um nome para a classe
+  controller (i.e. ``Hello``) com a palavra ``Controller``. Essa é uma
+  convenção que fornece consistência aos controllers e permite que eles sejam
+  referenciados usando apenas a primeira parte do nome (i.e. ``Hello``) na
+  configuração de roteamento.
 
-* *line 6*: The class name is the concatenation of a name for the controller
-  class (i.e. ``Hello``) and the word ``Controller``. This is a convention
-  that provides consistency to controllers and allows them to be referenced
-  only by the first part of the name (i.e. ``Hello``) in the routing configuration.
+* *linha 8*: Toda action em uma classe controller é sufixada com ``Action`` e
+  é referenciada na configuração de roteamento pelo nome da action (``index``).
+  Na próxima seção, você criará uma rota que mapeia uma URI para essa action.
+  Você aprenderá como os marcadores de posição das rotas (``{name}``) tornam-se
+  argumentos no método da action (``$name``).
 
-* *line 8*: Each action in a controller class is suffixed with ``Action``
-  and is referenced in the routing configuration by the action's name (``index``).
-  In the next section, you'll create a route that maps a URI to this action.
-  You'll learn how the route's placeholders (``{name}``) become arguments
-  to the action method (``$name``).
-
-* *line 10*: The controller creates and returns a ``Response`` object.
+* *linha 10*: O controller cria e retorna um objeto ``Response``.
 
 .. index::
    single: Controller; Routes and controllers
 
-Mapping a URL to a Controller
------------------------------
+Mapeando uma URL para um Controller
+-----------------------------------
 
-The new controller returns a simple HTML page. To actually view this page
-in your browser, you need to create a route, which maps a specific URL pattern
-to the controller:
+O novo controller retorna uma página HTML simples. Para ver realmente essa
+página no seu navegador você precisa criar uma rota que mapeia um padrão
+específico de URL para o controller:
 
 .. configuration-block::
 
@@ -167,42 +172,45 @@ to the controller:
             '_controller' => 'AcmeHelloBundle:Hello:index',
         )));
 
-Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
-controller and passes in ``ryan`` for the ``$name`` variable. Creating a
-"page" means simply creating a controller method and associated route.
+Agora, acessar ``/hello/ryan`` executa o controller
+``HelloController::indexAction()`` e passa ``ryan`` para a variável ``$name``.
+A criação de uma "página" significa simplesmente criar um método controller e
+associar uma rota.
 
-Notice the syntax used to refer to the controller: ``AcmeHelloBundle:Hello:index``.
-Symfony2 uses a flexible string notation to refer to different controllers.
-This is the most common syntax and tells Symfony2 to look for a controller
-class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
-method ``indexAction()`` is then executed.
+Note a sintaxe usada para referenciar o controller:
+``AcmeHelloBundle:Hello:index``. O Symfony2 usa uma notação flexível de string
+para referenciar diferentes controllers. Essa é a sintaxe mais comum e diz ao
+Symfony2 para buscar por uma classe controller chamada ``helloController``
+dentro de um bundle chamado ``AcmeHelloBundle``. Então o método
+``indexAction()`` é executado.
 
-For more details on the string format used to reference different controllers,
-see :ref:`controller-string-syntax`.
+Para mais detalhes sobre o formato de string usado para referenciar diferentes
+controllers, veja :ref:`controller-string-syntax`.
 
 .. note::
 
-    This example places the routing configuration directly in the ``app/config/``
-    directory. A better way to organize your routes is to place each route
-    in the bundle it belongs to. For more information on this, see
+    Esse exemplo coloca a configuração de roteamento diretamente no diretório
+    ``app/config/``. Uma forma melhor de organizar suas rotas é colocar cada
+    uma das rotas no bundle a qual elas pertencem. Para mais informações, veja
     :ref:`routing-include-external-resources`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter</book/routing>`.
+    Você pode aprender muito mais sobre o sistema de roteamento no
+    :doc:`capítulo Roteamento</book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
 
 .. _route-parameters-controller-arguments:
 
-Route Parameters as Controller Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parâmetros de Rota como Argumentos do Controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You already know that the ``_controller`` parameter ``AcmeHelloBundle:Hello:index``
-refers to a ``HelloController::indexAction()`` method that lives inside the
-``AcmeHelloBundle`` bundle. What's more interesting is the arguments that are
-passed to that method:
+Você já sabe que o parâmetro ``_controller`` em ``AcmeHelloBundle:Hello:index``
+se refere ao método ``HelloController::indexAction()`` que está dentro do
+bundle ``AcmeHelloBundle``. O que é mais interessante são os argumentos que
+são passado para o método:
 
 .. code-block:: php
 
@@ -220,11 +228,10 @@ passed to that method:
         }
     }
 
-The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` parameter from the matched route (``ryan`` in our example). In
-fact, when executing your controller, Symfony2 matches each argument of
-the controller with a parameter from the matched route. Take the following
-example:
+O controller tem um único argumento, ``$name``, que corresponde ao parâmetro
+``{name}`` da rota casada (``ryan`` no nosso exemplo). Na verdade quando
+executa seu controller, o Symfony2 casa cada um dos argumentos do controller
+com um parâmetro da rota casada. Veja o seguinte exemplo:
 
 .. configuration-block::
 
@@ -251,56 +258,58 @@ example:
             'color'       => 'green',
         )));
 
-The controller for this can take several arguments::
+O controller dessa rota pode receber vários argumentos:
 
     public function indexAction($first_name, $last_name, $color)
     {
         // ...
     }
 
-Notice that both placeholder variables (``{first_name}``, ``{last_name}``)
-as well as the default ``color`` variable are available as arguments in the
-controller. When a route is matched, the placeholder variables are merged
-with the ``defaults`` to make one array that's available to your controller.
+Observe que tanto as variáveis de marcadores de posição (``{first_name}``,
+``{last_name}``) quanto a váriavel padrão ``color`` estão disponíveis como
+argumentos no controller. Quando uma rota é casada, as variáveis marcadoras
+de posição são mescladas com as variáveis ``default`` criando um array
+que fica disponível para o seu controller.
 
-Mapping route parameters to controller arguments is easy and flexible. Keep
-the following guidelines in mind while you develop.
+O mapeamento de parâmetros de rota com argumentos do controller é fácil e
+flexível. Tenha em mente as seguintes orientações enquanto estiver
+desenvolvendo.
 
-* **The order of the controller arguments does not matter**
+* **A ordem dos argumentos do controller não importa**
 
-    Symfony is able to match the parameter names from the route to the variable
-    names in the controller method's signature. In other words, it realizes that
-    the ``{last_name}`` parameter matches up with the ``$last_name`` argument.
-    The arguments of the controller could be totally reordered and still work
-    perfectly::
+    O Symfony é capaz de casar os nomes dos parâmetros da rota com os nomes
+    das variáveis na assinatura do método do controller. Em outras palavras,
+    ele sabe que o parâmetro ``{last_name}`` casa com o argumento
+    ``$last_name``. Os argumentos do controller podem ser totalmente
+    reordenados e continuam funcionando perfeitamente:
 
         public function indexAction($last_name, $color, $first_name)
         {
             // ..
         }
 
-* **Each required controller argument must match up with a routing parameter**
+* **Todo argumento obrigatório do controller tem que corresponder a um parâmetro de roteamento**
 
-    The following would throw a ``RuntimeException`` because there is no ``foo``
-    parameter defined in the route::
+    O seguinte deveria lançar uma ``RuntimeException`` porque não existe nenhum
+    parâmetro ``foo`` definido na rota:
 
         public function indexAction($first_name, $last_name, $color, $foo)
         {
             // ..
         }
 
-    Making the argument optional, however, is perfectly ok. The following
-    example would not throw an exception::
+	Deixando o argumento opcional, no entanto, tudo corre bem. O
+	seguinte exemplo não lança uma exceção:
 
         public function indexAction($first_name, $last_name, $color, $foo = 'bar')
         {
             // ..
         }
 
-* **Not all routing parameters need to be arguments on your controller**
+* **Nem todos os parâmetros de roteamento precisam ser argumentos no seu controller**
 
-    If, for example, the ``last_name`` weren't important for your controller,
-    you could omit it entirely::
+    Se, por exemplo, ``last_name`` não for importante para o seu controller,
+    você pode omitir inteiramente ele:
 
         public function indexAction($first_name, $color)
         {
@@ -309,18 +318,18 @@ the following guidelines in mind while you develop.
 
 .. tip::
 
-    Every route also has a special ``_route`` parameter, which is equal to
-    the name of the route that was matched (e.g. ``hello``). Though not usually
-    useful, this is equally available as a controller argument.
+    Cada uma das rotas tem um parâmetro ``_route`` especial, que é igual ao
+    nome da rota que foi casada (e.g. ``hello``). Embora não seja útil
+    geralmente, ele também fica disponível como um argumento do controller.
 
 .. _book-controller-request-argument:
 
-The ``Request`` as a Controller Argument
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+O ``Request`` como um Argumento do Controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For convenience, you can also have Symfony pass you the ``Request`` object
-as an argument to your controller. This is especially convenient when you're
-working with forms, for example::
+Por conveniência, você também pode fazer com que o Symfony passe o objeto
+``Request`` como um argumento para seu controller. Isso é conveniente
+especialmente quando você estiver trabalhando com formulários, por exemplo:
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -335,16 +344,16 @@ working with forms, for example::
 .. index::
    single: Controller; Base controller class
 
-The Base Controller Class
--------------------------
+A Classe Controller Base
+------------------------
 
-For convenience, Symfony2 comes with a base ``Controller`` class that assists
-with some of the most common controller tasks and gives your controller class
-access to any resource it might need. By extending this ``Controller`` class,
-you can take advantage of several helper methods.
+Por conveniência, o Symfony2 vem com uma classe ``Controller`` base que ajuda
+com algumas das tarefas mais comuns dos controllers e fornece às suas classes
+controller acesso a qualquer recurso que elas possam precisar. Estendendo essa
+classe ``Controller``, você se beneficia com vários métodos helper.
 
-Add the ``use`` statement atop the ``Controller`` class and then modify the
-``HelloController`` to extend it:
+Adicione a instrução ``use`` no topo da sua classe ``Controller`` e então
+modifique o ``HelloController`` para estendê-lo:
 
 .. code-block:: php
 
@@ -362,57 +371,59 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
         }
     }
 
-This doesn't actually change anything about how your controller works. In
-the next section, you'll learn about the helper methods that the base controller
-class makes available. These methods are just shortcuts to using core Symfony2
-functionality that's available to you with or without the use of the base
-``Controller`` class. A great way to see the core functionality in action
-is to look in the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class
-itself.
+Isso não muda realmente nada o jeito que seu controller trabalha. Na próxima
+seção você aprenderá sobre os métodos helper que a classe controller base
+disponibiliza. Esses métodos são apenas atalhos para usar funcionalidades do
+núcleo do Symfony2 que estão disponíveis para você usando ou não a classe base
+``Controller``. Uma boa maneira de ver a funcionalidade do núcleo em ação
+é olhar a própria classe
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`.
 
 .. tip::
 
-    Extending the base class is *optional* in Symfony; it contains useful
-    shortcuts but nothing mandatory. You can also extend
-    ``Symfony\Component\DependencyInjection\ContainerAware``. The service
-    container object will then be accessible via the ``container`` property.
-
+    Estender a classe base é *opcional* no Symfony; ela contém atalhos úteis
+    mas nada que seja mandatório. Você também pode estender
+    ``Symfony\Component\DependencyInjection\ContainerAware``. O objeto
+    contêiner de serviços então será acessível por meio da propriedade
+    ``container``.
+    
 .. note::
 
-    You can also define your :doc:`Controllers as Services
+    Você também pode definir seus :doc:`Controllers como Serviços
     </cookbook/controller/service>`.
 
 .. index::
    single: Controller; Common Tasks
 
-Common Controller Tasks
------------------------
+Tarefas Comuns dos Controllers
+------------------------------
 
-Though a controller can do virtually anything, most controllers will perform
-the same basic tasks over and over again. These tasks, such as redirecting,
-forwarding, rendering templates and accessing core services, are very easy
-to manage in Symfony2.
+Embora virtualmente um controller possa fazer qualquer coisa, a maioria dos
+controllers irão realizar as mesmas tarefas básicas repetidas vezes. Essas
+tarefas, como redirecionamentos, direcionamentos, renderização de templates e
+acesso a serviços nucleares são muitos fáceis de gerenciar no Symfony2.
 
 .. index::
    single: Controller; Redirecting
 
-Redirecting
-~~~~~~~~~~~
+Redirecionando
+~~~~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the ``redirect()`` method::
+Se você quiser redirecionar o usuário para outra página, use o método
+``redirect()``::
 
     public function indexAction()
     {
         return $this->redirect($this->generateUrl('homepage'));
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
+O método ``generateUrl()`` é apenas uma função helper que gera a URL de uma
+determinada rota. Para mais informações, veja o capítulo
+:doc:`Roteamento </book/routing>`.
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+Por padrão, o método ``redirect()`` efetua um redirecionamento 302
+(temporário). Para realizar um redirecionamento 301 (permanente), modifique o
+segundo argumento::
 
     public function indexAction()
     {
@@ -421,8 +432,8 @@ perform a 301 (permanent) redirect, modify the second argument::
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to:
+    O método ``redirect()`` é simplesmente um atalho que cria um objeto
+    ``Response`` especializado em redirecionar o usuário. Ele é equivalente a:
 
     .. code-block:: php
 
@@ -433,13 +444,13 @@ perform a 301 (permanent) redirect, modify the second argument::
 .. index::
    single: Controller; Forwarding
 
-Forwarding
-~~~~~~~~~~
+Direcionando
+~~~~~~~~~~~~
 
-You can also easily forward to another controller internally with the ``forward()``
-method. Instead of redirecting the user's browser, it makes an internal sub-request,
-and calls the specified controller. The ``forward()`` method returns the ``Response``
-object that's returned from that controller::
+Você também pode facilmente direcionar internamente para outro controller com o
+método ``forward()``. Em vez de redirecionar o navegador do usuário, ele faz
+uma sub-requisição interna e chama o controller especificado. O método
+``forward()`` retorna o objeto ``Response`` que é retornado pelo controller::
 
     public function indexAction($name)
     {
@@ -448,36 +459,36 @@ object that's returned from that controller::
             'color' => 'green'
         ));
 
-        // further modify the response or return it directly
+        // pode modificar a resposta ou retorná-la diretamente
         
         return $response;
     }
 
-Notice that the `forward()` method uses the same string representation of
-the controller used in the routing configuration. In this case, the target
-controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
-The array passed to the method becomes the arguments on the resulting controller.
-This same interface is used when embedding controllers into templates (see
-:ref:`templating-embedding-controller`). The target controller method should
-look something like the following::
+Note que o método `forward()` usa a mesma representação em string do
+controller que foi usada na configuração de roteamento. Nesse caso, a classe
+controller alvo será ``HelloController`` dentro de ``AcmeHelloBundle``.
+O array passado para o método se torna os argumentos no controller
+resultante. Essa mesma interface é usada quando se embutem controllers em
+templates (veja :ref:`templating-embedding-controller`). O método controller
+alvo deve se parecer com o seguinte::
 
     public function fancyAction($name, $color)
     {
-        // ... create and return a Response object
+        // ... cria e retorna um objeto Response
     }
 
-And just like when creating a controller for a route, the order of the arguments
-to ``fancyAction`` doesn't matter. Symfony2 matches the index key names
-(e.g. ``name``) with the method argument names (e.g. ``$name``). If you
-change the order of the arguments, Symfony2 will still pass the correct
-value to each variable.
+E da mesma forma quando criamos um controller para uma rota, a ordem dos
+argumentos para ``fancyAction`` não importa. O Symfony2 combina os nomes
+das chaves dos índices (e.g. ``name``) com os nomes dos argumentos do
+método (e.g. ``$name``). Se você mudar a ordem dos argumentos, o Symfony2
+continuará passandos os valores corretos para cada variável.
 
 .. tip::
 
-    Like other base ``Controller`` methods, the ``forward`` method is just
-    a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
-    object::
+    Assim como em outros métodos do ``Controller`` base, o método ``forward`` é
+    apenas um atalho para uma funcionalidade nuclear do Symfony2. Um
+    direcionamento pode ser realizado diretamente por meio do serviço
+    ``http_kernel``. Um direcionamento retorna um objeto ``Response``::
     
         $httpKernel = $this->container->get('http_kernel');
         $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
@@ -490,33 +501,35 @@ value to each variable.
 
 .. _controller-rendering-templates:
 
-Rendering Templates
-~~~~~~~~~~~~~~~~~~~
+Renderizando Templates
+~~~~~~~~~~~~~~~~~~~~~~
 
-Though not a requirement, most controllers will ultimately render a template
-that's responsible for generating the HTML (or other format) for the controller.
-The ``renderView()`` method renders a template and returns its content. The
-content from the template can be used to create a ``Response`` object::
+Apesar de não ser um requisito, a maioria dos controllers irá, no fim das contas,
+renderizar um template que é responsável por gerar o HTML (ou outro formato)
+para o controller. O método ``renderView()`` renderiza um template e retorna
+seu conteúdo. O conteúdo do template pode ser usado para criar um objeto
+``Response``::
 
     $content = $this->renderView('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
     return new Response($content);
 
-This can even be done in just one step with the ``render()`` method, which
-returns a ``Response`` object containing the content from the template::
+Isso pode ser feito até em um único passo usando o método ``render()``, que
+retorna um objeto ``Response`` com o conteúdo do template::
 
     return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
-In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
-the ``AcmeHelloBundle`` will be rendered.
+Em ambos os casos, o template ``Resources/views/Hello/index.html.twig`` dentro
+do ``AcmeHelloBundle`` será renderizado.
 
-The Symfony templating engine is explained in great detail in the
-:doc:`Templating </book/templating>` chapter.
+O sistema de template do Symfony é explicado com mais detalhes no capítulo
+:doc:`Templating </book/templating>`.
 
 .. tip::
 
-    The ``renderView`` method is a shortcut to direct use of the ``templating``
-    service. The ``templating`` service can also be used directly::
+    O método ``renderView`` é um atalho para usar diretamente o serviço
+    ``templating``. O serviço ``templating`` também pode ser usado
+    diretamente::
     
         $templating = $this->get('templating');
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
@@ -524,11 +537,12 @@ The Symfony templating engine is explained in great detail in the
 .. index::
    single: Controller; Accessing services
 
-Accessing other Services
-~~~~~~~~~~~~~~~~~~~~~~~~
+Acessando outros Serviços
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When extending the base controller class, you can access any Symfony2 service
-via the ``get()`` method. Here are several common services you might need::
+Quando se estende a classe controller base, você pode acessar qualquer um dos
+serviços Symfony2 através do método ``get()``. Aqui estão alguns dos serviços
+mais comuns que você pode precisar::
 
     $request = $this->getRequest();
 
@@ -538,26 +552,27 @@ via the ``get()`` method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
-There are countless other services available and you are encouraged to define
-your own. To list all available services, use the ``container:debug`` console
-command:
+Existem outros inúmeros serviços disponíveis e você é encorajado a definir os
+seus próprios. Para listar todos os serviços disponíveis, use o comando do
+console ``container:debug``:
 
 .. code-block:: bash
 
     php app/console container:debug
 
-For more information, see the :doc:`/book/service_container` chapter.
+Para mais informações, veja o capítulo :doc:`/book/service_container`.
+
 
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
 
-Managing Errors and 404 Pages
------------------------------
+Gerenciando Erros e Páginas 404
+-------------------------------
 
-When things are not found, you should play well with the HTTP protocol and
-return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base controller class, do the following::
+Quando algo não for encontrado, você deve usar de forma correta o protocolo
+HTTP e retornar uma resposta 404. Para isso, você lançará um tipo especial de
+exceção. Se estiver estendendo a classe controller base, faça o seguinte::
 
     public function indexAction()
     {
@@ -569,35 +584,38 @@ If you're extending the base controller class, do the following::
         return $this->render(...);
     }
 
-The ``createNotFoundException()`` method creates a special ``NotFoundHttpException``
-object, which ultimately triggers a 404 HTTP response inside Symfony.
+O método ``createNotFoundException()`` cria um objeto especial
+``NotFoundHttpException``, que no fim dispara uma resposta HTTP 404 de dentro
+do Symfony.
 
-Of course, you're free to throw any ``Exception`` class in your controller -
-Symfony2 will automatically return a 500 HTTP response code.
+É lógico que você é livre para lançar qualquer classe ``Exception`` no seu
+controller - o Symfony irá retornar automaticamente uma resposta HTTP código
+500.
 
 .. code-block:: php
 
     throw new \Exception('Something went wrong!');
 
-In every case, a styled error page is shown to the end user and a full debug
-error page is shown to the developer (when viewing the page in debug mode).
-Both of these error pages can be customized. For details, read the
-":doc:`/cookbook/controller/error_pages`" cookbook recipe.
+Em todo caso, uma página de erro estilizada é mostrada para o usuário final e
+uma página de erro com informações de debug completa é mostrada para o
+desenvolvedor (no caso de visualizar a página no modo debug). Ambas as páginas
+podem ser personalizadas. Para detalhes, leia a receita
+":doc:`/cookbook/controller/error_pages`" no cookbook.
 
 .. index::
    single: Controller; The session
    single: Session
 
-Managing the Session
+Gerenciando a Sessão
 --------------------
 
-Symfony2 provides a nice session object that you can use to store information
-about the user (be it a real person using a browser, a bot, or a web service)
-between requests. By default, Symfony2 stores the attributes in a cookie
-by using the native PHP sessions.
+O Symfony2 fornece um objeto de sessão muito bom que você pode usar para
+guardar informações sobre o usuário (seja ele uma pessoa real usando um
+navegador, um robô ou um web service) entre requisições. Por padrão, o
+Symfony2 guarda os atributos em um cookie usando as sessões nativas do PHP.
 
-Storing and retrieving information from the session can be easily achieved
-from any controller::
+O armazenamento e a recuperação de informações da sessão são feitos
+facilmente de qualquer controller::
 
     $session = $this->getRequest()->getSession();
 
@@ -610,21 +628,20 @@ from any controller::
     // set the user locale
     $session->setLocale('fr');
 
-These attributes will remain on the user for the remainder of that user's
-session.
+Esses atributos permanecerão no usuário até o fim da sessão.
 
 .. index::
    single Session; Flash messages
 
-Flash Messages
-~~~~~~~~~~~~~~
+Mensagens Flash
+~~~~~~~~~~~~~~~
 
-You can also store small messages that will be stored on the user's session
-for exactly one additional request. This is useful when processing a form:
-you want to redirect and have a special message shown on the *next* request.
-These types of messages are called "flash" messages.
+Você também guardar pequenas mensagens que serão armazenadas na sessão do
+usuário apenas por uma requisição. Isso é útil no processamento de formulários:
+você pode redirecionar o usuário e mostrar uma mensagem especial na requisição
+*seguinte*. Esses tipos de mensagens são chamadas de mensagens "flash".
 
-For example, imagine you're processing a form submit::
+Por exemplo, imagine que você esteja processando a submissão de um formulário::
 
     public function updateAction()
     {
@@ -642,12 +659,12 @@ For example, imagine you're processing a form submit::
         return $this->render(...);
     }
 
-After processing the request, the controller sets a ``notice`` flash message
-and then redirects. The name (``notice``) isn't significant - it's just what
-you're using to identify the type of the message.
+Depois do processamento da requisição, o controller define uma mensagem flash
+`notice` e então faz o redirecionamento. O nome (``notice``) não é
+importante - é apenas o que você usa para identificar o tipo da mensagem.
 
-In the template of the next action, the following code could be used to render
-the ``notice`` message:
+No template da próxima action, o código a seguir poderia ser usado para
+renderizar a mensagem ``notice``:
 
 .. configuration-block::
 
@@ -667,20 +684,21 @@ the ``notice`` message:
             </div>
         <?php endif; ?>
 
-By design, flash messages are meant to live for exactly one request (they're
-"gone in a flash"). They're designed to be used across redirects exactly as
-you've done in this example.
+Por definição, as mensagens flash são feitas para existirem por exatamente uma
+requisição (elas "se vão num instante" - "gone in a flash"). Elas foram
+projetadas para serem usadas entre redirecionamentos exatamente como você fez
+nesse exemplo.
 
 .. index::
    single: Controller; Response object
 
-The Response Object
--------------------
+O Objeto Response
+-----------------
 
-The only requirement for a controller is to return a ``Response`` object. The
-:class:`Symfony\\Component\\HttpFoundation\\Response` class is a PHP
-abstraction around the HTTP response - the text-based message filled with HTTP
-headers and content that's sent back to the client::
+O único requisito de um controller é retornar um objeto ``Response``. A classe
+:class:`Symfony\\Component\\HttpFoundation\\Response` é uma abstração PHP em
+volta da resposta HTTP - a mensagem em texto cheia de cabeçalhos HTTP e
+conteúdo que é mandado de volta para o cliente::
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
@@ -691,20 +709,20 @@ headers and content that's sent back to the client::
 
 .. tip::
 
-    The ``headers`` property is a
-    :class:`Symfony\\Component\\HttpFoundation\\HeaderBag` object with several
-    useful methods for reading and mutating the ``Response`` headers. The
-    header names are normalized so that using ``Content-Type`` is equivalent
-    to ``content-type`` or even ``content_type``.
+	A propriedade ``headers`` é a classe
+	:class:`Symfony\\Component\\HttpFoundation\\HeaderBag` com vários métodos
+	úteis para ler e modificar os cabeçalhos do ``Response``. Os nomes dos
+	cabeçalhos são normalizados de forma que usar ``Content-Type`` seja
+	equivalente a ``content-type`` ou mesmo ``content_type``.
 
 .. index::
    single: Controller; Request object
 
-The Request Object
-------------------
+O Objeto Request
+----------------
 
-Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object when extending the base ``Controller`` class::
+Além dos valores nos marcadores de roteamento, o controller também tem acesso
+ao objeto ``Request`` quando está estendendo a classe ``Controller`` base::
 
     $request = $this->getRequest();
 
@@ -716,28 +734,29 @@ to the ``Request`` object when extending the base ``Controller`` class::
 
     $request->request->get('page'); // get a $_POST parameter
 
-Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
-object and are easily accessible.
+Assim como com o objeto ``Response``, os cabeçalhos da requisição são guardados
+em um objeto ``HeaderBag`` e são facilmente acessados.
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-Whenever you create a page, you'll ultimately need to write some code that
-contains the logic for that page. In Symfony, this is called a controller,
-and it's a PHP function that can do anything it needs in order to return
-the final ``Response`` object that will be returned to the user.
+Sempre que criar uma página, no final você precisará escrever algum código que
+contenha a lógica dessa página. No Symfony, isso é chamado de controller,
+e ele é uma função PHP que faz tudo que for necessário para no fim retornar
+o objeto ``Response`` final que será retornado ao usuário.
 
-To make life easier, you can choose to extend a base ``Controller`` class,
-which contains shortcut methods for many common controller tasks. For example,
-since you don't want to put HTML code in your controller, you can use
-the ``render()`` method to render and return the content from a template.
+Para facilitar a vida, você pode escolher estender uma classe ``Controller``
+base, que contém métodos que são atalhos para muitas tarefas comuns dos
+controllers. Por exemplo, uma vez que você não queira colocar código HTML
+no seu controller, você pode usar o método ``render()`` para renderizar e
+retornar o conteúdo de um template.
 
-In other chapters, you'll see how the controller can be used to persist and
-fetch objects from a database, process form submissions, handle caching and
-more.
+Em outros capítulos, você verá como o controller pode ser usado para persistir
+e buscar objetos em um banco de dados, processar submissões de formulários,
+gerenciar cache e muito mais.
 
-Learn more from the Cookbook
-----------------------------
+Saiba mais no Cookbook
+----------------------
 
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
