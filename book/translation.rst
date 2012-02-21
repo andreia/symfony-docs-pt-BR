@@ -596,7 +596,7 @@ Como você viu, em Russo, você pode ter três formas diferentes de plural, cada um
 com index de 0, 1 ou 2. Para cada forma, o plural é diferente, e então
 a tradução também é diferente.
 
-Quando uma tradução tem formas diferentes devido à pluralização, você pode providencia
+Quando uma tradução tem formas diferentes devido à pluralização, você pode providenciar
 todas as formas como string separadas por barra vertical (``|``)::
 
     'There is one apple|There are %count% apples'
