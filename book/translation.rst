@@ -5,7 +5,7 @@ Traduções
 ============
 
 O termo "internacionalização" se refere ao processo de abstrair strings
-e outras peças cim localidades específicas para fora de sua aplicação e dentro de uma camada
+e outras peças com localidades específicas para fora de sua aplicação e dentro de uma camada
 onde eles podem ser traduzidos e convertidos baseados na localização do usuário (em outras palavras,
 idioma e páis). Para o texto, isso significa englobar cada um com uma função
 capaz de traduzir o texto (ou "messagem") dentro do idioma do usuário::
@@ -35,7 +35,7 @@ o processo tem vários passos comuns:
 3. Criar translation resources para cada localidade suportada que traduza
    cada mensagem na aplicação;
 
-4. Determinar, fixar e gerenciar a locazle do usuário na sessão.
+4. Determinar, fixar e gerenciar a localidade do usuário na sessão.
 
 .. index::
    single: Traduções; Configuração
