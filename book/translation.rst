@@ -6,7 +6,7 @@ Traduções
 
 O termo "internacionalização" se refere ao processo de abstrair strings
 e outras peças cim localidades específicas para fora de sua aplicação e dentro de uma camada
-onde eles podem ser traduzidos e convertidos baseados na localização do usuário (i.e.
+onde eles podem ser traduzidos e convertidos baseados na localização do usuário (em outras palavras,
 idioma e páis). Para o texto, isso significa englobar cada um com uma função
 capaz de traduzir o texto (ou "messagem") dentro do idioma do usuário::
 
@@ -20,9 +20,9 @@ capaz de traduzir o texto (ou "messagem") dentro do idioma do usuário::
 
     O termo *localidade* se refere rigorosamente ao idioma e país do usuário. Isto
     pode ser qualquer string que sua aplicação usa então para gerenciar traduções
-    e outras diferenças de formato (e.g. formato de moeda). Nós recomendamos o código
+    e outras diferenças de formato (ex: formato de moeda). Nós recomendamos o código
     de *linguagem* ISO639-1 , um underscore (``_``), então o código de *país* 
-    ISO3166 (e.g. ``fr_FR`` para Francês/França).
+    ISO3166 (ex: ``fr_FR`` para Francês/França).
 
 Nesse capítulo, nós iremos aprender como preparar uma aplicação para suportar múltiplas
 localidades e então como criar traduções para localidade e então como criar traduções para múltiplas localidades. No geral,
@@ -30,7 +30,7 @@ o processo tem vários passos comuns:
 
 1. Abilitar e configurar o componente ``Translation`` do Symfony;
 
-2. Abstrair strings (i.e. "messagens") por englobá-las em chamadas para o ``Translator``;
+2. Abstrair strings (em outras palavras, "messagens") por englobá-las em chamadas para o ``Translator``;
 
 3. Criar translation resources para cada localidade suportada que traduza
    cada mensagem na aplicação;
@@ -75,7 +75,7 @@ não existe no localidadedo usuário.
 .. tip::
     
     Quando a tradução não existe para uma localidade, o tradutor primeiro tenta 
-    encontrar a tradução para o idioma (``fr`` se o localidadeé
+    encontrar a tradução para o idioma (``fr`` se o localidade é
     ``fr_FR`` por exemplo). Se isto também falhar, procura uma tradução
     usando a localidade alternativa.
 
@@ -138,7 +138,7 @@ sendo XLIFF o formato recomendado:
         # messages.fr.yml
         Symfony2 is great: J'aime Symfony2
 
-Agora, se o idioma do localidade do usuário é Francês (e.g. ``fr_FR`` ou ``fr_BE``),
+Agora, se o idioma do localidade do usuário é Francês (ex: ``fr_FR`` ou ``fr_BE``),
 a mensagem irá ser traduzida para ``J'aime Symfony2``.
 
 O processo de tradução
@@ -149,7 +149,7 @@ Para realmente traduzir a mensagem, Symfony2 usa um processo simples:
 * A ``localidade`` do usuário atual, que é armazenada na sessão, é determinada;
 
 * Um catálogo de mensagens traduzidas é carregado de translation resources definidos
-  pelo ``locale`` (e.g. ``fr_FR``). Messagens da localidade alternativa são
+  pelo ``locale`` (ex: ``fr_FR``). Messagens da localidade alternativa são
   também carregadas e adiconadas ao catalogo se elas realmente não existem. O resultado
   final é um grande "dicionário" de traduções. Veja `Catálogo de Mensagens`_
   para mais detalhes;
@@ -179,7 +179,7 @@ Espaços reservados de mensagem
 
 Entretanto criar uma tradução para este string é impossível visto que o tradutor
 irá tentar achar a mensagem exata, incluindo porções da variável
-(e.g. "Hello Ryan" ou "Hello Fabien"). Ao invés escrever uma tradução
+(ex: "Hello Ryan" ou "Hello Fabien"). Ao invés escrever uma tradução
 para toda interação possível da mesma variável ``$name`` , podemos substituir a
 variável com um "espaço reservado":
 
@@ -277,7 +277,7 @@ de arquivos e descoberta pelo Symfony, graças a algumas convenções.
 Localização de Traduções e Convenções de Nomeamento
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 procura por arquivos de mensagem (i.e. traduções) em duas localizações:
+Symfony2 procura por arquivos de mensagem (em outras palavras, traduções) em duas localizações:
 
 * Para mensagens encontradas no pacote,os arquivos de mensagem correspondente deveriam
   constar no diretório ``Resources/translations/`` do pacote;
@@ -285,16 +285,16 @@ Symfony2 procura por arquivos de mensagem (i.e. traduções) em duas localizações:
 * Para sobrepor qualquer tradução de pacote, coloque os arquivos de mensagem no
   diretório ``app/Resources/translations``.
 
-O nome de arquivo das traduções é também importante já que Symfony2 usa uma convenção
+O nome de arquivo das traduções é também importante, já que Symfony2 usa uma convenção
 para determinar detalhes sobre as traduções. Cada arquivo de messagem deve ser nomeado
 de acordo com o seguinte padrão: ``domínio.localidade.carregador``:
 
-* **domínio**: Uma forma opcional de organizar mensagens em grupos (e.g. ``admin``,
+* **domínio**: Uma forma opcional de organizar mensagens em grupos (ex: ``admin``,
   ``navigation`` ou o padrão ``messages``) - veja `Usando Domínios de Mensagem`_;
 
-* **localidade**: A localidade para a qual a tradução é feita (e.g. ``en_GB``, ``en``, etc);
+* **localidade**: A localidade para a qual a tradução é feita (ex: ``en_GB``, ``en``, etc);
 
-* **carregador**: Como Symfony2 deveria carregar e  analisar o arquivo (e.g. ``xliff``,
+* **carregador**: Como Symfony2 deveria carregar e  analisar o arquivo (ex: ``xliff``,
   ``php`` or ``yml``).
 
 O carregador poder ser o nome de qualquer carregador registrado. Por padrão, Symfony
@@ -322,8 +322,8 @@ Criando traduções
 
 Cada arquivo consiste de uma série de pares de tradução de id para um dado domínio e
 locale. A id é o identificador para a tradução individual, e pode ser a mensagem da
-localidade principal (e.g. "Symfony is great") de sua aplicaçãp
-ou um identificador único (e.g. "symfony2.great" - veja a barra lateral abaixo):
+localidade principal (ex: "Symfony is great") de sua aplicaçãp
+ou um identificador único (ex: "symfony2.great" - veja a barra lateral abaixo):
 
 .. configuration-block::
 
@@ -361,7 +361,7 @@ ou um identificador único (e.g. "symfony2.great" - veja a barra lateral abaixo):
         symfony2.great:    J'aime Symfony2
 
 Symfony2 irá descobrir esses arquivos e usá-los quando ou traduzir
-"Symfony2 is great" ou "symfony2.great" no localidadedo idioma Francês (e.g.
+"Symfony2 is great" ou "symfony2.great" no localidade do idioma Francês (ex:
 ``fr_FR`` ou ``fr_BE``).
 
 .. sidebar:: Usando Mensagens Reais ou Palavras-Chave
@@ -375,18 +375,18 @@ Symfony2 irá descobrir esses arquivos e usá-los quando ou traduzir
 
         $t = $translator->trans('symfony2.great');
 
-    No primeiro método, mensagens são escritas no idioma do localidadepadrão
+    No primeiro método, mensagens são escritas no idioma do localidade padrão
     (Inglês neste caso). Aquela mensagem é então usada como "id" quando criar
     traduções.
     
     No segundo método, mensagens são realmente "palavras-chave" que contém 
     a idéia da mensagem. A mensagem de palavras-chave é então usada como o "id"
     de qualquer tradução. Neste caso, traduções devem ser feitas para o locale
-    padrão (i.e. traduzir ``symfony2.great`` para ``Symfony2 is great``).
+    padrão (em outras palavras, traduzir ``symfony2.great`` para ``Symfony2 is great``).
 
     O segundo método é prático porque a chave da mensagem não precisará ser mudada
     em cada arquivo de tradução se decidirmos que a mensagem realmente deveria
-    ler "Symfony2 is really great" no localidadepadrão.
+    ler "Symfony2 is really great" no localidade padrão.
     
     A escolha de qual método usar é inteiramente sua, mas o formato de "palavra-chave"
     é frequentemente recomendada.
@@ -485,12 +485,12 @@ via serviço ``session`:
 
 .. code-block:: php
 
-    $localidade= $this->get('session')->getLocale();
+    $locale= $this->get('session')->getLocale();
 
     $this->get('session')->setLocale('en_US');
 
 .. index::
-   single: Traduções; localidadepadrão e alternativo
+   single: Traduções; localidade padrão e alternativo
 
 Localidade padrão e alternativa
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
