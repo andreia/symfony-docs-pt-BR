@@ -1,28 +1,28 @@
 .. index::
    single: Templating
 
-Creating and using Templates
+Criando e usando Templates
 ============================
 
-As you know, the :doc:`controller </book/controller>` is responsible for
-handling each request that comes into a Symfony2 application. In reality,
-the controller delegates the most of the heavy work to other places so that
-code can be tested and reused. When a controller needs to generate HTML,
-CSS or any other content, it hands the work off to the templating engine.
-In this chapter, you'll learn how to write powerful templates that can be
-used to return content to the user, populate email bodies, and more. You'll
-learn shortcuts, clever ways to extend templates and how to reuse template
-code.
+Como você sabe o :doc:`controller </book/controller>` é responsável por
+controlar cada requisição que venha de uma aplicação Symfony2. Na realidade,
+o controller delega muito do trabalho pesado para outros lugares então aquele
+código pode ser testado e reusado. Quando um controller precisa gerar HTML,
+CSS e qualquer outro conteúdo, ele entrega o trabalho para a engine de template.
+Nesse capítulo, você irá aprendder como escrever templates poderosas que podem ser
+usada para retornar conteúdo para o usuário, preencher corpo de e-mail, e mais. Você 
+irá aprender atalhos, maneiras espertas de extender templates e como reusar código
+de template.
 
 .. index::
-   single: Templating; What is a template?
+   single: Templating;O que é um template?
 
 Templates
 ---------
 
-A template is simply a text file that can generate any text-based format
-(HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code::
+Um template é simplesmente um arquivo de texto que pode gerar qualquer formato baseado em texto 
+(HTML, XML, CSV, LaTeX ...). O tipo mais familiar de template é um 
+template em *PHP* - um arquivo de texto analisado pelo PHP que contém uma mistura de texto e código PHP::
 
     <!DOCTYPE html>
     <html>
@@ -44,11 +44,11 @@ template - a text file parsed by PHP that contains a mix of text and PHP code::
         </body>
     </html>
 
-.. index:: Twig; Introduction
+.. index:: Twig; Introdução
 
-But Symfony2 packages an even more powerful templating language called `Twig`_.
-Twig allows you to write concise, readable templates that are more friendly
-to web designers and, in several ways, more powerful than PHP templates:
+Mas Symfony2 empacota até mesmo uma linguagem muito poderosa de template chamada `Twig`_.
+Twig permit a você escrever templates consisos e legíveis que são mais amigáveis
+para web designers e, e de uma certa forma, mais poderosos que templates de PHP:
 
 .. code-block:: html+jinja
 
@@ -68,40 +68,39 @@ to web designers and, in several ways, more powerful than PHP templates:
         </body>
     </html>
 
-Twig defines two types of special syntax:
+Twig degine dois tipos de sintaxe especiais:
 
-* ``{{ ... }}``: "Says something": prints a variable or the result of an
-  expression to the template;
-
-* ``{% ... %}``: "Does something": a **tag** that controls the logic of the
-  template; it is used to execute statements such as for-loops for example.
+* ``{{ ... }}``: "Diga algo": exibe uma variável ou o resultado de uma
+  expressão para o template;
+  
+* ``{% ... %}``: "Faça algo": uma **tag** que controla a lógica do
+  template; ela é usada para executar certas sentenças como for-loops por exemplo.
 
 .. note::
 
-   There is a third syntax used for creating comments: ``{# this is a comment #}``.
-   This syntax can be used across multiple lines like the PHP-equivalent
-   ``/* comment */`` syntax.
+   Há uma terceira sintaxe usada para criar comentários ``{# this is a comment #}``.
+   Essa sintaxe pode ser usada através de múltiplas linhas, parecidas com a sintaxe
+   equivalente em PHP ``/* comment */``.
 
-Twig also contains **filters**, which modify content before being rendered.
-The following makes the ``title`` variable all uppercase before rendering
-it:
+Twig também contém **filtros**, que modificam conteúdo antes de serem interpretados.
+O seguinte filtro transforma a variável ``title`` toda em letra maiúscula antes de interpretá-la:
 
 .. code-block:: jinja
 
     {{ title | upper }}
 
-Twig comes with a long list of `tags`_ and `filters`_ that are available
-by default. You can even `add your own extensions`_ to Twig as needed.
+Twig vem com uma longa lista de `tags`_ e `filtros`_ que estão disponíveis
+por padrão. Você pode até mesmo `adicionar suas próprias extensões`_ para o Twig quando precisar.
 
 .. tip::
 
-    Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
+    Registrar uma extensão Twig é tão fácil quanto criar um novo serviço e atribuir tag
+    nele com ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
 
-As you'll see throughout the documentation, Twig also supports functions
-and new functions can be easily added. For example, the following uses a
-standard ``for`` tag and the ``cycle`` function to print ten div tags, with
-alternating ``odd``, ``even`` classes:
+Como você verá através da documentação, Twig também suporta funções
+e nova funções podem ser facilmente adicionadas. Por exemplo. a seguinte função usa
+uma tag padrão ``for``  e a função ``cycle`` para então imprimir dez tags div, alternando
+entre classes ``odd`` e ``even``:
 
 .. code-block:: html+jinja
 
@@ -111,22 +110,21 @@ alternating ``odd``, ``even`` classes:
       </div>
     {% endfor %}
 
-Throughout this chapter, template examples will be shown in both Twig and PHP.
+Durante este capítulo, exemplos de template serão mostrados tanto em Twig como PHP.
 
-.. sidebar:: Why Twig?
-
-    Twig templates are meant to be simple and won't process PHP tags. This
-    is by design: the Twig template system is meant to express presentation,
-    not program logic. The more you use Twig, the more you'll appreciate
-    and benefit from this distinction. And of course, you'll be loved by
-    web designers everywhere.
+.. sidebar:: Por que Twig?
     
-    Twig can also do things that PHP can't, such as true template inheritance
-    (Twig templates compile down to PHP classes that inherit from each other),
-    whitespace control, sandboxing, and the inclusion of custom functions
-    and filters that only affect templates. Twig contains little features
-    that make writing templates easier and more concise. Take the following
-    example, which combines a loop with a logical ``if`` statement:
+    Templates Twig são feitas para serem simples e não irão processar tags PHP. Isto
+    é pelo design: o sistema de template do Twig é feito para expressar apresentação,
+    não lógica de programa. Quanto mais você usa Twig, mais você irá apreciar e beneficiar
+    desta distinção. E claro, você será amado por web designers de todos os lugares.
+    
+    Twig pode também fazer coisas que PHP não pode, como por exemplo herança verdadeira de template
+    (Templates do Twig compilam classes PHP que herdam uma da outra),
+    controle de espaço em branco, caixa de areia, e a inclusão de funções personalizadas
+    e filtros que somente afetam templates. Twig contém pequenos recursos
+    que fazem escrita de templates mais fácil e mais concisa. Considere o seguinte 
+    exemplo, que combina um loop com uma sentença lógia ``if``:
     
     .. code-block:: html+jinja
     
@@ -141,42 +139,42 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
 .. index::
    pair: Twig; Cache
 
-Twig Template Caching
+Cache do Template Twig
 ~~~~~~~~~~~~~~~~~~~~~
 
-Twig is fast. Each Twig template is compiled down to a native PHP class
-that is rendered at runtime. The compiled classes are located in the
-``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
-environment, such as ``dev`` or ``prod``) and in some cases can be useful
-while debugging. See :ref:`environments-summary` for more information on
-environments.
+Twig é rápido. Cada template Twig é compilado para uma classe nativa PHP
+que é processada na execução. As classes compiladas são localizadas no
+diretório ``app/cache/{environment}/twig`` (onde ``{environment}`` é o
+ambiente, como ``dev`` ou ``prod``), e em alguns casos pode ser útil durante 
+a depuração. Veja :ref:`environments-summary` para mais informações de
+ambientes.
 
-When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
-template will be automatically recompiled when changes are made to it. This
-means that during development you can happily make changes to a Twig template
-and instantly see the changes without needing to worry about clearing any
+Quando o modo ``debug`` é abilitado (comum no ambiente ``dev``), um template
+Twig será automaticamente recompilado quando mudanças são feitas nele. Isso
+signitica que durante o desenvolvimento você pode alegremente fazer mudanças para um template Twig
+e instântaneamente ver as mudanças sem precisar se preocupar sobre limpar qualquer
 cache.
 
-When ``debug`` mode is disabled (common in the ``prod`` environment), however,
-you must clear the Twig cache directory so that the Twig templates will
-regenerate. Remember to do this when deploying your application.
+Quando o modo ``debug`` é desabilitado (comum no ambiente ``prod``), entretanto,
+você deve limpar o cache do diretório Twig para que então os templates Twig
+se regenerem. Lembre de fazer isso quando distribuir sua aplicação.
 
 .. index::
    single: Templating; Inheritance
 
-Template Inheritance and Layouts
+Herança e Layouts de Template
 --------------------------------
 
-More often than not, templates in a project share common elements, like the
-header, footer, sidebar or more. In Symfony2, we like to think about this
-problem differently: a template can be decorated by another one. This works
-exactly the same as PHP classes: template inheritance allows you to build
-a base "layout" template that contains all the common elements of your site
-defined as **blocks** (think "PHP class with base methods"). A child template
-can extend the base layout and override any of its blocks (think "PHP subclass
-that overrides certain methods of its parent class").
+Mais frequentemente que não, templates compartilham elementos comuns em um projeto, como o
+header, footer, sidebar ou outros. Em Symfony2,  nós gostamos de pensar sobre esse
+problema de forma diferente: um template pode ser decorado por outro. Isso funciona
+exatemente da mesma forma como classes PHP: herança de template permite você construir
+um "layout" de template base que contenha todos os elementos comuns de seu site
+definidos como **blocos** (pense em "classe PHP com métodos base"). Um template filho
+pode extender o layout base e sobrepor os blocos (pense "subclasse PHP 
+que sobreponha certos métodos de sua classe pai").
 
-First, build a base layout file:
+Primeiro, construa um arquivo de layout de base:
 
 .. configuration-block::
 
@@ -233,18 +231,18 @@ First, build a base layout file:
         </html>
 
 .. note::
+    
+    Apesar da discussão sobre herança de template ser em termos do Twig.
+    a filosofia é a mesma entre templates Twig e PHP.
 
-    Though the discussion about template inheritance will be in terms of Twig,
-    the philosophy is the same between Twig and PHP templates.
+Este template define o esqueleto do documento base HTML de um página simples
+de duas colunas. Neste exemplo, três áreas ``{% block %}`` são definidas (``title``,
+``sidebar`` e ``body``). Cada bloco pode ser sobreposto por um template filho
+ou largado com sua implementação padrão. Esse template poderia também ser processado
+diretamente. Neste caso os blocos ``title``, ``sidebar`` e ``body`` blocks deveriam
+simplesmente reter os valores padrão neste template.
 
-This template defines the base HTML skeleton document of a simple two-column
-page. In this example, three ``{% block %}`` areas are defined (``title``,
-``sidebar`` and ``body``). Each block may be overridden by a child template
-or left with its default implementation. This template could also be rendered
-directly. In that case the ``title``, ``sidebar`` and ``body`` blocks would
-simply retain the default values used in this template.
-
-A child template might look like this:
+Um template filho poderia ser como este:
 
 .. configuration-block::
 
@@ -277,18 +275,18 @@ A child template might look like this:
         <?php $view['slots']->stop() ?>
 
 .. note::
+    
+   O template pai é idenficado por uma sintaxe especial de string
+   (``::base.html.twig``) que indica que o template reside no diretório
+   ``app/Resources/views`` do projeto. Essa convenção de nomeamento é
+   explicada inteiramente em :ref:`template-naming-locations`.
 
-   The parent template is identified by a special string syntax
-   (``::base.html.twig``) that indicates that the template lives in the
-   ``app/Resources/views`` directory of the project. This naming convention is
-   explained fully in :ref:`template-naming-locations`.
-
-The key to template inheritance is the ``{% extends %}`` tag. This tells
-the templating engine to first evaluate the base template, which sets up
-the layout and defines several blocks. The child template is then rendered,
-at which point the ``title`` and ``body`` blocks of the parent are replaced
-by those from the child. Depending on the value of ``blog_entries``, the
-output might look like this::
+A chave para herança template é a tag  ``{% extends %}``. Ela avisa
+o motor de template para primeiro avaliar o template base, que configura
+o layou e define vários blocos. O template filho é então processado,
+ao ponto que os blocos  ``title`` e ``body`` do template pai sejam substituídos
+por aqueles do filho. Dependendo do valor de ``blog_entries``, a
+saída poderia parecer com isso::
 
     <!DOCTYPE html>
     <html>
@@ -314,34 +312,34 @@ output might look like this::
         </body>
     </html>
 
-Notice that since the child template didn't define a ``sidebar`` block, the
-value from the parent template is used instead. Content within a ``{% block %}``
-tag in a parent template is always used by default.
+Perceba que desde que o template filho não definiu um bloco ``sidebar``, o
+valor do template pai é usado no lugar. Conteúdo dentro de uma tag  ``{% block %}``
+em um template pai é sempre usado por padrão.
 
-You can use as many levels of inheritance as you want. In the next section,
-a common three-level inheritance model will be explained along with how templates
-are organized inside a Symfony2 project.
+Você pode usar muitos níveis de herança quanto quiser. Na próxima sessão,
+um modelo comum de herança de três níveis será explicado assim como os templates
+são organizados dentro de um projeto Symfony2.
 
-When working with template inheritance, here are some tips to keep in mind:
+Quando trabalhar com herança de template, aqui estão algumas dicas para guardar na cabeça:
 
-* If you use ``{% extends %}`` in a template, it must be the first tag in
-  that template.
+* Se você usa ``{% extends %}`` em um template, ele deve ser a primeira tag 
+  naquele template.
+  
+* Quanto mais tags ``{% block %}`` você tiver no template base, melhor.
+  Lembre, templates filhos não precisam definir todos os blocos pai, então
+  criar tantos blocos em seus templates base quanto você quiser e dar a cada um
+  padrão sensato. Quanto mais blocos seus templates base tiverem, mais flexível
+  seu layout será.
 
-* The more ``{% block %}`` tags you have in your base templates, the better.
-  Remember, child templates don't have to define all parent blocks, so create
-  as many blocks in your base templates as you want and give each a sensible
-  default. The more blocks your base templates have, the more flexible your
-  layout will be.
+* Se você achar você mesmo duplicando conteúdo em um número de templates, isto provavelmente
+  significa que você deveria mover aquele conteúdo para um ``{% block %}`` no template pai.
+  Em alguns casos, uma solução melhor pode ser mover o conteúdo para um novo template
+  e ``incluir`` ele (veja :ref:`including-templates`).
 
-* If you find yourself duplicating content in a number of templates, it probably
-  means you should move that content to a ``{% block %}`` in a parent template.
-  In some cases, a better solution may be to move the content to a new template
-  and ``include`` it (see :ref:`including-templates`).
-
-* If you need to get the content of a block from the parent template, you
-  can use the ``{{ parent() }}`` function. This is useful if you want to add
-  to the contents of a parent block instead of completely overriding it:
-
+* Se você precisa obter o conteúdo de um bloco do template pai, você
+  pode usar a função ``{{ parent() }}``. Isso é útil se você quiser adicionar
+  ao conteúdo de um bloco pai ao invés de sobrepor ele::
+  
     .. code-block:: html+jinja
 
         {% block sidebar %}
@@ -351,17 +349,18 @@ When working with template inheritance, here are some tips to keep in mind:
         {% endblock %}
 
 .. index::
-   single: Templating; Naming Conventions
-   single: Templating; File Locations
+   single: Templating; Convenções de Nomeação
+   single: Templating; Localização de Arquivos
 
 .. _template-naming-locations:
 
-Template Naming and Locations
+Nomeação de Template e Localizações
 -----------------------------
 
-By default, templates can live in two different locations:
+Por padrão, templates podem residir em duas localizações diferentes:
 
-* ``app/Resources/views/``: The applications ``views`` directory can contain
+* ``app/Resources/views/``: O diretórico de aplicação de ``views`` pode conter
+  templates de extensa base para aplicação (ex: os layout de sua aplicação) assim como
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
   :ref:`overriding-bundle-templates`);
