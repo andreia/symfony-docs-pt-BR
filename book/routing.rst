@@ -787,11 +787,11 @@ que são especiais: cada um adiciona uma parte única de funcionalidade dentro d
 
 .. index::
    single: Roteamento; Controllers
-   single: Controller; Formato de Nomeamento de strings
+   single: Controller; Formato de nomeação de strings
 
 .. _controller-string-syntax:
 
-Padrão de Nomeamento do Controller
+Padrão de nomeação do Controller
 -------------------------
 
 Cada rota deve ter um parâmetro ``_controller``, que ordena qual 
@@ -855,7 +855,7 @@ cada um é disponibilizado como um argumento para o método do controller:
       // ...
     }
 
-Na realidade, a coleção inteira ``defaults`` é mesclada com um valor deparâmetro
+Na realidade, a coleção inteira ``defaults`` é mesclada com um valor de parâmetro
 para formar um único array. Cada chave daquele array está disponível como um
 argumento no controller.
 
