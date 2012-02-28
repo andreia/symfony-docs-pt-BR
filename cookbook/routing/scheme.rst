@@ -1,12 +1,12 @@
 .. index::
-   single: Routing; Scheme requirement
+   single: Roteamento; Exigência do Esquema
 
-How to force routes to always use HTTPS or HTTP
-===============================================
+Como forçar as rotas a usar sempre HTTPS ou HTTP
+================================================
 
-Sometimes, you want to secure some routes and be sure that they are always
-accessed via the HTTPS protocol. The Routing component allows you to enforce
-the URI scheme via the ``_scheme`` requirement:
+Às vezes, você deseja proteger algumas rotas e ter certeza de que elas serão sempre
+acessadas através do protocolo HTTPS. O componente de Roteamento permite que você aplique
+o esquema URI através da condição ``_scheme``:
 
 .. configuration-block::
 
@@ -46,10 +46,10 @@ the URI scheme via the ``_scheme`` requirement:
 
         return $collection;
 
-The above configuration forces the ``secure`` route to always use HTTPS.
+A configuração acima força a rota ``secure`` à sempre usar HTTPS.
 
-When generating the ``secure`` URL, and if the current scheme is HTTP, Symfony
-will automatically generate an absolute URL with HTTPS as the scheme:
+Ao gerar a URL ``secure``, e se o schema atual for HTTP, o Symfony
+irá gerar automaticamente uma URL absoluta com HTTPS como esquema:
 
 .. code-block:: text
 
@@ -61,16 +61,16 @@ will automatically generate an absolute URL with HTTPS as the scheme:
     {{ path('secure') }}
     # generates https://example.com/secure
 
-The requirement is also enforced for incoming requests. If you try to access
-the ``/secure`` path with HTTP, you will automatically be redirected to the
-same URL, but with the HTTPS scheme.
+A condição também é aplicada para as solicitações de entrada. Se você tentar acessar
+o caminho ``/secure`` com HTTP, você será automaticamente redirecionado para a
+mesma URL, mas com o esquema HTTPS.
 
-The above example uses ``https`` for the ``_scheme``, but you can also force a
-URL to always use ``http``.
+O exemplo acima utiliza ``https`` para o ``_scheme``, mas você também pode forçar uma
+URL à sempre utilizar ``http``.
 
 .. note::
 
-    The Security component provides another way to enforce HTTP or HTTPs via
-    the ``requires_channel`` setting. This alternative method is better suited
-    to secure an "area" of your website (all URLs under ``/admin``) or when
-    you want to secure URLs defined in a third party bundle.
+    O componente Security fornece outra forma de aplicar HTTP ou HTTPs através
+    da configuração ``requires_channel``. Este método alternativo é mais adequado
+    para proteger uma "área" do seu site (todas as URLs sob o ``/admin``) ou quando
+    você quiser proteger URLs definidas em um bundle de terceiros.

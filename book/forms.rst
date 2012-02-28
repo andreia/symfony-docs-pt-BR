@@ -269,7 +269,7 @@ Na seção anterior, você aprendeu como um formulário pode ser enviado com dad
 válidos ou inválidos. No Symfony2, a validação é aplicada ao objeto implícito
 (Ex., ``Task``). Em outras palavras, a questão não é se o "formulário" é
 válido, mas se o objeto ``$task`` é válido após a aplicação dos dados enviados pelo
-formulário. Chamando ``$form->isValid()`` é um atalho
+formulário. A chamada ``$form->isValid()`` é um atalho
 que pergunta ao objeto ``$task`` se ele possui ou não dados válidos.
 
 A validação é feita adicionando um conjunto de regras (chamadas *constraints*) à uma classe. Para
