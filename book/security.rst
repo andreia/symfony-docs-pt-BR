@@ -857,32 +857,32 @@ pode restringir ou permitir o acesso por comentário.
 
 Para mais informação, veja o passo-a-passo: :doc:`/cookbook/security/acl`.
 
-Users
------
+Usuários
+--------
 
-In the previous sections, you learned how you can protect different resources
-by requiring a set of *roles* for a resource. In this section we'll explore
-the other side of authorization: users.
+Nas seções anteriores, você aprendeu como proteger diferentes recursos exigindo
+um conjunto de *perfis* para o acesso a um recurso. Nesta seção exploraremos
+outro aspecto da autorização: os usuários.
 
-Where do Users come from? (*User Providers*)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+De onde os usuários vêm? (*User Providers*)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-During authentication, the user submits a set of credentials (usually a username
-and password). The job of the authentication system is to match those credentials
-against some pool of users. So where does this list of users come from?
+Durante a autenticação, o usuário submete um conjunto de credenciais (normalmente
+login e senha). O trabalho do sistema de autenticação é verificar essas credenciais
+contra um conjunto de usuários. De onde essa lista de usuários vem então?
 
-In Symfony2, users can come from anywhere - a configuration file, a database
-table, a web service, or anything else you can dream up. Anything that provides
-one or more users to the authentication system is known as a "user provider".
-Symfony2 comes standard with the two most common user providers: one that
-loads users from a configuration file and one that loads users from a database
-table.
+No Symfony2, usuários podem vir de qualquer lugar - um arquivo de configuração,
+um banco de dados, um serviço web ou qualquer outra fonte que desejar. Qualquer
+coisa que disponibiliza um ou mais usuários para o sistema de autenticação é conhecido
+como "user provider". O Symfony2 vem por padrão com os dois mais comuns: um que
+carrega os usuários do arquivo de configuração e outro que carrega os usuários do
+banco de dados.
 
-Specifying Users in a Configuration File
-........................................
+Especificando usuários no arquivo de configuração
+.................................................
 
-The easiest way to specify your users is directly in a configuration file.
-In fact, you've seen this already in the example in this chapter.
+O jeito mais fácil de especificar usuários é diretamnete no arquivo de configuração.
+De fato, você já viu isso em um exemplo neste capítulo.
 
 .. configuration-block::
 
@@ -923,19 +923,19 @@ In fact, you've seen this already in the example in this chapter.
             ),
         ));
 
-This user provider is called the "in-memory" user provider, since the users
-aren't stored anywhere in a database. The actual user object is provided
-by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
+Este *user provider* é chamado de "in-memory" user provider, já que os
+usuários não estão armazenados em nenhum banco de dados. O objeto usuário
+é fornecido pelo Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 
 .. tip::
-    Any user provider can load users directly from configuration by specifying
-    the ``users`` configuration parameter and listing the users beneath it.
+    Qualquer user provider pode carregar usuários diretamente da configuração se
+    especificar o parâmetro de configuração ``users`` e listar os usuários
+    abaixo dele.
 
 .. caution::
 
-    If your username is completely numeric (e.g. ``77``) or contains a dash
-    (e.g. ``user-name``), you should use that alternative syntax when specifying
-    users in YAML:
+    Se seu login é todo numérico (``77``, por exemplo) ou contém hífen (``user-name``, por exemplo),
+    você deveria utilizar a sintaxe alternativa quando especificar usuários em YAML:
 
     .. code-block:: yaml
 
@@ -943,25 +943,24 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
             - { name: 77, password: pass, roles: 'ROLE_USER' }
             - { name: user-name, password: pass, roles: 'ROLE_USER' }
 
-For smaller sites, this method is quick and easy to setup. For more complex
-systems, you'll want to load your users from the database.
+Para sites menores, este método é rápido e fácil de configurar. Para sistemas mais complexos,
+você provavelmente desejará carregar os usuários do banco de dados.
 
 .. _book-security-user-entity:
 
-Loading Users from the Database
-...............................
+Carregando usuários do banco de dados
+.....................................
 
-If you'd like to load your users via the Doctrine ORM, you can easily do
-this by creating a ``User`` class and configuring the ``entity`` provider.
+Se você desejar carregar seus usuários através do Doctrine ORM, você pode
+facilmente o fazer criando uma classe ``User`` e configurando o ``entity`` provider
 
 .. tip:
 
-    A high-quality open source bundle is available that allows your users
-    to be stored via the Doctrine ORM or ODM. Read more about the `FOSUserBundle`_
-    on GitHub.
+    Um bundle open source de alta qualidade está disponível que permite armazenar
+    seus usuários com Doctrine ORM ou ODM. Leia mais sobre o `FOSUserBundle`_ no GitHub.
 
-With this approach, you'll first create your own ``User`` class, which will
-be stored in the database.
+Nessa abordagem, você primeiro precisa criar sua própria classe ``User``, que
+será persistida no banco de dados.
 
 .. code-block:: php
 
@@ -984,20 +983,19 @@ be stored in the database.
         // ...
     }
 
-As far as the security system is concerned, the only requirement for your
-custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-interface. This means that your concept of a "user" can be anything, as long
-as it implements this interface.
+Ao que diz respeito ao sistema de segurança, o único requisito para sua
+classe ``User`` personalizada é que ela implemente a interface
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` . Isto significa
+que conceito de usuário pode ser qualquer um, desde que implemente essa interface.
 
 .. note::
 
-    The user object will be serialized and saved in the session during requests,
-    therefore it is recommended that you `implement the \Serializable interface`_
-    in your user object. This is especially important if your ``User`` class
-    has a parent class with private properties.
+    O objeto User será serializado e salvo na sessão entre requisições, por isso
+    é recomendado que você `implemente a interface \Serializable`_ em sua classe User.
+    Isto é especialmente importante se sua classe ``User`` tem uma classe pai com
+    propriedades private.
 
-Next, configure an ``entity`` user provider, and point it to your ``User``
-class:
+Em seguida, configure um user provider ``entity`` e aponte-o para sua classe ``User``:
 
 .. configuration-block::
 
@@ -1029,27 +1027,26 @@ class:
             ),
         ));
 
-With the introduction of this new provider, the authentication system will
-attempt to load a ``User`` object from the database by using the ``username``
-field of that class.
+Com a introdução desse novo provider, o sistema de autenticação tentará
+carregar o objeto ``User`` do banco de dados a partir do campo ``username`` da classe.
 
 .. note::
-    This example is just meant to show you the basic idea behind the ``entity``
-    provider. For a full working example, see :doc:`/cookbook/security/entity_provider`.
+    Este exemplo é somente para demonstrar a idéia básica por trás do provider ``entity``.
+    Para um exemplo completo, consulte :doc:`/cookbook/security/entity_provider`.
 
-For more information on creating your own custom provider (e.g. if you needed
-to load users via a web service), see :doc:`/cookbook/security/custom_provider`.
+Para mais informações sobre como criar seu próprio provider (se precisar carregar usuários
+do seu serviço web por exemplo), consulte :doc:`/cookbook/security/custom_provider`.
 
-Encoding the User's Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo a senha do usuário
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, for simplicity, all the examples have stored the users' passwords
-in plain text (whether those users are stored in a configuration file or in
-a database somewhere). Of course, in a real application, you'll want to encode
-your users' passwords for security reasons. This is easily accomplished by
-mapping your User class to one of several built-in "encoders". For example,
-to store your users in memory, but obscure their passwords via ``sha1``,
-do the following:
+Até agora, por simplicidade, todos os exemplos armazenavam as senhas dos usuários
+em texto puro (sendo armazenados no arquivo de configuração ou no banco de dados).
+Claro que em um aplicativo profissional você desejará proteger as senhas dos seus
+usuários por questões de segurança. Isto é facilmente conseguido mapeando sua
+classe User para algum "encoder" disponível. Por exemplo, para armazenar seus
+usuário em memória, mas proteger a senha deles através da função de hash `sha1``,
+faça o seguinte:
 
 .. configuration-block::
 
@@ -1105,16 +1102,16 @@ do the following:
             ),
         ));
 
-By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
-the password is simply run through the ``sha1`` algorithm one time and without
-any extra encoding. You can now calculate the hashed password either programmatically
-(e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
+Ao definir ``iterations`` como ``1`` e ``encode_as_base64`` como false, a senha codificada
+é simplesmente obtida como o resultado de ``sha1`` após uma iteração apenas, sem codificação
+extra. Você pode agora calcular a senha codificada por código PHP (e.g. ``hash('sha1', 'ryanpass')``)
+ou através de alguma ferramenta online como `functions-online.com`_ .
 
-If you're creating your users dynamically (and storing them in a database),
-you can use even tougher hashing algorithms and then rely on an actual password
-encoder object to help you encode passwords. For example, suppose your User
-object is ``Acme\UserBundle\Entity\User`` (like in the above example). First,
-configure the encoder for that user:
+Se você estiver criando seus usuário dinamicamente e os armazenando no banco de dados,
+você pode usar algoritmos the hash ainda mais complexos e então delegar em um objeto
+encoder para ajudar a codificar as senhas. Por exemplo, suponha que seu objeto User é
+``Acme\UserBundle\Entity\User`` (como no exemplo acima). Primeiro, configure o encoder para
+aquele usuário:
 
 .. configuration-block::
 
@@ -1147,6 +1144,7 @@ configure the encoder for that user:
             ),
         ));
 
+Neste caso, você
 In this case, you're using the stronger ``sha512`` algorithm. Also, since
 you've simply specified the algorithm (``sha512``) as a string, the system
 will default to hashing your password 5000 times in a row and then encoding
@@ -1736,5 +1734,5 @@ Learn more from the Cookbook
 .. _`componente de segurança`: https://github.com/symfony/Security
 .. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
+.. _`implemente a interface \Serializable`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
