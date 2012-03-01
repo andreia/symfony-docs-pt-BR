@@ -232,7 +232,7 @@ Primeiro, construa um arquivo de layout de base:
 
 .. note::
     
-    Apesar da discussão sobre herança de template ser em termos do Twig.
+    Apesar da discussão sobre herança de template ser em termos do Twig,
     a filosofia é a mesma entre templates Twig e PHP.
 
 Este template define o esqueleto do documento base HTML de um página simples
@@ -282,8 +282,8 @@ Um template filho poderia ser como este:
    explicada inteiramente em :ref:`template-naming-locations`.
 
 A chave para herança template é a tag  ``{% extends %}``. Ela avisa
-o motor de template para primeiro avaliar o template base, que configura
-o layou e define vários blocos. O template filho é então processado,
+a engine de template para primeiro avaliar o template base, que configura
+o layout e define vários blocos. O template filho é então processado,
 ao ponto que os blocos  ``title`` e ``body`` do template pai sejam substituídos
 por aqueles do filho. Dependendo do valor de ``blog_entries``, a
 saída poderia parecer com isso::
@@ -312,7 +312,7 @@ saída poderia parecer com isso::
         </body>
     </html>
 
-Perceba que desde que o template filho não definiu um bloco ``sidebar``, o
+Perceba que como o template filho não definiu um bloco ``sidebar``, o
 valor do template pai é usado no lugar. Conteúdo dentro de uma tag  ``{% block %}``
 em um template pai é sempre usado por padrão.
 
@@ -331,7 +331,7 @@ Quando trabalhar com herança de template, aqui estão algumas dicas para guardar 
   padrão sensato. Quanto mais blocos seus templates base tiverem, mais flexível
   seu layout será.
 
-* Se você achar você mesmo duplicando conteúdo em um número de templates, isto provavelmente
+* Se você achar você mesmo duplicando conteúdo em um certo número de templates, isto provavelmente
   significa que você deveria mover aquele conteúdo para um ``{% block %}`` no template pai.
   Em alguns casos, uma solução melhor pode ser mover o conteúdo para um novo template
   e ``incluir`` ele (veja :ref:`including-templates`).
@@ -359,71 +359,74 @@ Nomeação de Template e Localizações
 
 Por padrão, templates podem residir em duas localizações diferentes:
 
-* ``app/Resources/views/``: O diretórico de aplicação de ``views`` pode conter
-  templates de extensa base para aplicação (ex: os layout de sua aplicação) assim como
+* ``app/Resources/views/``: O diretório de aplicação de ``views`` pode conter
+  templates bases para toda a aplicação(ex: os layout de sua aplicação) assim como
+  os tempates que sobrepõem templates de pacote (veja :ref:`overriding-bundle-templates`);
+  
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
   :ref:`overriding-bundle-templates`);
+  
 
-* ``path/to/bundle/Resources/views/``: Each bundle houses its templates in its
-  ``Resources/views`` directory (and subdirectories). The majority of templates
-  will live inside a bundle.
+* ``path/to/bundle/Resources/views/``: Cada pacote possui as templates dela no diretório 
+  ``Resources/views`` (e sub-diretórios). A maioria dos templates irá residir dentro de
+  um pacote.
+  
+Symfony2 usa a sintaxe de string **bundle**:**controller**:**template** para
+templates. Isso permite vários tipos diferente de template, cada um residindo
+em uma localização especifica:
 
-Symfony2 uses a **bundle**:**controller**:**template** string syntax for
-templates. This allows for several different types of templates, each which
-lives in a specific location:
+* ``AcmeBlogBundle:Blog:index.html.twig``: Esta sintaxe é usada para especificar um
+  template para uma página específica. As três partes do string, cada uma separada
+  por dois pontos, (``:``), signitca o seguinte:
 
-* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
-  template for a specific page. The three parts of the string, each separated
-  by a colon (``:``), mean the following:
-
-    * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
+    * ``AcmeBlogBundle``: (*bundle*) o template reside entro de
       ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
-    * ``Blog``: (*controller*) indicates that the template lives inside the
-      ``Blog`` subdirectory of ``Resources/views``;
+    * ``Blog``: (*controller*) indica que o template reside dentro do
+       sub-diretório ``Blog`` de ``Resources/views``;
 
-    * ``index.html.twig``: (*template*) the actual name of the file is
+    * ``index.html.twig``: (*template*) o verdadeiro nome do arquivo é
       ``index.html.twig``.
 
-  Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
-  final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
+  Assumindo que o ``AcmeBlogBundle`` reside em ``src/Acme/BlogBundle``, o
+  atalho final para o layout seria ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
-* ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the ``AcmeBlogBundle``. Since the middle, "controller",
+* ``AcmeBlogBundle::layout.html.twig``: Essa sintaxe refere ao template base que
+  é específica para ``AcmeBlogBundle``. Since the middle, "controller",
   portion is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
 
-* ``::base.html.twig``: This syntax refers to an application-wide base template
-  or layout. Notice that the string begins with two colons (``::``), meaning
-  that both the *bundle* and *controller* portions are missing. This means
-  that the template is not located in any bundle, but instead in the root
-  ``app/Resources/views/`` directory.
+* ``::base.html.twig``: Esta sintaxe refere a uma template base para toda a aplicação ou
+  layout. Perceba que a string começa com dois sinais de dois pontos (``::``), significando
+  que ambas as partes *bundle*  *controller* estão faltando. Isto significa
+  que o template não é localizado em qualquer pacote, mas sim na raiz do 
+  diretório ``app/Resources/views/``.
 
-In the :ref:`overriding-bundle-templates` section, you'll find out how each
-template living inside the ``AcmeBlogBundle``, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
-directory. This gives the power to override templates from any vendor bundle.
+Na seção :ref:`overriding-bundle-templates`, você irá descobrir como cada
+template reside dentro do ``AcmeBlogBundle``, por exemplo, pode ser sobreposto
+ao colocar um template de mesmo nome no diretório 
+``app/Resources/AcmeBlogBundle/views/``. Isso dá o poder de sobrepor templates de qualquer pacote pago.
 
 .. tip::
+    
+    Esperançosamente, a sintaxe de nomeação de template parece familiar - é a mesma convenção
+    para nomeação usada para referir para :ref:`controller-string-syntax`.
 
-    Hopefully the template naming syntax looks familiar - it's the same naming
-    convention used to refer to :ref:`controller-string-syntax`.
-
-Template Suffix
+Sufixo de Template 
 ~~~~~~~~~~~~~~~
 
-The **bundle**:**controller**:**template** format of each template specifies
-*where* the template file is located. Every template name also has two extensions
-that specify the *format* and *engine* for that template.
+O formato **bundle**:**controller**:**template** de cada template especifica
+*onde* o arquivo de template está localizado. Cada nome de template também tem duas expressões
+que especificam o *formato* e *engine* para aquela template.
 
-* **AcmeBlogBundle:Blog:index.html.twig** - HTML format, Twig engine
+* **AcmeBlogBundle:Blog:index.html.twig** - formato HTML, engine Twig
 
-* **AcmeBlogBundle:Blog:index.html.php** - HTML format, PHP engine
+* **AcmeBlogBundle:Blog:index.html.php** - formato HTML, engine PHP
 
-* **AcmeBlogBundle:Blog:index.css.twig** - CSS format, Twig engine
+* **AcmeBlogBundle:Blog:index.css.twig** - formato CSS, engine Twig
 
-By default, any Symfony2 template can be written in either Twig or PHP, and
+Por padrão, qualquer template Symfony2 ou pode ser escrito em Twig ou em PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
 of these two *engines* should be used. The first part of the extension,
 (e.g. ``.html``, ``.css``, etc) is the final format that the template will
@@ -434,9 +437,9 @@ or any other format. For more information, read the :ref:`template-formats`
 section.
 
 .. note::
-
-   The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration<template-configuration>` for more details.
+    
+   As "engines" disponíveis podem ser configurados e até mesmo ter novas engines adicionadas.
+   Veja :ref:`Configuração de Template<template-configuration>` para mais detalhes.
 
 .. index::
    single: Templating; Tags and Helpers
