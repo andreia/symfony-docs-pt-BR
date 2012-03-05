@@ -326,12 +326,12 @@ Quando trabalhar com herança de template, aqui estão algumas dicas para guardar 
   naquele template.
   
 * Quanto mais tags ``{% block %}`` você tiver no template base, melhor.
-  Lembre, templates filhos não precisam definir todos os blocos pai, então
+  Lembre, templates filhos não precisam definir todos os blocos do pai, então
   criar tantos blocos em seus templates base quanto você quiser e dar a cada um
   padrão sensato. Quanto mais blocos seus templates base tiverem, mais flexível
   seu layout será.
 
-* Se você achar você mesmo duplicando conteúdo em um certo número de templates, isto provavelmente
+* Se você achar você mesmo duplicando conteúdo em um determinado número de templates, isto provavelmente
   significa que você deveria mover aquele conteúdo para um ``{% block %}`` no template pai.
   Em alguns casos, uma solução melhor pode ser mover o conteúdo para um novo template
   e ``incluir`` ele (veja :ref:`including-templates`).
@@ -359,7 +359,7 @@ Nomeação de Template e Localizações
 
 Por padrão, templates podem residir em duas localizações diferentes:
 
-* ``app/Resources/views/``: O diretório de aplicação de ``views`` pode conter
+* ``app/Resources/views/``: O diretório de aplicação de ``views`` pode abrigar
   templates bases para toda a aplicação(ex: os layout de sua aplicação) assim como
   os tempates que sobrepõem templates de pacote (veja :ref:`overriding-bundle-templates`);
   
@@ -368,7 +368,7 @@ Por padrão, templates podem residir em duas localizações diferentes:
   :ref:`overriding-bundle-templates`);
   
 
-* ``path/to/bundle/Resources/views/``: Cada pacote possui as templates dela no diretório 
+* ``path/to/bundle/Resources/views/``: Cada pacote abriga as templates dele no diretório 
   ``Resources/views`` (e sub-diretórios). A maioria dos templates irá residir dentro de
   um pacote.
   
@@ -426,15 +426,14 @@ que especificam o *formato* e *engine* para aquela template.
 
 * **AcmeBlogBundle:Blog:index.css.twig** - formato CSS, engine Twig
 
-Por padrão, qualquer template Symfony2 ou pode ser escrito em Twig ou em PHP, and
-the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
-of these two *engines* should be used. The first part of the extension,
-(e.g. ``.html``, ``.css``, etc) is the final format that the template will
-generate. Unlike the engine, which determines how Symfony2 parses the template,
-this is simply an organizational tactic used in case the same resource needs
-to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
-or any other format. For more information, read the :ref:`template-formats`
-section.
+Por padrão, qualquer template Symfony2 ou pode ser escrito em Twig ou em PHP, e
+a última  parte da extensão (ex: ``.twig`` ou ``.php``) especifica qual
+dessas duas *engines* deveria ser usada. A primeira parte da extensão,
+(ex: ``.html``, ``.css``, etc) é o formato final que o template irá
+gerar. Ao contrário de engine, que determina como Symfony2 analisa o template,
+isso é simplesmente uma tática organizacional em caso do mesmo recurso precisar
+ser transformado como HTML(``index.html.twig``), XML (``index.xml.twig``),
+ou qualquer outro formato. Para mais informaçõess, leia a seção :ref:`template-formats`.
 
 .. note::
     
@@ -442,45 +441,46 @@ section.
    Veja :ref:`Configuração de Template<template-configuration>` para mais detalhes.
 
 .. index::
-   single: Templating; Tags and Helpers
+   single: Templating; Tags e Helpers
    single: Templating; Helpers
 
-Tags and Helpers
+Tags e Helpers
 ----------------
 
-You already understand the basics of templates, how they're named and how
-to use template inheritance. The hardest parts are already behind you. In
-this section, you'll learn about a large group of tools available to help
-perform the most common template tasks such as including other templates,
-linking to pages and including images.
+Você já entende as bases do templates, como eles são chamados e como usar 
+herança de template. As partes mais difíceis estão realmente atrás de você. Nesta
+seção, você irá aprender sobre um grande grande grupo de ferramentas disponíveis para ajudar
+a desempenhar as tarefas de template mais comuns como incluir outras templates,
+vincular páginas e incluir imagens.
 
-Symfony2 comes bundled with several specialized Twig tags and functions that
-ease the work of the template designer. In PHP, the templating system provides
-an extensible *helper* system that provides useful features in a template
-context.
 
-We've already seen a few built-in Twig tags (``{% block %}`` & ``{% extends %}``)
-as well as an example of a PHP helper (``$view['slots']``). Let's learn a
-few more.
+Symfony2 vem acompanhado com várias tags Twig especializadas e funções que
+facilitam o trabalho do designer de template. Em PHP, o sistema de template providencia
+um sistema extenso de *helper* que providencia funcionalidades úteis no contexto
+de template.
+
+Nós realmente vimos umas poucas tags Twig construídas (``{% block %}`` e ``{% extends %}``)
+como exemplo de um helper PHP (``$view['slots']``). Vamos aprender um
+pouco mais.
 
 .. index::
-   single: Templating; Including other templates
+   single: Templating; Incluir outras templates
 
 .. _including-templates:
 
-Including other Templates
+Incluir outras Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You'll often want to include the same template or code fragment on several
-different pages. For example, in an application with "news articles", the
-template code displaying an article might be used on the article detail page,
-on a page displaying the most popular articles, or in a list of the latest
-articles.
+Você irá frequntemente querer incluir a mesma template ou fragmento de código em várias
+páginas diferentes. Por exemplo, em uma aplicação com "artigos de notícias", a exibição
+do artigo no código do template poderia ser usada numa página de detalhes do artigo,
+num a página exibindo os artigos mais populares, ou em uma lista dos últimos
+artigos.
 
-When you need to reuse a chunk of PHP code, you typically move the code to
-a new PHP class or function. The same is true for templates. By moving the
-reused template code into its own template, it can be included from any other
-template. First, create the template that you'll need to reuse.
+Quando você precisa reutilizar um pedaço de um código PHP, você tipicamente move o código
+para uma nova classe ou função PHP. O mesmo é verdade para template. Ao mover o
+código do template reutilizado em um template próprio, ele pode ser incluído em qualquer outro
+template. Primeiro, crie o template que você precisará reutilizar.
 
 .. configuration-block::
 
@@ -504,7 +504,7 @@ template. First, create the template that you'll need to reuse.
           <?php echo $article->getBody() ?>
         </p>
 
-Including this template from any other template is simple:
+Incluir este template de qualquer outro template é fácil:
 
 .. configuration-block::
 
@@ -534,33 +534,33 @@ Including this template from any other template is simple:
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
-The template is included using the ``{% include %}`` tag. Notice that the
-template name follows the same typical convention. The ``articleDetails.html.twig``
-template uses an ``article`` variable. This is passed in by the ``list.html.twig``
-template using the ``with`` command.
+O template é incluído usando a tag ``{% include %}``. Perceba que o
+nome do template segue a mesma convenção típica. O template ``articleDetails.html.twig``
+usa uma variável ``article``. Isso é passado por um template ``list.html.twig``
+usando o comando ``with``.
 
 .. tip::
 
-    The ``{'article': article}`` syntax is the standard Twig syntax for hash
-    maps (i.e. an array with named keys). If we needed to pass in multiple
-    elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
+    A sintaxe ``{'article': article}`` é a sintaxe Twig padrão para hash
+    maps (ex:  um array com chaves nomeadas). Se nós precisarmos passá-lo em elementos
+    múltiplos, ele poderia ser algo como: ``{'foo': foo, 'bar': bar}``.
 
 .. index::
-   single: Templating; Embedding action
-
+   single: Templating; Incorporação de ações
+   
 .. _templating-embedding-controller:
 
-Embedding Controllers
+Incorporação de Controllers
 ~~~~~~~~~~~~~~~~~~~~~
 
-In some cases, you need to do more than include a simple template. Suppose
-you have a sidebar in your layout that contains the three most recent articles.
-Retrieving the three articles may include querying the database or performing
-other heavy logic that can't be done from within a template.
+Em alguns casos, você precisa fazer mais do que incluir um template simples. Suponha
+que você tenha uma barra lateral no seu layout que contenha os três artigos mais recentes.
+Recuperar os três artigos podem incluir consultar a base de dados ou desempenhar
+outra lógica pesada que não pode ser a partir de um template.
 
-The solution is to simply embed the result of an entire controller from your
-template. First, create a controller that renders a certain number of recent
-articles:
+A solução é simplesmnte incorporar o resultado de um controller inteiro para
+seu template. Primeiro, crie o controller que retorne um certo número de artigos
+recentes :
 
 .. code-block:: php
 
@@ -577,7 +577,7 @@ articles:
         }
     }
 
-The ``recentList`` template is perfectly straightforward:
+A template ``recentList`` é perfeitamente straightforward:
 
 .. configuration-block::
 
@@ -600,13 +600,12 @@ The ``recentList`` template is perfectly straightforward:
         <?php endforeach; ?>
 
 .. note::
-
-    Notice that we've cheated and hardcoded the article URL in this example
-    (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    you'll learn how to do this correctly.
-
-To include the controller, you'll need to refer to it using the standard string
-syntax for controllers (i.e. **bundle**:**controller**:**action**):
+    Perceba que nós fizemos uma gambiarra e fizemos um hardcode no artigo URL desse exemplo
+    (ex: ``/article/*slug*``). Isso é uma prática ruim. Na próxima seção,
+    você irá aprender como fazer isso corretamente.
+    
+Para incluir um controller, você irá precisar referir a ela usando a sintaxe de string
+padrão para controllers (isto é, **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
@@ -628,25 +627,25 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
             <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
         </div>
 
-Whenever you find that you need a variable or a piece of information that
-you don't have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.
+Sempre quando você pensar que você precisa de uma variável ou uma peça de informação que
+você não tenha acesso em um template, considere transformar o controller.
+Controllers são rápidos para executar e promovem uma boa organização e utilização do código.
 
 .. index::
-   single: Templating; Linking to pages
+   single: Templating; Vinculação às páginas
 
-Linking to Pages
+Vinculação às Páginas
 ~~~~~~~~~~~~~~~~
 
-Creating links to other pages in your application is one of the most common
-jobs for a template. Instead of hardcoding URLs in templates, use the ``path``
-Twig function (or the ``router`` helper in PHP) to generate URLs based on
-the routing configuration. Later, if you want to modify the URL of a particular
-page, all you'll need to do is change the routing configuration; the templates
-will automatically generate the new URL.
+Criar links para outras página em sua aplicação é uma das tarefas mais 
+comuns para um template. Ao invés de fazer um hardcode nas URLs nos templates, use a
+função do Twig ``path`` (ou o helper ``router`` no PHP) para gerar URLs baseadas na
+configuração de roteamento. Mais tarde, se você quiser modificar a URL de uma página
+particular, tudo que você precisará fazer é mudar as configurações de roteamento; os
+templates irão automatricamente gerar a nova URL.
 
-First, link to the "_welcome" page, which is accessible via the following routing
-configuration:
+Primeiro, vincule a página "_welcome" , que é acessível pela seguinte configuração de
+roteamento:
 
 .. configuration-block::
 
@@ -671,7 +670,7 @@ configuration:
 
         return $collection;
 
-To link to the page, just use the ``path`` Twig function and refer to the route:
+Para vincular à página, apenas use a função Twig ``path`` e refira para a rota:
 
 .. configuration-block::
 
@@ -683,8 +682,8 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
-As expected, this will generate the URL ``/``. Let's see how this works with
-a more complicated route:
+Como esperado, isso irá gerar a URL ``/``. Vamos ver como isso irá funcionar com
+uma rota mais complicada:
 
 .. configuration-block::
 
@@ -709,10 +708,10 @@ a more complicated route:
 
         return $collection;
 
-In this case, you need to specify both the route name (``article_show``) and
-a value for the ``{slug}`` parameter. Using this route, let's revisit the
-``recentList`` template from the previous section and link to the articles
-correctly:
+Neste caso, você precisa especificar tanto o nome da rota (``article_show``) como
+um valor para o parâmetro ``{slug}``. Usando esta rota, vamos revisitar o 
+template ``recentList`` da sessão anterior e vincular aos artigos
+corretamente:
 
 .. configuration-block::
 
@@ -735,29 +734,29 @@ correctly:
         <?php endforeach; ?>
 
 .. tip::
-
-    You can also generate an absolute URL by using the ``url`` Twig function:
+    
+    Você também pode gerar uma URL absoluta ao usar a função ``url`` do Twig:
 
     .. code-block:: html+jinja
 
         <a href="{{ url('_welcome') }}">Home</a>
-
-    The same can be done in PHP templates by passing a third argument to
-    the ``generate()`` method:
+    
+    O mesmo pode ser feito em templates PHP ao passar um terceiro argumento ao
+    método ``generate()``:
 
     .. code-block:: php
 
         <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
 
 .. index::
-   single: Templating; Linking to assets
+   single: Templating; Vinculando os assets
 
-Linking to Assets
+Vinculando os Assets
 ~~~~~~~~~~~~~~~~~
 
-Templates also commonly refer to images, Javascript, stylesheets and other
-assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
+Templates podem frequentemente referir a imagens, Javascript, folhas de estilo e outros
+recursos. Claro você poderia fazer um hardcode do atalho desses assets (ex: ``/images/logo.png``),
+mas Symfony2 providencia uma opção mais dinâmica via função ``assets`` do Twig:
 
 .. configuration-block::
 
