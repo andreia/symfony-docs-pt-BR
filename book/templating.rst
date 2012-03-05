@@ -8,7 +8,7 @@ Como você sabe o :doc:`controller </book/controller>` é responsável por
 controlar cada requisição que venha de uma aplicação Symfony2. Na realidade,
 o controller delega muito do trabalho pesado para outros lugares então aquele
 código pode ser testado e reusado. Quando um controller precisa gerar HTML,
-CSS e qualquer outro conteúdo, ele entrega o trabalho para a engine de template.
+CSS e qualquer outro conteúdo, ele entrega o trabalho para o engine de template.
 Nesse capítulo, você irá aprendder como escrever templates poderosas que podem ser
 usada para retornar conteúdo para o usuário, preencher corpo de e-mail, e mais. Você 
 irá aprender atalhos, maneiras espertas de extender templates e como reusar código
@@ -282,7 +282,7 @@ Um template filho poderia ser como este:
    explicada inteiramente em :ref:`template-naming-locations`.
 
 A chave para herança template é a tag  ``{% extends %}``. Ela avisa
-a engine de template para primeiro avaliar o template base, que configura
+o engine de template para primeiro avaliar o template base, que configura
 o layout e define vários blocos. O template filho é então processado,
 ao ponto que os blocos  ``title`` e ``body`` do template pai sejam substituídos
 por aqueles do filho. Dependendo do valor de ``blog_entries``, a
@@ -772,45 +772,44 @@ mas Symfony2 providencia uma opção mais dinâmica via função ``assets`` do Twig:
 
         <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
 
-The ``asset`` function's main purpose is to make your application more portable.
-If your application lives at the root of your host (e.g. http://example.com),
-then the rendered paths should be ``/images/logo.png``. But if your application
-lives in a subdirectory (e.g. http://example.com/my_app), each asset path
-should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
-``asset`` function takes care of this by determining how your application is
-being used and generating the correct paths accordingly.
+O principal propósito da função ``asset`` é tornar sua aplicação mais portátil.
+Se sua aplicação reside na raiz do seu host (ex: http://example.com),
+então os atalhos interpretados deveriam ser ``/images/logo.png``. Mas se sua aplicação
+reside em um sub-diretório (ex: http://example.com/my_app), cada caminho do asset 
+deveria interpretar com o diretório (e.g. ``/my_app/images/logo.png``). A função
+``asset`` toma conta disto ao determinar como sua aplicação está
+sendo usada e gerando os atalhos de acordo com o correto.
 
-Additionally, if you use the ``asset`` function, Symfony can automatically
-append a query string to your asset, in order to guarantee that updated static
-assets won't be cached when deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
-configuration option.
+Adicionalmente, se você usar função asset, Symfony pode automaticamente
+anexar uma string de consulta para asset, em detrimento de garantir que assets
+estáticos atualizados não serão armazenados quando distribuídos. Por exemplo, ``/images/logo.png`` poderia
+parecer como ``/images/logo.png?v2``. Para mais informações, veja a opção de configuração 
+:ref:`ref-framework-assets-version`.
 
 .. index::
-   single: Templating; Including stylesheets and Javascripts
-   single: Stylesheets; Including stylesheets
-   single: Javascripts; Including Javascripts
+   single: Templating; Incluindo folhas de estilo e Javascripts
+   single: Folhas de estilo; Incluindo folhas de estilo
+   single: Javascripts; Incluindo Javascripts
 
-Including Stylesheets and Javascripts in Twig
+Incluindo Folhas de Estilo e Javascript no Twig
 ---------------------------------------------
 
-No site would be complete without including Javascript files and stylesheets.
-In Symfony, the inclusion of these assets is handled elegantly by taking
-advantage of Symfony's template inheritance.
+Nenhum site seria completo sem incluir arquivos Javascript e folhas de estilo.
+Em Symfony, a inclusão desses assets é elegantemente manipulada ao tirar
+vantagem das heranças de template do Symfony.
 
 .. tip::
+    
+    Esta seção irá ensinar você a filosofia por trás disto, incluindo folha de estilo
+    e asset Javascript em Symfony. Symfony também engloba outra biblioteca,
+    chamada Assetic, que segue essa filosofia mas também permite você fazer mais coisas
+    muito interessantes com esses assets. Para mais informações sobre
+    usar Assetic veja :doc:`/cookbook/assetic/asset_management`.
 
-    This section will teach you the philosophy behind including stylesheet
-    and Javascript assets in Symfony. Symfony also packages another library,
-    called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on 
-    using Assetic see :doc:`/cookbook/assetic/asset_management`.
-
-
-Start by adding two blocks to your base template that will hold your assets:
-one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
-just above the closing ``body`` tag. These blocks will contain all of the
-stylesheets and Javascripts that you'll need throughout your site:
+Comece adicionando dois blocos a seu template base que irá abrigar seus assets:
+uma chamada  ``stylesheets`` dentro da tag ``head`` e outra chamada ``javascripts``
+justamente acima do fechamento da tag ``body``. Esses blocos irão conter todas as
+folhas de estilo e Javascripts que você irá precisar através do seu site:
 
 .. code-block:: html+jinja
 
@@ -832,10 +831,10 @@ stylesheets and Javascripts that you'll need throughout your site:
         </body>
     </html>
 
-That's easy enough! But what if you need to include an extra stylesheet or
-Javascript from a child template? For example, suppose you have a contact
-page and you need to include a ``contact.css`` stylesheet *just* on that
-page. From inside that contact page's template, do the following:
+Isso é fácil o bastante ! Mas e se você precisar incluir uma folha de estilo ou
+Javascript de um template filho ? Por exemplo, suponha que você tenha uma página
+de contatos e você precise incluir uma folha de estilo ``contact.css`` *bem* naquela
+página. Dentro do template da página de contatos, faça o seguinte:
 
 .. code-block:: html+jinja
 
@@ -850,40 +849,40 @@ page. From inside that contact page's template, do the following:
     
     {# ... #}
 
-In the child template, you simply override the ``stylesheets`` block and 
-put your new stylesheet tag inside of that block. Of course, since you want
-to add to the parent block's content (and not actually *replace* it), you
-should use the ``parent()`` Twig function to include everything from the ``stylesheets``
-block of the base template.
+No template filho, você simplesmente sobrepõe o bloco ``stylesheets`` e
+coloca sua nova tag de folha de estilo dentro daquele bloco. Claro, desde que você queira
+adicionar ao conteúdo do bloco pai (e realmente não irá *substituí-lo), você
+deveria usar a função ``parent()`` do Twig function para incluir tudo do bloco ``stylesheets``
+do template base.
 
-You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php app/console assets:install target [--symlink]``
-command, which moves (or symlinks) files into the correct location. (target
-is by default "web").
+Você pode também incluir assets localizados em seus arquivos de pacotes ``Resources/public``.
+Você precisará executar o comando``php app/console assets:install target [--symlink]`` ,
+que move (ou symlinks) arquivos dentro da localização correta. 
+(target é sempre por padrão "web).
 
 .. code-block:: html+jinja
 
    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
 
-The end result is a page that includes both the ``main.css`` and ``contact.css``
-stylesheets.
+O resultado final é uma página que inclui ambas as folhas de estilo 
+``main.css`` e ``contact.css``.
 
 .. index::
-   single: Templating; The templating service
+   single: Templating; O Serviço de Templating
 
-Configuring and using the ``templating`` Service
+Configurando e usando o Serviço ``templating`` 
 ------------------------------------------------
 
-The heart of the template system in Symfony2 is the templating ``Engine``.
-This special object is responsible for rendering templates and returning
-their content. When you render a template in a controller, for example,
-you're actually using the templating engine service. For example:
+O coração do sistema de template em Symfony2 é o template ``Engine``.
+Este objeto especial é responsável por manipular templates e retornar
+o conteúdo deles. Quando você manipula um template em um controller, por exemplo,
+você está na verdade usando o serviço do template engine. Por exemplo:
 
 .. code-block:: php
 
     return $this->render('AcmeArticleBundle:Article:index.html.twig');
 
-is equivalent to
+é equivalente a:
 
 .. code-block:: php
 
@@ -894,9 +893,9 @@ is equivalent to
 
 .. _template-configuration:
 
-The templating engine (or "service") is preconfigured to work automatically
-inside Symfony2. It can, of course, be configured further in the application
-configuration file:
+O engine de template (ou "serviço") é pré-configurada para trabalhar automaticamente
+dentro de Symfony2. Ele pode, claro, ser configurado mais adiante no arquivo
+de configuração da aplicação:
 
 .. configuration-block::
 
@@ -924,32 +923,32 @@ configuration file:
             ),
         ));
 
-Several configuration options are available and are covered in the
+Várias opções de configuração estão disponíveis e estão cobertos em
 :doc:`Configuration Appendix</reference/configuration/framework>`.
 
 .. note::
-
-   The ``twig`` engine is mandatory to use the webprofiler (as well as many
-   third-party bundles).
+   
+   O engine ``twig`` é obrigatório para usar o webprofiler (bem como outros
+   pacotes de terceiros).
 
 .. index::
-    single; Template; Overriding templates
+    single; Template; Sobrepondo templates
 
 .. _overriding-bundle-templates:
 
-Overriding Bundle Templates
+Sobrepondo Templates de Pacote
 ---------------------------
 
-The Symfony2 community prides itself on creating and maintaining high quality
-bundles (see `Symfony2Bundles.org`_) for a large number of different features.
-Once you use a third-party bundle, you'll likely need to override and customize
-one or more of its templates.
+A comunidade Symfony2 orgulha-se de si própria em criar e manter pacotes
+de alta qualidade (veja `Symfony2Bundles.org`_) para um grande número de funcionalidades diferentes.
+Uma vez que você use um pacote de terceiros, você irá certamente precisar sobrepor e personalizar
+um ou mais de seus templates.
 
-Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
-project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
-really happy with everything, you want to override the blog "list" page to
-customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
+Suponha que você incluiu o imaginário open-source ``AcmeBlogBundle`` em seu
+projeto (ex: no diretório ``src/Acme/BlogBundle``). E enquanto você estiver
+realmente feliz com tudo, você quer sobrepor  a página de "lista" do blog para
+personalizar a marcação especificamente para sua aplicação. Ao se aprofundar no
+controller ``Blog`` eo ``AcmeBlogBundle``, você encontrará o seguinte::
 
     public function indexAction()
     {
@@ -958,35 +957,35 @@ customize the markup specifically for your application. By digging into the
         $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
 
-When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
-looks in two different locations for the template:
+Quando ``AcmeBlogBundle:Blog:index.html.twig`` é manipulado, Symfony2 realmente
+observa duas diferentes localizações para o template:
 
 #. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 #. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
 
-To override the bundle template, just copy the ``index.html.twig`` template
-from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
-(the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
-to create it). You're now free to customize the template.
+Para sobrepor o template de pacote, só copie o template ``index.html.twig`` 
+do pacote para  ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+(o diretório ``app/Resources/AcmeBlogBundle`` não existirão, então você precisará
+criá-lo). Você está livre agora para personalizar o template.
 
-This logic also applies to base bundle templates. Suppose also that each
-template in ``AcmeBlogBundle`` inherits from a base template called
-``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony2 will look in
-the following two places for the template:
+Esta lógica também se aplica a templates de pacote base. Suponha também que cada
+template em  ``AcmeBlogBundle`` herda de um template base chamado
+``AcmeBlogBundle::layout.html.twig``. Justo como antes, Symfony2 irá observar os
+seguintes dois lugares para o template:
 
 #. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
 #. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
 
-Once again, to override the template, just copy it from the bundle to
-``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
-customize this copy as you see fit.
+Uma vez novamente, para sobrepor o template, apenas copie ele para
+``app/Resources/AcmeBlogBundle/views/layout.html.twig``. Você agora está livre para
+personalizar esta cópia como você quiser.
 
-If you take a step back, you'll see that Symfony2 always starts by looking in
-the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
-template doesn't exist there, it continues by checking inside the
-``Resources/views`` directory of the bundle itself. This means that all bundle
-templates can be overridden by placing them in the correct ``app/Resources``
-subdirectory.
+Se você voltar um passo atrás, verá que Symfony2 sempre começa a olhar no 
+diretório ``app/Resources/{BUNDLE_NAME}/views/`` para um template. Se o
+template não existe aqui, ele continua checando dentro do diretório
+``Resources/views`` do próprio pacote. Isso significa que todos os templates
+do pacote podem ser sobrepostos ao colocá-los no sub-diretório correto 
+``app/Resources``.
 
 .. _templating-overriding-core-templates:
 
