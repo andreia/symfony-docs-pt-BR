@@ -980,8 +980,8 @@ Uma vez novamente, para sobrepor o template, apenas copie ele para
 ``app/Resources/AcmeBlogBundle/views/layout.html.twig``. Você agora está livre para
 personalizar esta cópia como você quiser.
 
-Se você voltar um passo atrás, verá que Symfony2 sempre começa a olhar no 
-diretório ``app/Resources/{BUNDLE_NAME}/views/`` para um template. Se o
+Se você voltar um passo atrás, verá que Symfony2 sempre começa a observar no 
+diretório ``app/Resources/{BUNDLE_NAME}/views/`` por um template. Se o
 template não existe aqui, ele continua checando dentro do diretório
 ``Resources/views`` do próprio pacote. Isso significa que todos os templates
 do pacote podem ser sobrepostos ao colocá-los no sub-diretório correto 
@@ -992,33 +992,33 @@ do pacote podem ser sobrepostos ao colocá-los no sub-diretório correto
 .. index::
     single; Template; Overriding exception templates
 
-Overriding Core Templates
+Sobrepondo Templates Centrais
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the Symfony2 framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core ``TwigBundle`` contains
-a number of different "exception" and "error" templates that can be overridden
-by copying each from the ``Resources/views/Exception`` directory of the
-``TwigBundle`` to, you guessed it, the
-``app/Resources/TwigBundle/views/Exception`` directory.
+Como o framework Symfony é um pacote por si só, templates centrais podem ser
+sobrepostos da mesma forma. Por exemplo, o núcleo ``TwigBundle`` contém
+um númeto de diferentes templates "exception" e "error" que podem ser sobrepostas
+ao copiar cada uma do diretório ``Resources/views/Exception`` do ``TwigBundle`` 
+para, você adivinhou, o diretório
+``app/Resources/TwigBundle/views/Exception`` .
 
 .. index::
    single: Templating; Three-level inheritance pattern
 
-Three-level Inheritance
+Herança de Três Níveis
 -----------------------
 
-One common way to use inheritance is to use a three-level approach. This
-method works perfectly with the three different types of templates we've just
-covered:
+Um modo comum de usar herança é usar uma aproximação em três níveis. Este
+método trabalha perfeitamente com três tipos diferentes de templates que nós
+certamente cobrimos:
 
-* Create a ``app/Resources/views/base.html.twig`` file that contains the main
-  layout for your application (like in the previous example). Internally, this
-  template is called ``::base.html.twig``;
+* Criar um arquivo ``app/Resources/views/base.html.twig`` que contém o layout
+  principal para sua aplicação (como nos exemplos anteriores). Internamente, este
+  template é chamado ``::base.html.twig``;
 
-* Create a template for each "section" of your site. For example, an ``AcmeBlogBundle``,
-  would have a template called ``AcmeBlogBundle::layout.html.twig`` that contains
-  only blog section-specific elements;
+* Cria um template para cada "seção" do seu site. Por exemplo, um ``AcmeBlogBundle``,
+  teria um template chamado ``AcmeBlogBundle::layout.html.twig`` que contém somente
+  elementos específicos para a sessão no blog:
 
     .. code-block:: html+jinja
 
@@ -1031,9 +1031,9 @@ covered:
             {% block content %}{% endblock %}
         {% endblock %}
 
-* Create individual templates for each page and make each extend the appropriate
-  section template. For example, the "index" page would be called something
-  close to ``AcmeBlogBundle:Blog:index.html.twig`` and list the actual blog posts.
+* Criar templates individuais para cada página e fazer cada um estender a template
+  de sessão apropriada. Por exemplo, a página "index" deveria ser chamada de algo
+  próximo a ``AcmeBlogBundle:Blog:index.html.twig`` e listar os blogs de posts reais.
 
     .. code-block:: html+jinja
 
@@ -1047,28 +1047,28 @@ covered:
             {% endfor %}
         {% endblock %}
 
-Notice that this template extends the section template -(``AcmeBlogBundle::layout.html.twig``)
-which in-turn extends the base application layout (``::base.html.twig``).
-This is the common three-level inheritance model.
+Perceba que este template estende a template de sessão - (``AcmeBlogBundle::layout.html.twig``)
+que por sua vez estende o layout de aplicação base (``::base.html.twig``).
+Isso é o modelo comum de herança de três níveis.
 
-When building your application, you may choose to follow this method or simply
-make each page template extend the base application template directly
-(e.g. ``{% extends '::base.html.twig' %}``). The three-template model is
-a best-practice method used by vendor bundles so that the base template for
-a bundle can be easily overridden to properly extend your application's base
-layout.
+Quando construir sua aplicação, você pode escolher seguir esse método ou simplesmente
+tornar cada template de página estender a template de aplicação base diretamente
+(ex: ``{% extends '::base.html.twig' %}``). O modelo de três templates é
+o método de melhor prática usado por vendor bundles então aquele template
+base para um pacote pode ser facilmente sobreposto para propriamente estender seu
+layout base de aplicação.
 
 .. index::
-   single: Templating; Output escaping
+   single: Templating; Saída para escape
 
-Output Escaping
+Saída para escape
 ---------------
 
-When generating HTML from a template, there is always a risk that a template
-variable may output unintended HTML or dangerous client-side code. The result
-is that dynamic content could break the HTML of the resulting page or allow
-a malicious user to perform a `Cross Site Scripting`_ (XSS) attack. Consider
-this classic example:
+Quando gerar HTML de um template, sempre há um risco que uma variável de 
+template pode gerar HTML involutário ou codigo do lado cliente perigoso. O resultado
+é que o conteúdo dinâmico poderia quebrar o HTML de uma página de resultados ou
+permitir um usuário maldoso realizar um ataque `Cross Site Scripting`_ (XSS). Considere
+esse exemplo clássico:
 
 .. configuration-block::
 
@@ -1080,61 +1080,61 @@ this classic example:
 
         Hello <?php echo $name ?>
 
-Imagine that the user enters the following code as his/her name::
+Imagine que o usuário entre o seguinte código como o nome dele/dela::
 
     <script>alert('hello!')</script>
 
-Without any output escaping, the resulting template will cause a JavaScript
-alert box to pop up::
+Sem qualquer outra saída de escape, o resultado da template irá causar uma caixa de alerta
+em JavaScript para saltar na tela::
 
     Hello <script>alert('hello!')</script>
 
-And while this seems harmless, if a user can get this far, that same user
-should also be able to write JavaScript that performs malicious actions
-inside the secure area of an unknowing, legitimate user.
+E enquanto isso parece inofensivo, se um usuário pode chegar tão longe, o
+mesmo usuário deveria também ser capaz de escrever Javascript que realiza
+ações maliciosas dentro de uma área segura de um usuário legítimo e desconhecido.
 
-The answer to the problem is output escaping. With output escaping on, the
-same template will render harmlessly, and literally print the ``script``
-tag to the screen::
+A resposta para o problema é saída para escape. Sem a saída para escape ativa,
+o mesmo template irá manipular inofensivamente, e literalmente imprimir a tag
+``script`` na tela::
 
     Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
 
-The Twig and PHP templating systems approach the problem in different ways.
-If you're using Twig, output escaping is on by default and you're protected.
-In PHP, output escaping is not automatic, meaning you'll need to manually
-escape where necessary.
+Os sistemas de templating Twig e PHP aproximam-se do problema de formas diferentes.
+Se você está usando Twig, saída para escape é ativado por padrão e você está protegido.
+Em PHP, saída para escape não é automático, significando que você precisará manualmente
+fazer o escape quando necessário.
 
-Output Escaping in Twig
+Saída para escape em Twig
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using Twig templates, then output escaping is on by default. This
-means that you're protected out-of-the-box from the unintentional consequences
-of user-submitted code. By default, the output escaping assumes that content
-is being escaped for HTML output.
+Se você está usando templates Twig, então saída para escape é ativado por padrão. Isto
+significa que você está protegido externamente de consequencias acidentais por código
+submetido por usuário. Por padrão, a saída para escape assume que o conteúdo está
+sendo escapado pela saída HTML.
 
-In some cases, you'll need to disable output escaping when you're rendering
-a variable that is trusted and contains markup that should not be escaped.
-Suppose that administrative users are able to write articles that contain
-HTML code. By default, Twig will escape the article body. To render it normally,
-add the ``raw`` filter: ``{{ article.body | raw }}``.
+Em alguns casos, você precisará desabilitar saída para escape quando você está manipulando
+uma variável que é confiável e contém marcação que não poderia ter escape.
+Suponha que usuários administrativos são capazes de escrever artigos que contenham
+código HTML. Por padrão, Twig irá escapar o corpo do artigo. Para fazê-lo normalamente,
+adicione o filtro ``raw``: ``{{ article.body | raw }}``.
 
-You can also disable output escaping inside a ``{% block %}`` area or
-for an entire template. For more information, see `Output Escaping`_ in
-the Twig documentation.
+Você pode também desabilitar saída para escape dentro de uma área ``{% block %}`` ou
+para um template inteiro. Para mais informações, veja `Output Escaping`_ na
+documentação do Twig.
 
-Output Escaping in PHP
+Saída para escape em PHP
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Output escaping is not automatic when using PHP templates. This means that
-unless you explicitly choose to escape a variable, you're not protected. To
-use output escaping, use the special ``escape()`` view method::
+Saída para escape não é automática quando usamos templates PHP. Isso significa
+que a menos que você escolha escapar uma variável explicitamente, você não está
+protegido. Para usar saída para escape use o método de view ``escape()``::
 
     Hello <?php echo $view->escape($name) ?>
 
-By default, the ``escape()`` method assumes that the variable is being rendered
-within an HTML context (and thus the variable is escaped to be safe for HTML).
-The second argument lets you change the context. For example, to output something
-in a JavaScript string, use the ``js`` context:
+Por padrão, o método ``escape()`` assume que a variável está sendo manipulada
+dentro de um contexto HTML (e assim a variável escapa e está segura para o HTML).
+O segundo argumento deixa você mudar o contexto. Por exemplo, para gerar algo
+em uma string Javascript, use o contexto ``js`` :
 
 .. code-block:: js
 
@@ -1145,26 +1145,26 @@ in a JavaScript string, use the ``js`` context:
 
 .. _template-formats:
 
-Template Formats
+Formatos de Template
 ----------------
 
-Templates are a generic way to render content in *any* format. And while in
-most cases you'll use templates to render HTML content, a template can just
-as easily generate JavaScript, CSS, XML or any other format you can dream of.
+Templates são uma forma genérica de modificar conteúdo em *qualquer* formato. E enquanto
+em muitos casos você irá usar templates para modificar conteúdo HTML, um template pode
+tão fácil como certo gerar JavaScript, CSS, XML ou qualquer outro formato que você possa sonhar.
 
-For example, the same "resource" is often rendered in several different formats.
-To render an article index page in XML, simply include the format in the
-template name:
+Por exemplo, o mesmo "recurso" é sempre modificado em diversos formatos diferentes.
+Para modificar uma página inicial de um artigo XML, simplesmente inclua o formato no
+nome do template:
 
-* *XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
-* *XML template filename*: ``index.xml.twig``
+* *nome do template XML*: ``AcmeArticleBundle:Article:index.xml.twig``
+* *nome do arquivo do template XML*: ``index.xml.twig``
 
-In reality, this is nothing more than a naming convention and the template
-isn't actually rendered differently based on its format.
+Na realidade, isso é nada mais que uma convenção de nomeação e o template
+não é realmente modificado de forma diferente ao baseado no formato dele.
 
-In many cases, you may want to allow a single controller to render multiple
-different formats based on the "request format". For that reason, a common
-pattern is to do the following:
+Em muitos casos, você pode querer permitir um controller unitário para modificar
+múltiplos formatos diferentes baseado no "formato de requisição". Por aquela razão,
+um padrão comum é fazer o seguinte:
 
 .. code-block:: php
 
@@ -1175,15 +1175,15 @@ pattern is to do the following:
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
 
-The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
-but can return any other format based on the format requested by the user.
-The request format is most often managed by the routing, where a route can
-be configured so that ``/contact`` sets the request format to ``html`` while
-``/contact.xml`` sets the format to ``xml``. For more information, see the
+O ``getRequestFormat`` no objeto ``Request`` padroniza para ``html``,
+mas pode retornar qualquer outro formato baseado no formato solicitado pelo usuário.
+O formato solicitado é frequentemente mais gerenciado pelo roteamento, onde uma rota
+pode ser configurada para que ``/contact``  configure o formato requisitado ``html`` enquanto
+``/contact.xml`` configure o formato para ``xml``. Para mais informações, veja
 :ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
 
-To create links that include the format parameter, include a ``_format``
-key in the parameter hash:
+Para criar links que incluam o parâmetro de formato, inclua uma chave ``_format``
+no detalhe do parâmetro:
 
 .. configuration-block::
 
@@ -1199,14 +1199,14 @@ key in the parameter hash:
             PDF Version
         </a>
 
-Final Thoughts
+Considerações finais
 --------------
 
-The templating engine in Symfony is a powerful tool that can be used each time
-you need to generate presentational content in HTML, XML or any other format.
-And though templates are a common way to generate content in a controller,
-their use is not mandatory. The ``Response`` object returned by a controller
-can be created with our without the use of a template:
+O engine de template em Symfony é uma ferramenta poderosa que pode ser usada cada momento
+que você precisa para gerar conteúdo de apresentação em HTML, XML ou qualquer outro formato.
+E apesar de tempaltes serem um jeito comum de gerar conteúdo em um controller,
+o uso deles não são obrigatórios. O objeto ``Response`` object retornado por um controller
+pode ser criado com ou sem o uso de um template:
 
 .. code-block:: php
 
@@ -1216,17 +1216,17 @@ can be created with our without the use of a template:
     // creates a Response object whose content is simple text
     $response = new Response('response content');
 
-Symfony's templating engine is very flexible and two different template
-renderers are available by default: the traditional *PHP* templates and the
-sleek and powerful *Twig* templates. Both support a template hierarchy and
-come packaged with a rich set of helper functions capable of performing
-the most common tasks.
+Engine de template do Symfony é muito flexível e dois editores de template
+diferentes estão disponíveis por padrão: os tradicionais templates do *PHP* e os
+polidos e poderosos templates do *Twig* . Ambos suportam uma hierarquia de template e
+vêm empacotados com um conjunto rico de funções helper capazes de realizar
+as tarefas mais comuns.
 
-Overall, the topic of templating should be thought of as a powerful tool
-that's at your disposal. In some cases, you may not need to render a template,
-and in Symfony2, that's absolutely fine.
+No geral, o tópico de template poderia ser pensado como uma ferramenta poderosa
+que está à sua disposição. Em alguns casos, você pode não precisar modificar um template,
+e em Symfony2, isso é absolutamente legal.
 
-Learn more from the Cookbook
+Aprenda mais do Cookbook
 ----------------------------
 
 * :doc:`/cookbook/templating/PHP`
