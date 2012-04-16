@@ -1144,18 +1144,17 @@ aquele usuário:
             ),
         ));
 
-Neste caso, você
-In this case, you're using the stronger ``sha512`` algorithm. Also, since
-you've simply specified the algorithm (``sha512``) as a string, the system
-will default to hashing your password 5000 times in a row and then encoding
-it as base64. In other words, the password has been greatly obfuscated so
-that the hashed password can't be decoded (i.e. you can't determine the password
-from the hashed password).
+Neste caso, você está utilizando um algoritmo mais forte ``sha512``. Além disso,
+desde que você especificou o algoritmo (``sha512``) como um texto, o sistema
+irá, por padrão, utilizar a função de hash 5000 vezes em uma linha e então o codificar
+como base64. Em outras palavras, a senha foi muito codificada de maneira que a senha
+não pode ser decodificada (isto é, você não pode determinar qual a senha
+a partir da senha codificada).
 
-If you have some sort of registration form for users, you'll need to be able
-to determine the hashed password so that you can set it on your user. No
-matter what algorithm you configure for your user object, the hashed password
-can always be determined in the following way from a controller:
+Se você tem alguma espécie de formulário de registro para os visitantes, você precisará
+a senha codificada para poder armazenar. Não importa o algoritmo que configurar para
+sua classe User, a senha codificada pode sempre ser determinada da seguinte maneira
+a partir de um controller:
 
 .. code-block:: php
 
@@ -1166,12 +1165,11 @@ can always be determined in the following way from a controller:
     $password = $encoder->encodePassword('ryanpass', $user->getSalt());
     $user->setPassword($password);
 
-Retrieving the User Object
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Obtendo o objeto User
+~~~~~~~~~~~~~~~~~~~~~
 
-After authentication, the ``User`` object of the current user can be accessed
-via the ``security.context`` service. From inside a controller, this will
-look like:
+Após a autenticação, o objeto ``User`` do usuário atual pode ser acessado através
+do serviço ``security.context``. De dentro de um controller, faça o seguinte:
 
 .. code-block:: php
 
@@ -1180,7 +1178,7 @@ look like:
         $user = $this->get('security.context')->getToken()->getUser();
     }
 
-In a controller this can be shortcut to:
+No controller, também existe o atalho:
 
 .. code-block:: php
 
@@ -1192,19 +1190,17 @@ In a controller this can be shortcut to:
 
 .. note::
 
-    Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
-    method of an anonymous user object will return true. To check if your
-    user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
-    role.
+    Usuários anônimos são tecnicamente autenticados, significando que o médodo ``isAuthenticated()``
+    de um objeto User autenticado anonimamente retornará verdadeiro. Para verificar se seu usuário está
+    realmente autenticado, verifique se o perfil ``IS_AUTHENTICATED_FULLY`` está atribuído ao mesmo.
 
-Using Multiple User Providers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilizando múltiplos User Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
-uses exactly one user provider, and will use the first declared user provider
-by default. But what if you want to specify a few users via configuration
-and the rest of your users in the database? This is possible by creating
-a new provider that chains the two together:
+Cada mecanismo de autenticação (exemplos: Autenticação HTTP, formulário de login, etc)
+usa exatamente um user provider, e utilizará, por padrão, o primeiro user provider configurado. O que acontece
+se você quiser que alguns de seus usuários sejam autenticados por arquivo de configuração e o
+resto por banco de dados? Isto é possível criando um novo user provider que ativa os dois juntos:
 
 .. configuration-block::
 
@@ -1256,15 +1252,15 @@ a new provider that chains the two together:
             ),
         ));
 
-Now, all authentication mechanisms will use the ``chain_provider``, since
-it's the first specified. The ``chain_provider`` will, in turn, try to load
-the user from both the ``in_memory`` and ``user_db`` providers.
+Agora, todos mecanismos de autenticação utilizarão o ``chain_provider``, já que é
+o primeiro configurado. O ``chain_provider`` tentará carregar o usuário de ambos
+providers ``in_memory`` e ``user_db``.
 
 .. tip::
 
-    If you have no reasons to separate your ``in_memory`` users from your
-    ``user_db`` users, you can accomplish this even more easily by combining
-    the two sources into a single provider:
+    Se você não tem razões para separar seus usuários ``in_memory`` dos seus
+    usuários ``user_db``, você pode conseguir o mesmo resultado mais facilmente,
+    combinando as duas origens em um único provider:
 
     .. configuration-block::
 
@@ -1302,6 +1298,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
                 ),
             ));
 
+Você pode ainda configurar o firewall ou mecanismos de autenticação individuais
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,
 the first provider is always used:
