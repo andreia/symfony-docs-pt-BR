@@ -1,5 +1,5 @@
-The Dependency Injection Tags
-=============================
+Tags de injeção de dependência
+==============================
 
 Tags:
 
@@ -18,13 +18,12 @@ Tags:
 * ``twig.extension``
 * ``validator.initializer``
 
-Enabling Custom PHP Template Helpers
-------------------------------------
+Habilitando seus próprios PHP Template Helpers
+----------------------------------------------
 
-To enable a custom template helper, add it as a regular service in one
-of your configuration, tag it with ``templating.helper`` and define an
-``alias`` attribute (the helper will be accessible via this alias in the
-templates):
+Para habilitar seus próprios template helpers, adicione ele como um serviço normal
+na sua configuração, marque ele com ``templating.helper`` e defina um ``alias``
+(o helper será acessível através deste nome na template).
 
 .. configuration-block::
 
@@ -51,11 +50,11 @@ templates):
 
 .. _reference-dic-tags-twig-extension:
 
-Enabling Custom Twig Extensions
--------------------------------
+Habilitando suas próprias extensões Twig
+----------------------------------------
 
-To enable a Twig extension, add it as a regular service in one of your
-configuration, and tag it with ``twig.extension``:
+Para habilitar uma extensão Twig, adicione como um serviço normal a sua configuração
+e marque ele com ``twig.extension``:
 
 .. configuration-block::
 
@@ -80,19 +79,18 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
-For information on how to create the actual Twig Extension class, see
-`Twig's documentation`_ on the topic.
+Para mais informações em como criar a extensão Twig, veja o tópico `Twig's documentation`_ .
 
 
 .. _dic-tags-kernel-event-listener:
 
-Enabling Custom Listeners
--------------------------
+Habilitando seus próprios Listeners
+-----------------------------------
 
-To enable a custom listener, add it as a regular service in one of your
-configuration, and tag it with ``kernel.event_listener``. You must provide
-the name of the event your service listens to, as well as the method that
-will be called:
+Para habilitar um listener, adicione-o como um serviço na sua configuração e
+marque-o com ``kernel.event_listener``. Você deverá informar qual o nome do evento
+ao qual seu listener estará associado bem como o método que será executado quando
+o evento ocorrer.
 
 .. configuration-block::
 
@@ -119,24 +117,25 @@ will be called:
 
 .. note::
 
-    You can also specify priority as an attribute of the kernel.event_listener 
-    tag (much like the method or event attributes), with either a positive 
-    or negative integer. This allows you to make sure your listener will always 
-    be called before or after another listener listening for the same event.
+    Você também pode especificar a ordem de execuçãoi que um recurso marcado com
+    a tag kernel.event_listener será chamado (assim como fez com os atributos
+    method e event acima, mas utilizando o atributo priority) definindo um inteiro
+    positivo ou negativo. Isto permite, por exemplo, que Você tenha certeza que seu listener
+    será sempre chamado antes ou depois de outro listener ligado ao mesmo evento.
 
 
 
 .. _dic-tags-kernel-event-subscriber:
 
-Enabling Custom Subscribers
----------------------------
+Habilitando seus próprios Subscribers
+-------------------------------------
 
 .. versionadded:: 2.1
 
-   The ability to add kernel event subscribers is new to 2.1.
+   A possibilidade de adicionar subscribers existe a partir da versão 2.1.
 
-To enable a custom subscriber, add it as a regular service in one of your
-configuration, and tag it with ``kernel.event_subscriber``:
+Para habilitar seu subscriber, adicione-o como um serviço em sua configuração
+e marque-o com a tag ``kernel.event_subscriber``:
 
 .. configuration-block::
 
@@ -163,19 +162,18 @@ configuration, and tag it with ``kernel.event_subscriber``:
 
 .. note::
 
-    Your service must implement the :class:`Symfony\Component\EventDispatcher\EventSubscriberInterface`
-    interface.
+    Seu serviço deverá implementar a interface :class:`Symfony\Component\EventDispatcher\EventSubscriberInterface` .
 
 .. note::
 
-    If your service is created by a factory, you **MUST** correctly set the ``class``
-    parameter for this tag to work correctly.
+    Se o seu serviço é criado por uma factory, Você **deverá** definir
+    o parâmetro ``class`` para esta tag funcionar corretamente.
 
-Enabling Custom Template Engines
---------------------------------
+Habilitando seu próprio sistema de templates
+--------------------------------------------
 
-To enable a custom template engine, add it as a regular service in one
-of your configuration, tag it with ``templating.engine``:
+Para habilitar um sistema de template, adicione-o como um serviço e marque-o
+com a tag ``templating.engine``:
 
 .. configuration-block::
 
@@ -200,11 +198,11 @@ of your configuration, tag it with ``templating.engine``:
             ->addTag('templating.engine')
         ;
 
-Enabling Custom Routing Loaders
--------------------------------
+Habilitando seus próprios carregadores de rotas (Routing Loaders)
+-----------------------------------------------------------------
 
-To enable a custom routing loader, add it as a regular service in one
-of your configuration, and tag it with ``routing.loader``:
+Para habilitar seus próprios carregadores, adicione-o como um serviço na
+sua configuração e marque-o com a tag ``routing.loader``:
 
 .. configuration-block::
 
@@ -231,9 +229,12 @@ of your configuration, and tag it with ``routing.loader``:
 
 .. _dic_tags-monolog:
 
-Using a custom logging channel with Monolog
--------------------------------------------
+Usando um canal próprio para logging com o Monolog
+--------------------------------------------------
 
+O Monolog permite que Você compartilhe seus manipuladores entre vários canais
+de logging. O serviço logger utiliza o canal ``app``, mas Você pode alterá-lo
+quando injetar o serviço em outro serviço.
 Monolog allows you to share its handlers between several logging channels.
 The logger service uses the channel ``app`` but you can change the
 channel when injecting the logger in a service.

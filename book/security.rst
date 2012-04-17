@@ -121,148 +121,148 @@ O componente de segurança pode ser configurado através da configuração de
     tem um arquivo separado para as configurações de segurança, pode colocar
     diretamente no arquivo de configuração principal (por exemplo, ``app/config/config.yml``).
 
-The end result of this configuration is a fully-functional security system
-that looks like the following:
+O resultado final desta configuração é um completo sistema de segurança funcional
+com as seguintes características:
 
-* There are two users in the system (``ryan`` and ``admin``);
-* Users authenticate themselves via the basic HTTP authentication prompt;
-* Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
-  can access it;
-* All URLs *not* matching ``/admin/*`` are accessible by all users (and the
-  user is never prompted to login).
+* Há dois usuários no sistema (``ryan`` e ``admin``);
+* Os usuários se autenticam através da janela de autenticação básica HTTP;
+* Qualquer URL que comece com ``/admin/*`` será protegida e somente o usuário ``admin``
+  terá acesso;
+* Todas URLs que *não* comecem com ``/admin/*`` são acessíveis a todos usuários
+  (e ao usuário nunca serão solicitadas as credenciais de acesso).
 
-Let's look briefly at how security works and how each part of the configuration
-comes into play.
+Vamos dar uma olhada como funciona a segurança e como cada parte da configuração influencia
+no sistema.
 
-How Security Works: Authentication and Authorization
-----------------------------------------------------
+Como funciona a segurança: Autenticação e Autorização
+-----------------------------------------------------
 
-Symfony's security system works by determining who a user is (i.e. authentication)
-and then checking to see if that user should have access to a specific resource
-or URL.
+O sistema de segurança do Symfony funciona determinando quem um usuário é (autenticação)
+e depois checando se o usuário tem acesso ao recurso específico ou URL solicitado.
 
-Firewalls (Authentication)
+Firewalls (Autenticação)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a user makes a request to a URL that's protected by a firewall, the
-security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if he does, to send a response
-back to the user initiating the authentication process.
+Quando um usuário requisita uma URL que está protegida por um firewall,
+o sistema de segurança é ativado. O trabalho do firewall é determinar
+se o usuário precisa ou não ser autenticado. Se ele precisar, envia a resposta
+de volta e inicia o processo de autenticação.
 
-A firewall is activated when the URL of an incoming request matches the configured
-firewall's regular expression ``pattern`` config value. In this example, the
-``pattern`` (``^/``) will match *every* incoming request. The fact that the
-firewall is activated does *not* mean, however, that the HTTP authentication
-username and password box is displayed for every URL. For example, any user
-can access ``/foo`` without being prompted to authenticate.
+Um firewall será ativado quando a URL requisitada corresponda ao ``padrão de caracteres`` da
+expressão regular configurada na configuração de segurança. Neste exemplo, o
+``padrão de caracteres`` (``^/``) corresponde a qualquer solicitação. O fato do
+firewall ser ativado *não* significa, porém, que a janela de autenticação básica HTTP
+(solicitando login e senha) será exibida para todas requisições. Por exemplo,
+qualquer usuário poderá acessar ``/foo`` sem que seja solicitada sua autenticação.
 
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
 
-This works first because the firewall allows *anonymous users* via the ``anonymous``
-configuration parameter. In other words, the firewall doesn't require the
-user to fully authenticate immediately. And because no special ``role`` is
-needed to access ``/foo`` (under the ``access_control`` section), the request
-can be fulfilled without ever asking the user to authenticate.
+Isto funciona primeiramente por que o firewall permite *usuários anônimos* através
+do parâmetro ``anonymous`` da configuração. Em outras palavras,  o firewall não
+exige que o usuário se autentique completamente. E por que nenhum ``perfil`` (``role``)
+é necessário para acessar ``/foo`` (na seção ``access_control``), a solicitação
+pode ser realizada sem que o usuário sequer se identifique.
 
-If you remove the ``anonymous`` key, the firewall will *always* make a user
-fully authenticate immediately.
+Se você remover a chave ``anonymous``, o firewall *sempre* fará o usuário se identificar
+por completo imediatamente.
 
-Access Controls (Authorization)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Controles de acesso (Autorização)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a user requests ``/admin/foo``, however, the process behaves differently.
-This is because of the ``access_control`` configuration section that says
-that any URL matching the regular expression pattern ``^/admin`` (i.e. ``/admin``
-or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
-are the basis for most authorization: a user can access ``/admin/foo`` only
-if it has the ``ROLE_ADMIN`` role.
+Se o usuário solicitar ``/admin/foo``, porém, o processo toma um rumo diferente.
+Isto acontecerá por que a seção ``access_control`` da configuração indica
+que qualquer URL que se encaixe no padrão de caracteres ``^/admin`` (isto é, ``/admin``
+ou qualquer coisa do tipo ``/admin/*``) deve ser acessada somente por usuários
+com o perfil ``ROLE_ADMIN``. Perfis são a base para a maioria das autorizações:
+o usuário pode acessar ``/admin/foo`` somente se tiver o perfil ``ROLE_ADMIN``.
 
 .. image:: /images/book/security_anonymous_user_denied_authorization.png
    :align: center
 
-Like before, when the user originally makes the request, the firewall doesn't
-ask for any identification. However, as soon as the access control layer
-denies the user access (because the anonymous user doesn't have the ``ROLE_ADMIN``
-role), the firewall jumps into action and initiates the authentication process.
-The authentication process depends on the authentication mechanism you're
-using. For example, if you're using the form login authentication method,
-the user will be redirected to the login page. If you're using HTTP authentication,
-the user will be sent an HTTP 401 response so that the user sees the username
-and password box.
+Como antes, o firewall não solicita credenciais de acesso. Assim que a camada
+de controle de acesso nega o acesso (por que o usuário não tem o perfil ``ROLE_ADMIN``),
+porém, o firewall inicia o processo de autenticação. Este processo depende
+do mecanismo de autenticação que estiver utilizando. Por exemplo, se estiver utilizando
+o método de formulário de autenticação (``form login``), o usuário será redirecionado
+para a página de login. Se estiver utilizando o método básico de autenticação HTTP,
+o navegador recebe uma resposta do tipo HTTP 401 para que ao usuário seja exibida
+a janela de login/senha do navegador.
 
-The user now has the opportunity to submit its credentials back to the application.
-If the credentials are valid, the original request can be re-tried.
+O usuário agora tem a oportunidade de digitar suas credenciais no aplicativo. Se as
+credenciais forem válidas, a requisição original será solicitada novamente.
 
 .. image:: /images/book/security_ryan_no_role_admin_access.png
    :align: center
 
-In this example, the user ``ryan`` successfully authenticates with the firewall.
-But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
-access to ``/admin/foo``. Ultimately, this means that the user will see some
-sort of message indicating that access has been denied.
+No exemplo, o usuário ``ryan`` se autentica com sucesso pelo firewall. Como, porém,
+``ryan`` não tem o perfil ``ROLE_ADMIN``, ele ainda terá seu acesso negado ao
+recurso ``/admin/foo``. Infelizmente, isto significa que o usuário verá
+uma mensagem indicando que o acesso foi negado.
 
 .. tip::
 
-    When Symfony denies the user access, the user sees an error screen and
-    receives a 403 HTTP status code (``Forbidden``). You can customize the
-    access denied error screen by following the directions in the
-    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
-    to customize the 403 error page.
+    Quando o Symfony nega acesso a um usuário, o usuário vê uma tela de
+    erro e o navegador recebe uma resposta com o HTTP status code 403 (``Forbidden``).
+    É possível personalizar a tela de erro de acesso negado seguindo as
+    instruções em :ref:`Error Pages<cookbook-error-pages-by-status-code>` do
+    do texto do Symfony 2 - Passo-a-passo que ensina a personalizar a página
+    de erro 403.
 
-Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
-takes place, except now, after being authenticated, the access control layer
-will let the request pass through:
+Finalmente, se o usuário ``admin`` requisitar ``/admin/foo``, um processo similar
+entra em ação, mas neste caso, após a autenticação, a camada de controle de acesso
+permitirá que a requisição seja completada:
 
 .. image:: /images/book/security_admin_role_access.png
    :align: center
 
-The request flow when a user requests a protected resource is straightforward,
-but incredibly flexible. As you'll see later, authentication can be handled
-in any number of ways, including via a form login, X.509 certificate, or by
-authenticating the user via Twitter. Regardless of the authentication method,
-the request flow is always the same:
+O fluxo de requisição quando um usuário solicita um recurso protegido é direto,
+mas muito flexível. Como verá mais tarde, a autenticação pode acontecer de
+diversas maneiras, incluindo formulário de login, certificado X.509, ou
+autenticação pelo Twitter. Independente do método de autenticação, o fluxo
+de requisiçao é sempre o mesmo:
 
-#. A user accesses a protected resource;
-#. The application redirects the user to the login form;
-#. The user submits its credentials (e.g. username/password);
-#. The firewall authenticates the user;
-#. The authenticated user re-tries the original request.
+#. Um usuário acessa um recurso protegido;
+#. O aplicativo redireciona o usuário para o formulário de login;
+#. O usuário envia suas credenciais (e.g. login/senha);
+#. O firewall autentica o usuário;
+#. O usuário autenticado é redirecionado para o recurso solicitado originalmente.
 
 .. note::
 
-    The *exact* process actually depends a little bit on which authentication
-    mechanism you're using. For example, when using form login, the user
-    submits its credentials to one URL that processes the form (e.g. ``/login_check``)
-    and then is redirected back to the originally requested URL (e.g. ``/admin/foo``).
-    But with HTTP authentication, the user submits its credentials directly
-    to the original URL (e.g. ``/admin/foo``) and then the page is returned
-    to the user in that same request (i.e. no redirect).
+    O processo *exato* na verdade depende um pouco do mecanismo de autenticação
+    que estiver usando. Por exemplo, quando estiver utilizando formulário de login,
+    o usuário envia suas credenciais para a URL que processa o formulário (por exemplo,
+    ``/login_check``) e depois é redirecionado de volta para a URL solicitada
+    originalmente (por exemplo, ``/admin/foo``). Se utilizar autenticação básica
+    HTTP, porém, o usuário envia suas credenciais diretamente para a URL original
+    (por exemplo, ``/admin/foo``) e depois a página é retornada para o usuário
+    na mesma requisição (isto significa que não há redirecionamentos).
 
-    These types of idiosyncrasies shouldn't cause you any problems, but they're
-    good to keep in mind.
+    Estes detalhes técnicos não devem ser relevantes no uso do sistema de
+    segurança, mas é bom ter uma idéia a respeito.
 
 .. tip::
 
-    You'll also learn later how *anything* can be secured in Symfony2, including
-    specific controllers, objects, or even PHP methods.
+    Você aprenderá mais tarde como *qualquer coisa* pode ser protegida no Symfony2,
+    incluindo controladores específicos, objetos, ou até métodos PHP.
 
 .. _book-security-form-login:
 
-Using a Traditional Login Form
-------------------------------
+Usando um formulário de login em HTML
+-------------------------------------
 
-So far, you've seen how to blanket your application beneath a firewall and
-then protect access to certain areas with roles. By using HTTP Authentication,
-you can effortlessly tap into the native username/password box offered by
-all browsers. However, Symfony supports many authentication mechanisms out
-of the box. For details on all of them, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+Até agora, você viu como cobrir seu aplicativo depois do firewall e assim
+restringir o acesso de certas áreas a certos perfis. Utilizando a autenticação
+básica HTTP, é possível, sem esforços, submeter login/senha através da
+janela do navegador. O Symfony, porém, suporta de fábrica muitos outros
+mecanismos de autenticação. Para detalhes sobre todos eles, consulte
+:doc:`Referência Da Configuração De Segurança</reference/configuration/security>`.
 
-In this section, you'll enhance this process by allowing the user to authenticate
-via a traditional HTML login form.
+Nesta seção, você aprimorará o processo permitindo que o usuário se autentique através
+de um formulário de login tradicional em HTML.
 
-First, enable form login under your firewall:
+Primeiro habilite o formulário no seu firewall:
 
 .. configuration-block::
 
@@ -312,9 +312,9 @@ First, enable form login under your firewall:
 
 .. tip::
 
-    If you don't need to customize your ``login_path`` or ``check_path``
-    values (the values used here are the default values), you can shorten
-    your configuration:
+    Se não precisar de personlizar os valores de ``login_path`` ou ``check_path``
+    (os valores utilizados acima são os valores padrão), você pode encurtar
+    seu configuração:
 
     .. configuration-block::
 
@@ -330,11 +330,11 @@ First, enable form login under your firewall:
 
             'form_login' => array(),
 
-Now, when the security system initiates the authentication process, it will
-redirect the user to the login form (``/login`` by default). Implementing
-this login form visually is your job. First, create two routes: one that
-will display the login form (i.e. ``/login``) and one that will handle the
-login form submission (i.e. ``/login_check``):
+Agora, quando o sistema de segurança inicia o processo de autenticação,
+ele redirecionará o usuário para o formulário de login (``/login`` por padrão).
+É sua tarefa implementar o visual desse formulário. Primeiro, crie duas rotas:
+uma para a exibição do formulário de login (no caso, ``/login``) e outra
+para processar a submissão do formulário (no caso, ``/login_check``):
 
 .. configuration-block::
 
@@ -379,17 +379,17 @@ login form submission (i.e. ``/login_check``):
 
 .. note::
 
-    You will *not* need to implement a controller for the ``/login_check``
-    URL as the firewall will automatically catch and process any form submitted
-    to this URL. It's optional, but helpful, to create a route so that you
-    can use it to generate the form submission URL in the login template below.
+    *Não* é preciso implementar o controller para a URL ``/login_check``
+    pois o firewall interceptará e processará o que foi submitido para essa URL.
+    É opcional, porém útil, criar uma rota para que você possa gerar o link
+    de submissão na template do formulário de login.
 
-Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``login_path`` config
-value, as that's where the security system will redirect users that need
-to login.
+Observe que o nome da rota ``login`` não é importante. O que importa é que a
+URL da rota corresponda o que foi colocado na configuração  ``login_path``, pois
+é para onde o sistema de segurança redirecionará os usuários que precisarem
+se autenticar.
 
-Next, create the controller that will display the login form:
+O próximo passo é criar o controller que exibirá o formulário de login:
 
 .. code-block:: php
 
@@ -421,17 +421,16 @@ Next, create the controller that will display the login form:
         }
     }
 
-Don't let this controller confuse you. As you'll see in a moment, when the
-user submits the form, the security system automatically handles the form
-submission for you. If the user had submitted an invalid username or password,
-this controller reads the form submission error from the security system so
-that it can be displayed back to the user.
+Não se confunda com esse controller. Como verá, quando o usuário submete o formulário,
+o sistema de segurança automaticamente processar a submissão para você. Se o usuário
+entrou com login e/ou senha inválidos, este controller pega o erro ocorrido do sistema
+de segurança para poder exibir ao usuário.
 
-In other words, your job is to display the login form and any login errors
-that may have occurred, but the security system itself takes care of checking
-the submitted username and password and authenticating the user.
+Em outras palavras, seu trabalho é exibir o formulário de login e qualquer
+erro ocorrido durante a tentativa de autenticação, mas o sistema de segurança
+já toma conta de checar se as credenciais são válidas e de autenticar o usuário.
 
-Finally, create the corresponding template:
+Finalmente crie a template correspondente:
 
 .. configuration-block::
 
@@ -481,63 +480,65 @@ Finally, create the corresponding template:
 
 .. tip::
 
-    The ``error`` variable passed into the template is an instance of
+    A variável ``error`` passada para a template é uma instância de
     :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
-    It may contain more information - or even sensitive information - about
-    the authentication failure, so use it wisely!
+    Esta pode conter mais informações - ou até informações sensíveis - sobre a
+    falha na autenticação, por isso use-a com sabedoria!
 
-The form has very few requirements. First, by submitting the form to ``/login_check``
-(via the ``login_check`` route), the security system will intercept the form
-submission and process the form for you automatically. Second, the security
-system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
+O formulário tem que atender alguns requisitos. Primeiro, ao submeter o formulário
+para ``/login_check`` (através da rota  ``login_check``), o sistema de segurança
+interceptará a submissão do formulário e o processará. Segundo, o sistema de segurança
+espera que os campos submetidos sejam chamados ``_username`` e ``_password``
+(estes nomes podem ser :ref:`configured<reference-security-firewall-form-login>`).
 
-And that's it! When you submit the form, the security system will automatically
-check the user's credentials and either authenticate the user or send the
-user back to the login form where the error can be displayed.
+E é isso! Quando submeter um formulário, o sistema de segurança irá automaticamente
+checar as credenciais do usuário e autenticá-lo ou enviar o ele de volta ao
+formulário de login para o erro ser exibido.
 
-Let's review the whole process:
+Vamos revisar o processo inteiro:
 
-#. The user tries to access a resource that is protected;
-#. The firewall initiates the authentication process by redirecting the
-   user to the login form (``/login``);
-#. The ``/login`` page renders login form via the route and controller created
-   in this example;
-#. The user submits the login form to ``/login_check``;
-#. The security system intercepts the request, checks the user's submitted
-   credentials, authenticates the user if they are correct, and sends the
-   user back to the login form if they are not.
+#. O usuário tenta acessar um recurso que está protegido;
+#. O firewall inicia o processo de autenticação redirecionando o
+   usuário para o formulário de login(``/login``);
+#. A página ``/login`` produz o formulário de login através da rota
+   e controlador criados neste exemplo;
+#. O usuário submete o formulário de login para ``/login_check``;
+#. O sistema de segurança intercepta a solicitação, verifica as credenciais
+   submetidas pelo usuário, autentica o mesmo se tiverem corretas ou envia
+   de volta para o formulário de login caso contrário;
 
-By default, if the submitted credentials are correct, the user will be redirected
-to the original page that was requested (e.g. ``/admin/foo``). If the user
-originally went straight to the login page, he'll be redirected to the homepage.
-This can be highly customized, allowing you to, for example, redirect the
-user to a specific URL.
+Por padrão, se as credenciais estiverem corretas, o usuário será redirecionado
+para a página que solicitou originalmente (e.g. ``/admin/foo``). Se o usuário
+originalmente solicitar a página de login, ele será redirecionado para a página
+principal. Isto pode ser modificado se necessário, o que permitiria você
+redirecionar o usuário para um outra URL específica.
 
-For more details on this and how to customize the form login process in general,
-see :doc:`/cookbook/security/form_login`.
+Para maiores detalhes sobre isso e como personalizar o processamento do
+formulário de login acesse
+:doc:`/cookbook/security/form_login`.
 
 .. _book-security-common-pitfalls:
 
-.. sidebar:: Avoid Common Pitfalls
+.. sidebar:: Evite os erros comuns
 
-    When setting up your login form, watch out for a few common pitfalls.
+    Quando estiver configurando seu formulário de login, fique atendo
+    aos seguintes erros comuns.
 
-    **1. Create the correct routes**
+    **1. Crie as rotas corretas**
 
-    First, be sure that you've defined the ``/login`` and ``/login_check``
-    routes correctly and that they correspond to the ``login_path`` and
-    ``check_path`` config values. A misconfiguration here can mean that you're
-    redirected to a 404 page instead of the login page, or that submitting
-    the login form does nothing (you just see the login form over and over
-    again).
+    Primeiro, tenha certeza que definiu as rotas ``/login`` e ``/login_check``
+    corretamente e que elas correspondem aos calores das configurações
+    ``login_path`` e ``check_path``. A configuração errada pode significar que
+    você será redirecionado para a página de erro 404 ao invés da página
+    de login ou a submissão do formulário de login não faça nada (você
+    sempre vê o formulário sem sair dele).
 
-    **2. Be sure the login page isn't secure**
+    **2. Tenha certeza que a página de login não é protegida**
 
-    Also, be sure that the login page does *not* require any roles to be
-    viewed. For example, the following configuration - which requires the
-    ``ROLE_ADMIN`` role for all URLs (including the ``/login`` URL), will
-    cause a redirect loop:
+    Também tenha certeza que a página de login *não* precisa de qualquer
+    perfil para ser vizualizada. Por exemplo, a seguinte configuração,
+    que exige o perfil ``ROLE_ADMIN`` para todas as URLs (incluindo a
+    URL ``/login``), causará um redirecionamento circular:
 
     .. configuration-block::
 
@@ -558,7 +559,7 @@ see :doc:`/cookbook/security/form_login`.
                 array('path' => '^/', 'role' => 'ROLE_ADMIN'),
             ),
 
-    Removing the access control on the ``/login`` URL fixes the problem:
+    Removendo o controle de acesso para a URL ``/login`` resolve o problema:
 
     .. configuration-block::
 
@@ -582,9 +583,8 @@ see :doc:`/cookbook/security/form_login`.
                 array('path' => '^/', 'role' => 'ROLE_ADMIN'),
             ),
 
-    Also, if your firewall does *not* allow for anonymous users, you'll need
-    to create a special firewall that allows anonymous users for the login
-    page:
+    Além disso, se o seu firewall *não* permite usuários anônimos, você precisará
+    criar um firewall especial para permitir usuários anônimos para a página de login:
 
     .. configuration-block::
 
@@ -620,51 +620,51 @@ see :doc:`/cookbook/security/form_login`.
                 ),
             ),
 
-    **3. Be sure ``/login_check`` is behind a firewall**
+    **3. Tenha certeza que ``/login_check`` está protegida por um firewall**
 
-    Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
-    is behind the firewall you're using for your form login (in this example,
-    the single firewall matches *all* URLs, including ``/login_check``). If
-    ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
-    to find the controller for path "/login_check"`` exception.
+    Certifique-se que a URL indicada em ``check_path`` (no caso, ``/login_check``)
+    esteja protegida por um firewall que está utilizando seu formulário de login
+    (neste exemplo, um único firewall filtra *todas* as URLs, incluindo ``/login_check``).
+    Se ``/login_check`` não estiver atrás de nenhum firewall, uma exceção
+    será gerada ``Unable to find the controller for path "/login_check"``.
 
-    **4. Multiple firewalls don't share security context**
+    **4. Múltiplos firewalls não compartilham o mesmo contexto de segurança**
 
-    If you're using multiple firewalls and you authenticate against one firewall,
-    you will *not* be authenticated against any other firewalls automatically.
-    Different firewalls are like different security systems. That's why,
-    for most applications, having one main firewall is enough.
+    Se estiver utilizando múltiplos firewalls e se autenticar em um firewall,
+    você *não* estará autenticado nos outros firewalls automaticamente.
+    Firewalls diferentes funcionam como sistemas de segurança diferente. Isto
+    acontece por que para a maioria dos aplicativos ter somente um
+    firewall é o suficiente.
 
-Authorization
+Autorização
 -------------
 
-The first step in security is always authentication: the process of verifying
-who the user is. With Symfony, authentication can be done in any way - via
-a form login, basic HTTP Authentication, or even via Facebook.
+O primeiro passo na segurança é sempre a autenticação: o processo de verficar quem
+o usuário é. No Symfony, a autenticação pode ser feita de várias maneiras -  via
+formulário de login, autenticação básica HTTP ou até mesmo pelo Facebook.
 
-Once the user has been authenticated, authorization begins. Authorization
-provides a standard and powerful way to decide if a user can access any resource
-(a URL, a model object, a method call, ...). This works by assigning specific
-roles to each user, and then requiring different roles for different resources.
+Uma vez que o usuário está autenticado, a autorização começa. Autorização fornece
+uma maneira padrão e poderosa de decidir se o usuário pode acessar algum recurso
+(uma  URL, um objeto do modelo, um método...). Isto funciona com perfis atribuídos
+para cada usuário e exigindo perfis diferentes para diferentes recursos.
 
-The process of authorization has two different sides:
+O processo de autorização tem dois lados diferentes:
 
-#. The user has a specific set of roles;
-#. A resource requires a specific role in order to be accessed.
+#. O usuário tem um conjunto de perfis específico;
+#. Um recurso requer um perfil específico para ser acessado.
 
-In this section, you'll focus on how to secure different resources (e.g. URLs,
-method calls, etc) with different roles. Later, you'll learn more about how
-roles are created and assigned to users.
+Nesta seção, o foco será em como tornar seguros diferentes recursos (por exemplo URLs,
+chamadas a métodos, etc) com diferentes perfis. Mais tarde, você aprenderá mais
+como perfis são criados e atribuídos aos usuários.
 
-Securing Specific URL Patterns
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo padrões de URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The most basic way to secure part of your application is to secure an entire
-URL pattern. You've seen this already in the first example of this chapter,
-where anything matching the regular expression pattern ``^/admin`` requires
-the ``ROLE_ADMIN`` role.
+A maneira mais básica de proteger seu aplicativo é proteger um padrão de URL.
+Você já viu no primeiro exemplo deste capítulo que qualquer requisição que
+se encaixasse na expressão regular ``^/admin`` exigiria o perfil ``ROLE_ADMIN``.
 
-You can define as many URL patterns as you need - each is a regular expression.
+Você pode definir quantos padrões precisar. Cada um é uma expressão regular.
 
 .. configuration-block::
 
@@ -699,38 +699,39 @@ You can define as many URL patterns as you need - each is a regular expression.
 
 .. tip::
 
-    Prepending the path with ``^`` ensures that only URLs *beginning* with
-    the pattern are matched. For example, a path of simply ``/admin`` (without
-    the ``^``) would correctly match ``/admin/foo`` but would also match URLs
-    like ``/foo/admin``.
+    Iniciando o padrão com ``^`` garante que somente URLs *começando* com o padrão
+    terá uma comparação positiva. Por exemplo, o padrão simples ``/admin`` (sem
+    o ``^``) resultaria em uma comparação positiva para ``/admin/foo``, mas
+    também para URLs como ``/foo/admin``.
 
-For each incoming request, Symfony2 tries to find a matching access control
-rule (the first one wins). If the user isn't authenticated yet, the authentication
-process is initiated (i.e. the user is given a chance to login). However,
-if the user *is* authenticated but doesn't have the required role, an
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-exception is thrown, which you can handle and turn into a nice "access denied"
-error page for the user. See :doc:`/cookbook/controller/error_pages` for
-more information.
+Para cada requisição que chega, o Symfony2 tenta encontrar uma regra de acesso
+correspondente, com comparação positiva do padrão (a primeira que encontrar ganha).
+Se o usuário não estiver autenticado ainda, a autenticação é iniciada (isto é,
+o usuário tem a chance de fazer login). Se o usuário, porém, já *estiver* autenticado,
+mas não tiver o perfil exigido, uma exceção é disparada
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException` ,
+que você pode tratar e transformar em uma apresentável página de "Acesso Negado"
+para o usuário. Veja :doc:`/cookbook/controller/error_pages` para mais informações.
 
-Since Symfony uses the first access control rule it matches, a URL like ``/admin/users/new``
-will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
-Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
+Como o Symfony utiliza a primeira regra de acesso que der uma comparação positiva, uma
+URL como ``/admin/users/new`` corresponderá a primeira regra e exigirá somente o perfil
+``ROLE_SUPER_ADMIN``. Qualquer URL como ``/admin/blog`` corresponderá a segunda regra e
+exigirá o perfil ``ROLE_ADMIN``.
 
 .. _book-security-securing-ip:
 
-Securing by IP
-~~~~~~~~~~~~~~
+Protegendo por IP
+~~~~~~~~~~~~~~~~~
 
-Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
-(ESI), for example, which utilize a route named "_internal". When
-ESI is used, the _internal route is required by the gateway cache to enable
-different caching options for subsections within a given page. This route
-comes with the ^/_internal prefix by default in the standard edition (assuming
-you've uncommented those lines from the routing file).
+Algumas situações podem exigir que você restrinja o acesso de uma determinada rota com base no IP.
+Isto é particularmente relevante no caso de :ref:`Edge Side Includes<edge-side-includes>` (ESI),
+por exemplo, que utiliza a rota com nome "_internal". Quanto ESI é utilizado, a rota
+_internal é requerida pelo gateway cache (gerente de cache) para possibilitar diferentes
+opções de caching para subseções dentro de uma determinada página. Esta rota vem com o
+prefixo ^/_internal por padrão na edição padrão (assumindo que você ativou estas linhas
+do seu arquivo de configuração de rotas - routing.yml).
 
-Here is an example of how you might secure this route from outside access:
+Aqui está um exemplo de como poderia proteger esta rota de acesso externo:
 
 .. configuration-block::
 
@@ -756,11 +757,11 @@ Here is an example of how you might secure this route from outside access:
 
 .. _book-security-securing-channel:
 
-Securing by Channel
-~~~~~~~~~~~~~~~~~~~
+Protegendo por canal
+~~~~~~~~~~~~~~~~~~~~
 
-Much like securing based on IP, requiring the use of SSL is as simple as
-adding a new access_control entry:
+Assim como a proteção por IP, exigir o uso de SSL é tão simples quanto adicionar uma
+nova entrar em access_control:
 
 .. configuration-block::
 
@@ -786,12 +787,12 @@ adding a new access_control entry:
 
 .. _book-security-securing-controller:
 
-Securing a Controller
-~~~~~~~~~~~~~~~~~~~~~
+Protegendo um Controller
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protecting your application based on URL patterns is easy, but may not be
-fine-grained enough in certain cases. When necessary, you can easily force
-authorization from inside a controller:
+Proteger seu aplicativo baseado em padrões de URL é fácil, mas este método pode não ser
+específico o bastante em certos casos. Quando necessário, você pode ainda facilmente
+forçar autorização de dentro de um controller:
 
 .. code-block:: php
 
@@ -809,8 +810,8 @@ authorization from inside a controller:
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
-which can secure your controller using annotations:
+Você pode ainda instalar e utilizar opcionalmente o ``JMSSecurityExtraBundle``,
+que te permite proteger controllers através de anotações:
 
 .. code-block:: php
 
@@ -824,64 +825,64 @@ which can secure your controller using annotations:
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
-using Symfony's Standard Distribution, this bundle is available by default.
-If not, you can easily download and install it.
+Para mais informações, veja a documentação `JMSSecurityExtraBundle`_ . Se você
+a distribuição Standard do Symfony, este bundle está habilitado por padrão.
+Se não estiver, você pode facilmente baixar e instalá-lo.
 
-Securing other Services
-~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo outros serviços
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In fact, anything in Symfony can be protected using a strategy similar to
-the one seen in the previous section. For example, suppose you have a service
-(i.e. a PHP class) whose job is to send emails from one user to another.
-You can restrict use of this class - no matter where it's being used from -
-to users that have a specific role.
+De fato, qualquer coisa pode ser protegida em Symfony utilizando uma estratégia
+similar a apresentada na seção anterior. Por exemplo, suponha que você tem
+um serviço (uma classe PHP, por exemplo) que seu trabalho é enviar e-mails
+de um usuário para outro. Você pode restringir o uso dessa classe - não
+importa de onde está sendo utilizada - a usuários que tenham um perfil específico.
 
-For more information on how you can use the security component to secure
-different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
+Para mais informações sobre como você pode utilizar o componente de segurança
+para proteger diferentes serviços e métodos de seu aplicativo, consulte :doc:`/cookbook/security/securing_services`.
 
-Access Control Lists (ACLs): Securing Individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Listas De Controle De Acesso (ACLs): Protegendo Objetos Específicos Do Banco De Dados
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not
-those of other users. Also, as the admin user, you yourself want to be able
-to edit *all* comments.
+Imagine que você está projetando um sistema de blog onde seus usuários podem
+comentar seus posts. Agora, você quer que um usuário tenha a possibilidade de editar
+seus próprios comentários, mas não aqueles de outros usuários. Além disso, como
+administrador, você quer poder editar *todos* os comentários.
 
-The security component comes with an optional access control list (ACL) system
-that you can use when you need to control access to individual instances
-of an object in your system. *Without* ACL, you can secure your system so that
-only certain users can edit blog comments in general. But *with* ACL, you
-can restrict or allow access on a comment-by-comment basis.
+O componente de segurança possui um sistema de listas de controle de acesso (ACL)
+que te permite controlar acesso a instâncias individuais de um objeto no seu
+sistema. *Sem* ACL, você consegue proteger seu sistema para que
+somente usuários específicos possam editar os comentários. *Com* ACL, porém, você
+pode restringir ou permitir o acesso por comentário.
 
-For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
+Para mais informação, veja o passo-a-passo: :doc:`/cookbook/security/acl`.
 
-Users
------
+Usuários
+--------
 
-In the previous sections, you learned how you can protect different resources
-by requiring a set of *roles* for a resource. In this section we'll explore
-the other side of authorization: users.
+Nas seções anteriores, você aprendeu como proteger diferentes recursos exigindo
+um conjunto de *perfis* para o acesso a um recurso. Nesta seção exploraremos
+outro aspecto da autorização: os usuários.
 
-Where do Users come from? (*User Providers*)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+De onde os usuários vêm? (*User Providers*)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-During authentication, the user submits a set of credentials (usually a username
-and password). The job of the authentication system is to match those credentials
-against some pool of users. So where does this list of users come from?
+Durante a autenticação, o usuário submete um conjunto de credenciais (normalmente
+login e senha). O trabalho do sistema de autenticação é verificar essas credenciais
+contra um conjunto de usuários. De onde essa lista de usuários vem então?
 
-In Symfony2, users can come from anywhere - a configuration file, a database
-table, a web service, or anything else you can dream up. Anything that provides
-one or more users to the authentication system is known as a "user provider".
-Symfony2 comes standard with the two most common user providers: one that
-loads users from a configuration file and one that loads users from a database
-table.
+No Symfony2, usuários podem vir de qualquer lugar - um arquivo de configuração,
+um banco de dados, um serviço web ou qualquer outra fonte que desejar. Qualquer
+coisa que disponibiliza um ou mais usuários para o sistema de autenticação é conhecido
+como "user provider". O Symfony2 vem por padrão com os dois mais comuns: um que
+carrega os usuários do arquivo de configuração e outro que carrega os usuários do
+banco de dados.
 
-Specifying Users in a Configuration File
-........................................
+Especificando usuários no arquivo de configuração
+.................................................
 
-The easiest way to specify your users is directly in a configuration file.
-In fact, you've seen this already in the example in this chapter.
+O jeito mais fácil de especificar usuários é diretamnete no arquivo de configuração.
+De fato, você já viu isso em um exemplo neste capítulo.
 
 .. configuration-block::
 
@@ -922,19 +923,19 @@ In fact, you've seen this already in the example in this chapter.
             ),
         ));
 
-This user provider is called the "in-memory" user provider, since the users
-aren't stored anywhere in a database. The actual user object is provided
-by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
+Este *user provider* é chamado de "in-memory" user provider, já que os
+usuários não estão armazenados em nenhum banco de dados. O objeto usuário
+é fornecido pelo Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 
 .. tip::
-    Any user provider can load users directly from configuration by specifying
-    the ``users`` configuration parameter and listing the users beneath it.
+    Qualquer user provider pode carregar usuários diretamente da configuração se
+    especificar o parâmetro de configuração ``users`` e listar os usuários
+    abaixo dele.
 
 .. caution::
 
-    If your username is completely numeric (e.g. ``77``) or contains a dash
-    (e.g. ``user-name``), you should use that alternative syntax when specifying
-    users in YAML:
+    Se seu login é todo numérico (``77``, por exemplo) ou contém hífen (``user-name``, por exemplo),
+    você deveria utilizar a sintaxe alternativa quando especificar usuários em YAML:
 
     .. code-block:: yaml
 
@@ -942,25 +943,24 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
             - { name: 77, password: pass, roles: 'ROLE_USER' }
             - { name: user-name, password: pass, roles: 'ROLE_USER' }
 
-For smaller sites, this method is quick and easy to setup. For more complex
-systems, you'll want to load your users from the database.
+Para sites menores, este método é rápido e fácil de configurar. Para sistemas mais complexos,
+você provavelmente desejará carregar os usuários do banco de dados.
 
 .. _book-security-user-entity:
 
-Loading Users from the Database
-...............................
+Carregando usuários do banco de dados
+.....................................
 
-If you'd like to load your users via the Doctrine ORM, you can easily do
-this by creating a ``User`` class and configuring the ``entity`` provider.
+Se você desejar carregar seus usuários através do Doctrine ORM, você pode
+facilmente o fazer criando uma classe ``User`` e configurando o ``entity`` provider
 
 .. tip:
 
-    A high-quality open source bundle is available that allows your users
-    to be stored via the Doctrine ORM or ODM. Read more about the `FOSUserBundle`_
-    on GitHub.
+    Um bundle open source de alta qualidade está disponível que permite armazenar
+    seus usuários com Doctrine ORM ou ODM. Leia mais sobre o `FOSUserBundle`_ no GitHub.
 
-With this approach, you'll first create your own ``User`` class, which will
-be stored in the database.
+Nessa abordagem, você primeiro precisa criar sua própria classe ``User``, que
+será persistida no banco de dados.
 
 .. code-block:: php
 
@@ -983,20 +983,19 @@ be stored in the database.
         // ...
     }
 
-As far as the security system is concerned, the only requirement for your
-custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-interface. This means that your concept of a "user" can be anything, as long
-as it implements this interface.
+Ao que diz respeito ao sistema de segurança, o único requisito para sua
+classe ``User`` personalizada é que ela implemente a interface
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` . Isto significa
+que conceito de usuário pode ser qualquer um, desde que implemente essa interface.
 
 .. note::
 
-    The user object will be serialized and saved in the session during requests,
-    therefore it is recommended that you `implement the \Serializable interface`_
-    in your user object. This is especially important if your ``User`` class
-    has a parent class with private properties.
+    O objeto User será serializado e salvo na sessão entre requisições, por isso
+    é recomendado que você `implemente a interface \Serializable`_ em sua classe User.
+    Isto é especialmente importante se sua classe ``User`` tem uma classe pai com
+    propriedades private.
 
-Next, configure an ``entity`` user provider, and point it to your ``User``
-class:
+Em seguida, configure um user provider ``entity`` e aponte-o para sua classe ``User``:
 
 .. configuration-block::
 
@@ -1028,27 +1027,26 @@ class:
             ),
         ));
 
-With the introduction of this new provider, the authentication system will
-attempt to load a ``User`` object from the database by using the ``username``
-field of that class.
+Com a introdução desse novo provider, o sistema de autenticação tentará
+carregar o objeto ``User`` do banco de dados a partir do campo ``username`` da classe.
 
 .. note::
-    This example is just meant to show you the basic idea behind the ``entity``
-    provider. For a full working example, see :doc:`/cookbook/security/entity_provider`.
+    Este exemplo é somente para demonstrar a idéia básica por trás do provider ``entity``.
+    Para um exemplo completo, consulte :doc:`/cookbook/security/entity_provider`.
 
-For more information on creating your own custom provider (e.g. if you needed
-to load users via a web service), see :doc:`/cookbook/security/custom_provider`.
+Para mais informações sobre como criar seu próprio provider (se precisar carregar usuários
+do seu serviço web por exemplo), consulte :doc:`/cookbook/security/custom_provider`.
 
-Encoding the User's Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Protegendo a senha do usuário
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, for simplicity, all the examples have stored the users' passwords
-in plain text (whether those users are stored in a configuration file or in
-a database somewhere). Of course, in a real application, you'll want to encode
-your users' passwords for security reasons. This is easily accomplished by
-mapping your User class to one of several built-in "encoders". For example,
-to store your users in memory, but obscure their passwords via ``sha1``,
-do the following:
+Até agora, por simplicidade, todos os exemplos armazenavam as senhas dos usuários
+em texto puro (sendo armazenados no arquivo de configuração ou no banco de dados).
+Claro que em um aplicativo profissional você desejará proteger as senhas dos seus
+usuários por questões de segurança. Isto é facilmente conseguido mapeando sua
+classe User para algum "encoder" disponível. Por exemplo, para armazenar seus
+usuário em memória, mas proteger a senha deles através da função de hash `sha1``,
+faça o seguinte:
 
 .. configuration-block::
 
@@ -1104,16 +1102,16 @@ do the following:
             ),
         ));
 
-By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
-the password is simply run through the ``sha1`` algorithm one time and without
-any extra encoding. You can now calculate the hashed password either programmatically
-(e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
+Ao definir ``iterations`` como ``1`` e ``encode_as_base64`` como false, a senha codificada
+é simplesmente obtida como o resultado de ``sha1`` após uma iteração apenas, sem codificação
+extra. Você pode agora calcular a senha codificada por código PHP (e.g. ``hash('sha1', 'ryanpass')``)
+ou através de alguma ferramenta online como `functions-online.com`_ .
 
-If you're creating your users dynamically (and storing them in a database),
-you can use even tougher hashing algorithms and then rely on an actual password
-encoder object to help you encode passwords. For example, suppose your User
-object is ``Acme\UserBundle\Entity\User`` (like in the above example). First,
-configure the encoder for that user:
+Se você estiver criando seus usuário dinamicamente e os armazenando no banco de dados,
+você pode usar algoritmos the hash ainda mais complexos e então delegar em um objeto
+encoder para ajudar a codificar as senhas. Por exemplo, suponha que seu objeto User é
+``Acme\UserBundle\Entity\User`` (como no exemplo acima). Primeiro, configure o encoder para
+aquele usuário:
 
 .. configuration-block::
 
@@ -1146,17 +1144,17 @@ configure the encoder for that user:
             ),
         ));
 
-In this case, you're using the stronger ``sha512`` algorithm. Also, since
-you've simply specified the algorithm (``sha512``) as a string, the system
-will default to hashing your password 5000 times in a row and then encoding
-it as base64. In other words, the password has been greatly obfuscated so
-that the hashed password can't be decoded (i.e. you can't determine the password
-from the hashed password).
+Neste caso, você está utilizando um algoritmo mais forte ``sha512``. Além disso,
+desde que você especificou o algoritmo (``sha512``) como um texto, o sistema
+irá, por padrão, utilizar a função de hash 5000 vezes em uma linha e então o codificar
+como base64. Em outras palavras, a senha foi muito codificada de maneira que a senha
+não pode ser decodificada (isto é, você não pode determinar qual a senha
+a partir da senha codificada).
 
-If you have some sort of registration form for users, you'll need to be able
-to determine the hashed password so that you can set it on your user. No
-matter what algorithm you configure for your user object, the hashed password
-can always be determined in the following way from a controller:
+Se você tem alguma espécie de formulário de registro para os visitantes, você precisará
+a senha codificada para poder armazenar. Não importa o algoritmo que configurar para
+sua classe User, a senha codificada pode sempre ser determinada da seguinte maneira
+a partir de um controller:
 
 .. code-block:: php
 
@@ -1167,12 +1165,11 @@ can always be determined in the following way from a controller:
     $password = $encoder->encodePassword('ryanpass', $user->getSalt());
     $user->setPassword($password);
 
-Retrieving the User Object
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Obtendo o objeto User
+~~~~~~~~~~~~~~~~~~~~~
 
-After authentication, the ``User`` object of the current user can be accessed
-via the ``security.context`` service. From inside a controller, this will
-look like:
+Após a autenticação, o objeto ``User`` do usuário atual pode ser acessado através
+do serviço ``security.context``. De dentro de um controller, faça o seguinte:
 
 .. code-block:: php
 
@@ -1181,7 +1178,7 @@ look like:
         $user = $this->get('security.context')->getToken()->getUser();
     }
 
-In a controller this can be shortcut to:
+No controller, também existe o atalho:
 
 .. code-block:: php
 
@@ -1193,19 +1190,17 @@ In a controller this can be shortcut to:
 
 .. note::
 
-    Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
-    method of an anonymous user object will return true. To check if your
-    user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
-    role.
+    Usuários anônimos são tecnicamente autenticados, significando que o médodo ``isAuthenticated()``
+    de um objeto User autenticado anonimamente retornará verdadeiro. Para verificar se seu usuário está
+    realmente autenticado, verifique se o perfil ``IS_AUTHENTICATED_FULLY`` está atribuído ao mesmo.
 
-Using Multiple User Providers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilizando múltiplos User Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
-uses exactly one user provider, and will use the first declared user provider
-by default. But what if you want to specify a few users via configuration
-and the rest of your users in the database? This is possible by creating
-a new provider that chains the two together:
+Cada mecanismo de autenticação (exemplos: Autenticação HTTP, formulário de login, etc)
+usa exatamente um user provider, e utilizará, por padrão, o primeiro user provider configurado. O que acontece
+se você quiser que alguns de seus usuários sejam autenticados por arquivo de configuração e o
+resto por banco de dados? Isto é possível criando um novo user provider que ativa os dois juntos:
 
 .. configuration-block::
 
@@ -1257,15 +1252,15 @@ a new provider that chains the two together:
             ),
         ));
 
-Now, all authentication mechanisms will use the ``chain_provider``, since
-it's the first specified. The ``chain_provider`` will, in turn, try to load
-the user from both the ``in_memory`` and ``user_db`` providers.
+Agora, todos mecanismos de autenticação utilizarão o ``chain_provider``, já que é
+o primeiro configurado. O ``chain_provider`` tentará carregar o usuário de ambos
+providers ``in_memory`` e ``user_db``.
 
 .. tip::
 
-    If you have no reasons to separate your ``in_memory`` users from your
-    ``user_db`` users, you can accomplish this even more easily by combining
-    the two sources into a single provider:
+    Se você não tem razões para separar seus usuários ``in_memory`` dos seus
+    usuários ``user_db``, você pode conseguir o mesmo resultado mais facilmente,
+    combinando as duas origens em um único provider:
 
     .. configuration-block::
 
@@ -1303,9 +1298,9 @@ the user from both the ``in_memory`` and ``user_db`` providers.
                 ),
             ));
 
-You can also configure the firewall or individual authentication mechanisms
-to use a specific provider. Again, unless a provider is specified explicitly,
-the first provider is always used:
+Você pode ainda configurar o firewall ou mecanismos de autenticação individuais para utilizar
+um user provider específico. Novamente, a menos que um provider seja especificado explicitamente,
+o primeiro será sempre utilizado:
 
 .. configuration-block::
 
@@ -1350,38 +1345,38 @@ the first provider is always used:
             ),
         ));
 
-In this example, if a user tries to login via HTTP authentication, the authentication
-system will use the ``in_memory`` user provider. But if the user tries to
-login via the form login, the ``user_db`` provider will be used (since it's
-the default for the firewall as a whole).
+Neste exemplo, se um usuário tentar se autenticar através de autenticação HTTP, o sistema
+utilizará o user provider  ``in_memory``. Se o usuário tentar, porém, se autenticar através
+do formulário de login, o provider ``user_db`` será usado (pois é o padrão para todo o firewall).
 
-For more information about user provider and firewall configuration, see
-the :doc:`/reference/configuration/security`.
+Para mais informações sobre a configuração do user provider e do firewall,
+veja :doc:`/reference/configuration/security`.
 
-Roles
------
+Perfis (Roles)
+--------------
 
-The idea of a "role" is key to the authorization process. Each user is assigned
-a set of roles and then each resource requires one or more roles. If the user
-has the required roles, access is granted. Otherwise access is denied.
+A idéia de um "perfil" é chave no processo de autorização. Para cada usuário é atribuído
+um conjunto de perfis e então cada recurso exige um ou mais perfis. Se um usuário
+tem os perfis requeridos, o acesso é concedido. Caso contrário, o acesso é negado.
 
-Roles are pretty simple, and are basically strings that you can invent and
-use as needed (though roles are objects internally). For example, if you
-need to start limiting access to the blog admin section of your website,
-you could protect that section using a ``ROLE_BLOG_ADMIN`` role. This role
-doesn't need to be defined anywhere - you can just start using it.
+Perfis são muito simples e basicamente textos que você pode inventar e utilizar
+de acordo com suas necessidades (embora perfis sejam objetos PHP internamente).
+Por exemplo, se precisar limitar acesso a uma seção administrativa do blog
+de seu website, você pode proteger a seção utilizando o perfil ``ROLE_BLOG_ADMIN``.
+Este perfil não precisa de estar definido em lugar nenhum - você pode simplesmente
+usar o mesmo.
 
 .. note::
 
-    All roles **must** begin with the ``ROLE_`` prefix to be managed by
-    Symfony2. If you define your own roles with a dedicated ``Role`` class
-    (more advanced), don't use the ``ROLE_`` prefix.
+    Todos os perfis **devem** começar com o prefixo ``ROLE_`` para serem gerenciados
+    pelo Symfony2. Se você definir seus próprios perfis com uma classe ``Role``
+    dedicada (mais avançado), não utilize o prefixo ``ROLE_``.
 
-Hierarchical Roles
-~~~~~~~~~~~~~~~~~~
+Hierarquia de Perfis
+~~~~~~~~~~~~~~~~~~~~
 
-Instead of associating many roles to users, you can define role inheritance
-rules by creating a role hierarchy:
+Ao invés de associar muitos perfis aos usuários, você pode defined regras
+de herança ao criar uma hierarquia de perfis:
 
 .. configuration-block::
 
@@ -1411,16 +1406,16 @@ rules by creating a role hierarchy:
             ),
         ));
 
-In the above configuration, users with ``ROLE_ADMIN`` role will also have the
-``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
-and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+Na configuração acima, usuários com o perfil ``ROLE_ADMIN`` terão também o perfil ``ROLE_USER``.
+O perfil ``ROLE_SUPER_ADMIN`` tem os ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH`` e ``ROLE_USER``
+(herdado do ``ROLE_ADMIN``).
 
-Logging Out
------------
+Saindo do sistema
+-----------------
 
-Usually, you'll also want your users to be able to log out. Fortunately,
-the firewall can handle this automatically for you when you activate the
-``logout`` config parameter:
+Normalmente, você também quer que seus usuários possam sair do sistema.
+Felizmente, o firewall consegue lidar com isso automaticamente quando o parâmetro
+de configuração ``logout`` está ativo:
 
 .. configuration-block::
 
@@ -1460,12 +1455,13 @@ the firewall can handle this automatically for you when you activate the
             // ...
         ));
 
-Once this is configured under your firewall, sending a user to ``/logout``
-(or whatever you configure the ``path`` to be), will un-authenticate the
-current user. The user will then be sent to the homepage (the value defined
-by the ``target`` parameter). Both the ``path`` and ``target`` config parameters
-default to what's specified here. In other words, unless you need to customize
-them, you can omit them entirely and shorten your configuration:
+Uma vez que está configurado no seu firewall, redirecionando o usuário para ``/logout``
+(ou qualquer outro caminho que configurar em ``path``), o usuário não estará
+mais autenticado. O usuário será então redirecionado para a página principal
+(o valor definido no parâmetro ``target``). Ambas configurações ``path`` e ``target``
+tem valor padrão iguais ao especificado aqui. Em outras palavras, a menos que
+precise personalizar, você pode simplesmente os omitir completamente e simplificar
+sua configuração:
 
 .. configuration-block::
 
@@ -1481,9 +1477,9 @@ them, you can omit them entirely and shorten your configuration:
 
         'logout' => array(),
 
-Note that you will *not* need to implement a controller for the ``/logout``
-URL as the firewall takes care of everything. You may, however, want to create
-a route so that you can use it to generate the URL:
+Note que você *não* precisará implementar o controller para a URL ``/logout``
+já que o firewall cuida disso. Você pode, porém, querer criar uma rota para que
+possa usar para gerar a URL:
 
 .. configuration-block::
 
@@ -1517,16 +1513,16 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-Once the user has been logged out, he will be redirected to whatever path
-is defined by the ``target`` parameter above (e.g. the ``homepage``). For
-more information on configuring the logout, see the
+Uma vez que o usuário não está mais autenticado, ele será redirecionado para o
+que tiver definido no parâmetro ``target``. Para mais informações sobre
+a configuração de logout, veja
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
-Access Control in Templates
----------------------------
+Controle de Acesso em Templates
+-------------------------------
 
-If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+Se você quiser checar se o usuário atual tem um determinado perfil de dentro de
+uma template, use a função:
 
 .. configuration-block::
 
@@ -1544,16 +1540,16 @@ the built-in helper function:
 
 .. note::
 
-    If you use this function and are *not* at a URL where there is a firewall
-    active, an exception will be thrown. Again, it's almost always a good
-    idea to have a main firewall that covers all URLs (as has been shown
-    in this chapter).
+    Se você usar esta função e *não* estiver em uma URL que está atrás de um
+    firewall ativo, uma exceção será gerada. Novamente, quase sempre é uma boa
+    idéia ter um firewall principal que protege todas as URLs (como visto neste
+    capítulo).
 
-Access Control in Controllers
------------------------------
+Controle de Acesso em Controllers
+---------------------------------
 
-If you want to check if the current user has a role in your controller, use
-the ``isGranted`` method of the security context:
+Se você quer verificar se o usuário atual tem um perfil de dentro de um controller,
+use o método ``isGranted`` do contexto de segurança:
 
 .. code-block:: php
 
@@ -1568,16 +1564,16 @@ the ``isGranted`` method of the security context:
 
 .. note::
 
-    A firewall must be active or an exception will be thrown when the ``isGranted``
-    method is called. See the note above about templates for more details.
+    Um firewall deve estar ativo ou uma exceção será gerada quanto o método ``isGranted``
+    for chamado. Veja a nota acima sobre templates para mais detalhes.
 
-Impersonating a User
---------------------
+Passando por outro usuário
+--------------------------
 
-Sometimes, it's useful to be able to switch from one user to another without
-having to logout and login again (for instance when you are debugging or trying
-to understand a bug a user sees that you can't reproduce). This can be easily
-done by activating the ``switch_user`` firewall listener:
+As vezes, é útil poder trocar de um usuário para outro sem ter que sair e se
+autenticar novamente (por exemplo quando você está depurando or tentando entender
+uma falha que um usuário vê e você não consegue reproduzir). Isto pode ser feito
+ativando o listener ``switch_user`` do firewall:
 
 .. configuration-block::
 
@@ -1612,20 +1608,20 @@ done by activating the ``switch_user`` firewall listener:
             ),
         ));
 
-To switch to another user, just add a query string with the ``_switch_user``
-parameter and the username as the value to the current URL:
+Para mudar para outro usuário, basta adicionar o parâmetro de URL ``_switch_user``
+indicando o usuário (username) na URL atual:
 
     http://example.com/somewhere?_switch_user=thomas
 
-To switch back to the original user, use the special ``_exit`` username:
+Para voltar ao usuário original, use como nome de usuário o texto ``_exit``:
 
     http://example.com/somewhere?_switch_user=_exit
 
-Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
-role. The name of this role can be modified via the ``role`` setting. For
-extra security, you can also change the query parameter name via the ``parameter``
-setting:
+Claro que esta funcionalidade precisar estar disponível para um grupo reduzido de usuários.
+Por padrão, o acesso é restrito a usuários que tem o perfil ``ROLE_ALLOWED_TO_SWITCH``.
+O nome deste perfil pode ser modificado através do parâmetro de configuração ``role``.
+Para segurança extra, você pode ainda mudar o nome do parâmetro de URL através da
+configuração ``parameter``:
 
 .. configuration-block::
 
@@ -1660,15 +1656,15 @@ setting:
             ),
         ));
 
-Stateless Authentication
-------------------------
+Autenticação Sem Estado
+-----------------------
 
-By default, Symfony2 relies on a cookie (the Session) to persist the security
-context of the user. But if you use certificates or HTTP authentication for
-instance, persistence is not needed as credentials are available for each
-request. In that case, and if you don't need to store anything else between
-requests, you can activate the stateless authentication (which means that no
-cookie will be ever created by Symfony2):
+Por padrão, o Symfony2 confia a um cookie (a Session) para persistir o contexto de
+segurança de um usuário. Se você utiliza, porém, certificados ou autenticação HTTP, por exemplo,
+persistência não é necessário já que as credenciais estão disponíveis em
+cada requisição. Neste caso, e se não precisar de armazenar nada entre as requisições,
+você pode ativar a autenticação sem estado (que significa que nenhum cookie será criado pelo
+Symfony2):
 
 .. configuration-block::
 
@@ -1701,39 +1697,39 @@ cookie will be ever created by Symfony2):
 
 .. note::
 
-    If you use a form login, Symfony2 will create a cookie even if you set
-    ``stateless`` to ``true``.
+    Se utiliza formulário de login, o Symfony2 criará um cookie mesmo se
+    você definir ``stateless`` como ``true``.
 
-Final Words
------------
+Palavras Finais
+---------------
 
-Security can be a deep and complex issue to solve correctly in your application.
-Fortunately, Symfony's security component follows a well-proven security
-model based around *authentication* and *authorization*. Authentication,
-which always happens first, is handled by a firewall whose job is to determine
-the identity of the user through several different methods (e.g. HTTP authentication,
-login form, etc). In the cookbook, you'll find examples of other methods
-for handling authentication, including how to implement a "remember me" cookie
-functionality.
+Segurança pode ser um assunto profundo e complexo de se resolver em uma aplicação.
+Felizmente, o componente de segurança do Symfony segue um bom modelo
+baseado em *autenticação* e *autorização*. Autenticação, que sempre acontece antes,
+é gerenciada pelo firewall cujo trabalho é determinar a identidade do usuário
+através de diversos possíveis métodos (exemplo, autenticação HTTP, formulário de login, etc).
+No passo-a-passo, você encontrará exemplos de como outros métodos de autenticação
+podem ser utilizados, incluindo como implementar o funcionalidade de
+"Lembrar de mim" baseada em cookie.
 
-Once a user is authenticated, the authorization layer can determine whether
-or not the user should have access to a specific resource. Most commonly,
-*roles* are applied to URLs, classes or methods and if the current user
-doesn't have that role, access is denied. The authorization layer, however,
-is much deeper, and follows a system of "voting" so that multiple parties
-can determine if the current user should have access to a given resource.
-Find out more about this and other topics in the cookbook.
+Uma vez que o usuário está autenticado, a camada de autorização pode determinar
+se o usuário deve ou não deve ter acesso a um recurso específico. Comumente,
+*perfis* são aplicados a URLs, classes ou métodos e se o usuário atual não
+possuir o perfil, o acesso é negado. A camada de autorização, porém,
+é muito mais extensa e segue o sistema de votação onde várias partes
+podem determinar se o usuário atual deve ter acesso a determinado recurso.
+Saiba mais sobre este e outros tópicos no passo-a-passo.
 
-Learn more from the Cookbook
-----------------------------
+Aprenda mais do Passo-a-Passo
+-----------------------------
 
-* :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
-* :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
-* :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
+* :doc:`Forçando HTTP/HTTPS </cookbook/security/force_https>`
+* :doc:`Coloque usuários por IP na lista negra com um voter personalizado </cookbook/security/voters>`
+* :doc:`Listas de Controle de Acesso (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`security component`: https://github.com/symfony/Security
+.. _`componente de segurança`: https://github.com/symfony/Security
 .. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
+.. _`implemente a interface \Serializable`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html

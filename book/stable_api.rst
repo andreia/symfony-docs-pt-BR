@@ -1,26 +1,25 @@
-A API Estável do Symfony2
-=========================
+API estável do Symfony2
+=======================
 
-A API estável do Symfony2 é um subconjunto de todos os métodos públicos
-publicados no Symfony2 (componentes e core bundles) que compartilham as
-seguintes propriedades:
+A API estável do Symfony2 é um subconjunto de todos métodos públicos publicados
+(componentes e bundles principais) que possuem as seguintes propriedades:
 
-* O namespace e nome de classe não mudarão;
+* O namespace e o nome da classe não mudarão;
 * O nome do método não mudará;
-* A assinatura do método (argumentos e tipo de valor de retorno) não mudará;
-* A semântica do que é o método não mudará.
+* A assinatura do método (parâmetros e tipo de retorno) não mudará;
+* A função do método (o que ele faz) não mudará;
 
-A implementação em si pode ser alterada. O caso só é válido para uma mudança na
-API estável para corrigir algum problema de segurança.
+A implementação em si pode mudar. O único caso que pode causar alteração na API
+estável será para correção de algum problema de segurança.
 
-A API estável é baseada em uma whitelist, marcada com `@api`. Então, tudo não
-marcado explícitamente não faz parte da API estável.
+A API estável é baseada em uma lista (whitelist), marcada com `@api`.
+Assim, tudo que não esteja marcado com `@api` não é parte da API estável.
 
 .. tip::
 
-    Qualquer bundle de terceiros também devem publicar sua própria API estável.
+    Qualquer bundle de terceiros deveria também publicar sua própria API estável.
 
-A partir do Symfony 2.0, os seguintes componentes têm uma API pública estável marcada:
+Atualmente na versão Symfony 2.0 os seguintes componentes têm API pública marcada:
 
 * BrowserKit
 * ClassLoader

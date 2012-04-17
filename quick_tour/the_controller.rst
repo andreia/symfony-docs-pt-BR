@@ -191,7 +191,7 @@ URL começada por ``/demo/secured/`` e define dois usuários válidos: ``user`` 
 que também inclui a permissão ``ROLE_USER`` (veja a configuração
 ``role_hierarchy``).
 
-.. dica::
+.. tip::
 
 	Para melhorar a legibilidade, nessa nossa configuração simplificada as
 	senhas são guardadas em texto puro, mas você pode usar algum algoritmo
@@ -223,7 +223,7 @@ e, a partir da página protegida hello, clique no link "Hello resource secured".
 O Symfony2 deve retornar um erro HTTP 403, indicando que o usuário está
 "proibido" de acessar o recurso.
 
-.. nota::
+.. note::
 
     A camada de segurança do Symfony2 é bem flexível e vem com muitos serviços
     de usuários (como no Doctrine ORM) e autenticação (como HTTP básico, HTTP
@@ -262,7 +262,7 @@ como o cache é gerenciado usando cabeçalhos de cache HTTP normais, você pode
 substituir o proxy reverso com o Varnish ou o Squid e estender a sua aplicação
 de forma fácil.
 
-.. nota::
+.. note::
 
 	Mas como se virar se você não puder fazer cache de páginas inteiras? O
 	Symfony2 continua tendo a solução, via Edge Side Includes (ESI), que
