@@ -1700,8 +1700,8 @@ Symfony2):
     Se utiliza formulário de login, o Symfony2 criará um cookie mesmo se
     você definir ``stateless`` como ``true``.
 
-Final Words
------------
+Palavras Finais
+---------------
 
 Segurança pode ser um assunto profundo e complexo de se resolver em uma aplicação.
 Felizmente, o componente de segurança do Symfony segue um bom modelo
