@@ -1298,10 +1298,9 @@ providers ``in_memory`` e ``user_db``.
                 ),
             ));
 
-Você pode ainda configurar o firewall ou mecanismos de autenticação individuais
-You can also configure the firewall or individual authentication mechanisms
-to use a specific provider. Again, unless a provider is specified explicitly,
-the first provider is always used:
+Você pode ainda configurar o firewall ou mecanismos de autenticação individuais para utilizar
+um user provider específico. Novamente, a menos que um provider seja especificado explicitamente,
+o primeiro será sempre utilizado:
 
 .. configuration-block::
 
@@ -1346,38 +1345,38 @@ the first provider is always used:
             ),
         ));
 
-In this example, if a user tries to login via HTTP authentication, the authentication
-system will use the ``in_memory`` user provider. But if the user tries to
-login via the form login, the ``user_db`` provider will be used (since it's
-the default for the firewall as a whole).
+Neste exemplo, se um usuário tentar se autenticar através de autenticação HTTP, o sistema
+utilizará o user provider  ``in_memory``. Se o usuário tentar, porém, se autenticar através
+do formulário de login, o provider ``user_db`` será usado (pois é o padrão para todo o firewall).
 
-For more information about user provider and firewall configuration, see
-the :doc:`/reference/configuration/security`.
+Para mais informações sobre a configuração do user provider e do firewall,
+veja :doc:`/reference/configuration/security`.
 
-Roles
------
+Perfis (Roles)
+--------------
 
-The idea of a "role" is key to the authorization process. Each user is assigned
-a set of roles and then each resource requires one or more roles. If the user
-has the required roles, access is granted. Otherwise access is denied.
+A idéia de um "perfil" é chave no processo de autorização. Para cada usuário é atribuído
+um conjunto de perfis e então cada recurso exige um ou mais perfis. Se um usuário
+tem os perfis requeridos, o acesso é concedido. Caso contrário, o acesso é negado.
 
-Roles are pretty simple, and are basically strings that you can invent and
-use as needed (though roles are objects internally). For example, if you
-need to start limiting access to the blog admin section of your website,
-you could protect that section using a ``ROLE_BLOG_ADMIN`` role. This role
-doesn't need to be defined anywhere - you can just start using it.
+Perfis são muito simples e basicamente textos que você pode inventar e utilizar
+de acordo com suas necessidades (embora perfis sejam objetos PHP internamente).
+Por exemplo, se precisar limitar acesso a uma seção administrativa do blog
+de seu website, você pode proteger a seção utilizando o perfil ``ROLE_BLOG_ADMIN``.
+Este perfil não precisa de estar definido em lugar nenhum - você pode simplesmente
+usar o mesmo.
 
 .. note::
 
-    All roles **must** begin with the ``ROLE_`` prefix to be managed by
-    Symfony2. If you define your own roles with a dedicated ``Role`` class
-    (more advanced), don't use the ``ROLE_`` prefix.
+    Todos os perfis **devem** começar com o prefixo ``ROLE_`` para serem gerenciados
+    pelo Symfony2. Se você definir seus próprios perfis com uma classe ``Role``
+    dedicada (mais avançado), não utilize o prefixo ``ROLE_``.
 
-Hierarchical Roles
-~~~~~~~~~~~~~~~~~~
+Hierarquia de Perfis
+~~~~~~~~~~~~~~~~~~~~
 
-Instead of associating many roles to users, you can define role inheritance
-rules by creating a role hierarchy:
+Ao invés de associar muitos perfis aos usuários, você pode defined regras
+de herança ao criar uma hierarquia de perfis:
 
 .. configuration-block::
 
@@ -1407,16 +1406,16 @@ rules by creating a role hierarchy:
             ),
         ));
 
-In the above configuration, users with ``ROLE_ADMIN`` role will also have the
-``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
-and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+Na configuração acima, usuários com o perfil ``ROLE_ADMIN`` terão também o perfil ``ROLE_USER``.
+O perfil ``ROLE_SUPER_ADMIN`` tem os ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH`` e ``ROLE_USER``
+(herdado do ``ROLE_ADMIN``).
 
-Logging Out
------------
+Saindo do sistema
+-----------------
 
-Usually, you'll also want your users to be able to log out. Fortunately,
-the firewall can handle this automatically for you when you activate the
-``logout`` config parameter:
+Normalmente, você também quer que seus usuários possam sair do sistema.
+Felizmente, o firewall consegue lidar com isso automaticamente quando o parâmetro
+de configuração ``logout`` está ativo:
 
 .. configuration-block::
 
@@ -1456,12 +1455,13 @@ the firewall can handle this automatically for you when you activate the
             // ...
         ));
 
-Once this is configured under your firewall, sending a user to ``/logout``
-(or whatever you configure the ``path`` to be), will un-authenticate the
-current user. The user will then be sent to the homepage (the value defined
-by the ``target`` parameter). Both the ``path`` and ``target`` config parameters
-default to what's specified here. In other words, unless you need to customize
-them, you can omit them entirely and shorten your configuration:
+Uma vez que está configurado no seu firewall, redirecionando o usuário para ``/logout``
+(ou qualquer outro caminho que configurar em ``path``), o usuário não estará
+mais autenticado. O usuário será então redirecionado para a página principal
+(o valor definido no parâmetro ``target``). Ambas configurações ``path`` e ``target``
+tem valor padrão iguais ao especificado aqui. Em outras palavras, a menos que
+precise personalizar, você pode simplesmente os omitir completamente e simplificar
+sua configuração:
 
 .. configuration-block::
 
@@ -1477,9 +1477,9 @@ them, you can omit them entirely and shorten your configuration:
 
         'logout' => array(),
 
-Note that you will *not* need to implement a controller for the ``/logout``
-URL as the firewall takes care of everything. You may, however, want to create
-a route so that you can use it to generate the URL:
+Note que você *não* precisará implementar o controller para a URL ``/logout``
+já que o firewall cuida disso. Você pode, porém, querer criar uma rota para que
+possa usar para gerar a URL:
 
 .. configuration-block::
 
@@ -1513,16 +1513,16 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-Once the user has been logged out, he will be redirected to whatever path
-is defined by the ``target`` parameter above (e.g. the ``homepage``). For
-more information on configuring the logout, see the
+Uma vez que o usuário não está mais autenticado, ele será redirecionado para o
+que tiver definido no parâmetro ``target``. Para mais informações sobre
+a configuração de logout, veja
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
-Access Control in Templates
----------------------------
+Controle de Acesso em Templates
+-------------------------------
 
-If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+Se você quiser checar se o usuário atual tem um determinado perfil de dentro de
+uma template, use a função:
 
 .. configuration-block::
 
@@ -1540,16 +1540,16 @@ the built-in helper function:
 
 .. note::
 
-    If you use this function and are *not* at a URL where there is a firewall
-    active, an exception will be thrown. Again, it's almost always a good
-    idea to have a main firewall that covers all URLs (as has been shown
-    in this chapter).
+    Se você usar esta função e *não* estiver em uma URL que está atrás de um
+    firewall ativo, uma exceção será gerada. Novamente, quase sempre é uma boa
+    idéia ter um firewall principal que protege todas as URLs (como visto neste
+    capítulo).
 
-Access Control in Controllers
------------------------------
+Controle de Acesso em Controllers
+---------------------------------
 
-If you want to check if the current user has a role in your controller, use
-the ``isGranted`` method of the security context:
+Se você quer verificar se o usuário atual tem um perfil de dentro de um controller,
+use o método ``isGranted`` do contexto de segurança:
 
 .. code-block:: php
 
@@ -1564,16 +1564,16 @@ the ``isGranted`` method of the security context:
 
 .. note::
 
-    A firewall must be active or an exception will be thrown when the ``isGranted``
-    method is called. See the note above about templates for more details.
+    Um firewall deve estar ativo ou uma exceção será gerada quanto o método ``isGranted``
+    for chamado. Veja a nota acima sobre templates para mais detalhes.
 
-Impersonating a User
---------------------
+Passando por outro usuário
+--------------------------
 
-Sometimes, it's useful to be able to switch from one user to another without
-having to logout and login again (for instance when you are debugging or trying
-to understand a bug a user sees that you can't reproduce). This can be easily
-done by activating the ``switch_user`` firewall listener:
+As vezes, é útil poder trocar de um usuário para outro sem ter que sair e se
+autenticar novamente (por exemplo quando você está depurando or tentando entender
+uma falha que um usuário vê e você não consegue reproduzir). Isto pode ser feito
+ativando o listener ``switch_user`` do firewall:
 
 .. configuration-block::
 
@@ -1608,20 +1608,20 @@ done by activating the ``switch_user`` firewall listener:
             ),
         ));
 
-To switch to another user, just add a query string with the ``_switch_user``
-parameter and the username as the value to the current URL:
+Para mudar para outro usuário, basta adicionar o parâmetro de URL ``_switch_user``
+indicando o usuário (username) na URL atual:
 
     http://example.com/somewhere?_switch_user=thomas
 
-To switch back to the original user, use the special ``_exit`` username:
+Para voltar ao usuário original, use como nome de usuário o texto ``_exit``:
 
     http://example.com/somewhere?_switch_user=_exit
 
-Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
-role. The name of this role can be modified via the ``role`` setting. For
-extra security, you can also change the query parameter name via the ``parameter``
-setting:
+Claro que esta funcionalidade precisar estar disponível para um grupo reduzido de usuários.
+Por padrão, o acesso é restrito a usuários que tem o perfil ``ROLE_ALLOWED_TO_SWITCH``.
+O nome deste perfil pode ser modificado através do parâmetro de configuração ``role``.
+Para segurança extra, você pode ainda mudar o nome do parâmetro de URL através da
+configuração ``parameter``:
 
 .. configuration-block::
 
@@ -1656,15 +1656,15 @@ setting:
             ),
         ));
 
-Stateless Authentication
-------------------------
+Autenticação Sem Estado
+-----------------------
 
-By default, Symfony2 relies on a cookie (the Session) to persist the security
-context of the user. But if you use certificates or HTTP authentication for
-instance, persistence is not needed as credentials are available for each
-request. In that case, and if you don't need to store anything else between
-requests, you can activate the stateless authentication (which means that no
-cookie will be ever created by Symfony2):
+Por padrão, o Symfony2 confia a um cookie (a Session) para persistir o contexto de
+segurança de um usuário. Se você utiliza, porém, certificados ou autenticação HTTP, por exemplo,
+persistência não é necessário já que as credenciais estão disponíveis em
+cada requisição. Neste caso, e se não precisar de armazenar nada entre as requisições,
+você pode ativar a autenticação sem estado (que significa que nenhum cookie será criado pelo
+Symfony2):
 
 .. configuration-block::
 
@@ -1697,35 +1697,35 @@ cookie will be ever created by Symfony2):
 
 .. note::
 
-    If you use a form login, Symfony2 will create a cookie even if you set
-    ``stateless`` to ``true``.
+    Se utiliza formulário de login, o Symfony2 criará um cookie mesmo se
+    você definir ``stateless`` como ``true``.
 
 Final Words
 -----------
 
-Security can be a deep and complex issue to solve correctly in your application.
-Fortunately, Symfony's security component follows a well-proven security
-model based around *authentication* and *authorization*. Authentication,
-which always happens first, is handled by a firewall whose job is to determine
-the identity of the user through several different methods (e.g. HTTP authentication,
-login form, etc). In the cookbook, you'll find examples of other methods
-for handling authentication, including how to implement a "remember me" cookie
-functionality.
+Segurança pode ser um assunto profundo e complexo de se resolver em uma aplicação.
+Felizmente, o componente de segurança do Symfony segue um bom modelo
+baseado em *autenticação* e *autorização*. Autenticação, que sempre acontece antes,
+é gerenciada pelo firewall cujo trabalho é determinar a identidade do usuário
+através de diversos possíveis métodos (exemplo, autenticação HTTP, formulário de login, etc).
+No passo-a-passo, você encontrará exemplos de como outros métodos de autenticação
+podem ser utilizados, incluindo como implementar o funcionalidade de
+"Lembrar de mim" baseada em cookie.
 
-Once a user is authenticated, the authorization layer can determine whether
-or not the user should have access to a specific resource. Most commonly,
-*roles* are applied to URLs, classes or methods and if the current user
-doesn't have that role, access is denied. The authorization layer, however,
-is much deeper, and follows a system of "voting" so that multiple parties
-can determine if the current user should have access to a given resource.
-Find out more about this and other topics in the cookbook.
+Uma vez que o usuário está autenticado, a camada de autorização pode determinar
+se o usuário deve ou não deve ter acesso a um recurso específico. Comumente,
+*perfis* são aplicados a URLs, classes ou métodos e se o usuário atual não
+possuir o perfil, o acesso é negado. A camada de autorização, porém,
+é muito mais extensa e segue o sistema de votação onde várias partes
+podem determinar se o usuário atual deve ter acesso a determinado recurso.
+Saiba mais sobre este e outros tópicos no passo-a-passo.
 
-Learn more from the Cookbook
-----------------------------
+Aprenda mais do Passo-a-Passo
+-----------------------------
 
-* :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
-* :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
-* :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
+* :doc:`Forçando HTTP/HTTPS </cookbook/security/force_https>`
+* :doc:`Coloque usuários por IP na lista negra com um voter personalizado </cookbook/security/voters>`
+* :doc:`Listas de Controle de Acesso (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
 .. _`componente de segurança`: https://github.com/symfony/Security
