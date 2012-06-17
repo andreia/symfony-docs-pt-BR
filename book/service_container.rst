@@ -1,77 +1,77 @@
 .. index::
    single: Service Container
-   single: Dependency Injection Container
+   single: Container de Injeção de Dependência
 
-Service Container
-=================
+Container de Serviço
+====================
 
-A modern PHP application is full of objects. One object may facilitate the
-delivery of email messages while another may allow you to persist information
-into a database. In your application, you may create an object that manages
-your product inventory, or another object that processes data from a third-party
-API. The point is that a modern application does many things and is organized
-into many objects that handle each task.
+Uma aplicação PHP moderna é cheia de objetos. Um objeto pode facilitar a entrega 
+de mensagens de e-mail enquanto outro pode permitir persistir as informações
+em um banco de dados. Em sua aplicação, você pode criar um objeto que gerencia
+seu estoque de produtos, ou outro objeto que processa dados de uma API de 
+terceiros. O ponto é que uma aplicação moderna faz muitas coisas e é organizada
+em muitos objetos que lidam com cada tarefa.
 
-In this chapter, we'll talk about a special PHP object in Symfony2 that helps
-you instantiate, organize and retrieve the many objects of your application.
-This object, called a service container, will allow you to standardize and
-centralize the way objects are constructed in your application. The container
-makes your life easier, is super fast, and emphasizes an architecture that
-promotes reusable and decoupled code. And since all core Symfony2 classes
-use the container, you'll learn how to extend, configure and use any object
-in Symfony2. In large part, the service container is the biggest contributor
-to the speed and extensibility of Symfony2.
+Neste capítulo, vamos falar sobre um objeto PHP especial no Symfony2 que ajuda
+você a instanciar, organizar e recuperar os muitos objetos da sua aplicação.
+Esse objeto, chamado de container de serviço, lhe permitirá padronizar e
+centralizar a forma como os objetos são construídos em sua aplicação. O container
+facilita a sua vida, é super rápido e enfatiza uma arquitetura que promove 
+código reutilizável e desacoplado. E, como todas as classes principais do Symfony2
+usam o container, você vai aprender como estender, configurar e usar qualquer objeto
+no Symfony2. Em grande parte, o container de serviço é o maior contribuinte à 
+velocidade e extensibilidade do Symfony2.
 
-Finally, configuring and using the service container is easy. By the end
-of this chapter, you'll be comfortable creating your own objects via the
-container and customizing objects from any third-party bundle. You'll begin
-writing code that is more reusable, testable and decoupled, simply because
-the service container makes writing good code so easy.
+Finalmente, configurar e usar o container de serviço é fácil. Ao final deste 
+capítulo, você estará confortável criando os seus próprios objetos através do container 
+e personalizando objetos a partir de qualquer bundle de terceiros. Você vai começar
+a escrever código que é mais reutilizável, testável e desacoplado, simplesmente porque
+o container de serviço torna fácil escrever bom código.
 
 .. index::
-   single: Service Container; What is a service?
+   single: Container de Serviço; O que é um Serviço?
 
-What is a Service?
-------------------
+O que é um Serviço?
+-------------------
 
-Put simply, a :term:`Service` is any PHP object that performs some sort of
-"global" task. It's a purposefully-generic name used in computer science
-to describe an object that's created for a specific purpose (e.g. delivering
-emails). Each service is used throughout your application whenever you need
-the specific functionality it provides. You don't have to do anything special
-to make a service: simply write a PHP class with some code that accomplishes
-a specific task. Congratulations, you've just created a service!
+Simplificando, um :term:`Serviço` é qualquer objeto PHP que realiza algum tipo de
+tarefa "global". É um nome genérico proposital, usado em ciência da computação,
+para descrever um objeto que é criado para uma finalidade específica (por exemplo, 
+entregar e-mails). Cada serviço é usado em qualquer parte da sua aplicação sempre que 
+precisar da funcionalidade específica que ele fornece. Você não precisa fazer nada de 
+especial para construir um serviço: basta escrever uma classe PHP com algum código que 
+realiza uma tarefa específica. Parabéns, você acabou de criar um serviço!
 
 .. note::
 
-    As a rule, a PHP object is a service if it is used globally in your
-    application. A single ``Mailer`` service is used globally to send
-    email messages whereas the many ``Message`` objects that it delivers
-    are *not* services. Similarly, a ``Product`` object is not a service,
-    but an object that persists ``Product`` objects to a database *is* a service.
+    Como regra geral, um objeto PHP é um serviço se ele é usado globalmente em sua
+    aplicação. Um único serviço ``Mailer`` é utilizado globalmente para enviar
+    mensagens de e-mail, enquanto os muitos objetos ``Message`` que ele entrega
+    *não* são serviços. Do mesmo modo, um objeto ``Product`` não é um serviço, mas 
+    um objeto que persiste os objetos ``Product`` para um banco de dados *é* um serviço.
 
-So what's the big deal then? The advantage of thinking about "services" is
-that you begin to think about separating each piece of functionality in your
-application into a series of services. Since each service does just one job,
-you can easily access each service and use its functionality wherever you
-need it. Each service can also be more easily tested and configured since
-it's separated from the other functionality in your application. This idea
-is called `service-oriented architecture`_ and is not unique to Symfony2
-or even PHP. Structuring your application around a set of independent service
-classes is a well-known and trusted object-oriented best-practice. These skills
-are key to being a good developer in almost any language.
+Então, porque ele é especial? A vantagem de pensar em "serviços" é que você começa 
+a pensar em separar cada pedaço de funcionalidade de sua aplicação em uma série de 
+serviços. Uma vez que cada serviço realiza apenas um trabalho, você pode facilmente acessar 
+cada serviço e usar a sua funcionalidade, sempre que você precisar. Cada serviço pode 
+também ser mais facilmente testado e configurado já que ele está separado das outras 
+funcionalidades em sua aplicação. Esta idéia é chamada de `arquitetura orientada à 
+serviços`_ e não é exclusiva do Symfony2 ou até mesmo do PHP. Estruturar a sua aplicação 
+em torno de um conjunto de classes de serviços independentes é uma das melhores práticas 
+de orientação à objeto bem conhecida e confiável. Essas habilidades são a chave para 
+ser um bom desenvolvedor em praticamente qualquer linguagem.
 
 .. index::
-   single: Service Container; What is?
+   single: Container de Serviço; O que é?
 
-What is a Service Container?
+O que é um Service Container?
 ----------------------------
 
-A :term:`Service Container` (or *dependency injection container*) is simply
-a PHP object that manages the instantiation of services (i.e. objects).
-For example, suppose we have a simple PHP class that delivers email messages.
-Without a service container, we must manually create the object whenever
-we need it:
+Um :term:`Container de Serviço` (ou *container de injeção de dependência*) é 
+simplesmente um objeto PHP que gerencia a instanciação de serviços (ex. objetos).
+Por exemplo, imagine que temos uma classe PHP simples que envia mensagens de e-mail.
+Sem um container de serviço, precisamos criar manualmente o objeto sempre que 
+precisarmos dele:
 
 .. code-block:: php
 
@@ -80,24 +80,24 @@ we need it:
     $mailer = new Mailer('sendmail');
     $mailer->send('ryan@foobar.net', ... );
 
-This is easy enough. The imaginary ``Mailer`` class allows us to configure
-the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
-But what if we wanted to use the mailer service somewhere else? We certainly
-don't want to repeat the mailer configuration *every* time we need to use
-the ``Mailer`` object. What if we needed to change the ``transport`` from
-``sendmail`` to ``smtp`` everywhere in the application? We'd need to hunt
-down every place we create a ``Mailer`` service and change it.
+Isso é bastante fácil. A classe imaginária ``Mailer`` nos permite configurar o método 
+utilizado para entregar as mensagens de e-mail (por exemplo: ``sendmail``, ``smtp``, etc).
+Mas, e se quiséssemos usar o serviço de mailer em outro lugar? Nós certamente não 
+desejamos repetir a configuração do mailer *sempre* que nós precisamos usar o objeto 
+``Mailer``. E se precisarmos mudar o ``transport`` de ``sendmail`` para ``smtp`` em 
+toda a aplicação? Nós precisaremos localizar cada lugar em que adicionamos um serviço 
+``Mailer`` e alterá-lo.
 
 .. index::
-   single: Service Container; Configuring services
+   single: Container de Serviço; Configurando serviços
 
-Creating/Configuring Services in the Container
-----------------------------------------------
+Criando/Configurando Serviços no Container
+------------------------------------------
 
-A better answer is to let the service container create the ``Mailer`` object
-for you. In order for this to work, we must *teach* the container how to
-create the ``Mailer`` service. This is done via configuration, which can
-be specified in YAML, XML or PHP:
+Uma resposta melhor é deixar o container de serviço criar o objeto ``Mailer`` 
+para você. Para que isso funcione, é preciso *ensinar* o container como
+criar o serviço ``Mailer``. Isto é feito através de configuração, que pode
+ser especificada em YAML, XML ou PHP:
 
 .. configuration-block::
 
@@ -130,17 +130,17 @@ be specified in YAML, XML or PHP:
 
 .. note::
 
-    When Symfony2 initializes, it builds the service container using the
-    application configuration (``app/config/config.yml`` by default). The
-    exact file that's loaded is dictated by the ``AppKernel::registerContainerConfiguration()``
-    method, which loads an environment-specific configuration file (e.g.
-    ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
-    for ``prod``).
+    Quando o Symfony2 é inicializado, ele constrói o container de serviço usando a
+    configuração da aplicação (por padrão (``app/config/config.yml``). O arquivo 
+    exato que é carregado é ditado pelo método ``AppKernel::registerContainerConfiguration()``
+    , que carrega um arquivo de configuração do ambiente específico (por exemplo
+    ``config_dev.yml`` para o ambiente ``dev`` ou ``config_prod.yml``
+    para o ``prod``).
 
-An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
-the service container. The container is available in any traditional Symfony2
-controller where you can access the services of the container via the ``get()``
-shortcut method::
+Uma instância do objeto ``Acme\HelloBundle\Mailer`` está agora disponível através do
+container de serviço. O container está disponível em qualquer controlador tradicional do 
+Symfony2 onde você pode acessar os serviços do container através do método de atalho 
+``get()``::
 
     class HelloController extends Controller
     {
@@ -154,26 +154,26 @@ shortcut method::
         }
     }
 
-When we ask for the ``my_mailer`` service from the container, the container
-constructs the object and returns it. This is another major advantage of
-using the service container. Namely, a service is *never* constructed until
-it's needed. If you define a service and never use it on a request, the service
-is never created. This saves memory and increases the speed of your application.
-This also means that there's very little or no performance hit for defining
-lots of services. Services that are never used are never constructed.
+Quando requisitamos o serviço ``my_mailer`` a partir do container, o container
+constrói o objeto e o retorna. Esta é outra vantagem importante do uso do container
+de serviço. Ou seja, um serviço *nunca* é construído até que ele seja necessário. 
+Se você definir um serviço e nunca usá-lo em um pedido, o serviço nunca será criado. 
+Isso economiza memória e aumenta a velocidade de sua aplicação. Isto também significa 
+que não há nenhuma perda ou apenas uma perda insignificante de desempenho ao definir
+muitos serviços. Serviços que nunca são usados, nunca são construídos.
 
-As an added bonus, the ``Mailer`` service is only created once and the same
-instance is returned each time you ask for the service. This is almost always
-the behavior you'll need (it's more flexible and powerful), but we'll learn
-later how you can configure a service that has multiple instances.
+Como um bônus adicional, o serviço ``Mailer`` é criado apenas uma vez e a mesma
+instância é retornada cada vez que você requisitar o serviço. Isso é quase sempre
+o comportamento que você precisa (é mais flexível e poderoso), mas vamos aprender,
+mais tarde, como você pode configurar um serviço que possui várias instâncias.
 
 .. _book-service-container-parameters:
 
-Service Parameters
-------------------
+Parâmetros do Serviço
+---------------------
 
-The creation of new services (i.e. objects) via the container is pretty
-straightforward. Parameters make defining services more organized and flexible:
+A criação de novos serviços (objetos, por exemplo) através do container é bastante
+simples. Os parâmetros tornam a definição dos serviços mais organizada e flexível:
 
 .. configuration-block::
 
@@ -216,34 +216,43 @@ straightforward. Parameters make defining services more organized and flexible:
             array('%my_mailer.transport%')
         ));
 
-The end result is exactly the same as before - the difference is only in
-*how* we defined the service. By surrounding the ``my_mailer.class`` and
-``my_mailer.transport`` strings in percent (``%``) signs, the container knows
-to look for parameters with those names. When the container is built, it
-looks up the value of each parameter and uses it in the service definition.
+O resultado final é exatamente o mesmo de antes - a diferença está apenas em *como* 
+definimos o serviço. Quando as strings ``my_mailer.class`` e ``my_mailer.transport`` 
+estão envolvidas por sinais de porcentagem (``%``), o container sabe que deve procurar 
+por parâmetros com esses nomes. Quando o container é construído, ele procura o valor de 
+cada parâmetro e utiliza-o na definição do serviço.
 
-The purpose of parameters is to feed information into services. Of course
-there was nothing wrong with defining the service without using any parameters.
-Parameters, however, have several advantages:
+.. note::
 
-* separation and organization of all service "options" under a single
-  ``parameters`` key;
+    O sinal de porcentagem dentro de um parâmetro ou argumento, como parte da string, deve 
+    ser escapado com um outro sinal de porcentagem:
+    
+    .. code-block:: xml
 
-* parameter values can be used in multiple service definitions;
+        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
-* when creating a service in a bundle (we'll show this shortly), using parameters
-  allows the service to be easily customized in your application.
+A finalidade dos parâmetros é alimentar informação para os serviços. Naturalmente, 
+não há nada de errado em definir o serviço sem o uso de quaisquer parâmetros.
+Os parâmetros, no entanto, possuem várias vantagens:
 
-The choice of using or not using parameters is up to you. High-quality
-third-party bundles will *always* use parameters as they make the service
-stored in the container more configurable. For the services in your application,
-however, you may not need the flexibility of parameters.
+* separação e organização de todas as "opções" dos serviços sob uma única
+  chave ``parameters``;
 
-Array Parameters
+* os valores do parâmetro podem ser usados em múltiplas definições de serviços;
+
+* ao criar um serviço em um bundle (vamos mostrar isso em breve), o uso de parâmetros
+  permite que o serviço seja facilmente customizado em sua aplicação.
+
+A escolha de usar ou não os parâmetros é com você. Bundles de terceiros de alta qualidade
+*sempre* utilizarão parâmetros, pois, eles tornam mais configurável o serviço armazenado no 
+container. Para os serviços em sua aplicação, entretanto, você pode não precisar da 
+flexibilidade dos parâmetros.
+
+Parâmetros Array
 ~~~~~~~~~~~~~~~~
 
-Parameters do not need to be flat strings, they can also be arrays. For the XML
-format, you need to use the type="collection" attribute for all parameters that are
+Os parâmetros não precisam ser strings, eles também podem ser arrays. Para o formato XML
+, você precisará usar o atributo type="collection" em todos os parâmetros que são
 arrays.
 
 .. configuration-block::
@@ -297,46 +306,46 @@ arrays.
                                 ));
 
 
-Importing other Container Configuration Resources
--------------------------------------------------
+Importando outros Recursos de Configuração do Container
+-------------------------------------------------------
 
 .. tip::
 
-    In this section, we'll refer to service configuration files as *resources*.
-    This is to highlight that fact that, while most configuration resources
-    will be files (e.g. YAML, XML, PHP), Symfony2 is so flexible that configuration
-    could be loaded from anywhere (e.g. a database or even via an external
-    web service).
+    Nesta seção, vamos referenciar os arquivos de configuração de serviço como *recursos*.
+    Isto é para destacar o fato de que, enquanto a maioria dos recursos de configuração
+    será em arquivos (por exemplo, YAML, XML, PHP), o Symfony2 é tão flexível que a configuração
+    pode ser carregada de qualquer lugar (por exemplo, de um banco de dados ou até mesmo através 
+    de um web service externo).
 
-The service container is built using a single configuration resource
-(``app/config/config.yml`` by default). All other service configuration
-(including the core Symfony2 and third-party bundle configuration) must
-be imported from inside this file in one way or another. This gives you absolute
-flexibility over the services in your application.
+O service container é construído usando um único recurso de configuração 
+(por padrão ``app/config/config.yml``). Todas as outras configurações de serviço
+(incluindo o núcleo do Symfony2 e configurações de bundles de terceiros) devem
+ser importadas dentro desse arquivo de uma forma ou de outra. Isso lhe dá absoluta
+flexibilidade sobre os serviços em sua aplicação.
 
-External service configuration can be imported in two different ways. First,
-we'll talk about the method that you'll use most commonly in your application:
-the ``imports`` directive. In the following section, we'll introduce the
-second method, which is the flexible and preferred method for importing service
-configuration from third-party bundles.
+Configurações de serviços externos podem ser importadas de duas maneiras distintas. 
+Primeiro, vamos falar sobre o método que você vai usar mais frequentemente na sua 
+aplicação: a diretiva ``imports``. Na seção seguinte, vamos falar sobre o segundo método, 
+que é mais flexível e preferido para a importação de configuração de serviços dos bundles 
+de terceiros.
 
 .. index::
-   single: Service Container; imports
+   single: Container de Serviço; imports
 
 .. _service-container-imports-directive:
 
-Importing Configuration with ``imports``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Importando configuração com ``imports``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, we've placed our ``my_mailer`` service container definition directly
-in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
-it makes more sense to put the ``my_mailer`` container definition inside the
-bundle as well.
+Até agora, adicionamos a nossa definição do container de serviço ``my_mailer`` 
+diretamente no arquivo de configuração da aplicação (por exemplo: ``app/config/config.yml``). 
+Naturalmente, já que a própria classe ``Mailer`` reside dentro do ``AcmeHelloBundle``, 
+faz mais sentido colocar a definição do container ``my_mailer`` dentro do
+bundle também.
 
-First, move the ``my_mailer`` container definition into a new container resource
-file inside ``AcmeHelloBundle``. If the ``Resources`` or ``Resources/config``
-directories don't exist, create them.
+Primeiro, mova a definição do container ``my_mailer`` dentro de um novo arquivo container de recurso 
+dentro do ``AcmeHelloBundle``. Se os diretórios ``Resources`` ou ``Resources/config``
+não existirem, adicione eles.
 
 .. configuration-block::
 
@@ -379,10 +388,10 @@ directories don't exist, create them.
             array('%my_mailer.transport%')
         ));
 
-The definition itself hasn't changed, only its location. Of course the service
-container doesn't know about the new resource file. Fortunately, we can
-easily import the resource file using the ``imports`` key in the application
-configuration.
+A definição em si não mudou, apenas a sua localização. Claro que o container de 
+serviço não sabe sobre o novo arquivo de recurso. Felizmente, nós podemos facilmente 
+importar o arquivo de recurso usando a chave ``imports`` na configuração da 
+aplicação.
 
 .. configuration-block::
 
@@ -390,8 +399,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            hello_bundle:
-                resource: @AcmeHelloBundle/Resources/config/services.yml
+            - { resource: @AcmeHelloBundle/Resources/config/services.yml }
 
     .. code-block:: xml
 
@@ -405,51 +413,51 @@ configuration.
         // app/config/config.php
         $this->import('@AcmeHelloBundle/Resources/config/services.php');
 
-The ``imports`` directive allows your application to include service container
-configuration resources from any other location (most commonly from bundles).
-The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHello`` syntax resolves the directory path of
-the ``AcmeHelloBundle`` bundle. This helps you specify the path to the resource
-without worrying later if you move the ``AcmeHelloBundle`` to a different
-directory.
+A diretiva ``imports`` permite à sua aplicação incluir os recursos de configuração 
+do container de serviço de qualquer outra localização (mais comumente, de bundles).
+A localização do ``resource``, para arquivos, é o caminho absoluto para o arquivo de 
+recurso. A sintaxe especial ``@AcmeHello`` resolve o caminho do diretório do
+bundle ``AcmeHelloBundle``. Isso ajuda você a especificar o caminho para o recurso
+sem preocupar-se mais tarde caso mover o ``AcmeHelloBundle`` para um diretório 
+diferente.
 
 .. index::
-   single: Service Container; Extension configuration
+   single: Container de Serviço; Configuração de extensão
 
 .. _service-container-extension-configuration:
 
-Importing Configuration via Container Extensions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Importando Configuração através de Extensões do Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When developing in Symfony2, you'll most commonly use the ``imports`` directive
-to import container configuration from the bundles you've created specifically
-for your application. Third-party bundle container configuration, including
-Symfony2 core services, are usually loaded using another method that's more
-flexible and easy to configure in your application.
+Ao desenvolver no Symfony2, você vai mais comumente usar a diretiva ``imports``
+para importar a configuração do container dos bundles que você criou especificamente
+para a sua aplicação. As configurações de container de bundles de terceiros, incluindo
+os serviços do núcleo do Symfony2, são geralmente carregadas usando um outro método 
+que é mais flexível e fácil de configurar em sua aplicação.
 
-Here's how it works. Internally, each bundle defines its services very much
-like we've seen so far. Namely, a bundle uses one or more configuration
-resource files (usually XML) to specify the parameters and services for that
-bundle. However, instead of importing each of these resources directly from
-your application configuration using the ``imports`` directive, you can simply
-invoke a *service container extension* inside the bundle that does the work for
-you. A service container extension is a PHP class created by the bundle author
-to accomplish two things:
+Veja como ele funciona. Internamente, cada bundle define os seus serviços de forma 
+semelhante a que vimos até agora. Ou seja, um bundle utiliza um ou mais arquivos de 
+configurações de recurso (normalmente XML) para especificar os parâmetros e serviços 
+para aquele bundle. No entanto, em vez de importar cada um desses recursos diretamente a partir
+da sua configuração da aplicação usando a diretiva ``imports``, você pode simplesmente
+invocar uma *extensão do container de serviço* dentro do bundle que faz o trabalho para
+você. Uma extensão do container de serviço é uma classe PHP criada pelo autor do bundle
+para realizar duas coisas:
 
-* import all service container resources needed to configure the services for
-  the bundle;
+* importar todos os recursos de container de serviço necessários para configurar 
+  os serviços para o bundle;
 
-* provide semantic, straightforward configuration so that the bundle can
-  be configured without interacting with the flat parameters of the bundle's
-  service container configuration.
+* fornecer configuração simples e semântica para que o bundle possa 
+  ser configurado sem interagir com os parâmetros da configuração 
+  do container de serviço.
 
-In other words, a service container extension configures the services for
-a bundle on your behalf. And as we'll see in a moment, the extension provides
-a sensible, high-level interface for configuring the bundle.
+Em outras palavras, uma extensão do container de serviço configura os serviços 
+para um bundle em seu nome. E, como veremos em breve, a extensão fornece
+uma interface sensível e de alto nível para configurar o bundle.
 
-Take the ``FrameworkBundle`` - the core Symfony2 framework bundle - as an
-example. The presence of the following code in your application configuration
-invokes the service container extension inside the ``FrameworkBundle``:
+Considere o ``FrameworkBundle`` - o bundle do núcleo do framework Symfony2 - 
+como um exemplo. A presença do código a seguir na configuração da sua aplicação
+invoca a extensão do container de serviço dentro do ``FrameworkBundle``:
 
 .. configuration-block::
 
@@ -486,56 +494,59 @@ invokes the service container extension inside the ``FrameworkBundle``:
             // ...
         ));
 
-When the configuration is parsed, the container looks for an extension that
-can handle the ``framework`` configuration directive. The extension in question,
-which lives in the ``FrameworkBundle``, is invoked and the service configuration
-for the ``FrameworkBundle`` is loaded. If you remove the ``framework`` key
-from your application configuration file entirely, the core Symfony2 services
-won't be loaded. The point is that you're in control: the Symfony2 framework
-doesn't contain any magic or perform any actions that you don't have control
-over.
+Quando é realizado o parse da configuração, o container procura uma extensão que
+pode lidar com a diretiva de configuração ``framework``. A extensão em questão,
+que reside no ``FrameworkBundle``, é chamada e a configuração do serviço para o 
+``FrameworkBundle`` é carregada. Se você remover totalmente a chave ``framework``
+de seu arquivo de configuração da aplicação, os serviços do núcleo do Symfony2
+não serão carregados. O ponto é que você está no controle: o framework Symfony2
+não contém qualquer tipo de magia ou realiza quaisquer ações que você não tenha 
+controle.
 
-Of course you can do much more than simply "activate" the service container
-extension of the ``FrameworkBundle``. Each extension allows you to easily
-customize the bundle, without worrying about how the internal services are
-defined.
+Claro que você pode fazer muito mais do que simplesmente "ativar" a extensão do 
+container de serviço do ``FrameworkBundle``. Cada extensão permite que você facilmente
+personalize o bundle, sem se preocupar com a forma como os serviços internos são
+definidos.
 
-In this case, the extension allows you to customize the ``charset``, ``error_handler``,
-``csrf_protection``, ``router`` configuration and much more. Internally,
-the ``FrameworkBundle`` uses the options specified here to define and configure
-the services specific to it. The bundle takes care of creating all the necessary
-``parameters`` and ``services`` for the service container, while still allowing
-much of the configuration to be easily customized. As an added bonus, most
-service container extensions are also smart enough to perform validation -
-notifying you of options that are missing or the wrong data type.
+Neste caso, a extensão permite que você personalize as configurações ``charset``, 
+``error_handler``, ``csrf_protection``, ``router`` e muito mais. Internamente,
+o ``FrameworkBundle`` usa as opções especificadas aqui para definir e configurar
+os serviços específicos para ele. O bundle se encarrega de criar todos os ``parameters``
+e ``services`` necessários para o container de serviço, permitindo ainda que grande parte 
+da configuração seja facilmente personalizada. Como um bônus adicional, a maioria das 
+extensões do container de serviço também são inteligentes o suficiente para executar a validação -
+notificando as opções que estão faltando ou que estão com o tipo de dados incorreto.
 
-When installing or configuring a bundle, see the bundle's documentation for
-how the services for the bundle should be installed and configured. The options
-available for the core bundles can be found inside the :doc:`Reference Guide</reference/index>`.
+Ao instalar ou configurar um bundle, consulte a documentação do bundle para
+verificar como os serviços para o bundle devem ser instalados e configurados. As opções
+disponíveis para os bundles do núcleo podem ser encontradas no :doc:`Reference Guide</reference/index>`.
 
 .. note::
 
-   Natively, the service container only recognizes the ``parameters``,
-   ``services``, and ``imports`` directives. Any other directives
-   are handled by a service container extension.
+   Nativamente, o container de serviço somente reconhece as diretivas
+   ``parameters``, ``services`` e ``imports``. Quaisquer outras diretivas
+   são manipuladas pela extensão do container de serviço.
+
+Se você deseja expor configuração amigável em seus próprios bundles, leia o
+":doc:`/cookbook/bundles/extension`" do cookbook.
 
 .. index::
-   single: Service Container; Referencing services
+   single: Container de Serviço; Referenciando serviços
 
-Referencing (Injecting) Services
---------------------------------
+Referenciando (Injetando) Serviços
+----------------------------------
 
-So far, our original ``my_mailer`` service is simple: it takes just one argument
-in its constructor, which is easily configurable. As you'll see, the real
-power of the container is realized when you need to create a service that
-depends on one or more other services in the container.
+Até agora, nosso serviço original ``my_mailer`` é simples: ele recebe apenas um argumento
+em seu construtor, que é facilmente configurável. Como você verá, o poder real
+do container é percebido quando você precisa criar um serviço que depende de um ou 
+mais outros serviços no container.
 
-Let's start with an example. Suppose we have a new service, ``NewsletterManager``,
-that helps to manage the preparation and delivery of an email message to
-a collection of addresses. Of course the ``my_mailer`` service is already
-really good at delivering email messages, so we'll use it inside ``NewsletterManager``
-to handle the actual delivery of the messages. This pretend class might look
-something like this::
+Vamos começar com um exemplo. Suponha que temos um novo serviço, ``NewsletterManager``,
+que ajuda a gerenciar a preparação e entrega de uma mensagem de e-mail para 
+uma coleção de endereços. Claro que o serviço ``my_mailer`` já está muito bom 
+ao entregar mensagens de e-mail, por isso vamos usá-lo dentro do ``NewsletterManager`` 
+para lidar com a entrega das mensagens. Esta simulação de classe seria parecida 
+com::
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -553,8 +564,8 @@ something like this::
         // ...
     }
 
-Without using the service container, we can create a new ``NewsletterManager``
-fairly easily from inside a controller::
+Sem usar o container de serviço, podemos criar um novo ``NewsletterManager``
+facilmente dentro de um controlador::
 
     public function sendNewsletterAction()
     {
@@ -563,11 +574,11 @@ fairly easily from inside a controller::
         // ...
     }
 
-This approach is fine, but what if we decide later that the ``NewsletterManager``
-class needs a second or third constructor argument? What if we decide to
-refactor our code and rename the class? In both cases, you'd need to find every
-place where the ``NewsletterManager`` is instantiated and modify it. Of course,
-the service container gives us a much more appealing option:
+Esta abordagem é boa, mas, e se decidirmos mais tarde que a classe ``NewsletterManager``
+precisa de um segundo ou terceiro argumento? E se decidirmos refatorar nosso 
+código e renomear a classe? Em ambos os casos, você precisa encontrar todos os
+locais onde o ``NewsletterManager`` é instanciado e modificá-lo. Certamente, 
+o container de serviço nos dá uma opção muito mais atraente:
 
 .. configuration-block::
 
@@ -617,26 +628,26 @@ the service container gives us a much more appealing option:
             array(new Reference('my_mailer'))
         ));
 
-In YAML, the special ``@my_mailer`` syntax tells the container to look for
-a service named ``my_mailer`` and to pass that object into the constructor
-of ``NewsletterManager``. In this case, however, the specified service ``my_mailer``
-must exist. If it does not, an exception will be thrown. You can mark your
-dependencies as optional - this will be discussed in the next section.
+Em YAML, a sintaxe especial ``@my_mailer`` diz ao container para procurar
+por um serviço chamado ``my_mailer`` e passar esse objeto para o construtor 
+do ``NewsletterManager``. Neste caso, entretanto, o serviço especificado ``my_mailer``
+deve existir. Caso ele não existir, será gerada uma exceção. Você pode marcar suas
+dependências como opcionais - o que será discutido na próxima seção.
 
-Using references is a very powerful tool that allows you to create independent service
-classes with well-defined dependencies. In this example, the ``newsletter_manager``
-service needs the ``my_mailer`` service in order to function. When you define
-this dependency in the service container, the container takes care of all
-the work of instantiating the objects.
+O uso de referências é uma ferramenta muito poderosa que lhe permite criar classes de 
+serviços independentes com dependências bem definidas. Neste exemplo, o serviço 
+``newsletter_manager`` precisa do serviço ``my_mailer`` para funcionar. Quando você 
+define essa dependência no container de serviço, o container cuida de todo o 
+trabalho de instanciar os objetos.
 
-Optional Dependencies: Setter Injection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Dependências Opcionais: Injeção do Setter 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Injecting dependencies into the constructor in this manner is an excellent
-way of ensuring that the dependency is available to use. If you have optional
-dependencies for a class, then "setter injection" may be a better option. This
-means injecting the dependency using a method call rather than through the
-constructor. The class would look like this::
+Injetando dependências no construtor dessa maneira é uma excelente forma de 
+assegurar que a dependência estará disponível para o uso. No entanto, se você possuir 
+dependências opcionais para uma classe, a "injeção do setter" pode ser uma opção melhor. 
+Isto significa injetar a dependência usando uma chamada de método ao invés do
+construtor. A classe ficaria assim::
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -654,7 +665,7 @@ constructor. The class would look like this::
         // ...
     }
 
-Injecting the dependency by the setter method just needs a change of syntax:
+Para injetar a dependência pelo método setter somente é necessária uma mudança da sintaxe:
 
 .. configuration-block::
 
@@ -710,19 +721,19 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
 .. note::
 
-    The approaches presented in this section are called "constructor injection"
-    and "setter injection". The Symfony2 service container also supports
-    "property injection".
+    As abordagens apresentadas nesta seção são chamadas de "injeção de construtor"
+    e "injeção de setter". O container de serviço do Symfony2 também suporta a
+    "injeção de propriedade".
 
-Making References Optional
---------------------------
+Tornando Opcionais as Referências
+---------------------------------
 
-Sometimes, one of your services may have an optional dependency, meaning
-that the dependency is not required for your service to work properly. In
-the example above, the ``my_mailer`` service *must* exist, otherwise an exception
-will be thrown. By modifying the ``newsletter_manager`` service definition,
-you can make this reference optional. The container will then inject it if
-it exists and do nothing if it doesn't:
+Às vezes, um de seus serviços pode ter uma dependência opcional, ou seja,
+a dependência não é exigida por seu serviço para funcionar corretamente. No
+exemplo acima, o serviço ``my_mailer`` *deve* existir, caso contrário, uma exceção
+será gerada. Ao modificar a definição do serviço ``newsletter_manager`` ,
+você pode tornar esta referência opcional. O container irá, então, injetá-lo se
+ele existir e não irá fazer nada caso contrário:
 
 .. configuration-block::
 
@@ -766,9 +777,9 @@ it exists and do nothing if it doesn't:
             array(new Reference('my_mailer', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
         ));
 
-In YAML, the special ``@?`` syntax tells the service container that the dependency
-is optional. Of course, the ``NewsletterManager`` must also be written to
-allow for an optional dependency:
+Em YAML, a sintaxe especial ``@?`` diz ao container de serviço que a dependência
+é opcional. Naturalmente, o ``NewsletterManager`` também deve ser escrito para
+permitir uma dependência opcional:
 
 .. code-block:: php
 
@@ -777,16 +788,16 @@ allow for an optional dependency:
             // ...
         }
 
-Core Symfony and Third-Party Bundle Services
---------------------------------------------
+Serviços do Núcleo do Symfony e de Bundles de Terceiros 
+-------------------------------------------------------
 
-Since Symfony2 and all third-party bundles configure and retrieve their services
-via the container, you can easily access them or even use them in your own
-services. To keep things simple, Symfony2 by default does not require that
-controllers be defined as services. Furthermore Symfony2 injects the entire
-service container into your controller. For example, to handle the storage of
-information on a user's session, Symfony2 provides a ``session`` service,
-which you can access inside a standard controller as follows::
+Desde que o Symfony2 e todos os bundles de terceiros configuram e recuperam os seus serviços
+através do container, você pode acessá-los facilmente ou até mesmo usá-los em seus próprios
+serviços. Para manter tudo simples, o Symfony2, por padrão, não exige que controladores sejam 
+definidos como serviços. Além disso, o Symfony2 injeta o container de serviço inteiro em seu 
+controlador. Por exemplo, para gerenciar o armazenamento de informações em uma sessão do 
+usuário, o Symfony2 fornece um serviço ``session``, que você pode acessar dentro de um 
+controlador padrão da seguinte forma::
 
     public function indexAction($bar)
     {
@@ -796,15 +807,15 @@ which you can access inside a standard controller as follows::
         // ...
     }
 
-In Symfony2, you'll constantly use services provided by the Symfony core or
-other third-party bundles to perform tasks such as rendering templates (``templating``),
-sending emails (``mailer``), or accessing information on the request (``request``).
+No Symfony2, você vai usar constantemente os serviços fornecidos pelo núcleo do Symfony ou
+outros bundles de terceiros para executar tarefas como renderização de templates (``templating``),
+envio de e-mails (``mailer``), ou acessar informações sobre o pedido(``request``).
 
-We can take this a step further by using these services inside services that
-you've created for your application. Let's modify the ``NewsletterManager``
-to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer``).
-Let's also pass the templating engine service to the ``NewsletterManager``
-so that it can generate the email content via a template::
+Podemos levar isto um passo adiante, usando esses serviços dentro dos serviços que
+você criou para a sua aplicação. Vamos modificar o ``NewsletterManager``
+para utilizar o serviço de ``mailer`` real do Symfony2 (no lugar do ``my_mailer``).
+Vamos também passar o serviço de templating engine para o ``NewsletterManager``
+então ele poderá gerar o conteúdo de e-mail através de um template::
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -825,7 +836,7 @@ so that it can generate the email content via a template::
         // ...
     }
 
-Configuring the service container is easy:
+A configuração do service container é fácil:
 
 .. configuration-block::
 
@@ -853,54 +864,54 @@ Configuring the service container is easy:
             )
         ));
 
-The ``newsletter_manager`` service now has access to the core ``mailer``
-and ``templating`` services. This is a common way to create services specific
-to your application that leverage the power of different services within
-the framework.
+O serviço ``newsletter_manager`` agora tem acesso aos serviços do núcleo 
+``mailer`` and ``templating``. Esta é uma forma comum de criar serviços 
+específicos para sua aplicação que aproveitam o poder de diferentes serviços 
+dentro do framework.
 
 .. tip::
 
-    Be sure that ``swiftmailer`` entry appears in your application
-    configuration. As we mentioned in :ref:`service-container-extension-configuration`,
-    the ``swiftmailer`` key invokes the service extension from the
-    ``SwiftmailerBundle``, which registers the ``mailer`` service.
+    Certifique-se de que a entrada ``swiftmailer`` aparece na configuração da 
+    sua aplicação. Como mencionamos em :ref:`service-container-extension-configuration`,
+    a chave ``swiftmailer`` invoca a extensão de serviço do 
+    ``SwiftmailerBundle``, que registra o serviço ``mailer``.
 
 .. index::
-   single: Service Container; Advanced configuration
+   single: Container de Serviço; Configuração avançada
 
-Advanced Container Configuration
---------------------------------
+Configuração Avançada do Container
+----------------------------------
 
-As we've seen, defining services inside the container is easy, generally
-involving a ``service`` configuration key and a few parameters. However,
-the container has several other tools available that help to *tag* services
-for special functionality, create more complex services, and perform operations
-after the container is built.
+Como vimos, a definição de serviços no interior do container é fácil, geralmente
+envolvendo uma chave de configuração ``service`` e alguns parâmetros. No entanto,
+o container possui várias outras ferramentas disponíveis que ajudam a adicionar uma *tag* 
+para uma funcionalidade especial nos serviços, criar serviços mais complexos e executar 
+operações após o container estar construído.
 
-Marking Services as public / private
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Marcando Serviços como público / privado
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When defining services, you'll usually want to be able to access these definitions
-within your application code. These services are called ``public``. For example,
-the ``doctrine`` service registered with the container when using the DoctrineBundle
-is a public service as you can access it via::
+Ao definir os serviços, normalmente você vai desejar poder acessar essas definições
+dentro do código da sua aplicação. Esses serviços são chamados ``publicos``. Por exemplo,
+o serviço ``doctrine`` registrado com o container quando se utiliza o DoctrineBundle
+é um serviço público, já que você pode acessá-lo via::
 
    $doctrine = $container->get('doctrine');
 
-However, there are use-cases when you don't want a service to be public. This
-is common when a service is only defined because it could be used as an
-argument for another service.
+No entanto, existem casos de uso em que você não deseja que um serviço seja público. 
+Isto é comum quando um serviço é definido apenas porque poderia ser usado como um
+argumento para um outro serviço.
 
 .. note::
 
-    If you use a private service as an argument to more than one other service,
-    this will result in two different instances being used as the instantiation
-    of the private service is done inline (e.g. ``new PrivateFooBar()``).
+    Se você usar um serviço privado como um argumento para mais de um serviço,
+    isto irá resultar em duas instâncias diferentes sendo usadas, ​​já que, a instanciação
+    do serviço privado é realizada inline (por exemplo: ``new PrivateFooBar()``).
 
-Simply said: A service will be private when you do not want to access it
-directly from your code.
+Simplesmente falando: Um serviço será privado quando você não quiser acessá-lo
+diretamente em seu código.
 
-Here is an example:
+Aqui está um exemplo:
 
 .. configuration-block::
 
@@ -921,23 +932,23 @@ Here is an example:
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-Now that the service is private, you *cannot* call::
+Agora que o serviço é privado, você *não* pode chamar::
 
     $container->get('foo');
 
-However, if a service has been marked as private, you can still alias it (see
-below) to access this service (via the alias).
+No entanto, se o serviço foi marcado como privado, você ainda pode adicionar um alias
+para ele (veja abaixo) para acessar este serviço (através do alias).
 
 .. note::
 
-   Services are by default public.
+   Os serviços são públicos por padrão.
 
-Aliasing
-~~~~~~~~
+Definindo Alias
+~~~~~~~~~~~~~~~
 
-When using core or third party bundles within your application, you may want
-to use shortcuts to access some services. You can do so by aliasing them and,
-furthermore, you can even alias non-public services.
+Ao usar bundles do núcleo ou de terceiros dentro de sua aplicação, você pode desejar
+usar atalhos para acessar alguns serviços. Isto é possível adicionando alias à eles 
+e, além disso, você pode até mesmo adicionar alias para serviços que não são públicos.
 
 .. configuration-block::
 
@@ -962,16 +973,16 @@ furthermore, you can even alias non-public services.
 
         $containerBuilder->setAlias('bar', 'foo');
 
-This means that when using the container directly, you can access the ``foo``
-service by asking for the ``bar`` service like this::
+Isto significa que, ao usar o container diretamente, você pode acessar o serviço
+``foo`` pedindo pelo serviço ``bar`` como segue::
 
-    $container->get('bar'); // Would return the foo service
+    $container->get('bar'); // retorna o serviço foo
 
-Requiring files
-~~~~~~~~~~~~~~~
+Incluindo Arquivos
+~~~~~~~~~~~~~~~~~~
 
-There might be use cases when you need to include another file just before
-the service itself gets loaded. To do so, you can use the ``file`` directive.
+Podem haver casos de uso quando é necessário incluir outro arquivo antes do 
+serviço em si ser carregado. Para fazer isso, você pode usar a diretiva ``file``.
 
 .. configuration-block::
 
@@ -994,18 +1005,18 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
         $container->setDefinition('foo', $definition);
 
-Notice that symfony will internally call the PHP function require_once
-which means that your file will be included only once per request.
+Observe que o symfony irá, internamente, chamar a função PHP require_once 
+o que significa que seu arquivo será incluído apenas uma vez por pedido.
 
 .. _book-service-container-tags:
 
 Tags (``tags``)
 ~~~~~~~~~~~~~~~
 
-In the same way that a blog post on the Web might be tagged with things such
-as "Symfony" or "PHP", services configured in your container can also be
-tagged. In the service container, a tag implies that the service is meant
-to be used for a specific purpose. Take the following example:
+Da mesma forma que podem ser definidas tags para um post de um blog na web com palavras 
+como "Symfony" ou "PHP", também podem ser definidas tags para os serviços configurados 
+em seu container. No container de serviço, a presença de uma tag significa que o serviço 
+destina-se ao uso para um fim específico. Veja o seguinte exemplo:
 
 .. configuration-block::
 
@@ -1029,18 +1040,18 @@ to be used for a specific purpose. Take the following example:
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 
-The ``twig.extension`` tag is a special tag that the ``TwigBundle`` uses
-during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``foo.twig.extension`` service should be registered
-as a Twig extension with Twig. In other words, Twig finds all services tagged
-with ``twig.extension`` and automatically registers them as extensions.
+A tag ``twig.extension`` é uma tag especial que o ``TwigBundle`` usa durante a 
+configuração. Ao definir a tag ``twig.extension`` para este serviço, o bundle 
+saberá que o serviço ``foo.twig.extension`` deve ser registrado como uma extensão 
+Twig com o Twig. Em outras palavras, o Twig encontra todos os serviços com a tag
+``twig.extension`` e automaticamente registra-os como extensões.
 
-Tags, then, are a way to tell Symfony2 or other third-party bundles that
-your service should be registered or used in some special way by the bundle.
+Tags, então, são uma forma de dizer ao Symfony2 ou outros bundles de terceiros que
+o seu serviço deve ser registrado ou usado de alguma forma especial pelo bundle.
 
-The following is a list of tags available with the core Symfony2 bundles.
-Each of these has a different effect on your service and many tags require
-additional arguments (beyond just the ``name`` parameter).
+Segue abaixo uma lista das tags disponíveis com os bundles do núcleo do Symfony2.
+Cada uma delas tem um efeito diferente no seu serviço e muitas tags requerem
+argumentos adicionais (além do parâmetro ``name``).
 
 * assetic.filter
 * assetic.templating.php
@@ -1057,11 +1068,11 @@ additional arguments (beyond just the ``name`` parameter).
 * translation.loader
 * validator.constraint_validator
 
-Learn more from the Cookbook
-----------------------------
+Saiba mais
+----------
 
-* :doc:`/cookbook/service_container/factories`
-* :doc:`/cookbook/service_container/parentservices`
+* :doc:`/components/dependency_injection/factories`
+* :doc:`/components/dependency_injection/parentservices`
 * :doc:`/cookbook/controller/service`
 
-.. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
+.. _`arquitetura orientada à serviços`: http://wikipedia.org/wiki/Service-oriented_architecture
