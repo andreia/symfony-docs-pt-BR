@@ -1,16 +1,16 @@
-Coding Standards
-================
+Padrões de Codificação
+======================
 
-When contributing code to Symfony2, you must follow its coding standards. To
-make a long story short, here is the golden rule: **Imitate the existing
-Symfony2 code**. Most open-source Bundles and libraries used by Symfony2 also
-follow the same guidelines, and you should too.
+Para contribuir com código para o Symfony2, você deve seguir seus padrões de
+codificação. Para encurtar a história, esta é a regra de ouro: **Imite o código
+existente no Symfony2**. Muitos Bundles e bilbiotecas usados pelo Symfony2
+também seguem as mesmas regras, e você também deveria.
 
-Remember that the main advantage of standards is that every piece of code
-looks and feels familiar, it's not about this or that being more readable.
+Lembre-se que a principal vantagem de padrões é que cada pedaço de código parece
+familiar, não é sobre isso ou aquilo ser mais legível.
 
-Since a picture - or some code - is worth a thousand words, here's a short
-example containing most features described below:
+Como uma imagem — ou código — diz mais que mil palavras, aqui está um exemplo
+curto, contendo a maior parte dos aspectos descrito abaixo.
 
 .. code-block:: php
 
@@ -58,82 +58,85 @@ example containing most features described below:
         }
     }
 
-Structure
+
+Estrutura
 ---------
 
-* Never use short tags (`<?`);
+* Nunca use *short tags* (`<?`);
 
-* Don't end class files with the usual `?>` closing tag;
+* Não termine arquivos de classe com o a tag `?>` de costume;
 
-* Indentation is done by steps of four spaces (tabs are never allowed);
+* Indentação é feita em passos de 4 espaços (tabulações nunca são permitidas);
 
-* Use the linefeed character (`0x0A`) to end lines;
+* Use o caractere de nova linha (LF ou `0x0A`) para encerrar linhas;
 
-* Add a single space after each comma delimiter;
+* Coloque um único espaço depois de cada vírgula;
 
-* Don't put spaces after an opening parenthesis and before a closing one;
+* Não coloque espaços depois de abrir parênteses ou antes de fechá-los;
 
-* Add a single space around operators (`==`, `&&`, ...);
+* Coloque um único espaço em volta de operadores (`==`, `&&`, …);
 
-* Add a single space before the opening parenthesis of a control keyword
-  (`if`, `else`, `for`, `while`, ...);
+* Coloque um único espaço antes de abrir parênteses de uma palavra de controle
+(`if`, `else`, `for`, `while`, …);
 
-* Add a blank line before `return` statements, unless the return is alone
-  inside a statement-group (like an `if` statement);
+* Coloque uma linha em braco antes de uma declaração `return`, a não ser que a
+declaração esteja sozinha dentro de um bloco (como dentro de um `if`);
 
-* Don't add trailing spaces at the end of lines;
+* Não acrescente espaços no final das linhas;
 
-* Use braces to indicate control structure body regardless of the number of
-  statements it contains;
+* Use chaves para indicar o corpo de estruturas de controle, não importando o
+númedo de declarações que ele contém;
 
-* Put braces on their own line for classes, methods, and functions
-  declaration;
+* Coloque chaves nas suas prórpias linhas na declaração de classes, métodos e funções;
 
-* Separate the conditional statements (`if`, `else`, ...) and the opening
-  brace with a single space and no blank line;
+* Separe as declarações de estruturas de controle (`if`, `else`, …) e suas
+chaves de abertura com um único espaço e nenhuma linha em branco;
 
-* Declare visibility explicitly for class, methods, and properties (usage of
-  `var` is prohibited);
+* Declare explicitamente a visibilidade de classes, métodos e propriedades. O
+uso de `var` é proibido;
 
-* Use lowercase PHP native typed constants: `false`, `true`, and `null`. The
-  same goes for `array()`;
+* Use as constantes nativas do PHP em caixa baixa: `false`, `true` e `null`. O
+mesmo vale para `array()`;
 
-* Use uppercase strings for constants with words separated with underscores;
+* Use caixa alta para constantes, com as palavras separadas por `_`;
 
-* Define one class per file;
+* Defina uma classe por arquivo;
 
-* Declare class properties before methods;
+* Declare as propriedades da classe antes dos métodos;
 
-* Declare public methods first, then protected ones and finally private ones.
+* Declare métodos públicos primeiro, depois os protegidos e, finalmente, os
+privados.
 
-Naming Conventions
-------------------
 
-* Use camelCase, not underscores, for variable, function and method
-  names;
+Padrões de nomeação
+-------------------
 
-* Use underscores for option, argument, parameter names;
+* Use camelCase, não underscores (`_`), para variáveis, funções e métodos;
 
-* Use namespaces for all classes;
+* Use underscores para nomes de opções, argumentos e parâmetros;
 
-* Suffix interfaces with `Interface`;
+* Use namespaces em todas as classes;
 
-* Use alphanumeric characters and underscores for file names;
+* Sufixe nomes de interface com `Interface`;
 
-* Don't forget to look at the more verbose :doc:`conventions` document for
-  more subjective naming considerations.
+* Use caracteres alfanuméricos e underscores para nomes de arquivos;
 
-Documentation
--------------
+* Não se esqueça de ver no documento mais explicativo :doc:`conventions` para
+considerações de nomeação mais subjetivas.
 
-* Add PHPDoc blocks for all classes, methods, and functions;
 
-* Omit the `@return` tag if the method does not return anything;
+Documentação
+------------
 
-* The `@package` and `@subpackage` annotations are not used.
+* Insira blocks PHPDoc para todas as classes, métodos e funções;
 
-License
+* Omita a tag `@return` se o método não  retorna nada;
+
+* As anotações `@package` e `@subpackage` não são usadas.
+
+
+Licença
 -------
 
-* Symfony is released under the MIT license, and the license block has to be
-  present at the top of every PHP file, before the namespace.
+* Symfony é distribuido sob a licença MIT, e o bloco de licença deve estar
+presente no topo de todo arquivo PHP, antes do namespace.

@@ -2,24 +2,24 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
 
-* **Controllers**
+* **Controladores**
 
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
 
-* **Routing**
+* **Roteamento**
 
   * :doc:`/cookbook/routing/scheme`
   * :doc:`/cookbook/routing/slash_in_parameter`
 
-* **Handling JavaScript and CSS Assets**
+* **Manuseando Assets JavaScript e CSS**
 
   * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`
   * :doc:`/cookbook/assetic/jpeg_optimize`
   * :doc:`/cookbook/assetic/apply_to_option`
 
-* **Database Interaction (Doctrine)**
+* **Interação com o Banco de Dados (Doctrine)**
 
   * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
@@ -29,7 +29,7 @@
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
   * :doc:`/cookbook/doctrine/custom_dql_functions`
 
-* **Forms and Validation**
+* **Formulários e Validação**
 
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/data_transformers`
@@ -39,7 +39,7 @@
   * :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
-* **Configuration and the Service Container**
+* **Configuração e o Service Container**
 
   * :doc:`/cookbook/configuration/environments`
   * :doc:`/cookbook/configuration/external_parameters`
@@ -55,21 +55,21 @@
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/extension`
 
-* **Emailing**
+* **E-mails**
 
   * :doc:`/cookbook/email`
   * :doc:`/cookbook/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
 
-* **Testing**
+* **Testando**
 
   * :doc:`/cookbook/testing/http_authentication`
   * :doc:`/cookbook/testing/insulating_clients`
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
 
-* **Security**
+* **Segurança**
 
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
@@ -83,16 +83,16 @@
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
 
-* **Caching**
+* **Cache**
 
   * :doc:`/cookbook/cache/varnish`
 
-* **Templating**
+* **Templates**
 
   * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
 
-* **Tools, Logging and Internals**
+* **Ferramentas, Logging e Internals**
 
   * :doc:`/cookbook/tools/autoloader`
   * :doc:`/cookbook/tools/finder`
@@ -104,13 +104,13 @@
 
   * :doc:`/cookbook/web_services/php_soap_extension`
 
-* **Extending Symfony**
+* **Estendendo o Symfony**
 
   * :doc:`/cookbook/event_dispatcher/class_extension`
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * :doc:`/cookbook/request/mime_type`
   * :doc:`/cookbook/profiler/data_collector`
 
-* **Symfony2 for symfony1 Users**
+* **Symfony2 para Usuários do symfony1**
 
   * :doc:`/cookbook/symfony1`

@@ -1,121 +1,120 @@
-How Symfony2 differs from symfony1
+Como o Symfony2 difere do symfony1
 ==================================
 
-The Symfony2 framework embodies a significant evolution when compared with
-the first version of the framework. Fortunately, with the MVC architecture
-at its core, the skills used to master a symfony1 project continue to be
-very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
-routing, controllers and templates all remain.
+O framework Symfony2 incorpora uma evolução significativa quando comparado com
+a primeira versão do framework. Felizmente, com a arquitetura MVC
+em sua essência, as habilidades usadas para dominar um projeto symfony1 continuam a ser
+muito relevantes ao desenvolver com o Symfony2. Claro, o ``app.yml`` não existe mais, mas quanto ao 
+roteamento, controladores e templates, todos permanecem.
 
-In this chapter, we'll walk through the differences between symfony1 and Symfony2.
-As you'll see, many tasks are tackled in a slightly different way. You'll
-come to appreciate these minor differences as they promote stable, predictable,
-testable and decoupled code in your Symfony2 applications.
+Neste capítulo, vamos percorrer as diferenças entre o symfony1 e Symfony2.
+Como você verá, muitas tarefas são abordadas de uma forma ligeiramente diferente. Você vai
+apreciar estas pequenas diferenças pois elas promovem um código estável, previsível,
+testável e desacoplado em suas aplicações Symfony2.
 
-So, sit back and relax as we take you from "then" to "now".
+Então, sente e relaxe, pois vamos guiá-lo a partir de agora.
 
-Directory Structure
--------------------
+Estrutura de Diretórios
+-----------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
-you'll notice a very different directory structure than in symfony1. The
-differences, however, are somewhat superficial.
+Ao olhar um projeto Symfony2 - por exemplo, o `Symfony2 Standard`_ -
+você verá uma estrutura de diretórios muito diferente da encontrada no symfony1. 
+As diferenças, no entanto, são um tanto superficiais.
 
-The ``app/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
+O Diretório ``app/``
+~~~~~~~~~~~~~~~~~~~~
 
-In symfony1, your project has one or more applications, and each lives inside
-the ``apps/`` directory (e.g. ``apps/frontend``). By default in Symfony2,
-you have just one application represented by the ``app/`` directory. Like
-in symfony1, the ``app/`` directory contains configuration specific to that
-application. It also contains application-specific cache, log and template
-directories as well as a ``Kernel`` class (``AppKernel``), which is the base
-object that represents the application.
+No symfony1, o seu projeto tem uma ou mais aplicações, e cada uma fica localizada dentro
+do diretório ``apps/`` (ex. ``apps/frontend``). Por padrão, no Symfony2,
+você tem apenas uma aplicação representada pelo diretório ``app/``. Como 
+no symfony1, o diretório ``app/`` contém a configuração específica para determinada
+aplicação. Ele também contém os diretórios cache, log e template
+específicos para a aplicação, bem como, uma classe ``Kernel`` (``AppKernel``), que é o 
+objeto base que representa a aplicação.
 
-Unlike symfony1, almost no PHP code lives in the ``app/`` directory. This
-directory is not meant to house modules or library files as it did in symfony1.
-Instead, it's simply the home of configuration and other resources (templates,
-translation files).
+Ao contrário do symfony1, quase nenhum código PHP reside no diretório ``app/``. Este
+diretório não pretende armazenar os módulos ou arquivos de biblioteca como acontece no symfony1.
+Em vez disso, ele é simplesmente o lar da configuração e outros recursos (templates,
+arquivos de tradução).
 
-The ``src/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
+O Diretório ``src/``
+~~~~~~~~~~~~~~~~~~~~
 
-Put simply, your actual code goes here. In Symfony2, all actual application-code
-lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
-each bundle lives inside the ``src`` directory. In that way, the ``src``
-directory is a bit like the ``plugins`` directory in symfony1, but much more
-flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
-third-party bundles may live in the ``vendor/bundles/`` directory.
+Simplificando, o seu código fica armazendo aqui. No Symfony2, todo o código real da aplicação 
+reside dentro de um bundle (equivalente a um plugin no symfony1) e, por padrão,
+cada bundle reside dentro do diretório ``src``. Dessa forma, o diretório ``src``
+é um pouco parecido com o diretório ``plugins`` do symfony1, mas muito mais
+flexível. Além disso, enquanto os *seus* bundles vão residir no diretório ``src/``,
+os bundles de terceiros podem residir no diretório ``vendor/bundles/``.
 
-To get a better picture of the ``src/`` directory, let's first think of a
-symfony1 application. First, part of your code likely lives inside one or
-more applications. Most commonly these include modules, but could also include
-any other PHP classes you put in your application. You may have also created
-a ``schema.yml`` file in the ``config`` directory of your project and built
-several model files. Finally, to help with some common functionality, you're
-using several third-party plugins that live in the ``plugins/`` directory.
-In other words, the code that drives your application lives in many different
-places.
+Para obter uma imagem melhor do diretório ``src/``, vamos primeiro pensar em uma
+aplicação symfony1. Primeiro, parte do seu código provavelmente reside dentro de uma ou
+mais aplicações. Mais geralmente estas incluem módulos, mas também podem incluir
+quaisquer outras classes PHP que você adicionar na sua aplicação. Você também pode ter criado
+um arquivo ``schema.yml`` no diretório ``config`` do seu projeto e construiu
+vários arquivos de modelo. Finalmente, para ajudar com alguma funcionalidade comum, você está
+usando vários plugins de terceiros que residem no diretório ``plugins/``.
+Em outras palavras, o código que compôem a sua aplicação reside em vários locais 
+diferentes.
 
-In Symfony2, life is much simpler because *all* Symfony2 code must live in
-a bundle. In our pretend symfony1 project, all the code *could* be moved
-into one or more plugins (which is a very good practice, in fact). Assuming
-that all modules, PHP classes, schema, routing configuration, etc were moved
-into a plugin, the symfony1 ``plugins/`` directory would be very similar
-to the Symfony2 ``src/`` directory.
+No Symfony2, a vida é muito mais simples porque *todo* o código Symfony2 deve residir em
+um bundle. Em nosso projeto symfony1, todo o código *pode* ser movido
+em um ou mais plugins (o que, na verdade, é uma prática muito boa). Assumindo
+que todos os módulos, classes PHP, esquema, configuração de roteamento, etc, foram movidos
+para um plugin, o diretório ``plugins/`` do symfony1 seria muito semelhante
+ao diretório ``src/`` do Symfony2.
 
-Put simply again, the ``src/`` directory is where your code, assets,
-templates and most anything else specific to your project will live.
+Simplificando novamente, o diretório ``src/`` é onde o seu código, assets,
+templates e mais qualquer outra coisa específica ao seu projeto, vai residir.
 
-The ``vendor/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~
+O Diretório ``vendor/``
+~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
-directory in symfony1, which was the conventional directory for all vendor
-libraries and bundles. By default, you'll find the Symfony2 library files in
-this directory, along with several other dependent libraries such as Doctrine2,
-Twig and Swiftmailer. 3rd party Symfony2 bundles usually live in the
+O diretório ``vendor/`` é basicamente equivalente ao diretório
+``lib/vendor/`` do symfony1, que foi o diretório convencional para todas as bibliotecas 
+vendor e bundles. Por padrão, você vai encontrar os arquivos de biblioteca do Symfony2
+nesse diretório, juntamente com várias outras bibliotecas dependentes, como Doctrine2,
+Twig e SwiftMailer. Bundles Symfony2 de terceiros geralmente residem no 
 ``vendor/bundles/``.
 
-The ``web/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
+O Diretório ``web/``
+~~~~~~~~~~~~~~~~~~~~
 
-Not much has changed in the ``web/`` directory. The most noticeable difference
-is the absence of the ``css/``, ``js/`` and ``images/`` directories. This
-is intentional. Like with your PHP code, all assets should also live inside
-a bundle. With the help of a console command, the ``Resources/public/``
-directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
-directory. This allows you to keep assets organized inside your bundle, but
-still make them available to the public. To make sure that all bundles are
-available, run the following command::
+Não mudou muita coisa no diretório ``web/``. A diferença mais notável é a ausência 
+dos diretórios ``css/``, ``js/`` e ``images/``. Isto é intencional. Tal como o seu 
+código PHP, todos os assets também devem residir dentro de um bundle. Com a ajuda 
+de um comando do console, o diretório ``Resources/public/`` de cada pacote é copiado 
+ou ligado simbolicamente ao diretório ``web/bundles/``. Isto permite-lhe manter os 
+assets organizados dentro do seu bundle, mas, ainda torná-los disponíveis ao público. 
+Para certificar-se de que todos os bundles estão disponíveis, execute o seguinte comando::
 
     php app/console assets:install web
 
 .. note::
 
-   This command is the Symfony2 equivalent to the symfony1 ``plugin:publish-assets``
-   command.
+   Este comando é equivalente no Symfony2 ao comando ``plugin:publish-assets`` do 
+   symfony1.
 
-Autoloading
------------
+O Autoloading
+-------------
 
-One of the advantages of modern frameworks is never needing to worry about
-requiring files. By making use of an autoloader, you can refer to any class
-in your project and trust that it's available. Autoloading has changed in
-Symfony2 to be more universal, faster, and independent of needing to clear
-your cache.
+Uma das vantagens dos frameworks modernos é nunca ter que preocupar-se em incluir 
+arquivos. Ao fazer uso de um autoloader, você pode fazer referência à qualquer classe
+em seu projeto e confiar que ela estará disponível. O autoloading mudou no Symfony2 
+para ser mais universal, mais rápido e independente da necessidade de limpar o 
+seu cache.
 
-In symfony1, autoloading was done by searching the entire project for the
-presence of PHP class files and caching this information in a giant array.
-That array told symfony1 exactly which file contained each class. In the
-production environment, this caused you to need to clear the cache when classes
-were added or moved.
+No symfony1, o autoloading é realizado pesquisando em todo o projeto pela presença 
+de arquivos de classe PHP e realizando o cache desta informação em um array gigante.
+Este array diz ao symfony1 exatamente qual arquivo continha cada classe. No ambiente 
+de produção, isto faz com que você precise limpar o cache quando as classes
+forem adicionadas ou movidas.
 
-In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
-The idea behind the autoloader is simple: the name of your class (including
-the namespace) must match up with the path to the file containing that class.
-Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
-example::
+No Symfony2, uma nova classe - ``UniversalClassLoader`` - lida com esse processo.
+A idéia por trás do autoloader é simples: o nome da sua classe (incluindo
+o namespace) deve coincidir com o caminho para o arquivo que contém essa classe.
+Considere, por exemplo, o ``FrameworkExtraBundle`` da Edição Standard do 
+Symfony2::
 
     namespace Sensio\Bundle\FrameworkExtraBundle;
 
@@ -126,14 +125,14 @@ example::
     {
         // ...
 
-The file itself lives at
-``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
-As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in 
-(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
-``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
-namespace in the ``vendor/bundle`` directory:
+O arquivo em si reside em 
+``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+Como você pode ver, a localização do arquivo segue o namespace da classe.
+Especificamente, o namespace, ``Sensio\Bundle\FrameworkExtraBundle``, indica
+o diretório que o arquivo deve residir em 
+(``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``). Isto é porque, no
+arquivo ``app/autoload.php``, você vai configurar o Symfony para procurar pelo namespace ``Sensio``
+no diretório ``vendor/sensio``:
 
 .. code-block:: php
 
@@ -142,29 +141,29 @@ namespace in the ``vendor/bundle`` directory:
     // ...
     $loader->registerNamespaces(array(
         // ...
-        'Sensio'           => __DIR__.'/../vendor/bundles',
+        'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
     ));
 
-If the file did *not* live at this exact location, you'd receive a
-``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``
-error. In Symfony2, a "class does not exist" means that the suspect class
-namespace and physical location do not match. Basically, Symfony2 is looking
-in one exact location for that class, but that location doesn't exist (or
-contains a different class). In order for a class to be autoloaded, you
-**never need to clear your cache** in Symfony2.
+Se o arquivo *não* residir nesta localização exata, você receberá o seguinte
+erro: ``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``.
+No Symfony2, a mensagem "classe não existe" significa que o namespace suspeito da classe 
+e a sua localização física não correspondem. Basicamente, o Symfony2 estará procurando
+em um local exato por esta classe, mas esse local não existe (ou contém uma classe 
+diferente). A fim de que uma classe seja carregada automaticamente, você
+**nunca precisará limpar o cache** no Symfony2.
 
-As mentioned before, for the autoloader to work, it needs to know that the
-``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
-example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/``
-directory. This mapping is entirely controlled by you via the
-``app/autoload.php`` file.
+Como mencionado anteriormente, para o autoloader funcionar, ele precisa saber que o
+namespace ``Sensio`` reside no diretório ``vendor/bundles`` e que, por
+exemplo, o namespace ``Doctrine`` reside no diretório ``vendor/doctrine/lib/``
+. Este mapeamento é controlado inteiramente por você através do
+arquivo ``app/autoload.php``.
 
-If you look at the ``HelloController`` from the Symfony2 Standard Edition you
-can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
-``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
-do not need to explicitly configure the location of bundles that live in the
-``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
-the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
+Se você olhar o ``HelloController`` da Edição Standard do Symfony2 
+poderá ver que ele reside no namespace ``Acme\DemoBundle\Controller``. Sim, o
+namespace ``Acme`` não é definido no ``app/autoload.php``. Por padrão, você
+não precisa configurar explicitamente o local dos bundles que residem no 
+diretório ``src/``. O ``UniversalClassLoader`` está configurado para usar como alternativa
+o diretório ``src/`` usando o seu método ``registerNamespaceFallbacks``:
 
 .. code-block:: php
 
@@ -175,60 +174,60 @@ the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
         __DIR__.'/../src',
     ));
 
-Using the Console
+Usando o Console
 -----------------
 
-In symfony1, the console is in the root directory of your project and is
-called ``symfony``:
+No symfony1, o console está no diretório raiz do seu projeto e é
+chamado ``symfony``:
 
 .. code-block:: text
 
     php symfony
 
-In Symfony2, the console is now in the app sub-directory and is called
+No Symfony2, o console está agora no sub-diretório app e é chamado
 ``console``:
 
 .. code-block:: text
 
     php app/console
 
-Applications
-------------
+Aplicações
+----------
 
-In a symfony1 project, it is common to have several applications: one for the
-frontend and one for the backend for instance.
+Em um projeto symfony1, é comum ter várias aplicações: uma para o
+frontend e uma para o backend, por exemplo.
 
-In a Symfony2 project, you only need to create one application (a blog
-application, an intranet application, ...). Most of the time, if you want to
-create a second application, you might instead create another project and
-share some bundles between them.
+Em um projeto Symfony2, você só precisa criar uma única aplicação (um aplicação
+blog, uma aplicação intranet, ...). Na maioria das vezes, se você desejar
+criar uma segunda aplicação, você pode, em vez, criar outro projeto e 
+compartilhar alguns bundles entre elas.
 
-And if you need to separate the frontend and the backend features of some
-bundles, you can create sub-namespaces for controllers, sub-directories for
-templates, different semantic configurations, separate routing configurations,
-and so on.
+E, se você precisa separar as funcionalidades do frontend e backend de alguns
+bundles, você pode criar sub-namespaces para os controladores, sub-diretórios para
+templates, diferentes configurações semânticas, configurações separadas de roteamento,
+e assim por diante.
 
-Of course, there's nothing wrong with having multiple applications in your
-project, that's entirely up to you. A second application would mean a new
-directory, e.g. ``my_app/``, with the same basic setup as the ``app/`` directory.
+Claro, não há nada de errado em ter várias aplicações em seu projeto, isto depende
+inteiramente de você. Uma segunda aplicação significaria um novo diretório, 
+por exemplo: ``my_app/``, com a mesma configuração básica do diretório ``app/``.
 
 .. tip::
 
-    Read the definition of a :term:`Project`, an :term:`Application`, and a
-    :term:`Bundle` in the glossary.
+    Leia a definição de :term:`Projeto`, :term:`Aplicação` e 
+    :term:`Bundle` no glossário.
 
-Bundles and Plugins
--------------------
+Bundles e Plugins
+-----------------
 
-In a symfony1 project, a plugin could contain configuration, modules, PHP
-libraries, assets and anything else related to your project. In Symfony2,
-the idea of a plugin is replaced by the "bundle". A bundle is even more powerful
-than a plugin because the core Symfony2 framework is brought in via a series
-of bundles. In Symfony2, bundles are first-class citizens that are so flexible
-that even core code itself is a bundle.
+Em um projeto symfony1, um plugin pode conter configuração, módulos, bibliotecas PHP,
+assets e qualquer outra coisa relacionada ao seu projeto. No Symfony2, 
+a idéia de um plugin é substituída pelo "bundle". Um bundle é ainda mais poderoso
+do que um plugin porque o núcleo do framework Symfony2 é fornecido através de uma série
+de bundles. No Symfony2, os bundles são cidadãos de primeira classe que são tão flexíveis
+que mesmo o código do núcleo em si é um bundle.
 
-In symfony1, a plugin must be enabled inside the ``ProjectConfiguration``
-class::
+No symfony1, um plugin deve ser ativado dentro da classe 
+``ProjectConfiguration``::
 
     // config/ProjectConfiguration.class.php
     public function setup()
@@ -236,7 +235,7 @@ class::
         $this->enableAllPluginsExcept(array(/* some plugins here */));
     }
 
-In Symfony2, the bundles are activated inside the application kernel::
+No Symfony2, os bundles são ativados dentro do kernel da aplicação::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -247,28 +246,28 @@ In Symfony2, the bundles are activated inside the application kernel::
             // ...
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
-        
+
         return $bundles;
     }
 
-Routing (``routing.yml``) and Configuration (``config.yml``)
+Roteamento (``routing.yml``) e configuração (``config.yml``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
-automatically loaded inside any plugin. In Symfony2, routing and application
-configuration inside a bundle must be included manually. For example, to
-include a routing resource from a bundle called ``AcmeDemoBundle``, you can
-do the following::
+No symfony1, os arquivos de configuração ``routing.yml`` e ``app.yml`` são automaticamente 
+carregados dentro de qualquer plugin. No Symfony2, o roteamento e a configuração da 
+aplicação dentro de um bundle devem ser incluídos manualmente. Por exemplo, para
+incluir um recurso de roteamento de um bundle chamado ``AcmeDemoBundle``, você pode
+fazer o seguinte::
 
     # app/config/routing.yml
     _hello:
         resource: "@AcmeDemoBundle/Resources/config/routing.yml"
 
-This will load the routes found in the ``Resources/config/routing.yml`` file
-of the ``AcmeDemoBundle``. The special ``@AcmeDemoBundle`` is a shortcut syntax
-that, internally, resolves to the full path to that bundle.
+Isto irá carregar as rotas encontradas no arquivo ``Resources/config/routing.yml`` do 
+``AcmeDemoBundle``. O especial ``@AcmeDemoBundle`` é uma sintaxe de atalho
+que, internamente, resolve o caminho completo para esse bundle.
 
-You can use this same strategy to bring in configuration from a bundle:
+Você pode usar essa mesma estratégia para trazer a configuração de um bundle:
 
 .. code-block:: yaml
 
@@ -276,10 +275,10 @@ You can use this same strategy to bring in configuration from a bundle:
     imports:
         - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
 
-In Symfony2, configuration is a bit like ``app.yml`` in symfony1, except much
-more systematic. With ``app.yml``, you could simply create any keys you wanted.
-By default, these entries were meaningless and depended entirely on how you
-used them in your application:
+No Symfony2, a configuração é um pouco semelhante ao ``app.yml`` do symfony1, exceto que é muito
+mais sistemática. Com o ``app.yml``, você poderia simplesmente criar as chaves que desejava.
+Por padrão, as entradas eram sem significado e dependia inteiramente de como você
+utilizava em sua aplicação:
 
 .. code-block:: yaml
 
@@ -288,23 +287,23 @@ used them in your application:
       email:
         from_address:  foo.bar@example.com
 
-In Symfony2, you can also create arbitrary entries under the ``parameters``
-key of your configuration:
+No Symfony2, você também pode criar entradas arbitrárias sob a chave ``parameters``
+de sua configuração:
 
 .. code-block:: yaml
 
     parameters:
         email.from_address: foo.bar@example.com
 
-You can now access this from a controller, for example::
+Você pode agora acessar ele a partir de um controlador, por exemplo::
 
     public function helloAction($name)
     {
         $fromAddress = $this->container->getParameter('email.from_address');
     }
 
-In reality, the Symfony2 configuration is much more powerful and is used
-primarily to configure objects that you can use. For more information, see
-the chapter titled ":doc:`/book/service_container`".
+Na realidade, a configuração no Symfony2 é muito mais potente e é usada
+principalmente para configurar objetos que você pode usar. Para maiores informações, 
+visite o capítulo intitulado ":doc:`/book/service_container`".
 
 .. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
