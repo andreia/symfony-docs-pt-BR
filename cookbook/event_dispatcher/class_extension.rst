@@ -1,11 +1,11 @@
 .. index::
-   single: Event Dispatcher
+   single: Dispatcher de Eventos
 
-How to extend a Class without using Inheritance
-===============================================
+Como estender uma Classe sem usar Herança
+=========================================
 
-To allow multiple classes to add methods to another one, you can define the
-magic ``__call()`` method in the class you want to be extended like this:
+Para permitir que várias classes adicionem métodos para uma outra, você pode definir o
+método mágico ``__call()`` na classe que você deseja que seja estendida da seguinte forma:
 
 .. code-block:: php
 
@@ -15,23 +15,23 @@ magic ``__call()`` method in the class you want to be extended like this:
 
         public function __call($method, $arguments)
         {
-            // create an event named 'foo.method_is_not_found'
+            // cria um evento chamado 'foo.method_is_not_found'
             $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
             $this->dispatcher->dispatch($this, 'foo.method_is_not_found', $event);
 
-            // no listener was able to process the event? The method does not exist
+            // nenhum listener foi capaz de processar o evento? O método não existe
             if (!$event->isProcessed()) {
                 throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
             }
 
-            // return the listener returned value
+            // retorna o valor retornado pelo listener 
             return $event->getReturnValue();
         }
     }
 
-This uses a special ``HandleUndefinedMethodEvent`` that should also be
-created. This is a generic class that could be reused each time you need to
-use this pattern of class extension:
+Isto utiliza um ``HandleUndefinedMethodEvent`` especial que também deve ser
+criado. Esta é uma classe genérica que poderia ser reutilizada cada vez que você precisa
+utilizar esse padrão de extensão de classe:
 
 .. code-block:: php
 
@@ -68,7 +68,7 @@ use this pattern of class extension:
         }
 
         /**
-         * Sets the value to return and stops other listeners from being notified
+         * Define o valor de retorno e pára a notificação para outros listeners
          */
         public function setReturnValue($val)
         {
@@ -88,8 +88,8 @@ use this pattern of class extension:
         }
     }
 
-Next, create a class that will listen to the ``foo.method_is_not_found`` event
-and *add* the method ``bar()``:
+Em seguida, crie uma classe que vai ouvir o evento ``foo.method_is_not_found``
+e *adicionar* o método ``bar()``:
 
 .. code-block:: php
 
@@ -97,28 +97,28 @@ and *add* the method ``bar()``:
     {
         public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)
         {
-            // we only want to respond to the calls to the 'bar' method
+            // queremos somente responder as chamadas do método 'bar'
             if ('bar' != $event->getMethod()) {
-                // allow another listener to take care of this unknown method
+                // permite que outro listener cuide deste método desconhecido
                 return;
             }
 
-            // the subject object (the foo instance)
+            // o objeto (a instância foo)
             $foo = $event->getSubject();
 
-            // the bar method arguments
+            // os argumentos do método bar
             $arguments = $event->getArguments();
 
-            // do something
+            // faz algo
             // ...
 
-            // set the return value
+            // define o valor de retorno
             $event->setReturnValue($someValue);
         }
     }
 
-Finally, add the new ``bar`` method to the ``Foo`` class by register an
-instance of ``Bar`` with the ``foo.method_is_not_found`` event:
+Por fim, adicione o novo método ``bar`` na classe ``Foo`` para registrar uma
+instância de ``Bar`` com o evento ``foo.method_is_not_found``:
 
 .. code-block:: php
 
