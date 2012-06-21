@@ -1,30 +1,31 @@
 .. index::
    single: Request; Add a request format and mime type
 
-How to register a new Request Format and Mime Type
+Como registrar um novo Formato de Requisição e de Mime Type
 ==================================================
 
-Every ``Request`` has a "format" (e.g. ``html``, ``json``), which is used
-to determine what type of content to return in the ``Response``. In fact,
-the request format, accessible via
+Todo ``Request`` possui um "formato" (e.g. ``html``, ``json``), que é usado
+para determinar o tipo de conteúdo a ser retornado pelo ``Response``. Na
+verdade, o formato de requisição, acessível pelo método
 :method:`Symfony\\Component\\HttpFoundation\\Request::getRequestFormat`,
-is used to set the MIME type of the ``Content-Type`` header on the ``Response``
-object. Internally, Symfony contains a map of the most common formats (e.g.
-``html``, ``json``) and their associated MIME types (e.g. ``text/html``,
-``application/json``). Of course, additional format-MIME type entries can
-easily be added. This document will show how you can add the ``jsonp`` format
-and corresponding MIME type.
+é usado para definir o MIME type do cabeçalho ``Content-Type`` no objeto
+``Response``. Internamente, Symfony contém um mapa dos formatos mais comuns
+(e.g. ``html``, ``json``) e seus MIME types associados (e.g. ``text/html``,
+``application/json``). Naturalmente, formatos adicionais de MIME type de
+entrada podem ser facilmente adicionados. Este documento irá mostrar como
+você pode adicionar o formato ``jsonp`` e seu MIME type correspondente.
 
-Create an ``kernel.request`` Listener
+Criando um ``kernel.request`` Listener
 -------------------------------------
 
-The key to defining a new MIME type is to create a class that will "listen" to
-the ``kernel.request`` event dispatched by the Symfony kernel. The
-``kernel.request`` event is dispatched early in Symfony's request handling
-process and allows you to modify the request object.
+A chave para definir um novo MIME type é criar uma classe que irá "ouvir" o
+evento ``kernel.request`` enviado pelo kernel do Symfony. O evento
+``kernel.request`` é enviado no início no processo de manipulação da
+requisição Symfony e permite que você modifique o objeto da requisição.
 
-Create the following class, replacing the path with a path to a bundle in your
-project::
+
+Crie a seguinte classe, substituindo o caminho com um caminho para um pacote
+em seu projeto::
 
     // src/Acme/DemoBundle/RequestListener.php
     namespace Acme\DemoBundle;
@@ -40,11 +41,12 @@ project::
         }
     }
 
-Registering your Listener
+Registrando seu Listener
 -------------------------
 
-As for any other listener, you need to add it in one of your configuration
-file and register it as a listener by adding the ``kernel.event_listener`` tag:
+Como para qualquer outro listener, você precisa adicioná-lo em um arquivo de
+configuração e registrá-lo como um listerner adicionando a tag
+``kernel.event_listener``:
 
 .. configuration-block::
 
@@ -79,11 +81,11 @@ file and register it as a listener by adding the ``kernel.event_listener`` tag:
         $definition->addTag('kernel.event_listener', array('event' => 'kernel.request', 'method' => 'onKernelRequest'));
         $container->setDefinition('acme.demobundle.listener.request', $definition);
 
-At this point, the ``acme.demobundle.listener.request`` service has been
-configured and will be notified when the Symfony kernel dispatches the
-``kernel.request`` event.
+Neste ponto, o serviço ``acme.demobundle.listener.request`` foi configurado e
+será notificado quando o Symfony kernel enviar um evento ``kernel.request``.
 
 .. tip::
 
-    You can also register the listener in a configuration extension class (see
-    :ref:`service-container-extension-configuration` for more information).
+    Você também pode registrar o ouvinte em uma classe de extensão de
+    configuração (see :ref:`service-container-extension-configuration`
+    para mais informações).

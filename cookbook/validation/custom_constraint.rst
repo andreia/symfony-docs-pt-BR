@@ -1,19 +1,19 @@
 .. index::
    single: Validation; Custom constraints
 
-How to create a Custom Validation Constraint
+Como criar uma Regra de Validação Personalizada
 --------------------------------------------
 
-You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. Options for your
-constraint are represented as public properties on the constraint class. For
-example, the :doc:`Url</reference/constraints/Url>` constraint includes
-the ``message`` and ``protocols`` properties:
+Você pode criar uma regra de validação extendendo uma classe de restrição
+básica, :class:`Symfony\\Component\\Validator\\Constraint`. Opções para a regra
+são representadas como propriedades públicas na classe de restrição. Por
+exemplo, a regra :doc:`Url</reference/constraints/Url>` inclui as propriedades
+``message`` e ``protocols``:
 
 .. code-block:: php
 
     namespace Symfony\Component\Validator\Constraints;
-    
+
     use Symfony\Component\Validator\Constraint;
 
     /**
@@ -27,13 +27,13 @@ the ``message`` and ``protocols`` properties:
 
 .. note::
 
-    The ``@Annotation`` annotation is necessary for this new constraint in
-    order to make it available for use in classes via annotations.
+    A annotation ``@Annotation`` é necessária para esta nova regra para
+    torná-la disponível para uso em classes via annotations.
 
-As you can see, a constraint class is fairly minimal. The actual validation is
-performed by a another "constraint validator" class. The constraint validator
-class is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic:
+Como você pode ver, uma classe de restrição é muito curta. A validação real é
+realizada por uma outra classe "validadora de restrição". A classe validadora
+de restrição é especificada pelo método de restrição``validatedBy()``, que
+inclui alguma lógica lógica padrão simples:
 
 .. code-block:: php
 
@@ -43,12 +43,12 @@ includes some simple default logic:
         return get_class($this).'Validator';
     }
 
-In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
-Symfony2 will automatically look for another class, ``MyConstraintValidator``
-when actually performing the validation.
+Em outras palavras, se você criar uma ``Constraint`` personalizada
+(e.g. ``MyConstraint``), o Symfony2 automaticamente irá procurar a outra
+classe ``MyConstraintValidator`` quando realmente executar a validação.
 
-The validator class is also simple, and only has one required method: ``isValid``.
-Take the ``NotBlankValidator`` as an example:
+A classe validadora também é simples, e só tem um método necessário:
+``isValid``. Pegue o ``NotBlankValidator`` como exemplo.
 
 .. code-block:: php
 
@@ -66,13 +66,13 @@ Take the ``NotBlankValidator`` as an example:
         }
     }
 
-Constraint Validators with Dependencies
+Validadores de Restrição com Dependências
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator``
-tag and an ``alias`` attribute:
+Se seu validador de restrição possui dependências, como uma conexão de banco
+de dados, ela terá que ser configurada como um serviço no recipiente de injeção
+de dependência. Este serviço deve incluir a tag
+``validator.constraint_validator``e um atributo ``alias``:
 
 .. configuration-block::
 
@@ -98,8 +98,8 @@ tag and an ``alias`` attribute:
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
         ;
 
-Your constraint class may now use this alias to reference the appropriate
-validator::
+Sua classe de restrição pode agora usar estes alias para referenciar o
+validador apropriado::
 
     public function validatedBy()
     {
