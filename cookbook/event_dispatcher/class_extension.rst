@@ -29,7 +29,7 @@ método mágico ``__call()`` na classe que você deseja que seja estendida da se
         }
     }
 
-Isto utiliza um ``HandleUndefinedMethodEvent`` especial que também deve ser
+Ela utiliza um ``HandleUndefinedMethodEvent`` especial que também deve ser
 criado. Esta é uma classe genérica que poderia ser reutilizada cada vez que você precisa
 utilizar esse padrão de extensão de classe:
 

@@ -1,19 +1,19 @@
 .. index::
-   single: Controller
+   single: Controlador
 
-Controller
-==========
+Controlador
+===========
 
-Um controller é uma função PHP que você cria e que pega informações da
+Um controlador é uma função PHP que você cria e que pega informações da
 requisição HTTP para criar e retornar uma resposta HTTP (como um objeto
 ``Response`` do Symfony2). A resposta pode ser uma página HTML, um documento
 XML, um array JSON serializado, uma imagem, um redirecionamento, um erro 404
-ou qualquer coisa que você imaginar. O controller contém toda e qualquer lógica
+ou qualquer coisa que você imaginar. O controlador contém toda e qualquer lógica
 arbritária que *sua aplicação* precisa para renderizar o conteúdo de uma
 página.
 
-Para ver quão simples é isso, vamos ver um controller do Symfony2 em ação.
-O seguinte controller deve rendereizar uma página que mostra apenas 
+Para ver quão simples é isso, vamos ver um controlador do Symfony2 em ação.
+O seguinte controlador deve renderizar uma página que mostra apenas 
 ``Hello world!``:
 
     use Symfony\Component\HttpFoundation\Response;
@@ -23,24 +23,24 @@ O seguinte controller deve rendereizar uma página que mostra apenas
         return new Response('Hello world!');
     }
 
-O objetivo de um controller é sempre o mesmo: criar e retornar um objeto
+O objetivo de um controlador é sempre o mesmo: criar e retornar um objeto
 ``Response``. Ao longo do caminho, ele pode ler informações da requisição,
 carregar um recurso do banco de dados, mandar um e-mail ou gravar informações
-na sessão do usuário. Mas em todos os casos, o controller acabará retornando
+na sessão do usuário. Mas em todos os casos, o controlador acabará retornando
 o objeto ``Response`` que será mandado de volta para o cliente.
 
 Não há nenhuma mágica e nenhum outro requisito para se preocupar! Aqui temos
 alguns exemplos comuns:
 
-* O *Controller A* prepara um objeto ``Response`` representando o conteúdo
+* O *Controlador A* prepara um objeto ``Response`` representando o conteúdo
   da página inicial do site.
 
-* O *Controller B* lê o parâmetro ``slug`` da requisição para carregar uma
+* O *Controlador B* lê o parâmetro ``slug`` da requisição para carregar uma
   entrada do blog no banco de dados e cria um um objeto ``Response`` mostrando
   o blog. Se o ``slug`` não for encontrado no banco de dados, ele cria e
   retorna um objeto ``Response`` com um código de status 404.
 
-* O *Controller C* trata a o envio de um formulário de contato. Ele lê a
+* O *Controlador C* trata a o envio de um formulário de contato. Ele lê a
   informação do formulário a partir da requisição, salva a informação de
   contato no banco de dados e envia por e-mail a informação de contato
   para o webmaster. Finalmente, ele cria um objeto ``Response`` que
@@ -48,51 +48,51 @@ alguns exemplos comuns:
   de contato.
 
 .. index::
-   single: Controller; Request-controller-response lifecycle
+   single: Controlador; O ciclo de vida requisição-controlador-resposta 
 
-O Ciclo de Vida da Requisição, Controller e Resposta
-----------------------------------------------------
+O Ciclo de Vida da Requisição, Controlador e Resposta
+-----------------------------------------------------
 
 Toda requisição tratada por um projeto com Symfony 2 passa pelo mesmo ciclo de
 vida simples. O framework cuida das tarefas repetitivas e por fim executa um
-controller onde reside o código personalizado da sua aplicação:
+controlador onde reside o código personalizado da sua aplicação:
 
-#. Toda requisição é tratada por um único arquivo front controller (e.g.
-   ``app.php`` or ``app_dev.php``) que inicializa a aplicação;
+#. Toda requisição é tratada por um único arquivo front controlador (por exemplo, 
+   ``app.php`` ou ``app_dev.php``) que inicializa a aplicação;
 
-#. O ``Router`` lê a informação da requisição (e.g. a URI), encontra uma rota
-   que casa com aquela informação, e lê o parâmetro ``_controller`` da rota;
+#. O ``Router`` lê a informação da requisição (por exemplo, a URI), encontra uma rota
+   que casa com aquela informação e lê o parâmetro ``_controller`` da rota;
 
-#. O controller que casou com a rota é executado e o código dentro do
-   controller cria e retorna um objeto ``Response``;
+#. O controlador que casou com a rota é executado e o código dentro do
+   controlador cria e retorna um objeto ``Response``;
 
 #. Os cabeçalhos HTTP e o conteúdo do objeto ``Response`` são enviados de
    volta para o cliente.
 
-Criar uma página é tão fácil quanto criar um controller (#3) e fazer uma rota
-que mapeie uma URL para aquele controller (#2).
+Criar uma página é tão fácil quanto criar um controlador (#3) e fazer uma rota
+que mapeie uma URL para aquele controlador (#2).
 
 .. note::
 
     Embora tenha um nome similar, um "front controller" é diferente dos
-    "controllers" dos quais vamos falar nesse capítulo. Um front controller é
+    "controladores" dos quais vamos falar nesse capítulo. Um front controller é
     um pequeno arquivo PHP que fica no seu diretório web e através do qual
     todas as requisições são direcionadas. Uma aplicação típica terá um front
-    controller de produção (e.g. ``app.php``) e um front controller de
-    desenvolvimento (e.g. ``app_dev.php``). Provavelmente você nunca precisará
+    controller de produção (por exemplo, ``app.php``) e um front controller de
+    desenvolvimento (por exemplo, ``app_dev.php``). Provavelmente você nunca precisará
     editar, visualizar ou se preocupar com os front controllers da sua
     aplicação.
 
 .. index::
-   single: Controller; Simple example
+   single: Controlador; Exemplo simples
 
-Um Controller Simples
----------------------
+Um Controlador Simples
+----------------------
 
-Embora um controller possa ser qualquer código PHP que possa ser chamado (uma
-função, um método em um objeto ou uma ``Closure``), no Symfony2 um controller
-geralmente é um único método dentro de um objeto controller. Os controllers
-também são chamados de *actions*:
+Embora um controlador possa ser qualquer código PHP que possa ser chamado (uma
+função, um método em um objeto ou uma ``Closure``), no Symfony2 um controlador
+geralmente é um único método dentro de um objeto controlador. Os controladores
+também são chamados de *ações*:
 
 .. code-block:: php
     :linenos:
@@ -112,42 +112,42 @@ também são chamados de *actions*:
 
 .. tip::
 
-    Note que o *controller* é o método ``indexAction``, que fica dentro de
-    uma *classe controller* (``HelloController``). Não se confunda com a
-    nomenclatura: uma *classe controller* é apenas um forma conveniente de
-    agrupar vários controllers/actions juntos. Geralmente a classe controller
-    irá agrupar vários controllers/actions (e.g. ``updateAction``,
+    Note que o *controlador* é o método ``indexAction``, que fica dentro de
+    uma *classe controladora* (``HelloController``). Não se confunda com a
+    nomenclatura: uma *classe controladora* é apenas um forma conveniente de
+    agrupar vários controladores/ações juntos. Geralmente a classe controladora
+    irá agrupar vários controladores/ações (por exemplo, ``updateAction``,
     ``deleteAction`` etc).
     
-Esse controller é bem simples, mas vamos explicá-lo:
+Esse controlador é bem simples, mas vamos explicá-lo:
 
 * *linha 3*: O Symfony2 se beneficia da funcionalidade de namespace do PHP 5.3
-  colocando a classe controller inteira dentro de um namespace. A palavra chave
-  ``use`` importa a classe ``Response`` que nosso controller tem que retornar.
+  colocando a classe controladora inteira dentro de um namespace. A palavra chave
+  ``use`` importa a classe ``Response`` que nosso controlador tem que retornar.
 
 * *linha 6*: O nome da classe é a concatenação de um nome para a classe
-  controller (i.e. ``Hello``) com a palavra ``Controller``. Essa é uma
-  convenção que fornece consistência aos controllers e permite que eles sejam
-  referenciados usando apenas a primeira parte do nome (i.e. ``Hello``) na
+  controlador (ou seja, ``Hello``) com a palavra ``Controller``. Essa é uma
+  convenção que fornece consistência aos controladores e permite que eles sejam
+  referenciados usando apenas a primeira parte do nome (ou seja, ``Hello``) na
   configuração de roteamento.
 
-* *linha 8*: Toda action em uma classe controller é sufixada com ``Action`` e
-  é referenciada na configuração de roteamento pelo nome da action (``index``).
+* *linha 8*: Toda ação em uma classe controladora é sufixada com ``Action`` e
+  é referenciada na configuração de roteamento pelo nome da ação (``index``).
   Na próxima seção, você criará uma rota que mapeia uma URI para essa action.
   Você aprenderá como os marcadores de posição das rotas (``{name}``) tornam-se
   argumentos no método da action (``$name``).
 
-* *linha 10*: O controller cria e retorna um objeto ``Response``.
+* *linha 10*: O controlador cria e retorna um objeto ``Response``.
 
 .. index::
-   single: Controller; Routes and controllers
+   single: Controlador; Rotas e controladores
 
-Mapeando uma URL para um Controller
------------------------------------
+Mapeando uma URL para um Controlador
+------------------------------------
 
-O novo controller retorna uma página HTML simples. Para ver realmente essa
+O novo controlador retorna uma página HTML simples. Para ver realmente essa
 página no seu navegador você precisa criar uma rota que mapeia um padrão
-específico de URL para o controller:
+específico de URL para o controlador:
 
 .. configuration-block::
 
@@ -172,20 +172,20 @@ específico de URL para o controller:
             '_controller' => 'AcmeHelloBundle:Hello:index',
         )));
 
-Agora, acessar ``/hello/ryan`` executa o controller
+Agora, acessar ``/hello/ryan`` executa o controlador
 ``HelloController::indexAction()`` e passa ``ryan`` para a variável ``$name``.
-A criação de uma "página" significa simplesmente criar um método controller e
+A criação de uma "página" significa simplesmente criar um método controlador e
 associar uma rota.
 
-Note a sintaxe usada para referenciar o controller:
+Note a sintaxe usada para referenciar o controlador:
 ``AcmeHelloBundle:Hello:index``. O Symfony2 usa uma notação flexível de string
-para referenciar diferentes controllers. Essa é a sintaxe mais comum e diz ao
-Symfony2 para buscar por uma classe controller chamada ``helloController``
+para referenciar diferentes controladores. Essa é a sintaxe mais comum e diz ao
+Symfony2 para buscar por uma classe controladora chamada ``helloController``
 dentro de um bundle chamado ``AcmeHelloBundle``. Então o método
 ``indexAction()`` é executado.
 
 Para mais detalhes sobre o formato de string usado para referenciar diferentes
-controllers, veja :ref:`controller-string-syntax`.
+controladores, veja :ref:`controller-string-syntax`.
 
 .. note::
 
@@ -200,17 +200,17 @@ controllers, veja :ref:`controller-string-syntax`.
     :doc:`capítulo Roteamento</book/routing>`.
 
 .. index::
-   single: Controller; Controller arguments
+   single: Controlador; Argumentos do Controlador
 
 .. _route-parameters-controller-arguments:
 
-Parâmetros de Rota como Argumentos do Controller
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parâmetros de Rota como Argumentos do Controlador
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Você já sabe que o parâmetro ``_controller`` em ``AcmeHelloBundle:Hello:index``
 se refere ao método ``HelloController::indexAction()`` que está dentro do
 bundle ``AcmeHelloBundle``. O que é mais interessante são os argumentos que
-são passado para o método:
+são passados para o método:
 
 .. code-block:: php
 
@@ -228,9 +228,9 @@ são passado para o método:
         }
     }
 
-O controller tem um único argumento, ``$name``, que corresponde ao parâmetro
+O controlador tem um único argumento, ``$name``, que corresponde ao parâmetro
 ``{name}`` da rota casada (``ryan`` no nosso exemplo). Na verdade quando
-executa seu controller, o Symfony2 casa cada um dos argumentos do controller
+executa seu controlador, o Symfony2 casa cada um dos argumentos do controlador
 com um parâmetro da rota casada. Veja o seguinte exemplo:
 
 .. configuration-block::
@@ -258,7 +258,7 @@ com um parâmetro da rota casada. Veja o seguinte exemplo:
             'color'       => 'green',
         )));
 
-O controller dessa rota pode receber vários argumentos:
+O controlador dessa rota pode receber vários argumentos:
 
     public function indexAction($first_name, $last_name, $color)
     {
@@ -267,20 +267,20 @@ O controller dessa rota pode receber vários argumentos:
 
 Observe que tanto as variáveis de marcadores de posição (``{first_name}``,
 ``{last_name}``) quanto a váriavel padrão ``color`` estão disponíveis como
-argumentos no controller. Quando uma rota é casada, as variáveis marcadoras
+argumentos no controlador. Quando uma rota é casada, as variáveis marcadoras
 de posição são mescladas com as variáveis ``default`` criando um array
-que fica disponível para o seu controller.
+que fica disponível para o seu controlador.
 
-O mapeamento de parâmetros de rota com argumentos do controller é fácil e
+O mapeamento de parâmetros de rota com argumentos do controlador é fácil e
 flexível. Tenha em mente as seguintes orientações enquanto estiver
 desenvolvendo.
 
-* **A ordem dos argumentos do controller não importa**
+* **A ordem dos argumentos do controlador não importa**
 
     O Symfony é capaz de casar os nomes dos parâmetros da rota com os nomes
-    das variáveis na assinatura do método do controller. Em outras palavras,
+    das variáveis na assinatura do método do controlador. Em outras palavras,
     ele sabe que o parâmetro ``{last_name}`` casa com o argumento
-    ``$last_name``. Os argumentos do controller podem ser totalmente
+    ``$last_name``. Os argumentos do controlador podem ser totalmente
     reordenados e continuam funcionando perfeitamente:
 
         public function indexAction($last_name, $color, $first_name)
@@ -288,7 +288,7 @@ desenvolvendo.
             // ..
         }
 
-* **Todo argumento obrigatório do controller tem que corresponder a um parâmetro de roteamento**
+* **Todo argumento obrigatório do controlador tem que corresponder a um parâmetro de roteamento**
 
     O seguinte deveria lançar uma ``RuntimeException`` porque não existe nenhum
     parâmetro ``foo`` definido na rota:
@@ -306,9 +306,9 @@ desenvolvendo.
             // ..
         }
 
-* **Nem todos os parâmetros de roteamento precisam ser argumentos no seu controller**
+* **Nem todos os parâmetros de roteamento precisam ser argumentos no seu controlador**
 
-    Se, por exemplo, ``last_name`` não for importante para o seu controller,
+    Se, por exemplo, ``last_name`` não for importante para o seu controlador,
     você pode omitir inteiramente ele:
 
         public function indexAction($first_name, $color)
@@ -319,16 +319,16 @@ desenvolvendo.
 .. tip::
 
     Cada uma das rotas tem um parâmetro ``_route`` especial, que é igual ao
-    nome da rota que foi casada (e.g. ``hello``). Embora não seja útil
-    geralmente, ele também fica disponível como um argumento do controller.
+    nome da rota que foi casada (por exemplo, ``hello``). Embora não seja útil
+    geralmente, ele também fica disponível como um argumento do controlador.
 
 .. _book-controller-request-argument:
 
-O ``Request`` como um Argumento do Controller
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+O ``Request`` como um Argumento do Controlador
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Por conveniência, você também pode fazer com que o Symfony passe o objeto
-``Request`` como um argumento para seu controller. Isso é conveniente
+``Request`` como um argumento para seu controlador. Isso é conveniente
 especialmente quando você estiver trabalhando com formulários, por exemplo:
 
     use Symfony\Component\HttpFoundation\Request;
@@ -342,14 +342,14 @@ especialmente quando você estiver trabalhando com formulários, por exemplo:
     }
 
 .. index::
-   single: Controller; Base controller class
+   single: Controlador; Classe base do controlador
 
-A Classe Controller Base
-------------------------
+A Classe Base do Controlador
+----------------------------
 
 Por conveniência, o Symfony2 vem com uma classe ``Controller`` base que ajuda
-com algumas das tarefas mais comuns dos controllers e fornece às suas classes
-controller acesso a qualquer recurso que elas possam precisar. Estendendo essa
+com algumas das tarefas mais comuns dos controladores e fornece às suas classes
+controladoras acesso à qualquer recurso que elas possam precisar. Estendendo essa
 classe ``Controller``, você se beneficia com vários métodos helper.
 
 Adicione a instrução ``use`` no topo da sua classe ``Controller`` e então
@@ -371,8 +371,8 @@ modifique o ``HelloController`` para estendê-lo:
         }
     }
 
-Isso não muda realmente nada o jeito que seu controller trabalha. Na próxima
-seção você aprenderá sobre os métodos helper que a classe controller base
+Isso não muda realmente nada o jeito que seu controlador trabalha. Na próxima
+seção você aprenderá sobre os métodos helper que a classe controladora base
 disponibiliza. Esses métodos são apenas atalhos para usar funcionalidades do
 núcleo do Symfony2 que estão disponíveis para você usando ou não a classe base
 ``Controller``. Uma boa maneira de ver a funcionalidade do núcleo em ação
@@ -393,18 +393,18 @@ núcleo do Symfony2 que estão disponíveis para você usando ou não a classe b
     </cookbook/controller/service>`.
 
 .. index::
-   single: Controller; Common Tasks
+   single: Controlador; Tarefas Comuns
 
-Tarefas Comuns dos Controllers
-------------------------------
+Tarefas Comuns dos Controladores
+--------------------------------
 
-Embora virtualmente um controller possa fazer qualquer coisa, a maioria dos
-controllers irão realizar as mesmas tarefas básicas repetidas vezes. Essas
+Embora virtualmente um controlador possa fazer qualquer coisa, a maioria dos
+controladores irão realizar as mesmas tarefas básicas repetidas vezes. Essas
 tarefas, como redirecionamentos, direcionamentos, renderização de templates e
 acesso a serviços nucleares são muitos fáceis de gerenciar no Symfony2.
 
 .. index::
-   single: Controller; Redirecting
+   single: Controlador; Redirecionado
 
 Redirecionando
 ~~~~~~~~~~~~~~
@@ -442,15 +442,15 @@ segundo argumento::
         return new RedirectResponse($this->generateUrl('homepage'));
 
 .. index::
-   single: Controller; Forwarding
+   single: Controlador; Direcionando
 
 Direcionando
 ~~~~~~~~~~~~
 
-Você também pode facilmente direcionar internamente para outro controller com o
+Você também pode facilmente direcionar internamente para outro controlador com o
 método ``forward()``. Em vez de redirecionar o navegador do usuário, ele faz
-uma sub-requisição interna e chama o controller especificado. O método
-``forward()`` retorna o objeto ``Response`` que é retornado pelo controller::
+uma sub-requisição interna e chama o controlador especificado. O método
+``forward()`` retorna o objeto ``Response`` que é retornado pelo controlador::
 
     public function indexAction($name)
     {
@@ -465,11 +465,11 @@ uma sub-requisição interna e chama o controller especificado. O método
     }
 
 Note que o método `forward()` usa a mesma representação em string do
-controller que foi usada na configuração de roteamento. Nesse caso, a classe
-controller alvo será ``HelloController`` dentro de ``AcmeHelloBundle``.
-O array passado para o método se torna os argumentos no controller
-resultante. Essa mesma interface é usada quando se embutem controllers em
-templates (veja :ref:`templating-embedding-controller`). O método controller
+controlador que foi usada na configuração de roteamento. Nesse caso, a classe
+controlador alvo será ``HelloController`` dentro de ``AcmeHelloBundle``.
+O array passado para o método se torna os argumentos no controlador
+resultante. Essa mesma interface é usada quando se embutem controladores em
+templates (veja :ref:`templating-embedding-controller`). O método controlador
 alvo deve se parecer com o seguinte::
 
     public function fancyAction($name, $color)
@@ -477,11 +477,11 @@ alvo deve se parecer com o seguinte::
         // ... cria e retorna um objeto Response
     }
 
-E da mesma forma quando criamos um controller para uma rota, a ordem dos
+E da mesma forma, quando criamos um controlador para uma rota, a ordem dos
 argumentos para ``fancyAction`` não importa. O Symfony2 combina os nomes
-das chaves dos índices (e.g. ``name``) com os nomes dos argumentos do
-método (e.g. ``$name``). Se você mudar a ordem dos argumentos, o Symfony2
-continuará passandos os valores corretos para cada variável.
+das chaves dos índices (por exemplo, ``name``) com os nomes dos argumentos do
+método (por exemplo, ``$name``). Se você mudar a ordem dos argumentos, o Symfony2
+continuará passando os valores corretos para cada variável.
 
 .. tip::
 
@@ -497,16 +497,16 @@ continuará passandos os valores corretos para cada variável.
         ));
 
 .. index::
-   single: Controller; Rendering templates
+   single: Controlador; Renderizando templates
 
 .. _controller-rendering-templates:
 
 Renderizando Templates
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Apesar de não ser um requisito, a maioria dos controllers irá, no fim das contas,
+Apesar de não ser um requisito, a maioria dos controladores irá, no fim das contas,
 renderizar um template que é responsável por gerar o HTML (ou outro formato)
-para o controller. O método ``renderView()`` renderiza um template e retorna
+para o controlador. O método ``renderView()`` renderiza um template e retorna
 seu conteúdo. O conteúdo do template pode ser usado para criar um objeto
 ``Response``::
 
@@ -535,12 +535,12 @@ O sistema de template do Symfony é explicado com mais detalhes no capítulo
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
 .. index::
-   single: Controller; Accessing services
+   single: Controlador; Acessando Serviços
 
 Acessando outros Serviços
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quando se estende a classe controller base, você pode acessar qualquer um dos
+Quando se estende a classe controladora base, você pode acessar qualquer um dos
 serviços Symfony2 através do método ``get()``. Aqui estão alguns dos serviços
 mais comuns que você pode precisar::
 
@@ -564,15 +564,15 @@ Para mais informações, veja o capítulo :doc:`/book/service_container`.
 
 
 .. index::
-   single: Controller; Managing errors
-   single: Controller; 404 pages
+   single: Controlador; Gerenciando Erros
+   single: Controlador; Páginas 404
 
 Gerenciando Erros e Páginas 404
 -------------------------------
 
 Quando algo não for encontrado, você deve usar de forma correta o protocolo
 HTTP e retornar uma resposta 404. Para isso, você lançará um tipo especial de
-exceção. Se estiver estendendo a classe controller base, faça o seguinte::
+exceção. Se estiver estendendo a classe controlador base, faça o seguinte::
 
     public function indexAction()
     {
@@ -589,7 +589,7 @@ O método ``createNotFoundException()`` cria um objeto especial
 do Symfony.
 
 É lógico que você é livre para lançar qualquer classe ``Exception`` no seu
-controller - o Symfony irá retornar automaticamente uma resposta HTTP código
+controlador - o Symfony irá retornar automaticamente uma resposta HTTP código
 500.
 
 .. code-block:: php
@@ -603,8 +603,8 @@ podem ser personalizadas. Para detalhes, leia a receita
 ":doc:`/cookbook/controller/error_pages`" no cookbook.
 
 .. index::
-   single: Controller; The session
-   single: Session
+   single: Controlador; A Sessão
+   single: Sessão
 
 Gerenciando a Sessão
 --------------------
@@ -615,7 +615,7 @@ navegador, um robô ou um web service) entre requisições. Por padrão, o
 Symfony2 guarda os atributos em um cookie usando as sessões nativas do PHP.
 
 O armazenamento e a recuperação de informações da sessão são feitos
-facilmente de qualquer controller::
+facilmente de qualquer controlador::
 
     $session = $this->getRequest()->getSession();
 
@@ -659,7 +659,7 @@ Por exemplo, imagine que você esteja processando a submissão de um formulário
         return $this->render(...);
     }
 
-Depois do processamento da requisição, o controller define uma mensagem flash
+Depois do processamento da requisição, o controlador define uma mensagem flash
 `notice` e então faz o redirecionamento. O nome (``notice``) não é
 importante - é apenas o que você usa para identificar o tipo da mensagem.
 
@@ -690,12 +690,12 @@ projetadas para serem usadas entre redirecionamentos exatamente como você fez
 nesse exemplo.
 
 .. index::
-   single: Controller; Response object
+   single: Controlador; Objeto Response 
 
 O Objeto Response
 -----------------
 
-O único requisito de um controller é retornar um objeto ``Response``. A classe
+O único requisito de um controlador é retornar um objeto ``Response``. A classe
 :class:`Symfony\\Component\\HttpFoundation\\Response` é uma abstração PHP em
 volta da resposta HTTP - a mensagem em texto cheia de cabeçalhos HTTP e
 conteúdo que é mandado de volta para o cliente::
@@ -716,12 +716,12 @@ conteúdo que é mandado de volta para o cliente::
 	equivalente a ``content-type`` ou mesmo ``content_type``.
 
 .. index::
-   single: Controller; Request object
+   single: Controlador; Objeto Request 
 
 O Objeto Request
 ----------------
 
-Além dos valores nos marcadores de roteamento, o controller também tem acesso
+Além dos valores nos marcadores de roteamento, o controlador também tem acesso
 ao objeto ``Request`` quando está estendendo a classe ``Controller`` base::
 
     $request = $this->getRequest();
@@ -741,17 +741,17 @@ Considerações Finais
 --------------------
 
 Sempre que criar uma página, no final você precisará escrever algum código que
-contenha a lógica dessa página. No Symfony, isso é chamado de controller,
+contenha a lógica dessa página. No Symfony, isso é chamado de controlador,
 e ele é uma função PHP que faz tudo que for necessário para no fim retornar
 o objeto ``Response`` final que será retornado ao usuário.
 
 Para facilitar a vida, você pode escolher estender uma classe ``Controller``
 base, que contém métodos que são atalhos para muitas tarefas comuns dos
-controllers. Por exemplo, uma vez que você não queira colocar código HTML
-no seu controller, você pode usar o método ``render()`` para renderizar e
+controladores. Por exemplo, uma vez que você não queira colocar código HTML
+no seu controlador, você pode usar o método ``render()`` para renderizar e
 retornar o conteúdo de um template.
 
-Em outros capítulos, você verá como o controller pode ser usado para persistir
+Em outros capítulos, você verá como o controlador pode ser usado para persistir
 e buscar objetos em um banco de dados, processar submissões de formulários,
 gerenciar cache e muito mais.
 
