@@ -5,9 +5,4 @@ Contribuindo com o Código
     :maxdepth: 2
 
     bugs
-    patches
-    security
-    tests
     standards
-    conventions
-    license

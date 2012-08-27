@@ -1,8 +1,7 @@
-Event Dispatcher
-================
+Dispatcher de Eventos
+=====================
 
 .. toctree::
     :maxdepth: 2
 
     class_extension
-    method_behavior
