@@ -12,6 +12,7 @@ Cookbook
     assetic/jpeg_optimize
     assetic/apply_to_option
 
+    doctrine/common_extensions
     doctrine/reverse_engineering
     doctrine/multiple_entity_managers
 

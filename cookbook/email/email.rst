@@ -126,8 +126,8 @@ a adição de conteúdo HTML, e muito mais. Felizmente, o Swiftmailer cobre o t�
     no Symfony2:
 
     * :doc:`gmail`
-    * :doc:`email/dev_environment`
-    * :doc:`email/spool`
+    * :doc:`dev_environment`
+    * :doc:`spool`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
 .. _`Criação de Mensagens`: http://swiftmailer.org/docs/messages

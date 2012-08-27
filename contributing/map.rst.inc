@@ -1,8 +1,8 @@
 * **Código**:
 
   * :doc:`Bugs </contributing/code/bugs>`
-  * :doc:`Coding Standards</contributing/code/standards>`
+  * :doc:`Padrões de Codificação </contributing/code/standards>`
 
 * **Comumidade**:
 
-  * :doc:`Other Resources </contributing/community/other>`
+  * :doc:`Outros Recursos </contributing/community/other>`

@@ -14,6 +14,7 @@
 
 * **Interação com o Banco de Dados (Doctrine)**
 
+  * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/reverse_engineering`
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
 
@@ -29,7 +30,7 @@
 
 * **E-mails**
 
-  * :doc:`/cookbook/email`
+  * :doc:`/cookbook/email/email`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
 
