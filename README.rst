@@ -4,7 +4,7 @@ Contribuindo com a tradução da documentação oficial do Symfony2:
 Informando os documentos que deseja traduzir
 --------------------------------------------
 
-Para melhor organização, primeiro informar o(s) documento(s) que pretende ajudar na tradução e/ou revisão na planilha de tradutores/revisores:
+Para melhor organização, primeiro informe o(s) documento(s) que pretende ajudar na tradução e/ou revisão na planilha de tradutores/revisores:
 https://spreadsheets.google.com/ccc?key=0AtX-XMIXR2DAdFBMekh4UktObUNOMy1NX2RSMjJMUUE
 
 Se ainda não possuir acesso de edição nesta planilha, solicitar o acesso para andreiabohner at gmail dot com.
@@ -12,7 +12,7 @@ Se ainda não possuir acesso de edição nesta planilha, solicitar o acesso para
 Utilizando o Git e o Github
 ---------------------------
 
-1. Para começar, fazer o fork do repositório master da tradução para o português no github:
+1. Para começar, faça o fork do repositório master da tradução para o português no github:
 
    1.1 Acessar o repositório master no github: https://github.com/andreia/symfony-docs-pt-BR
    1.2 Clicar no botão fork
@@ -20,21 +20,26 @@ Utilizando o Git e o Github
 2. Agora, você irá "clonar" o projeto para a sua máquina local:
    
    2.1 Copiar a URL do repositório do seu fork, para utilizá-la com o comando git clone (por exemplo)::
+
     $ git clone git@github.com:seuusername/symfony-docs.git
 
    2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
 
-3. Pronto, agora é só trabalhar na tradução do(s) documento(s).
+3. Copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
+    Pronto, agora é só trabalhar na tradução do(s) documento(s).
 
-4. Finalizadas as traduções e/ou revisões, faça o commit das alterações no seu repositório local::
+4. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
 
+5. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
+
+    $ git add <nome_do_arquivo>
     $ git commit –a –m "pt_BR translation"
 
-5. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
+6. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
 
     $ git push origin master
 
-6. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem para que ele faça um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
+7. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
    Mais informações sobre o `Pull Request`_ 
 
 
