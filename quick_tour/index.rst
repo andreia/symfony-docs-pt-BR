@@ -6,3 +6,4 @@ Guia de Início Rápido
 
    the_view
    the_controller
+   the_architecture

@@ -12,7 +12,8 @@ Inicie rapidamente no Symfony2 com o :doc:`Guia de Início Rápido <quick_tour/i
     quick_tour/index
 
 * :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` 
+* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_architecture`
 
 Livro
 -----
