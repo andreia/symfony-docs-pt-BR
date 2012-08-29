@@ -78,6 +78,18 @@ Se preferir, existe um editor online, que pode auxiliar em: http://rst.ninjs.org
 
 .. _`Pull Request`: http://help.github.com/pull-requests/
 
+Glossário
+~~~~~~~~~
+
+Para mantermos consistente a tradução dos documentos, verifique no glossário os termos que não devem ser traduzidos e aqueles que devem seguir a mesma tradução:
+http://andreia.github.com/symfony-docs-pt-BR/
+
+Visualização dos documentos traduzidos
+--------------------------------------
+
+Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada no seguinte endereço:
+http://andreiabohner.org/symfony2docs/index.html
+
 Referências
 -----------
 
