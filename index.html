@@ -1,51 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640" />
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
     <title>Documentação do Symfony2 em Português  by andreia</title>
-  </head>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  </head>
   <body>
-    <a id="forkme_banner" href="https://github.com/andreia/symfony-docs-pt-BR">View on GitHub</a>
-    <div class="shell">
 
       <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Documentação do Symfony2 em Português </h1>
-            <h2>Como contribuir com a Tradução da Documentação Oficial do Symfony2 para Português do Brasil</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
+        <h1>Documentação do Symfony2 em Português </h1>
+        <p>Como contribuir com a Tradução da Documentação Oficial do Symfony2 para Português do Brasil</p>
       </header>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/andreia/symfony-docs-pt-BR/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/andreia/symfony-docs-pt-BR/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+      <div id="banner">
+        <span id="logo"></span>
 
+        <a href="https://github.com/andreia/symfony-docs-pt-BR" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/andreia/symfony-docs-pt-BR/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/andreia/symfony-docs-pt-BR/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
         <h2>Informando os documentos que deseja traduzir</h2>
 
 <p>Para melhor organização, primeiro informar o(s) documento(s) que pretende ajudar na tradução e/ou revisão na planilha de tradutores/revisores:
@@ -127,6 +120,14 @@ Mais informações sobre o Pull Request: <a href="http://help.github.com/pull-re
         <td><strong>Tradução</strong></td>
     </tr>
 <tr>
+<td>action</td>
+        <td>ação</td>
+    </tr>
+<tr>
+<td>autoloader</td>
+        <td>autoloader</td>
+    </tr>
+<tr>
 <td>bundle</td>
         <td>bundle</td>
     </tr>
@@ -135,24 +136,48 @@ Mais informações sobre o Pull Request: <a href="http://help.github.com/pull-re
         <td>controlador</td>
     </tr>
 <tr>
-<td>action</td>
-        <td>ação</td>
+<td>e.g.</td>
+        <td>ex. ou por exemplo</td>
     </tr>
 <tr>
-<td>string</td>
-        <td>string</td>
-    </tr>
-<tr>
-<td>package</td>
-        <td>pacote</td>
+<td>embedded</td>
+        <td>embutido</td>
     </tr>
 <tr>
 <td>event dispatcher</td>
         <td>dispatcher de evento</td>
     </tr>
 <tr>
+<td>front controller</td>
+        <td>front controller</td>
+    </tr>
+<tr>
+<td>i.e.</td>
+        <td>ou seja</td>
+    </tr>
+<tr>
+<td>kernel</td>
+        <td>kernel</td>
+    </tr>
+<tr>
+<td>layout</td>
+        <td>layout</td>
+    </tr>
+<tr>
+<td>listener</td>
+        <td>listener</td>
+    </tr>
+<tr>
+<td>package</td>
+        <td>pacote</td>
+    </tr>
+<tr>
 <td>route</td>
         <td>rota</td>
+    </tr>
+<tr>
+<td>string</td>
+        <td>string</td>
     </tr>
 <tr>
 <td>template</td>
@@ -167,24 +192,12 @@ Mais informações sobre o Pull Request: <a href="http://help.github.com/pull-re
         <td>renderizando</td>
     </tr>
 <tr>
-<td>front controller</td>
-        <td>front controller</td>
-    </tr>
-<tr>
 <td>service container</td>
         <td>container de serviço</td>
     </tr>
 <tr>
-<td>layout</td>
-        <td>layout</td>
-    </tr>
-<tr>
-<td>listener</td>
-        <td>listener</td>
-    </tr>
-<tr>
-<td>embedded</td>
-        <td>embutido</td>
+<td>vendor</td>
+        <td>vendor</td>
     </tr>
 </table><h2>Referências</h2>
 
@@ -195,21 +208,12 @@ Mais informações sobre o Pull Request: <a href="http://help.github.com/pull-re
 </li>
 </ul>
       </section>
-
       <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/andreia">andreia</a> can be found on <a href="https://github.com/andreia/symfony-docs-pt-BR">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+        <p>Project maintained by <a href="https://github.com/andreia">andreia</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
       </footer>
-
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
