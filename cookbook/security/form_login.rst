@@ -105,7 +105,7 @@ Redirecionando após Sucesso
 Você pode alterar o local para onde o formulário de login redireciona após um login bem-sucedido 
 usando opções de configuração diferentes. Por padrão, o formulário irá redirecionar para a URL
 solicitada pelo usuário (ou seja, a URL que acionou o formulário de login que está sendo exibido).
-Por exemplo, se o usuário solicitou ```http://www.example.com/admin/post/18/edit``, então, após 
+Por exemplo, se o usuário solicitou ``http://www.example.com/admin/post/18/edit``, então, após 
 o login bem-sucedido, ele será enviado de volta para ``http://www.example.com/admin/post/18/edit`` 
 . Isto é feito através do armazenamento da URL solicitada 
 em sessão. Se nenhuma URL estiver presente na sessão (talvez o usuário acessou
