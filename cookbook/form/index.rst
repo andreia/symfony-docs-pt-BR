@@ -1,4 +1,4 @@
-Formul·rio
+Formul√°rio
 ==========
 
 .. toctree::
