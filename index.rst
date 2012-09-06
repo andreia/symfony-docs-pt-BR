@@ -37,6 +37,16 @@ Cookbook
 
 Leia o :doc:`Cookbook </cookbook/index>`.
 
+Componentes
+-----------
+
+.. toctree::
+    :hidden:
+
+    components/index
+
+Leia a documentação :doc:`Components </components/index>`.
+
 Documentos de Referência
 ------------------------
 
