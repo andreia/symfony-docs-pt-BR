@@ -6,3 +6,4 @@ Bundles
 
     best_practices
     inheritance
+    extension
