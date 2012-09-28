@@ -24,6 +24,7 @@
 * :doc:`/cookbook/email/index`
 
   * :doc:`/cookbook/email/email`
+  * :doc:`/cookbook/email/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
 
