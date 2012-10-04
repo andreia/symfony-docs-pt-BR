@@ -428,7 +428,7 @@ feito com o autoloader fornecido pelo Symfony. Um autoloader é uma ferramenta q
 permite a utilização de classes PHP sem a necessidade de incluir os seus arquivos
 explicitamente.
 
-Primeiro, `faça o download do symfony`_ e o coloque no diretório ``vendor/symfony/``.
+Primeiro, `faça o download do symfony`_ e o coloque no diretório ``vendor/symfony/symfony/``.
 A seguir, crie um o arquivo ``app/bootstrap.php``. Utilize-o para dar ``require`` 
 dos dois arquivos da aplicação e para configurar o autoloader:
 
@@ -438,11 +438,11 @@ dos dois arquivos da aplicação e para configurar o autoloader:
     // bootstrap.php
     require_once 'model.php';
     require_once 'controllers.php';
-    require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    require_once 'vendor/symfony/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
     ));
 
     $loader->register();
@@ -548,8 +548,8 @@ pra você. Aqui está um exemplo da mesma aplicação, agora feito com o Symfony
 
     <?php
     // src/Acme/BlogBundle/Controller/BlogController.php
-
     namespace Acme\BlogBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
@@ -560,7 +560,7 @@ pra você. Aqui está um exemplo da mesma aplicação, agora feito com o Symfony
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Post:list.html.php', array('posts' => $posts));
+            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
@@ -575,7 +575,7 @@ pra você. Aqui está um exemplo da mesma aplicação, agora feito com o Symfony
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Post:show.html.php', array('post' => $post));
+            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
         }
     }
 

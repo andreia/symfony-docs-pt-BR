@@ -216,8 +216,8 @@ no seu controlador::
             ->add('dueDate', 'date')
             ->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
 
             if ($form->isValid()) {
                 // perform some action, such as saving the task to the database
@@ -229,13 +229,18 @@ no seu controlador::
         // ...
     }
 
+.. versionadded:: 2.1
+    O método ``bind`` tornou-se mais flexível no Symfony 2.1. Ele aceita agora os 
+    dados brutos do cliente (como antes) ou um objeto Request do Symfony. Ele é 
+    preferido ao invés do método obsoleto ``bindRequest``.
+
 Agora, quando enviar o formulário, o controlador vincula (bind) ao formulário os dados enviados, 
 que traduz os dados de volta as propriedades ``task`` e ``dueDate``
-do objeto ``$task``. Isso tudo acontece através do método ``bindRequest()``.
+do objeto ``$task``. Isso tudo acontece através do método ``bind()``.
 
 .. note::
 
-    Assim que o ``bindRequest()`` é chamado, os dados enviados são transferidos
+    Assim que o ``bind()`` é chamado, os dados enviados são transferidos
     imediatamente para o objeto implícito. Isso acontece independentemente de
     os dados implícitos serem realmente válidos.
 
@@ -391,13 +396,15 @@ você precisa especificar qual(ais) grupo(s) de validação seu formulário deve
 
 Se você está criando :ref:`classes de formulário<book-form-creating-form-classes>` (uma
 boa prática), então você precisa adicionar o seguinte ao método 
-``getDefaultOptions()``::
+``setDefaultOptions()``::
 
-    public function getDefaultOptions(array $options)
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => array('registration')
-        );
+        ));
     }
 
 Em ambos os casos, *apenas* o grupo de validação ``registration`` será
@@ -414,11 +421,13 @@ Se você precisar de alguma lógica avançada para determinar os grupos de valid
 com base nos dados submetidos), você pode definir a opção ``validation_groups``
 para um ``array callback`` ou uma ``Closure``::
 
-    public function getDefaultOptions(array $options)
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
-        );
+        ));
     }
 
 Isso irá chamar o método estático ``determineValidationGroups()`` na
@@ -426,9 +435,12 @@ classe ``Client`` após o formulário ser vinculado (bound), mas antes da valida
 O objeto do formulário é passado como um argumento para esse método (veja o exemplo seguinte).
 Você também pode definir toda a lógica inline usando uma Closure::
 
-    public function getDefaultOptions(array $options)
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if (Entity\Client::TYPE_PERSON == $data->getType()) {
@@ -437,7 +449,7 @@ Você também pode definir toda a lógica inline usando uma Closure::
                     return array('company');
                 }
             },
-        );
+        ));
     }
 
 .. index::
@@ -758,11 +770,11 @@ que vai abrigar a lógica da construção do formulário de tarefas:
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
             $builder->add('dueDate', null, array('widget' => 'single_text'));
@@ -809,12 +821,44 @@ a decisão final depende de você.
     boa idéia especificar explicitamente a opção ``data_class`` adicionando
     o seguinte à sua classe type de formulário::
 
-        public function getDefaultOptions(array $options)
+        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
-            );
+            ));
         }
+
+.. tip::
+
+    Ao mapear formulários para objetos, todos os campos são mapeados. Qualquer  
+    campo do formulário que não existe no objeto mapeado irá fazer com que uma 
+    exceção seja gerada.
+
+    In cases where you need extra fields in the form (for example: a "do you
+    agree with these terms" checkbox) that will not be mapped to the underlying
+    object, you need to set the property_path option to ``false``::
+
+    Nos casos em que você precisa de campos extras na formulário (por exemplo: um
+    checkbox "você concorda com os termos") que não será mapeado para o objeto implícito,
+    você precisa definir a opção property_path como ``false``::
+
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('property_path' => false));
+        }
+
+    Além disso, se houver quaiquer campos do formulário que não estão incluídos nos 
+    dados submetidos, esses campos serão definidos explicitamente como ``null``.
+
+    Os dados do campo podem ser acessados em um controlador com::
+
+        $form->get('dueDate')->getData();
+
 
 .. index::
    pair: Formulários; Doctrine
@@ -831,7 +875,7 @@ para ser persistida através do Doctrine (ou seja, você adicionou
 após a submissão do formulário pode ser feita quando o formulário é válido::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($task);
         $em->flush();
 
@@ -913,20 +957,21 @@ crie uma classe de formulário para que o objeto ``Category`` possa ser modifica
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class CategoryType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Category',
-            );
+            ));
         }
 
         public function getName()
@@ -942,7 +987,9 @@ ao objeto ``TaskType`` cujo tipo é uma instância da nova classe
 
 .. code-block:: php
 
-    public function buildForm(FormBuilder $builder, array $options)
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
@@ -950,7 +997,18 @@ ao objeto ``TaskType`` cujo tipo é uma instância da nova classe
     }
 
 Os campos do ``CategoryType`` podem agora ser renderizados juntamente com os campos da
-classe ``TaskType``. Renderize os campos ``Category`` da mesma forma
+classe ``TaskType``. Para ativar a validação no CategoryType, adicione
+a opção ``cascade_validation``::
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Acme\TaskBundle\Entity\Category',
+            'cascade_validation' => true,
+        ));
+    }
+
+Renderize os campos ``Category`` da mesma forma
 que os campos originais da ``Task``:
 
 .. configuration-block::
@@ -1082,6 +1140,19 @@ que vem com o Symfony).
 Para personalizar qualquer parte de um formulário, você só precisa substituir o fragmento
 apropriado. Saber exatamente qual bloco ou arquivo deve-se substituir é o tema da
 próxima seção.
+
+.. versionadded:: 2.1
+   Foi introduzida uma sintaxe alternativa do Twig para ``form_theme`` no 2.1. Ela aceita 
+   qualquer expressão Twig válida (a diferença mais notável está no uso de um array quando 
+   utilizar vários temas).
+
+   .. code-block:: html+jinja
+
+       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+
+       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
 
 Para uma discussão mais extensiva, consulte :doc:`/cookbook/form/form_customization`.
 
@@ -1323,21 +1394,23 @@ a saída de todos os campos não-renderizados.
 
 O token CSRF pode ser personalizado formulário por formulário. Por exemplo::
 
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
     class TaskType extends AbstractType
     {
         // ...
-    
-        public function getDefaultOptions(array $options)
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class'      => 'Acme\TaskBundle\Entity\Task',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
                 'intention'       => 'task_item',
-            );
+            ));
         }
-        
+
         // ...
     }
 
@@ -1361,7 +1434,7 @@ Na maioria dos casos, um formulário é vinculado a um objeto, e os campos do fo
 e armazenam seus dados nas propriedades desse objeto. Isto foi exatamente o que
 você viu até agora neste capítulo com a classe `Task`.
 
-Mas às vezes, você pode desejar apenas utilizar um formulário sem uma classe, e receber
+Mas, às vezes, você pode desejar apenas utilizar um formulário sem uma classe, e receber
 um array dos dados submetidos. Isso é realmente muito fácil::
 
     // Certifique-se que você importou o namespace Request acima da classe
@@ -1377,8 +1450,8 @@ um array dos dados submetidos. Isso é realmente muito fácil::
             ->add('message', 'textarea')
             ->getForm();
         
-            if ($request->getMethod() == 'POST') {
-                $form->bindRequest($request);
+            if ($request->isMethod('POST')) {
+                $form->bind($request);
 
                 // data is an array with "name", "email", and "message" keys
                 $data = $form->getData();
@@ -1388,8 +1461,8 @@ um array dos dados submetidos. Isso é realmente muito fácil::
     }
 
 Por padrão, um formulário assume que você deseja trabalhar com arrays de
-dados, em vez de um objeto. Há exatamente duas maneiras que você pode mudar
-esse comportamento e amarrar o formulário à um objeto, em vez disso:
+dados, em vez de um objeto. Há exatamente duas maneiras em que você pode mudar
+esse comportamento e amarrar o formulário à um objeto:
 
 1. Passar um objeto ao criar o formulário (como o primeiro argumento para ``createFormBuilder``
    ou o segundo argumento para ``createForm``);
@@ -1443,14 +1516,15 @@ mas aqui está um pequeno exemplo::
         // ...
     ;
 
-Agora, quando você chamar `$form->isValid()`, a configuração de *constraints* aqui será executada
+Agora, quando você chamar `$form->bind($request)`, a configuração de *constraints* aqui será executada
 em relação aos dados do seu formulário. Se você estiver usando uma classe de formulário, sobrescreva 
-o método ``getDefaultOptions`` para especificar a opção::
+o método ``setDefaultOptions`` para especificar a opção::
 
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
     use Symfony\Component\Validator\Constraints\MinLength;
     use Symfony\Component\Validator\Constraints\Collection;
@@ -1459,14 +1533,16 @@ o método ``getDefaultOptions`` para especificar a opção::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
-        
-            $options['validation_constraint'] = $collectionConstraint;
+
+            $resolver->setDefaults(array(
+                'validation_constraint' => $collectionConstraint
+            ));
         }
     }
 

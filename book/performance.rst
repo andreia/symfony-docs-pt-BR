@@ -55,20 +55,23 @@ configurados para encontrar um determinado arquivo, fazendo chamadas ``file_exis
 finalmente, encontre o arquivo que estiver procurando.
 
 A solução mais simples é armazenar em cache a localização de cada classe após ter sido localizada
-pela primeira vez. O Symfony vem com um carregador de classe - ``ApcUniversalClassLoader`` -
-que estende a ``UniversalClassLoader`` e armazena os locais das classes
-no APC.
+pela primeira vez. O Symfony vem com um carregador de classe - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
+que faz exatamente isso. Para usá-lo, basta adaptar seu arquivo front controller.
+Se você estiver usando a Distribuição Standard, este código já deve estar disponível com 
+comentários neste arquivo::
 
-Para usar este carregador de classe, simplesmente adapte o seu ``autoloader.php`` como segue:
+    // app.php
+    // ...
 
-.. code-block:: php
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
-    // app/autoload.php
-    require __DIR__.'/../vendor/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+    // Use APC for autoloading to improve performance
+    // Change 'sf2' by the prefix you want in order to prevent key conflict with another application
+    /*
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+    */
 
-    use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
-
-    $loader = new ApcUniversalClassLoader('some caching unique prefix');
     // ...
 
 .. note::
@@ -109,7 +112,7 @@ Note que existem duas desvantagens ao usar um arquivo de inicialização:
 * Quando estiver debugando, é necessário colocar ``break points`` dentro do arquivo de inicialização.
 
 Se você estiver usando a Edição Standard do Symfony2, o arquivo de inicialização é automaticamente
-reconstruído após a atualização das bibliotecas vendor através do comando ``php bin/vendors install``
+reconstruído após a atualização das bibliotecas vendor através do comando ``php composer.phar install``
 .
 
 Arquivos de inicialização e caches de código byte
@@ -123,4 +126,4 @@ mais motivo para usar um arquivo de inicialização.
 .. _`Caches de código byte`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`autoloader.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
-.. _`arquivo de inicialização`: https://github.com/sensio/SensioDistributionBudle/blob/master/Resources/bin/build_bootstrap.php
+.. _`arquivo de inicialização`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

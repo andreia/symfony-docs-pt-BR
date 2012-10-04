@@ -337,7 +337,7 @@ especialmente quando você estiver trabalhando com formulários, por exemplo:
     {
         $form = $this->createForm(...);
         
-        $form->bindRequest($request);
+        $form->bind($request);
         // ...
     }
 
@@ -625,8 +625,8 @@ facilmente de qualquer controlador::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 Esses atributos permanecerão no usuário até o fim da sessão.
 
@@ -647,11 +647,11 @@ Por exemplo, imagine que você esteja processando a submissão de um formulário
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($this->getRequest());
+        $form->bind($this->getRequest());
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash('notice', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -670,19 +670,19 @@ renderizar a mensagem ``notice``:
 
     .. code-block:: html+jinja
 
-        {% if app.session.hasFlash('notice') %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ app.session.flash('notice') }}
+                {{ flashMessage }}
             </div>
-        {% endif %}
+        {% endfor %}
 
     .. code-block:: php
     
-        <?php if ($view['session']->hasFlash('notice')): ?>
+        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo $view['session']->getFlash('notice') ?>
+                <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
-        <?php endif; ?>
+        <?php endforeach; ?>
 
 Por definição, as mensagens flash são feitas para existirem por exatamente uma
 requisição (elas "se vão num instante" - "gone in a flash"). Elas foram

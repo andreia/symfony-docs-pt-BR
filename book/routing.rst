@@ -2,7 +2,7 @@
    single: Roteamento
 
 Roteamento
-=======
+==========
 
 URLs bonitas são uma obrigação absoluta para qualquer aplicação web séria. Isto
 significa deixar para trás URLs feias como ``index.php?article_id=57`` em favor
@@ -15,8 +15,8 @@ a mudança é simples.
 
 O roteador do Symfony2 deixa você definir URLs criativas que você mapeia para diferentes
 áreas de sua aplicação. No final deste capítulo, você será capaz de :
-* Criar rotas complexas que mapeiam para os controllers
-* Gerar URLs dentro de templates e controllers
+* Criar rotas complexas que mapeiam para os controladores
+* Gerar URLs dentro de templates e controladores
 * Carregar recursos de roteamento  de pacotes (ou algum lugar a mais)
 * Depurar suas rotas
 
@@ -24,11 +24,11 @@ O roteador do Symfony2 deixa você definir URLs criativas que você mapeia para 
    single: Roteamento; Bases
 
 Roteamento em Ação
------------------
+------------------
 
-Um *rota* é um mapa de um padrão URL para um controller. Por exemplo, suponha
+Um *rota* é um mapa de um padrão URL para um controlador. Por exemplo, suponha
 que você queira ajustar qualquer URL como ``/blog/my-post`` ou ``/blog/all-about-symfony``
-e enviá-la ao controller que pode olhar e mudar aquela entrada do blog.
+e enviá-la ao controlador que pode olhar e mudar aquela entrada do blog.
 A rota é simples:
 
 .. configuration-block::
@@ -69,9 +69,9 @@ A rota é simples:
 O padrão definido pela rota ``blog_show`` age como ``/blog/*`` onde
 o coringa é dado pelo nome ``slug``. Para a URL ``/blog/my-blog-post``,
 a variável ``slug`` obtém um valor de ``my-blog-post``, que está disponível
-para você usar em seu controller (continue lendo).
+para você usar em seu controlador (continue lendo).
 
-O parâmetro ``_controller`` é uma chave especial que avisa o Symfony qual controller
+O parâmetro ``_controller`` é uma chave especial que avisa o Symfony qual controlador
 deveria ser executado quando uma URL corresponde a essa rota. A string ``_controller``
 é chamada :ref:`logical name<controller-string-syntax>`. Ela segue um 
 padrão que aponta para uma classe e método PHP específico:
@@ -96,18 +96,18 @@ padrão que aponta para uma classe e método PHP específico:
     }
 
 Parabéns ! Você agora criou sua primeira rota conectou ela a
-um controller. Agora, quando você visitar ``/blog/my-post``, o controller ``showAction``
+um controlador. Agora, quando você visitar ``/blog/my-post``, o controlador ``showAction``
 será executado e a variável ``$slug`` será igual a ``my-post``.
 
 Esse é o objetivo do roteador do Symfony2: mapear a URL de uma requisição para um
-controller. Ao longo do caminho, você aprenderá todos os tipos de truques que tornam o mapeamento fácil,
+controlador. Ao longo do caminho, você aprenderá todos os tipos de truques que tornam o mapeamento fácil,
 mesmo das URLS mais complexas.
 
 .. index::
    single: Roteamento; Por debaixo do capuz
    
 Roteamento: Por debaixo do capuz
------------------------
+--------------------------------
 
 Quando uma requisição é feita para sua aplicação, ela contém um endereço para
 o "recurso" exato que o cliente está requisitando.Esse endereço é chamado de
@@ -119,30 +119,30 @@ a mais. Considere a seguinte requisição de exemplo :
     GET /blog/my-blog-post
 
 O objetido do sistema de roteamento do Symfony2 é analisar esta URL e determinar
-qual controller deveria ser executado. O processo interior parece isso:
+qual controlador deveria ser executado. O processo interior parece isso:
 
 #. A requisação é controlada pelo front controller do Symfony2 front controller (ex: ``app.php``);
 
 #. O núcleo do Symfony2 (ex: Kernel) pergunta ao roteador para inspecionar a requisição;
 
 #. O roteador ajusta a URL recebida para uma rota específica e retorna informação
-   sobre a rota, incluindo o controller que deveria ser executado;
+   sobre a rota, incluindo o controlador que deveria ser executado;
 
-#. O kernel do Symfony2 executa o controller, que retorna por último
+#. O kernel do Symfony2 executa o controlador, que retorna por último
    um objeto ``Response``.
 
 .. figure:: /images/request-flow.png
    :align: center
    :alt: Symfony2 request flow
 
-   A camada de roteamento é  uma ferramenta que traduza a URL recebida em um controller
+   A camada de roteamento é  uma ferramenta que traduza a URL recebida em um controlador
    específico para executar.
 
 .. index::
    single: Roteamento; Criando rotas
 
 Criando rotas
----------------
+-------------
 
 Symfony carrega todas as rotas para sua aplicação de um arquivo de configuração 
 de roteamento. O arquivo é geralmente ``app/config/routing.yml``, mas pode ser configurado
@@ -181,7 +181,7 @@ de aplicação:
     Veja a seção:ref:`routing-include-external-resources` para mais informação.
 
 Configuração de rota básica
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Definir uma rota é fácil, e uma aplicação típica terá um monte de rotas.
 A basic route consists of just two parts: the ``pattern`` to match and a
@@ -221,7 +221,7 @@ A basic route consists of just two parts: the ``pattern`` to match and a
 
         return $collection;
 
-A rota combina a homepage (``/``) e mapeia ele para o controller 
+A rota combina a homepage (``/``) e mapeia ele para o controlador 
 ``AcmeDemoBundle:Main:homepage``. A string ``_controller`` é traduzida pelo Symfony2 em uma
 função verdadeira do PHP e exectudada. Aquele processo irá ser explicado brevemente
 na seção :ref:`controller-string-syntax`.
@@ -230,7 +230,7 @@ na seção :ref:`controller-string-syntax`.
    single: Roteamento; Espaços reservados
 
 Roteando com Espaços reservados
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Claro que o sistema de roteamento suporta rotas muito mais interessantes. Muitas
 rotas irão conter uma ou mais chamadas de espaços reservados "coringa":
@@ -269,9 +269,9 @@ rotas irão conter uma ou mais chamadas de espaços reservados "coringa":
         return $collection;
 
 O padrão irá corresponder a qualquer coisa que pareça ``/blog/*``. Melhor ainda,
-o valor correspondendo ao espaço reservado ``{slug}`` estará disponível no seu controller. 
+o valor correspondendo ao espaço reservado ``{slug}`` estará disponível no seu controlador. 
 Em outras palavras, se a URL é ``/blog/hello-world``, uma variável 
-``$slug``, com o valor de ``hello-world``, estará disponível no controller.
+``$slug``, com o valor de ``hello-world``, estará disponível no controlador.
 Isto pode ser usado, por exemplo, para carregar o post do blog correspondendo àquela string.
 
 Este padrão *não* irá, entretanto, simplesmente ajustar ``/blog``. Isso é porque,
@@ -279,7 +279,7 @@ por padrão, todos os espaços reservados são requeridos. Isto pode ser mudado 
 de espaço reservado ao array ``defaults``.
 
 Espaços reservados Requeridos e Opcionais
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Para tornar as coisas mais excitantes, adicione uma nova rota que mostre uma lista de todos
 os posts do blog para essa aplicação de blog imaginária:
@@ -356,7 +356,7 @@ blog ? Atualize a rota para ter uma nova ``{page}``  de espaço reservado:
         return $collection;
 
 Como o espaço reservado ``{slug}`` anterior, o valor correspondendo a ``{page}``
-estará disponível dentro do seu controller. Este valor pode ser usado para determinar qual
+estará disponível dentro do seu controlador. Este valor pode ser usado para determinar qual
 conjunto de posts do blog mostrar para determinada página.
 
 Mas espere ! Como espaços reservados são requeridos por padrão, essa rota não irá
@@ -417,7 +417,8 @@ corresponder, atribuindo ao parâmetro ``page`` o valor ``2``. Perfeito.
    single: Roteamento; Requisitos
 
 Adicionando Requisitos
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+
 Dê uma rápida olhada nos roteamentos que foram criados até agora:
 
 .. configuration-block::
@@ -614,11 +615,11 @@ com a expressão regular ``(en|fr)``.
    single: Roteamento; Requisição de método
 
 Adicionando Requisição de Método HTTP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Em adição à URL, você também pode ajustar o "método" da requisição recebida
 (em outras palavras, GET, HEAD, POST, PUT, DELETE).Suponha que você tenha um formulário de contato
-com dois controllers - um para exibir o formulário (em uma requisição GET) e uma
+com dois controladores - um para exibir o formulário (em uma requisição GET) e uma
 para processar o formulário quando ele é enviado (em uma requisição POST). Isto pode 
 ser acompanhando com a seguinte configuração de rota:
 
@@ -680,7 +681,7 @@ ser acompanhando com a seguinte configuração de rota:
 Apesar do fato que estas duas rotas tem padrões idênticos (``/contact``),
 a primeira rota irá aceitar somente requisições GET e a segunda rota irá somente
 aceitar requisiçõs POST.Isso significa que você pode exibir o formulário e enviar o
-formulário pela mesma URL, enquanto usa controllers distintos para as duas ações.
+formulário pela mesma URL, enquanto usa controladores distintos para as duas ações.
 
 .. note::
     If no ``_method`` requirement is specified, the route will match on
@@ -697,7 +698,7 @@ regular. Para aceitar requisições ``GET`` *ou* ``POST``, você pode usar ``GET
 
 
 Exemplo avançado de roteamento
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Até esse ponto, você tem tudo que você precisa para criar uma poderosa estrutura
 de roteamento em Symfony. O exemplo seguinte mostra quão flexível o
@@ -766,36 +767,41 @@ uma barra. URLs que correspondam a esta rota poderia parecer como:
     do ojeto ``Request``. Ultimamente, o formato requisitado é usado para certas
     coisas como as configurar o ``Content-Type`` da resposta (ex: um formato de requisição 
     ``json`` traduz em um ``Content-Type`` de ``application/json``).
-    Ele também pode ser usado no controller para alterar um template diferente para
+    Ele também pode ser usado no controlador para alterar um template diferente para
     cada valor de ``_format``. O parâmetro ``_format`` é um modo muito poderoso 
     para alterar o mesmo conteúdo em formatos diferentes.
 
 
 Parâmetros de Roteamento Especiais
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Como você viu, cada parâmetro de roteamento ou valor padrão está eventualmente disponível
-como um argumento no método do controller. Adicionalmente, existem três parâmetros
+como um argumento no método do controlador. Adicionalmente, existem três parâmetros
 que são especiais: cada um adiciona uma parte única de funcionalidade dentro da sua aplicação:
 
 * ``_controller``: Como você viu, este parâmetro é usado para determinar qual 
-  controller é executado quando a rota é correspondida;
+  controlador é executado quando a rota é correspondida;
   
 * ``_format``: Usado para fixar o formato de requisição (:ref:`read more<book-routing-format-param>`);
 
-* ``_locale``: Usado para fixar a localidade na sessão (:ref:`read more<book-translation-locale-url>`);
+* ``_locale``: Usado para fixar a localidade no pedido (:ref:`read more<book-translation-locale-url>`);
+
+.. tip::
+
+    Se você usar o parâmetro ``_locale`` na rota, aquele valor será também
+    armazenado na sessão, então, os pedidos posteriores mantêm a mesma localidade.
 
 .. index::
-   single: Roteamento; Controllers
-   single: Controller; Formato de nomeação de strings
+   single: Roteamento; Controladores
+   single: Controlador; Formato de nomeação de strings
 
 .. _controller-string-syntax:
 
-Padrão de nomeação do Controller
--------------------------
+Padrão de nomeação do Controlador
+---------------------------------
 
 Cada rota deve ter um parâmetro ``_controller``, que ordena qual 
-controller deveria ser executado quando uma rota é correspondida. Esse parâmetro
+controlador deveria ser executado quando uma rota é correspondida. Esse parâmetro
 usa um padrão de string simples chamado *logical controller name*, que
 o Symfony mapeia para uma classe e método PHP específico. O padrão tem três partes,
 cada uma separada por dois pontos:
@@ -804,13 +810,13 @@ cada uma separada por dois pontos:
 
 Por exemplo, um valor ``_controller`` de ``AcmeBlogBundle:Blog:show`` significa:
 
-+----------------+---------------------+---------------+
-|Pacote          |Classe do Controller |Nome do Método |
-+================+=====================+===============+
-| AcmeBlogBundle | BlogController      | showAction    |
-+----------------+---------------------+---------------+
++----------------+-----------------------+----------------+
+| Bundle         | Classe do Controlador | Nome do Método |
++================+=======================+================+
+| AcmeBlogBundle | BlogController        | showAction     |
++----------------+-----------------------+----------------+
 
-O controller poderia parecer assim:
+O controlador poderia parecer assim:
 
 .. code-block:: php
 
@@ -838,15 +844,15 @@ e permite mais flexibilidade.
 .. note::
 
    Em complemento ao utilizar o nome lógico ou o nome de classe totalmente qualificado,
-   Symfony suporta um terceiro modo de referir a um controller. Esse método
+   Symfony suporta um terceiro modo de referir a um controlador. Esse método
    usa somente um separador de dois pontos (ex: ``service_name:indexAction``) e
-   referir um controller como um serviço (veja :doc:`/cookbook/controller/service`).
+   referir um controlador como um serviço (veja :doc:`/cookbook/controller/service`).
 
-Parâmetros de Rota e Argumentos de Controller
------------------------------------------
+Parâmetros de Rota e Argumentos de Controlador
+----------------------------------------------
 
 Os parâmetros de rota (ex: ``{slug}``) são especialmente importantes porque
-cada um é disponibilizado como um argumento para o método do controller:
+cada um é disponibilizado como um argumento para o método do controlador:
 
 .. code-block:: php
 
@@ -857,9 +863,9 @@ cada um é disponibilizado como um argumento para o método do controller:
 
 Na realidade, a coleção inteira ``defaults`` é mesclada com um valor de parâmetro
 para formar um único array. Cada chave daquele array está disponível como um
-argumento no controller.
+argumento no controlador.
 
-Em outras palavras, para cada argumento do método do seu controller, Symfony procura
+Em outras palavras, para cada argumento do método do seu controlador, Symfony procura
 por um parâmetro de rota daquele nome e atribui o valor para aquele argumento.
 No exemplo avançado acima, qualquer combinação (em qualquer ordem) das seguintes
 variáveis poderia ser usada como argumentos para o método ``showAction()``:
@@ -885,7 +891,7 @@ veja :ref:`route-parameters-controller-arguments`.
 .. _routing-include-external-resources:
 
 Incluindo Recursos Externos de Roteamento
-------------------------------------
+-----------------------------------------
 
 Todas as rotas são carregadas por um arquivo de configuração individual - geralmente ``app/config/routing.yml``
 (veja `Criando Rotas`_ acima). É comum, entretanto, que você queria carregar recursos
@@ -971,7 +977,7 @@ As rotas daquele arquivo são analisadas e carregadas da mesma forma que o arqui
 principal de roteamento.
 
 Prefixando Rotas Importadas
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Você também pode escolher providenciar um "prefixo" para as rotas importadas. Por exemplo
 suponha que você queira que a rota ``acme_hello`` tnha um padrão final de ``/admin/hello/{name}``
@@ -1045,14 +1051,25 @@ o nome da rota após o comando:
 
     php app/console router:debug article_show
 
+.. versionadded:: 2.1
+    O comando ``router:match`` foi adicionado no Symfony 2.1
+
+Você pode verificar, se houver, que rota corresponde à um caminho com o 
+comando de console ``router:match``:
+
+.. code-block:: bash
+
+    $ php app/console router:match /articles/en/2012/article.rss
+    Route "article_show" matches
+
 .. index::
    single: Roteamento; Gerando URLs
 
 Gerando URLs
----------------
+------------
 
 O sistema de roteamento deveria também ser usado para gerar URLs. Na realidade, roteamento
-é um sistema bi-direcional: mapeando a URL para um controller+parâmetros e
+é um sistema bi-direcional: mapeando a URL para um controlador+parâmetros e
 parâmetros+rota de voltar para a URL. Os métodos
 :method:`Symfony\\Component\\Routing\\Router::match` e
 :method:`Symfony\\Component\\Routing\\Router::generate` formam esse sistema
@@ -1097,7 +1114,7 @@ Em uma sessão futura, você irá aprender como gerar URLs a partir de templates
    single: Roteamento; URLs Absolutas
 
 Gerando URLs Absolutas
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 Por padrão, o roteador irá gerar URLs relativas (ex: ``/blog``). Para gerar
 uma URL absoluta, simplesmente passe ``true`` ao terceiro argumento do 
@@ -1124,7 +1141,7 @@ método ``generate()``:
    single: Roteamento; Gerando URLs num template
    
 Gerando URLs com Strings de Consulta
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 O método ``generate`` pega um array de valores coringa para gerar a URI.
 Mas se você passar valores extras, eles serão adicionados ao URI como uma string de consulta::
@@ -1133,7 +1150,7 @@ Mas se você passar valores extras, eles serão adicionados ao URI como uma stri
     // /blog/2?category=Symfony
 
 Gerando URLs de um template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 O lugar mais comum para gerar uma URL é pelo template, ao fazer vinculação
 entre páginas na sua aplicação.Isso é feito da mesma forma que antes, mas
@@ -1173,13 +1190,13 @@ Sumário
 -------
 
 Roteamento é um sistema para mapear a URL de requisiçõs recebidas para a função
-do controller que deveria ser chamada para processar a requisição. Em ambas permite
+do controlador que deveria ser chamada para processar a requisição. Em ambas permite
 a você especificar URLs bonitas e manter a funcionalidade de sua aplicação
 desacoplada daquelas URLs. Roteamento é um mecanismo de duas vias, significando que 
 também deveria ser usada para gerar URLs.
 
 Aprenda mais do Cookbook
-----------------------------
+------------------------
 
 * :doc:`/cookbook/routing/scheme`
 

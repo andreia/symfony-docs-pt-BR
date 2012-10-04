@@ -15,14 +15,17 @@ começar a desenvolver imediatamente.
     projeto e armazena-lo por meio de um sistema de controle de versão, veja
     `Utilizando Controle de Versão`_.
 
-Baixando uma Distribuição do Symfony2
--------------------------------------
+Instalando uma Distribuição do Symfony2
+---------------------------------------
 
 .. tip::
 
     Primeiro, certifique-se de que você tem um servidor web (Apache, por exemplo)
-    com o PHP 5.3.2 ou superior instalado e configurado. Para mais informações
-    sobre os requisitos do Symfony2, veja a :doc:`referência sobre requisitos</reference/requirements>`.
+    com a versão mais recente possível do PHP (é recomendado o PHP 5.3.8 ou superior). 
+    Para mais informações sobre os requisitos do Symfony2, veja a :doc:`referência 
+    sobre requisitos</reference/requirements>`. Para informações sobre a configuração
+    de seu específico root do servidor web, verifique a seguinte documentação:
+    `Apache`_ | `Nginx`_ .
 
 O Symfony2 tem pacotes chamados de "distribuições", que são aplicações totalmente
 funcionais que já vem com as bibliotecas básicas do framework, uma seleção de
@@ -33,34 +36,45 @@ para começar a desenvolver.
 
 Comece acessando a página de download do Symfony2 em `http://symfony.com/download`_.
 Nessa página, você verá *Symfony Standard Edition*, que é a principal distribuição
-do Symfony2. Aqui você precisará fazer duas escolhas:
+do Symfony2. Existem duas formas de iniciar o seu projeto:
 
-* Baixar o arquivo ``.tgz`` ou o ``.zip``. Os dois são equivalentes, portanto,
-  baixe o arquivo no formato que você estiver mais acostumado a utilizar.
+Opção 1) Composer
+~~~~~~~~~~~~~~~~~
 
-* Baixar a distribuição com ou sem itens de terceiros (vendors). Se você tem o
-  `Git`_ instalado em seu computador, você deve optar pela opção sem itens de
-  terceiros (without vendors), uma vez que isso te dará um pouco mais de flexibilidade
-  ao trabalhar com bibliotecas de terceiros.
+`Composer`_  é uma biblioteca de gerenciamento de dependências para PHP, que você pode usar 
+para baixar a Edição Standard do Symfony2.
 
-Baixe um dos arquivos para um local dentro do diretório raiz do seu servidor web
-e o descompacte. Utilizando a linha de comando em um sistema UNIX, isso pode ser
-feito da seguinte maneira (troque o ``###`` pelo nome do arquivo):
+Comece fazendo o `download do Composer`_ em qualquer lugar em seu computador local. Se você 
+tem o curl instalado, é tão fácil como:
 
 .. code-block:: bash
 
-    # for .tgz file
-    tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
+    curl -s https://getcomposer.org/installer | php
 
-    # for a .zip file
-    unzip Symfony_Standard_Vendors_2.0.###.zip
+.. note::
 
-Ao terminar, você deverá ter um diretório chamado ``Symfony/`` parecido com isso:
+     Se o seu computador não está pronto para usar o Composer, você verá algumas recomendações 
+     ao executar este comando. Siga as recomendações para que o Composer funcione corretamente.
+
+O Composer é um arquivo executável PHAR, que você pode usar para baixar a Distribuição Standard:
+
+.. code-block:: bash
+
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.1.x-dev
+
+.. tip::
+
+    Para uma versão exata, substitua `2.1.x-dev` com a versão mais recente do Symfony (por exemplo, 2.1.1). 
+    Para mais detalhes, consulte a `Página de Instalação do Symfony`_
+
+Este comando pode demorar alguns minutos para ser executado pois o Composer baixa a Distribuição Padrão, 
+juntamente com todas as bibliotecas vendor de que ela precisa. Quando terminar, você deve ter um diretório
+parecido com o seguinte:
 
 .. code-block:: text
 
-    www/ <- your web root directory
-        Symfony/ <- the unpacked archive
+    path/to/webroot/ <- your web root directory
+        Symfony/ <- the new directory
             app/
                 cache/
                 config/
@@ -73,19 +87,102 @@ Ao terminar, você deverá ter um diretório chamado ``Symfony/`` parecido com i
                 app.php
                 ...
 
-Atualizando bibliotecas de terceiros
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Opção 2) Fazer download de um arquivo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Por fim, se você baixou a versão sem itens de terceiros (without vendors),
-instale esses itens via linha de comando utilizando:
+Você também pode fazer download de um arquivo da Edição Standard. Aqui, você vai
+precisar fazer duas escolhas:
+
+* Faça o download do arquivo ``tgz`` ou ``zip`` - ambos são equivalentes, faça o download
+  daquele que você está mais confortável em usar;
+
+* Faça o download da distribuição com ou sem vendors. Se você está pensando em usar mais
+  bibliotecas de terceiros ou bundles e gerenciá-los através do Composer, você 
+  provavelmente deve baixar "sem vendors".
+
+Baixe um dos arquivos em algum lugar sob o diretório raiz do seu servidor web local e descompacte-o. 
+A partir de uma linha de comando UNIX, isto pode ser feito com um dos seguintes comandos (substituindo 
+``###`` com o seu nome real do arquivo):
 
 .. code-block:: bash
 
-    php bin/vendors install
+    # for .tgz file
+    $ tar zxvf Symfony_Standard_Vendors_2.1.###.tgz
 
-Esse comando baixa todas as bibliotecas de terceiros necessários - incluindo o
-próprio Symfony - para o diretório ``vendor/``. Para informações sobre como as
-bibliotecas de terceiros são gerenciadas dentro do Symfony2, veja ":ref:`cookbook-managing-vendor-libraries`".
+    # for a .zip file
+    $ unzip Symfony_Standard_Vendors_2.1.###.zip
+
+Se você baixou o arquivo "sem vendors", você definitivamente precisa ler a próxima seção.
+
+.. note ::
+
+     Você pode facilmente substituir a estrutura de diretórios padrão. Veja
+     :doc:`/cookbook/configuration/override_dir_structure` para mais
+     informações.
+
+.. _installation-updating-vendors:
+
+Atualizando os Vendors
+~~~~~~~~~~~~~~~~~~~~~~
+
+Neste ponto, você baixou um projeto Symfony totalmente funcional em que
+você vai começar a desenvolver a sua própria aplicação. Um projeto Symfony depende
+de um número de bibliotecas externas. Estas são baixadas no diretório `vendor/`
+do seu projeto através de uma biblioteca chamada `Composer_`.
+
+Dependendo de como você baixou o Symfony, você pode ou não precisar fazer a atualização
+de seus vendors agora. Mas, a atualização de seus vendors é sempre segura, e garante
+que você tem todas as bibliotecas vendor que você precisa.
+
+Passo 1: Obter o `Composer` _ (O excelente novo sistema de pacotes do PHP)
+
+.. code-block:: bash
+
+    curl -s http://getcomposer.org/installer | php
+
+Certifique-se de que você baixou o ``composer.phar`` no mesmo diretório onde
+o arquivo ``composer.json`` encontra-se (por padrão, no raiz de seu projeto 
+Symfony).
+
+Passo 2: Instalar os vendors
+
+.. code-block:: bash
+
+    $ php composer.phar install
+
+Este comando faz o download de todas as bibliotecas vendor necessárias - incluindo
+o Symfony em si - dentro do diretório ``vendor/``.
+
+.. note ::
+
+    Se você não tem o ``curl`` instalado, você também pode apenas baixar o arquivo ``installer``
+    manualmente em http://getcomposer.org/installer. Coloque este arquivo em seu
+    projeto e execute:
+
+    .. code-block:: bash
+
+        php installer
+        php composer.phar install
+
+.. tip::
+
+    Ao executar ``php composer.phar install`` ou ``php composer.phar update``,
+    o composer vai executar comandos de pós instalação/atualização para limpar o cache
+    e instalar os assets. Por padrão, os assets serão copiados para o seu diretório 
+    ``web``. Para criar links simbólicos em vez de copiar os assets, você pode
+    adicionar uma entrada no nó ``extra`` do seu arquivo composer.json com a chave
+    ``symfony-assets-install``  e o valor ``symlink``:
+
+    .. code-block:: json
+
+        "extra": {
+            "symfony-app-dir": "app",
+            "symfony-web-dir": "web",
+            "symfony-assets-install": "symlink"
+        }
+
+    Ao passar ``relative` ao invés de ``symlink`` para o symfony-assets-install,
+    o comando irá gerar links simbólicos relativos.
 
 Configuração e Instalação
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,7 +197,7 @@ Utilize a seguinte URL para verificar a sua configuração:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/config.php
 
 Se algum problema foi encontrado, ele deve ser corrigido agora, antes de prosseguir.
 
@@ -164,7 +261,7 @@ primeira webpage Symfony2 "real":
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/
+    http://localhost/app_dev.php/
 
 O Symfony2 deverá lhe dar as boas vindas e parabeniza-lo pelo trabalho duro até agora!
 
@@ -183,6 +280,9 @@ Se você é novo no Symfony, junte-se a nós em ":doc:`page_creation`", onde voc
 aprenderá como criar páginas, mudar configurações e tudo mais que precisará para
 a sua nova aplicação.
 
+Certifique-se também verificar o :doc:`Cookbook</cookbook/index>`, que contém 
+uma grande variedade de artigos sobre a resolução de problemas específicos com Symfony.
+
 Utilizando Controle de Versão
 -----------------------------
 
@@ -194,7 +294,7 @@ Para instruções específicas sobre a melhor maneira de configurar o seu projet
 para ser armazenado no git, veja :doc:`/cookbook/workflow/new_project_git`.
 
 Ignorando o diretório ``vendor/``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Se você baixou o arquivo *sem itens de terceiros* (without vendors), você pode
 ignorar todo o diretório ``vendor/`` com segurança e não enviá-lo para o controle
@@ -203,14 +303,19 @@ a seguinte linha:
 
 .. code-block:: text
 
-    vendor/
+    /vendor/
 
 Agora, o diretório vendor não será enviado para o controle de versão. Isso é bom
 (na verdade, é ótimo!) porque quando alguém clonar ou fizer check out do projeto,
-ele/ela poderá simplesmente executar o script ``php bin/vendors install`` para
-baixar todas as bibliotecas de terceiros necessárias.
+ele/ela poderá simplesmente executar o script ``php composer.phar install`` para
+instalar todas as bibliotecas vendor necessárias.
 
-.. _`habilite o suporte a ACL`: https://help.ubuntu.com/community/FilePermissions#ACLs
+.. _`habilite o suporte a ACL`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
+.. _`Composer`: http://getcomposer.org/
+.. _`download do Composer`: http://getcomposer.org/download/
+.. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
+.. _`Nginx`: http://wiki.nginx.org/Symfony
+.. _`Página de Inslatação do Symfony`:    http://symfony.com/download
