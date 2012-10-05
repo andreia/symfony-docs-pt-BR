@@ -2,7 +2,7 @@
    single: Validação
 
 Validação
-==========
+=========
 
 Validação é uma tarefa muito comum em aplicações web. Dado inserido em formulário
 precisa ser validado. Dado também precisa ser revalidado antes de ser escrito 
@@ -17,7 +17,7 @@ Vamos olhar como isso pode ser usado no PHP.
    single: Validação; As bases
 
 As bases da validação
-------------------------
+---------------------
 
 A melhor forma de entender validação é vê-la em ação. Para começar, suponha 
 que você criou um bom e velho objeto PHP que você precisa usar em algum lugar da
@@ -106,8 +106,8 @@ seguinte:
 .. index::
    single: Validação; Usando o validator
 
-Usando o serviço ``validator`` 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Usando o serviço ``validator``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Próximo passo, para realmente validar um objeto``Author``, use o método ``validate``
 no serviço ``validator`` (classe :class:`Symfony\\Component\\Validator\\Validator`).
@@ -204,7 +204,7 @@ Dentro do template, você pode gerar a lista de erros exatamente necessária:
 .. _book-validation-forms:
 
 Validação e formulários
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 O serviço ``validator`` pode ser usado a qualquer momento para validar qualquer objeto.
 Na realidade, entretanto, você irá trabalhar frequentemente com o ``validator`` indiretamente
@@ -224,8 +224,8 @@ parece o seguinte dentro do controller::
         $author = new Acme\BlogBundle\Entity\Author();
         $form = $this->createForm(new AuthorType(), $author);
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
 
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object
@@ -251,7 +251,7 @@ Para mais informações, veja: doc:`Forms</book/forms>` chapter.
 .. _book-validation-configuration:
 
 Configuração
--------------
+------------
 
 O validador do Symfony2 é abilitado por padrão, mas você deve abilitar explicitamente anotações
 se você usar o método de anotação para especificar suas restrições:
@@ -284,7 +284,7 @@ se você usar o método de anotação para especificar suas restrições:
 .. _validation-constraints:
 
 Restrições
------------
+----------
 
 O ``validator`` é designado para validar objtos perante *restrições* (i.e.
 regras). Em ordem para validar um objeto, simplesmente mapeie uma ou mais restrições 
@@ -298,7 +298,7 @@ regras da restrição.
 
 
 Restições Suportadas
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Symfony2 engloba um grande número de restrições mais frequentemente usadas:
 
@@ -313,7 +313,7 @@ no artigo do cookbook ":doc:`/cookbook/validation/custom_constraint`"  .
 .. _book-validation-constraint-configuration:
 
 Configuração de restrições
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Algumas restrições, como :doc:`NotBlank</reference/constraints/NotBlank>`,
 são simples como as outras, como a restrição :doc:`Choice</reference/constraints/Choice>`
@@ -464,7 +464,7 @@ para a restrição ou faça de forma segura sempre passando um array de opções
 .. _validator-constraint-targets:
 
 Escopos da restrição
-------------------
+--------------------
 
 Restrições podem ser aplicadas a uma propriedade de classe (e.g. ``name``) ou
 um método getter público (e.g. ``getFullName``). O primeiro é mais comum e fácil
@@ -475,8 +475,8 @@ de usar, mas o segundo permite você especificar regras de validação mais comp
 
 .. _validation-property-target:
 
-Propriedads
-~~~~~~~~~~
+Propriedades
+~~~~~~~~~~~~
 
 Validar as propriedades de uma classe é a técnica de validação mais básica.Symfony2
 permite a você validar propriedades private, protected ou public. A próxima listagem
@@ -634,7 +634,7 @@ prover uma validação mais personalizada.
 .. _book-validation-validation-groups:
 
 Grupos de validação
------------------
+-------------------
 
 Até agora, você foi capaz de adicionar restrições a uma classe e perguntar se aquela 
 classe passa ou não por todas as restrições definidas. Em alguns casos, entretanto,
@@ -768,7 +768,7 @@ veja :ref:`book-forms-validation-groups`.
 .. _book-validation-raw-values:
 
 Validando Valores e Arrays
-----------------------------
+--------------------------
 
 Até agora, você viu como pode validar objetos inteiros. Mas às vezes, você
 somente quer validar um valor simples - como verificar se uma string é um endereço
@@ -811,7 +811,7 @@ class:`Symfony\\Component\\Validator\\ConstraintViolation` ,
 que contém a mensagem de erro no método `getMessage` dele.
 
 Considerações Finais
---------------
+--------------------
 
 O Symfony2 ``validator`` é uma ferramenta poderosa que pode ser multiplicada para
 garantir que o dado de qualquer objeto seja "válido". O poder por trás da validação
@@ -822,7 +822,7 @@ em qualquer lugar para validar qualquer objeto.
 
 
 Aprenda mais do Cookbook
-----------------------------
+------------------------
 
 * :doc:`/cookbook/validation/custom_constraint`
 

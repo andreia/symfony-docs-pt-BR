@@ -241,8 +241,8 @@ do objeto ``$task``. Isso tudo acontece através do método ``bind()``.
 .. note::
 
     Assim que o ``bind()`` é chamado, os dados enviados são transferidos
-    imediatamente para o objeto implícito. Isso acontece independentemente de
-    os dados implícitos serem realmente válidos.
+    imediatamente para o objeto implícito. Isso acontece independentemente dos
+    dados implícitos serem realmente válidos.
 
 Este controlador segue um padrão comum para a manipulação de formulários, e possui três
 caminhos possíveis:
@@ -835,10 +835,6 @@ a decisão final depende de você.
     Ao mapear formulários para objetos, todos os campos são mapeados. Qualquer  
     campo do formulário que não existe no objeto mapeado irá fazer com que uma 
     exceção seja gerada.
-
-    In cases where you need extra fields in the form (for example: a "do you
-    agree with these terms" checkbox) that will not be mapped to the underlying
-    object, you need to set the property_path option to ``false``::
 
     Nos casos em que você precisa de campos extras na formulário (por exemplo: um
     checkbox "você concorda com os termos") que não será mapeado para o objeto implícito,

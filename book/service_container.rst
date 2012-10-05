@@ -466,7 +466,6 @@ invoca a extensão do container de serviço dentro do ``FrameworkBundle``:
         # app/config/config.yml
         framework:
             secret:          xxxxxxxxxx
-            charset:         UTF-8
             form:            true
             csrf_protection: true
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -475,7 +474,7 @@ invoca a extensão do container de serviço dentro do ``FrameworkBundle``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config charset="UTF-8" secret="xxxxxxxxxx">
+        <framework:config secret="xxxxxxxxxx">
             <framework:form />
             <framework:csrf-protection />
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
@@ -487,7 +486,6 @@ invoca a extensão do container de serviço dentro do ``FrameworkBundle``:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             'secret'          => 'xxxxxxxxxx',
-            'charset'         => 'UTF-8',
             'form'            => array(),
             'csrf-protection' => array(),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
@@ -508,8 +506,8 @@ container de serviço do ``FrameworkBundle``. Cada extensão permite que você f
 personalize o bundle, sem se preocupar com a forma como os serviços internos são
 definidos.
 
-Neste caso, a extensão permite que você personalize as configurações ``charset``, 
-``error_handler``, ``csrf_protection``, ``router`` e muito mais. Internamente,
+Neste caso, a extensão permite que você personalize as configurações ``error_handler``, 
+``csrf_protection``, ``router`` e muito mais. Internamente,
 o ``FrameworkBundle`` usa as opções especificadas aqui para definir e configurar
 os serviços específicos para ele. O bundle se encarrega de criar todos os ``parameters``
 e ``services`` necessários para o container de serviço, permitindo ainda que grande parte 

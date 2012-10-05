@@ -35,13 +35,14 @@ o processo tem vários passos comuns:
 3. Criar translation resources para cada localidade suportada que traduza
    cada mensagem na aplicação;
 
-4. Determinar, fixar e gerenciar a localidade do usuário na sessão.
+4. Determinar, definir e gerenciar a localidade do usuário para o pedido e opcionalmente
+   em toda a sessão do usuário.
 
 .. index::
    single: Traduções; Configuração
 
 Configuração
--------------
+------------
 
 Traduções são suportadas por um ``Translator`` :term:`service` que usa o
 localidadedo usuário para observar e retornar mensagens traduzidas. Antes de usar isto,
@@ -79,13 +80,14 @@ não existe no localidadedo usuário.
     ``fr_FR`` por exemplo). Se isto também falhar, procura uma tradução
     usando a localidade alternativa.
 
-O localidade usada em traduções é a que está armazenada na sessão do usuário.
+A localidade usada em traduções é a que está armazenada no pedido. Isto é
+tipicamente definido através do atributo ``_locale`` em suas rotas (veja :ref:`book-translation-locale-url`).
 
 .. index::
    single: Traduções; Tradução básica
    
 Tradução básica
------------------
+---------------
 
 Tradução do texto é feita done através do serviço  ``translator`` 
 (:class:`Symfony\\Component\\Translation\\Translator`). Para traduzir um bloco
@@ -146,7 +148,8 @@ O processo de tradução
 
 Para realmente traduzir a mensagem, Symfony2 usa um processo simples:
 
-* A ``localidade`` do usuário atual, que é armazenada na sessão, é determinada;
+* A ``localidade`` do usuário atual, que está armazenada no pedido (ou
+  armazenada como ``_locale`` na sessão), é determinada;
 
 * Um catálogo de mensagens traduzidas é carregado de translation resources definidos
   pelo ``locale`` (ex: ``fr_FR``). Messagens da localidade alternativa são
@@ -164,7 +167,7 @@ do catálogo de mensagem apropriada e o retorna (se ele existir).
    single: Traduções; Espaços reservados de mensagem
 
 Espaços reservados de mensagem
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Às vezes, uma mensagem conteúdo uma variável precisa ser traduzida:
 
@@ -247,7 +250,7 @@ para qualquer número de localidades diferentes.
    single: Traduções; Catálogo de Mensagens
 
 Catálogo de Mensagens
-------------------
+---------------------
 
 Quando uma mensagem é traduzida, Symfony2 compila um catálogo de mensagem para
 a localidade do usuário e investiga por uma tradução da mensagem. Um catálogo 
@@ -274,16 +277,24 @@ de arquivos e descoberta pelo Symfony, graças a algumas convenções.
 .. index::
    single: Traduções; Localizações de Translation resource 
 
-Localização de Traduções e Convenções de Nomeamento
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Localização de Traduções e Convenções de Nomenclatura
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 procura por arquivos de mensagem (em outras palavras, traduções) em duas localizações:
+O Symfony2 procura por arquivos de mensagem (em outras palavras, traduções) nas seguintes localizações:
 
-* Para mensagens encontradas no pacote,os arquivos de mensagem correspondente deveriam
-  constar no diretório ``Resources/translations/`` do pacote;
+* o diretório ``<kernel root directory>/Resources/translations``;
 
-* Para sobrepor qualquer tradução de pacote, coloque os arquivos de mensagem no
-  diretório ``app/Resources/translations``.
+* o diretório ``<kernel root directory>/Resources/<bundle name>/translations``;
+
+* o diretório ``Resources/translations/`` do bundle.
+
+Os locais são apresentados com a prioridade mais alta em primeiro lugar. Isso significa que você pode
+sobrescrever as mensagens de tradução de um bundle em qualquer um dos 2 diretórios no topo.
+
+O mecanismo de substituição funciona em um nível chave: apenas as chaves sobrescritas
+precisam ser listadas em um arquivo de mensagem de maior prioridade. Quando a chave não é 
+encontrada em um arquivo de mensagem, o tradutor automaticamente alternará para os arquivos 
+de mensagem menos prioritários.
 
 O nome de arquivo das traduções é também importante, já que Symfony2 usa uma convenção
 para determinar detalhes sobre as traduções. Cada arquivo de messagem deve ser nomeado
@@ -451,7 +462,7 @@ Symfony2 irá descobrir esses arquivos e usá-los quando ou traduzir
    single: Traduções; Domínios de mensagem
 
 Usando Domínios de mensagem
----------------------
+---------------------------
 
 Como nós vimos, arquivos de mensagem são organizados em diferentes localidades que 
 eles traduzem. Os arquivos de mensagem podem também ser organizados além de "domínios".
@@ -478,29 +489,42 @@ usuário.
    single: Traduções; Localidade do usuário
 
 Tratando a localidade do Usuário
---------------------------
+--------------------------------
 
-A localidade do usuário atual é armazenada na sessão e é acessível
-via serviço ``session`:
+A localidade do usuário atual é armazenada no pedido e é acessível
+através do objeto ``request`:
 
 .. code-block:: php
 
-    $locale= $this->get('session')->getLocale();
+    // access the reqest object in a standard controller
+    $request = $this->getRequest();
 
-    $this->get('session')->setLocale('en_US');
+    $locale = $request->getLocale();
+
+    $request->setLocale('en_US');
 
 .. index::
    single: Traduções; localidade padrão e alternativo
 
+Também é possível armazenar a localidade na sessão em vez do pedido.
+Se você fizer isso, cada pedido posterior terá esta localidade.
+
+.. code-block:: php
+
+    $this->get('session')->set('_locale', 'en_US');
+
+Veja a seção :ref:`book-translation-locale-url` abaixo sobre como setar a 
+localidade através de roteamento.
+
 Localidade padrão e alternativa
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Se a localidade não foi fixada explicitamente na sessão , o parâmetro de 
 configuração ``fallback_locale`` será usada pelo ``Translator``. O parâmetro
 é padronizado para ``en`` (veja `Configuração`_).
 
-Alternativamente, você pode garantir que uma localidade é fixada na sessão do usuário
-definindo um ``default_locale`` para o serviço de sessão:
+Alternativamente, você pode garantir que uma localidade é definida em cada pedido do usuário
+definindo um ``default_locale`` para o framework:
 
 .. configuration-block::
 
@@ -508,28 +532,33 @@ definindo um ``default_locale`` para o serviço de sessão:
 
         # app/config/config.yml
         framework:
-            session: { default_locale: en }
+            default_locale: en
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session default-locale="en" />
+            <framework:default-locale>en</framework:default-locale>
         </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'session' => array('default_locale' => 'en'),
+            'default_locale' => 'en',
         ));
+
+.. versionadded:: 2.1
+     O parâmetro ``default_locale`` foi definido debaixo da chave session 
+     originalmente, entretanto, com o 2.1 isto foi movido. Foi movido porque a 
+     localidade agora é definida no pedido ao invés da sessão.
 
 .. _book-translation-locale-url:
 
-a localidade and a URL
-~~~~~~~~~~~~~~~~~~~~~~
+A localidade e a URL
+~~~~~~~~~~~~~~~~~~~~
 
-Como a localidade do usuário é armazenada na sessão, pode ser tentador
+Uma vez que você pode armazenar a localidade do usuário na sessão, pode ser tentador
 usar a mesma URL para mostrar o recurso em muitos idiomas diferentes baseados
 na localidade do usuário.Por exemplo, ``http://www.example.com/contact`` poderia
 mostrar conteúdo em Inglês para um usuário e Francês para outro usuário. Infelizmente,
@@ -770,6 +799,17 @@ variáveis* e expressões complexas:
             {# but static strings are never escaped #}
             {{ '<h3>foo</h3>' | trans }}
 
+.. versionadded:: 2.1
+     Agora você pode definir o domínio de tradução para um template Twig inteiro 
+     com uma única tag:
+
+     .. code-block:: jinja
+
+            {% trans_default_domain "app" %}
+
+     Note que isso somente influencia o template atual, e não qualquer template
+     "incluído" (para evitar efeitos colaterais).
+
 Templates PHP
 ~~~~~~~~~~~~~
 
@@ -787,9 +827,9 @@ helper ``translator``:
     ) ?>
 
 Forçando a Localidade Tradutora
------------------------------
+-------------------------------
 
-Quando traduzir a mensagem, Symfony2 usa a localidade da sessão do usuário
+Quando traduzir a mensagem, Symfony2 usa a localidade do pedido atual
 ou a localidade ``alternativa`` se necessária. Você também pode especificar manualmente a
 localidade a usar para a tradução:
 
@@ -832,7 +872,8 @@ básicos:
   de mensagem. Symfony2 descobre e processa cada arquivo porque o nome dele segue
   uma convenção específica;
 
-* Gerenciar a localidade do usuário, que é armazenada na sessão.
+* Gerenciar a localidade do usuário, que é armazenada no pedido, mas também pode
+  ser definida na sessão do usuário.
 
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation

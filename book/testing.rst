@@ -1,5 +1,5 @@
 .. index::
-   single: Tests
+   single: Testes
 
 Testes
 ======
@@ -17,7 +17,8 @@ o PHPUnit propriamente dito, mas ele tem a sua excelente documentação `documen
 
 .. note::
 
-    Symfony2 funciona com o PHPUnit 3.5.11 ou anterior.
+    O Symfony2 funciona com o PHPUnit 3.5.11 ou posterior, embora a versão 3.6.4 é
+    necessária para testar o código do núcleo do Symfony.
 
 Cada teste - quer seja teste unitário ou teste funcional - é uma classe PHP 
 que deve residir no sub-diretório  `Tests/` de seus bundles. Se você seguir 
@@ -38,7 +39,7 @@ dê uma olhada no arquivo ``app/phpunit.xml.dist``.
     O Code coverage pode ser gerado com a opção ``--coverage-html``.
 
 .. index::
-   single: Tests; Unit Tests
+   single: Testes; Testes Unitários
 
 Testes Unitários
 ----------------
@@ -107,7 +108,7 @@ Executar os testes para um determinado arquivo ou diretório também é muito f�
     $ phpunit -c app src/Acme/DemoBundle/
 
 .. index::
-   single: Tests; Functional Tests
+   single: Testes; Testes Funcionais
 
 Testes Funcionais
 -----------------
@@ -252,7 +253,7 @@ o conteudo contém algum texto ou se o Response não é um documento XML/HTML::
         );
 
 .. index::
-   single: Tests; Assertions
+   single: Testes; Assertions
 
 .. sidebar: Afirmações Úteis
 
@@ -284,7 +285,7 @@ o conteudo contém algum texto ou se o Response não é um documento XML/HTML::
         $this->assertTrue($client->getResponse()->isRedirect());
 
 .. index::
-   single: Tests; Client
+   single: Testes; Client
 
 Trabalhando com o Teste Client
 ------------------------------
@@ -413,7 +414,7 @@ a task ``container:debug``.
     Se a informação que você precisa verificar está disponível no profiler, uso-o então
 
 Acessando dados do Profiler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 En cada requisição, o profiler do Symfony coleta e guarda uma grande quantidade de
 dados sobre a manipulação interna de cada request. Por exemplo, o profiler pode ser
@@ -442,7 +443,7 @@ o método ``followRedirect()``::
     $crawler = $client->followRedirect();
 
 .. index::
-   single: Tests; Crawler
+   single: Testes; Crawler
 
 .. _book-testing-crawler:
 
@@ -634,7 +635,7 @@ Também existe uma API para manipular os valores do campo de acordo com o seu ti
     ``my_form[subject]`` - para PHP arrays).
 
 .. index::
-   pair: Tests; Configuration
+   pair: Testes; Configuração
 
 Configuração de Testes
 ----------------------
@@ -708,7 +709,7 @@ Você também pode sobrescrever cabeçalhos HTTP numa base por requisições::
     se você precisar.
 
 .. index::
-   pair: PHPUnit; Configuration
+   pair: PHPUnit; Configuração
 
 Configuração do PHPUnit
 ~~~~~~~~~~~~~~~~~~~~~~~
