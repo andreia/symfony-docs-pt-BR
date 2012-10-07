@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine
 
-Bancos de Dados e Doctrine ("O Model")
-======================================
+Bancos de Dados e Doctrine
+==========================
 
 Temos que dizer, uma das tarefas mais comuns e desafiadoras em qualquer
 aplicação envolve persistir e ler informações de um banco de dados. Felizmente
@@ -16,7 +16,7 @@ trabalhar com um banco de dados.
     O Doctrine é totalmente desacoplado do Symfony, e seu uso é opcional. Esse
     capítulo é totalmente sobre o Doctrine ORM, que visa permitir fazer
     mapeamento de objetos para um banco de dados relacional (como o *MySQL*,
-    *PostgreSQL* ou o *Microsoft Sql*). É fácil usar consultas SQL puras se 
+    *PostgreSQL* ou o *Microsoft SQL*). É fácil usar consultas SQL puras se 
     você preferir, isso é explicado na entrada do cookbook
     ":doc:`/cookbook/doctrine/dbal`".
     
@@ -33,7 +33,7 @@ fará sua persistência no banco e depois irá retorná-lo.
 
 .. sidebar:: Codifique seguindo o exemplo
 
-	Se quiser seguir o exemplo deste capítulo, crie um ``AcmeStoreBundle`` via:
+    Se quiser seguir o exemplo deste capítulo, crie um ``AcmeStoreBundle`` via:
     
     .. code-block:: bash
     
@@ -44,24 +44,24 @@ Configurando o Banco de Dados
 
 Antes de começar realmente, você precisa configurar a informação de conexão do
 seu banco. Por convenção, essa informação geralmente é configurada no arquivo
-``app/config/parameters.yml``:
+``app/config/parameters.ini`` file:
 
-.. code-block:: yaml
+.. code-block:: ini
 
-    # app/config/parameters.yml
-    parameters:
-        database_driver:   pdo_mysql
-        database_host:     localhost
-        database_name:     test_project
-        database_user:     root
-        database_password: password
+    ; app/config/parameters.ini
+    [parameters]
+        database_driver   = pdo_mysql
+        database_host     = localhost
+        database_name     = test_project
+        database_user     = root
+        database_password = password
 
 .. note::
-	
-	Definir a configuração pelo ``parameters.yml`` é apenas uma convenção. Os
-	parâmetros definidos naquele arquivo são referenciados pelo arquivo de
-	configuração principal na configuração do Doctrine:
-	
+    
+    Definir a configuração pelo ``parameters.ini`` é apenas uma convenção. Os
+    parâmetros definidos naquele arquivo são referenciados pelo arquivo de
+    configuração principal na configuração do Doctrine:
+    
     .. code-block:: yaml
     
         doctrine:
@@ -72,12 +72,12 @@ seu banco. Por convenção, essa informação geralmente é configurada no arqui
                 user:     %database_user%
                 password: %database_password%
     
-	Colocando a informação do banco de dados em um arquivo separado, você pode
-	manter de forma fácil diferentes versões em cada um dos servidores. Você
-	pode também guardar facilmente a configuração de banco (ou qualquer outra
-	informação delicada) fora do seu projeto, por exemplo dentro do seu
-	diretório de configuração do Apache. Para mais informações, de uma olhada
-	em :doc:`/cookbook/configuration/external_parameters`.
+    Colocando a informação do banco de dados em um arquivo separado, você pode
+    manter de forma fácil diferentes versões em cada um dos servidores. Você
+    pode também guardar facilmente a configuração de banco (ou qualquer outra
+    informação delicada) fora do seu projeto, por exemplo dentro do seu
+    diretório de configuração do Apache. Para mais informações, de uma olhada
+    em :doc:`/cookbook/configuration/external_parameters`.
 
 Agora que o Doctrine sabe sobre seu banco, pode deixar que ele faça a criação
 dele para você:
@@ -114,8 +114,8 @@ persistida no banco de dados - ela é apenas uma classe PHP simples.
 
 .. tip::
 
-	Depois que você aprender os conceitos por trás do Doctrine, você pode
-	deixá-lo criar essa classe entidade para você:
+    Depois que você aprender os conceitos por trás do Doctrine, você pode
+    deixá-lo criar essa classe entidade para você:
     
     .. code-block:: bash
         
@@ -147,9 +147,9 @@ YAML, XML ou diretamente dentro da classe ``Product`` por meio de annotations:
 
 .. note::
 
-	Um bundle só pode aceitar um formato para definição de metadados. Por
-	exemplo, não é possível misturar definições em YAML com definições
-	por annotations nas classes entidade.
+    Um bundle só pode aceitar um formato para definição de metadados. Por
+    exemplo, não é possível misturar definições em YAML com definições
+    por annotations nas classes entidade.
 
 .. configuration-block::
 
@@ -229,9 +229,9 @@ YAML, XML ou diretamente dentro da classe ``Product`` por meio de annotations:
 
 .. tip::
 
-	O nome da tabela é opcional e, se omitido, será determinado automaticamente
-	baseado no nome da classe entidade.
-	
+    O nome da tabela é opcional e, se omitido, será determinado automaticamente
+    baseado no nome da classe entidade.
+    
 O Doctrine permite que você escolha entre uma grande variedade de diferentes
 tipos de campo, cada um com suas opções específicas. Para informações sobre os
 tipos de campos disponíveis, dê uma olhada na seção
@@ -239,31 +239,34 @@ tipos de campos disponíveis, dê uma olhada na seção
 
 .. seealso::
 
-	Você também pode conferir a `Documentação Básica sobre Mapeamento do
-	Doctrine`_ para todos os detalhes sobre o tema. Se você usar annotations,
-	irá precisar prefixar todas elas com ``ORM\`` (i.e. ``ORM\Column(..)``),
-	o que não é citado na documentação do Doctrine. Você também irá precisar
-	incluir o comando ``use Doctrine\ORM\Mapping as ORM;``, que *importa* o
-	prefixo ``ORM`` das annotations.
+    Você também pode conferir a `Documentação Básica sobre Mapeamento do
+    Doctrine`_ para todos os detalhes sobre o tema. Se você usar annotations,
+    irá precisar prefixar todas elas com ``ORM\`` (i.e. ``ORM\Column(..)``),
+    o que não é citado na documentação do Doctrine. Você também irá precisar
+    incluir o comando ``use Doctrine\ORM\Mapping as ORM;``, que *importa* o
+    prefixo ``ORM`` das annotations.
 
 .. caution::
 
-	Tenha cuidado para que o nome da sua classe e suas propriedades não estão
-	mapeadas com o nome de um comando SQL protegido (como ``group``ou
-	``user``). Por exemplo, se o nome da sua classe entidade é ``Group`` então,
-	por padrão, o nome da sua tabela será ``group``, que causará um erro de
-	SQL em alguns dos bancos de dados. Dê uma olhada na `documentação sobre
-	os nomes de comandos SQL reservados`_ para ver como escapar adequadamente
-	esses nomes.
-	
+    Tenha cuidado para que o nome da sua classe e suas propriedades não estão
+    mapeadas com o nome de um comando SQL protegido (como ``group``ou
+    ``user``). Por exemplo, se o nome da sua classe entidade é ``Group`` então,
+    por padrão, o nome da sua tabela será ``group``, que causará um erro de
+    SQL em alguns dos bancos de dados. Dê uma olhada na `documentação sobre
+    os nomes de comandos SQL reservados`_ para ver como escapar adequadamente
+    esses nomes. Alternativamente, se você pode escolher livremente seu 
+    esquema de banco de dados, simplesmente mapeie para um nome de tabela 
+    ou nome de coluna diferente. Veja a documentação do Doctrine sobre
+    `Classes persistentes`_ e `Mapeamento de propriedades`_
+    
 .. note::
 
-	Quando usar outra biblioteca ou programa (i.e. Doxygen) que usa annotations
-	você dever colocar a annotation ``@IgnoreAnnotation`` na classe para indicar
-	que annotations o Symfony deve ignorar.
-	
-	Por exemplo, para prevenir que a annotation ``@fn`` gere uma exceção, inclua
-	o seguinte:
+    Quando usar outra biblioteca ou programa (i.e. Doxygen) que usa annotations
+    você dever colocar a annotation ``@IgnoreAnnotation`` na classe para indicar
+    que annotations o Symfony deve ignorar.
+    
+    Por exemplo, para prevenir que a annotation ``@fn`` gere uma exceção, inclua
+    o seguinte:
 
         /**
          * @IgnoreAnnotation("fn")
@@ -291,9 +294,9 @@ altera os models já existentes).
 
 .. caution::
 
-	O comando ``doctrine:generate:entities`` gera um backup do ``Product.php``
-	original chamado de ``Product.php~`. Em alguns casos, a presença desse
-	arquivo pode causar um erro "Cannot redeclare class`.  É seguro removê-lo.
+    O comando ``doctrine:generate:entities`` gera um backup do ``Product.php``
+    original chamado de ``Product.php~`. Em alguns casos, a presença desse
+    arquivo pode causar um erro "Cannot redeclare class`.  É seguro removê-lo.
 
 Você pode gerar todas as entidades que são conhecidas por um bundle (i.e. cada
 classe PHP com a informação de mapeamento do Doctrine) ou de um namespace
@@ -306,11 +309,11 @@ inteiro.
 
 .. note::
 
-	O Doctrine não se importa se as suas propriedades são ``protected`` ou
-	``private``, ou se você não tem um método getter ou setter. Os getters e
-	setters são gerados aqui apenas porque você irá precisar deles para
-	interagir com o seu objeto PHP.
-	
+    O Doctrine não se importa se as suas propriedades são ``protected`` ou
+    ``private``, ou se você não tem um método getter ou setter. Os getters e
+    setters são gerados aqui apenas porque você irá precisar deles para
+    interagir com o seu objeto PHP.
+    
 
 Criando as Tabelas/Esquema do Banco de Dados
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -328,21 +331,21 @@ execute:
 
 .. tip::
 
-	Na verdade, esse comando é extremamente poderoso. Ele compara o que o banco
-	de dados *deveria* se parecer (baseado na informação de mapeamento das suas
-	entidades) com o que ele *realmente* se parece, e gera os comandos SQL
-	necessários para *atualizar* o banco para o que ele deveria ser. Em outras
-	palavras, se você adicionar uma nova propriedade com metadados de
-	mapeamento na classe ``Product``e executar esse comando novamente, ele irá
-	criar a instrução ''alter table'' para adicionar as novas colunas na tabela
-	``product`` existente.
-	
-	Uma maneira ainda melhor de se aproveitar dessa funcionalidade é por meio
-	das :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, que lhe
-	permitem criar essas instruções SQL e guardá-las em classes migration que
-	podem ser rodadas de forma sistemática no seu servidor de produção para que
-	se possa acompanhar e migrar o schema do seu banco de dados de uma forma
-	mais segura e confiável.
+    Na verdade, esse comando é extremamente poderoso. Ele compara o que o banco
+    de dados *deveria* se parecer (baseado na informação de mapeamento das suas
+    entidades) com o que ele *realmente* se parece, e gera os comandos SQL
+    necessários para *atualizar* o banco para o que ele deveria ser. Em outras
+    palavras, se você adicionar uma nova propriedade com metadados de
+    mapeamento na classe ``Product``e executar esse comando novamente, ele irá
+    criar a instrução ''alter table'' para adicionar as novas colunas na tabela
+    ``product`` existente.
+    
+    Uma maneira ainda melhor de se aproveitar dessa funcionalidade é por meio
+    das :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, que lhe
+    permitem criar essas instruções SQL e guardá-las em classes migration que
+    podem ser rodadas de forma sistemática no seu servidor de produção para que
+    se possa acompanhar e migrar o schema do seu banco de dados de uma forma
+    mais segura e confiável.
 
 Seu banco de dados agora tem uma tabela ``product`` totalmente funcional com
 as colunas correspondendo com os metadados que foram especificados.
@@ -379,8 +382,8 @@ controller, isso é bem simples. Inclua o seguinte método no
 
 .. note::
 
-	Se você estiver seguindo o exemplo na prática, precisará criar a rota que
-	aponta para essa action se quiser vê-la funcionando.
+    Se você estiver seguindo o exemplo na prática, precisará criar a rota que
+    aponta para essa action se quiser vê-la funcionando.
 
 Vamos caminhar pelo exemplo:
 
@@ -473,8 +476,8 @@ Uma vez que você tiver seu repositório, terá acesso a todos os tipos de méto
 
 .. note::
 
-	Naturalmente, você pode também pode rodar consultas complexas, vamos
-	aprender mais sobre isso na seção :ref:`book-doctrine-queries`.
+    Naturalmente, você pode também pode rodar consultas complexas, vamos
+    aprender mais sobre isso na seção :ref:`book-doctrine-queries`.
 
 Você também pode se aproveitar dos métodos bem úteis ``findBy`` e
 ``findOneBy`` para retornar facilmente objetos baseando-se em múltiplas
@@ -629,15 +632,15 @@ grupos etc. Para mais informações, veja a documentação oficial do
 
         ... WHERE p.price > :price ...
 
-	Você pode definir o valor do placeholder ``price``chamando o método
-	``setParameter()``::
+    Você pode definir o valor do placeholder ``price``chamando o método
+    ``setParameter()``::
 
         ->setParameter('price', '19.99')
 
-	Usar parâmetros em vez de colocar os valores diretamente no texto da
-	consulta é feito para prevenir ataques de SQL injection e deve ser feito
-	*sempre*. Se você estiver usando múltiplos parâmetros, você pode definir seus
-	valores de uma vez só usando o método ``setParameters()``::
+    Usar parâmetros em vez de colocar os valores diretamente no texto da
+    consulta é feito para prevenir ataques de SQL injection e deve ser feito
+    *sempre*. Se você estiver usando múltiplos parâmetros, você pode definir seus
+    valores de uma vez só usando o método ``setParameters()``::
 
         ->setParameters(array(
             'price' => '19.99',
@@ -750,8 +753,8 @@ entidades ``Product``, ordenadas alfabeticamente.
 
 .. tip::
 
-	O entity manager pode ser acessado via ``$this->getEntityManager()`` de 
-	dentro do repositório.
+    O entity manager pode ser acessado via ``$this->getEntityManager()`` de 
+    dentro do repositório.
 
 Você pode usar esse novo método da mesma forma que os métodos padrões "find"
 do repositório::
@@ -981,8 +984,8 @@ meio do valor de seu campo ``category_id``.
 
 .. sidebar:: Relacionamentos e Classes Proxy
 
-	O "lazy loading" é possível porque, quando necessário, o Doctrine retorna
-	um objeto "proxy" no lugar do objeto real. Olhe novamente o exemplo acima::
+    O "lazy loading" é possível porque, quando necessário, o Doctrine retorna
+    um objeto "proxy" no lugar do objeto real. Olhe novamente o exemplo acima::
     
         $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
@@ -1150,9 +1153,9 @@ a primeira persistência da entidade (i.e. inserção):
 
 .. note::
 
-	O exemplo acima presume que você tenha criado e mapeado uma propriedade
-	``created`` (que não foi mostrada aqui).
-	
+    O exemplo acima presume que você tenha criado e mapeado uma propriedade
+    ``created`` (que não foi mostrada aqui).
+    
 Agora, logo no momento anterior a entidade ser persistida pela primeira vez, o
 Doctrine irá automaticamente chamar esse método e o campo ``created`` será
 preenchido com a data atual.
@@ -1174,17 +1177,17 @@ callbacks em geral, veja a `documentação sobre Lifecycle Events`_ do Doctrine.
 
 .. sidebar:: Lifecycle Callbacks e Event Listeners
 
-	Observe que o método ``setCreatedValue()`` não recebe nenhum argumento.
-	Esse é o comportamento usual dos lifecycle callbacks e é intencional: eles
-	devem ser métodos simples que estão preocupados com as transformações
-	internas dos dados na entidade (e.g. preencher um campo created/updated ou
-	gerar um valor slug).
-	
-	Se você precisar fazer algo mais pesado - como rotinas de log ou mandar um
-	e-mail - você deve registrar uma classe externa como um event listener ou
-	subscriber e dar para ele acesso aos recursos que precisar. Para mais
-	informações, veja :doc:`/cookbook/doctrine/event_listeners_subscribers`.
-	
+    Observe que o método ``setCreatedValue()`` não recebe nenhum argumento.
+    Esse é o comportamento usual dos lifecycle callbacks e é intencional: eles
+    devem ser métodos simples que estão preocupados com as transformações
+    internas dos dados na entidade (e.g. preencher um campo created/updated ou
+    gerar um valor slug).
+    
+    Se você precisar fazer algo mais pesado - como rotinas de log ou mandar um
+    e-mail - você deve registrar uma classe externa como um event listener ou
+    subscriber e dar para ele acesso aos recursos que precisar. Para mais
+    informações, veja :doc:`/cookbook/doctrine/event_listeners_subscribers`.
+    
 
 Extensões do Doctrine: Timestampable, Sluggable, etc.
 -----------------------------------------------------
@@ -1348,3 +1351,5 @@ Para mais informações sobre o Doctrine, veja a seção *Doctrine* do
 .. _`documentação sobre Mapeamento de Propriedades`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping
 .. _`documentação sobre Lifecycle Events`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events
 .. _`documentação sobre os nomes de comandos SQL reservados`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#quoting-reserved-words
+.. _`Classes persistentes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
+.. _`Mapeamento de propriedade`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping

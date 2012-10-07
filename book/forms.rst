@@ -403,43 +403,6 @@ boa prática), então você precisa adicionar o seguinte ao método
 Em ambos os casos, *apenas* o grupo de validação ``registration`` será
 usado para validar o objeto implícito.
 
-Grupos com base nos dados submetidos
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-   A capacidade de especificar um callback ou Closure no ``validation_groups``
-   é novo na versão 2.1
-
-Se você precisar de alguma lógica avançada para determinar os grupos de validação (por exemplo,
-com base nos dados submetidos), você pode definir a opção ``validation_groups``
-para um ``array callback`` ou uma ``Closure``::
-
-    public function getDefaultOptions(array $options)
-    {
-        return array(
-            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
-        );
-    }
-
-Isso irá chamar o método estático ``determineValidationGroups()`` na
-classe ``Client`` após o formulário ser vinculado (bound), mas antes da validação ser executada.
-O objeto do formulário é passado como um argumento para esse método (veja o exemplo seguinte).
-Você também pode definir toda a lógica inline usando uma Closure::
-
-    public function getDefaultOptions(array $options)
-    {
-        return array(
-            'validation_groups' => function(FormInterface $form) {
-                $data = $form->getData();
-                if (Entity\Client::TYPE_PERSON == $data->getType()) {
-                    return array('person')
-                } else {
-                    return array('company');
-                }
-            },
-        );
-    }
-
 .. index::
    single: Formulários; Tipos de campos integrados
 
@@ -815,6 +778,29 @@ a decisão final depende de você.
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
             );
         }
+
+.. tip::
+
+    Ao mapear formulários para objetos, todos os campos são mapeados. Qualquer  
+    campo do formulário que não existe no objeto mapeado irá fazer com que uma 
+    exceção seja gerada.
+
+    Nos casos em que você precisa de campos extras na formulário (por exemplo: um
+    checkbox "você concorda com os termos") que não será mapeado para o objeto implícito,
+    você precisa definir a opção property_path como ``false``::
+
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('property_path' => false));
+        }
+
+    Além disso, se houver quaiquer campos do formulário que não estão incluídos nos 
+    dados submetidos, esses campos serão definidos explicitamente como ``null``.
+
+    Os dados do campo podem ser acessados em um controlador com::
+
+        $form->get('dueDate')->getData();
 
 .. index::
    pair: Formulários; Doctrine
