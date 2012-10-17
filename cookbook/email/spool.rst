@@ -9,10 +9,51 @@ a próxima página carregar, enquanto está enviando o e-mail. Isto pode ser evi
 pelo "spool" dos e-mails em vez de enviá-los diretamente. Isto significa que o ``Swiftmailer`` 
 não tentará enviar o email, mas, ao invés, salvará a mensagem em algum lugar, 
 como um arquivo. Outro processo poderá então ler a partir do spool e cuidar
-de enviar os e-mails no spool. Atualmente, apenas o spool para arquivo é suportado
+de enviar os e-mails no spool. Atualmente, apenas o spool para arquivo ou memória são suportados
 pelo ``Swiftmailer``.
 
-Para utilizar o spool, use a seguinte configuração:
+Spool usando memória
+--------------------
+
+Quando você usa o spool para armazenar os e-mails em memória, eles são enviados
+mesmo antes do kernel terminar. Isto significa que o e-mail só é enviado
+se o pedido foi todo executado sem qualquer exceção não tratada ou quaisquer erros.
+Para configurar o SwiftMailer com a opção de memória, utilize a seguinte configuração:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        swiftmailer:
+            # ...
+            spool: { type: memory }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+
+        <!--
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        -->
+
+        <swiftmailer:config>
+             <swiftmailer:spool type="memory" />
+        </swiftmailer:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('swiftmailer', array(
+             ...,
+            'spool' => array('type' => 'memory')
+        ));
+
+Spool usando um arquivo
+-----------------------
+
+Para utilizar o spool com um arquivo, use a seguinte configuração:
 
 .. configuration-block::
 

@@ -59,10 +59,13 @@ ter um diretório ``Symfony/`` parecido com o seguinte:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.1.x-dev
 
         # remove the Git history
         $ rm -rf .git
+
+        Para uma versão exata, substitua `2.1.x-dev` com a versão mais recente do Symfony
+        (Ex. 2.1.1). Para detalhes, veja a `Página de Instalação do Symfony`_
 
 .. tip::
 
@@ -455,9 +458,10 @@ o Symfony2 torna muito fácil implementar web sites de forma melhor e mais rápi
 Se você está ansioso para aprender mais sobre o Symfony2, mergulhe na próxima seção:
 ":doc:`A Visão<the_view>`".
 
-.. _Edição Standard do Symfony2:    http://symfony.com/download
-.. _Symfony em 5 minutos:           http://symfony.com/symfony-in-five-minutes
-.. _Separação de Responsabilidades: http://en.wikipedia.org/wiki/Separation_of_concerns
-.. _YAML:                           http://www.yaml.org/
-.. _anotações nos controladores:    http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
-.. _Twig:                           http://twig.sensiolabs.org/
+.. _Edição Standard do Symfony2:       http://symfony.com/download
+.. _Symfony em 5 minutos:              http://symfony.com/symfony-in-five-minutes
+.. _Separação de Responsabilidades:    http://en.wikipedia.org/wiki/Separation_of_concerns
+.. _YAML:                              http://www.yaml.org/
+.. _anotações nos controladores:       http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
+.. _Twig:                              http://twig.sensiolabs.org/
+.. _`Página de Instalação do Symfony`: http://symfony.com/download

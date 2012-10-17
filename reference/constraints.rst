@@ -16,12 +16,14 @@ Referência das Constraints de Validação
    constraints/Email
    constraints/MinLength
    constraints/MaxLength
+   constraints/Length
    constraints/Url
    constraints/Regex
    constraints/Ip
 
    constraints/Max
    constraints/Min
+   constraints/Range
 
    constraints/Date
    constraints/DateTime
@@ -29,6 +31,7 @@ Referência das Constraints de Validação
 
    constraints/Choice
    constraints/Collection
+   constraints/Count
    constraints/UniqueEntity
    constraints/Language
    constraints/Locale

@@ -175,4 +175,4 @@ O último comando gerou todos os getters e setters para todas as propriedades
 das duas classes de entidade ``BlogPost`` e ``BlogComment``. As entidades
 geradas agora estão prontas para serem usadas. Divirta-se!
 
-.. _`Doctrine tools documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/tools.html#reverse-engineering
+.. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering

@@ -9,5 +9,4 @@
 
 * *Outras Áreas**
 
-  * :doc:`/reference/dic_tags`
   * :doc:`/reference/requirements`

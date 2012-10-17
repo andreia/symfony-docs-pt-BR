@@ -9,7 +9,6 @@ Documentos de Referência
     forms/types
 
     constraints
-    dic_tags
     requirements
 
 .. include:: /reference/map.rst.inc

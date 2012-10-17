@@ -17,9 +17,9 @@ da linha de comando via:
 Abaixo está a lista de requisitos obrigatórios e opcionais.
 
 Obrigatório
----------
+-----------
 
-* Você precisa ter pelo menos a versão 5.3.2 do PHP
+* Você precisa ter pelo menos a versão 5.3.3 do PHP
 * JSON precisa estar habilitado
 * ctype precisa estar habilitado
 * Seu PHP.ini precisa ter o date.timezone definido
@@ -28,7 +28,7 @@ Opcional
 --------
 
 * Você precisa ter o módulo PHP-XML instalado
-* Você precisa ter pelo menos a versão 2.6.11 da libxml
+* Você precisa ter pelo menos a versão 2.6.21 da libxml
 * PHP tokenizer precisa estar habilitado
 * As funções da mbstring precisam estar habilitadas
 * iconv precisa estar habilitado
@@ -37,11 +37,11 @@ Opcional
 * APC 3.0.17+ (ou outro apcode cache precisa estar instalado)
 * Configurações recomendadas no PHP.ini
 
-    * short_open_tags: off
-    * magic_quotes_gpc: off
-    * register_globals: off
-    * session.autostart: off
-    
+  * ``short_open_tag = Off``
+  * ``magic_quotes_gpc = Off``
+  * ``register_globals = Off``
+  * ``session.autostart = Off``
+
 Doctrine
 --------
 

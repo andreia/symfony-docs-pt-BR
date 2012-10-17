@@ -23,7 +23,7 @@ git local:
    a sua nova estrutura do projeto, arquivos de configuração, etc. Renomeie-o como desejar.
 
 3. Crie um novo arquivo chamado ``.gitignore`` no raiz de seu novo projeto
-   (Ex.: junto com o arquivo ``deps``) e cole o conteúdo seguinte nele. Os arquivos
+   (Ex.: junto com o arquivo ``composer.json``) e cole o conteúdo seguinte nele. Os arquivos
    correspondentes a estes padrões serão ignorados pelo git:
 
     .. code-block:: text
@@ -32,7 +32,7 @@ git local:
         /app/bootstrap*
         /app/cache/*
         /app/logs/*
-        /vendor/  
+        /vendor/
         /app/config/parameters.yml
 
 4. Copie ``app/config/parameters.yml`` para ``app/config/parameters.yml.dist``.
@@ -59,11 +59,8 @@ git local:
     
         $ git commit -m "Initial commit"
 
-8. Finalmente, baixe todas as bibliotecas vendor de terceiros:
-
-    .. code-block:: bash
-    
-        $ php bin/vendors install
+8. Finalmente, baixe todas as bibliotecas vendor de terceiros executando 
+   o composer. Para detalhes, veja :ref:`installation-updating-vendors`.
 
 Neste ponto, você tem um projeto Symfony2 totalmente funcional que está corretamente
 comitado com o git. Você pode iniciar imediatamente o desenvolvimento, comitando as novas
@@ -125,11 +122,12 @@ para garantir que todas as bibliotecas vendor necessárias foram baixadas.
 Vendors e sub-módulos
 ~~~~~~~~~~~~~~~~~~~~~
 
-Em vez de usar o sistema ``deps`` e ``bin/vendors`` para gerenciar suas blibliotecas vendor, 
-você pode optar por usar o `git submodules`_ nativo. Não há
-nada de errado com esta abordagem, embora o sistema ``deps`` é a forma oficial
-de resolver este problema e o ``git submodules`` pode ser difícil trabalhar 
-às vezes.
+Em vez de usar o sistema ``composer.json`` para gerenciar suas bibliotecas vendor, 
+você pode optar por usar o `git submodules`_ nativo. Não há nada de errado com 
+esta abordagem, embora o sistema ``composer.json`` é a forma oficial
+de resolver este problema e provavelmente mais fácil de lidar. Ao contrário
+do ``git submodules``, o ``Composer`` é esperto o suficiente para calcular
+quais bibliotecas dependem de outras bibliotecas.
 
 Armazenando o seu Projeto em um Servidor Remoto
 -----------------------------------------------

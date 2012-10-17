@@ -87,7 +87,7 @@ Os seguintes atributos de configuração estão disponíveis:
 * ``auth_mode``         (``plain``, ``login``, ou ``cram-md5``)
 * ``spool``
 
-  * ``type`` (como será o queue de mensagens, atualmente somente ``file`` é suportado)
+  * ``type`` (como será o queue de mensagens, são suportados ``file`` ou ``memory``, veja :doc:`/cookbook/email/spool`)
   * ``path`` (onde armazenar as mensagens)
 * ``delivery_address``  (um endereço de email para onde serão enviados TODOS os e-mails)
 * ``disable_delivery``  (defina como true para desabilitar completamente a entrega)

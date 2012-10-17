@@ -129,20 +129,25 @@ controller::
     // em outro controller para outra requisição
     $foo = $session->get('foo');
 
-    // define a localidade do usuário
-    $session->setLocale('fr');
+    // usa um valor default se a chave não existe
+    $filters = $session->set('filters', array());
 
 Você pode guardar pequenas mensagens que ficarão disponíveis apenas para a
 próxima requisição::
 
     // guarda uma mensagem para a próxima requisição somente (em um controller)
-    $session->setFlash('notice', 'Congratulations, your action succeeded!');
+    $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // mostra a mensagem na próxima requisição (em um template)
-    {{ app.session.flash('notice') }}
+    // exibe quaisquer mensagens no próximo pedido (no template)
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div>{{ flashMessage }}</div>
+    {% endfor %}
 
 Isso é útil quando você precisa definir uma mensagem de sucesso antes de
 redirecionar o usuário para outra página (que então mostrará a mensagem).
+Por favor note que quando você usa has() ao invés de get(), a mensagem flash 
+não será apagada e, assim, permanece disponível durante os pedidos seguintes.
 
 Protegendo Recursos
 -------------------
@@ -163,9 +168,10 @@ atende as necessidades mais comuns:
 
         providers:
             in_memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                memory:
+                    users:
+                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
             dev:
@@ -197,7 +203,7 @@ que também inclui a permissão ``ROLE_USER`` (veja a configuração
 	senhas são guardadas em texto puro, mas você pode usar algum algoritmo
 	de hash ajustando a seção ``encoders``.
 	
-Indo para a URL	``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+Indo para a URL ``http://localhost/app_dev.php/demo/secured/hello``
 você será automaticamente redirecionado para o formulário de login pois o
 recurso é protegido por um ``firewall``.
 

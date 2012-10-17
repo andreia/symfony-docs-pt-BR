@@ -5,6 +5,6 @@ Os Componentes
     :hidden:
 
     class_loader
-    console
+    console/index
 
 .. include:: /components/map.rst.inc

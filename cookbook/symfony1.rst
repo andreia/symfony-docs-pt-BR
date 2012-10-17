@@ -45,7 +45,7 @@ reside dentro de um bundle (equivalente a um plugin no symfony1) e, por padrão,
 cada bundle reside dentro do diretório ``src``. Dessa forma, o diretório ``src``
 é um pouco parecido com o diretório ``plugins`` do symfony1, mas muito mais
 flexível. Além disso, enquanto os *seus* bundles vão residir no diretório ``src/``,
-os bundles de terceiros podem residir no diretório ``vendor/bundles/``.
+os bundles de terceiros irão residir am algum lugar no diretório ``vendor/``.
 
 Para obter uma imagem melhor do diretório ``src/``, vamos primeiro pensar em uma
 aplicação symfony1. Primeiro, parte do seu código provavelmente reside dentro de uma ou
@@ -74,8 +74,8 @@ O diretório ``vendor/`` é basicamente equivalente ao diretório
 ``lib/vendor/`` do symfony1, que foi o diretório convencional para todas as bibliotecas 
 vendor e bundles. Por padrão, você vai encontrar os arquivos de biblioteca do Symfony2
 nesse diretório, juntamente com várias outras bibliotecas dependentes, como Doctrine2,
-Twig e SwiftMailer. Bundles Symfony2 de terceiros geralmente residem no 
-``vendor/bundles/``.
+Twig e SwiftMailer. Bundles Symfony2 de terceiros residem em algum local no diretório
+``vendor/``.
 
 O Diretório ``web/``
 ~~~~~~~~~~~~~~~~~~~~
