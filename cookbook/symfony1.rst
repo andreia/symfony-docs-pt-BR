@@ -126,13 +126,13 @@ Symfony2::
         // ...
 
 O arquivo em si reside em 
-``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 Como você pode ver, a localização do arquivo segue o namespace da classe.
 Especificamente, o namespace, ``Sensio\Bundle\FrameworkExtraBundle``, indica
 o diretório que o arquivo deve residir em 
-(``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``). Isto é porque, no
+(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). Isto é porque, no
 arquivo ``app/autoload.php``, você vai configurar o Symfony para procurar pelo namespace ``Sensio``
-no diretório ``vendor/sensio``:
+no diretório ``vendor/bundle``:
 
 .. code-block:: php
 
@@ -141,7 +141,7 @@ no diretório ``vendor/sensio``:
     // ...
     $loader->registerNamespaces(array(
         // ...
-        'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
+        'Sensio'           => __DIR__.'/../vendor/bundles',
     ));
 
 Se o arquivo *não* residir nesta localização exata, você receberá o seguinte

@@ -17,8 +17,26 @@ Baixando o Symfony2
 -------------------
 
 Primeiro, verifique se você tem um servidor web instalado e configurado (como
-o Apache) com a versão mais recente possível do PHP (é recomendado o PHP 5.3.8 ou 
+o Apache) com a versão mais recente possível do PHP (é recomendado o PHP 5.3.2 ou 
 mais recente).
+
+.. tip::
+   
+    Se você possui o PHP 5.4, você pode usar o servidor web integrado. O servidor
+    web integrado deve ser usado somente para desenvolvimento, mas ele pode ajudá-lo
+    a iniciar o seu projeto facilmente e rapidamente.
+
+    Apenas use este comando para iniciar o servidor:
+    
+    .. code-block:: bash
+
+        $ php -S localhost:80 -t /path/to/www
+
+    onde "/path/to/www" é o caminho para algum diretório em sua máquina que
+    você extrai o Symfony, então, eventualmente a URL para sua aplicação
+    é "http://localhost/Symfony/app_dev.php". Você também pode extrair o Symfony
+    primeiro e então inicar o servidor web no diretório "web" do Symfony. Se
+    fizer isto, a URL para sua aplicação será "http://localhost/app_dev.php".
 
 Pronto? Comece fazendo o download da "`Edição Standard do Symfony2`_", uma :term:`distribuição`
 do Symfony que é pré-configurada para os casos de uso mais comuns e
@@ -54,32 +72,12 @@ ter um diretório ``Symfony/`` parecido com o seguinte:
 
 .. note::
 
-    Se você está familiarizado com o Composer, poderá executar o seguinte comando
-    em vez de baixar o arquivo:
+    Se você baixou a Edição Standard *sem vendors*, simplesmente execute o
+    seguinte comando para baixar todas as bibliotecas vendor:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install
-
-        # remove the Git history
-        $ rm -rf .git
-
-.. tip::
-
-    Se você tem o PHP 5.4, é possível usar o servidor web integrado:
-
-    .. code-block:: bash
-
-        # check your PHP CLI configuration
-        $ php ./app/check.php
-
-        # run the built-in web server
-        $ php ./app/console server:run
-
-    Então, a URL para a sua aplicação será "http://localhost:8000/app_dev.php"
-
-    O servidor integrado deve ser usado apenas para fins de desenvolvimento, mas
-    pode ajudá-lo a iniciar o seu projeto de forma rápida e fácil.
+        $ php bin/vendors install
 
 Verificando a configuração
 --------------------------
@@ -90,18 +88,7 @@ URL para ver o diagnóstico para a sua máquina:
 
 .. code-block:: text
 
-    http://localhost/config.php
-
-.. note::
-
-    Todos as URLs de exemplo assumem que você baixou e descompactou o Symfony
-    diretamente no diretório raiz web do seu servidor web. Se você seguiu as instruções
-    acima e descompactou o diretório `Symfony` em seu raiz web, então, adicione
-    `/Symfony/web` após `localhost` em todas as URLs:
-
-    .. code-block:: text
-
-        http://localhost/Symfony/web/config.php
+    http://localhost/Symfony/web/config.php
 
 Se houver quaisquer questões pendentes informadas, corrija-as. Você também pode 
 ajustar a sua configuração, seguindo todas as recomendações. Quando tudo estiver
@@ -110,7 +97,7 @@ a sua primeira página "real" do Symfony2:
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/
+    http://localhost/Symfony/web/app_dev.php/
 
 O Symfony2 lhe dá as boas vindas e parabeniza-o por seu trabalho até agora!
 
@@ -138,7 +125,7 @@ Symfony2 (substitua *Fabien* pelo seu primeiro nome):
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/demo/hello/Fabien
+    http://localhost/Symfony/web/app_dev.php/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
@@ -395,14 +382,14 @@ diretório ``web/`` (``app.php``), que é otimizado para o ambiente de produçã
 
 .. code-block:: text
 
-    http://localhost/app.php/demo/hello/Fabien
+    http://localhost/Symfony/web/app.php/demo/hello/Fabien
 
 E, se você usar o Apache com o ``mod_rewrite`` habilitado, poderá até omitir a
 parte ``app.php`` da URL:
 
 .. code-block:: text
 
-    http://localhost/demo/hello/Fabien
+    http://localhost/Symfony/web/demo/hello/Fabien
 
 Por último, mas não menos importante, nos servidores de produção, você deve apontar seu diretório
 raiz web para o diretório ``web/`` para proteger sua instalação e ter uma URL

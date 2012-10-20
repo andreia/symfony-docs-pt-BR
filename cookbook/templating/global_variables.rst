@@ -27,7 +27,7 @@ que permite você isolar e reutilizar o valor como a seguir.
 
 .. code-block:: ini
 
-    ; app/config/parameters.yml
+    ; app/config/parameters.ini
     [parameters]
         ga_tracking: UA-xxxxx-x
 

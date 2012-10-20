@@ -33,13 +33,13 @@ git local:
         /app/cache/*
         /app/logs/*
         /vendor/  
-        /app/config/parameters.yml
+        /app/config/parameters.ini
 
-4. Copie ``app/config/parameters.yml`` para ``app/config/parameters.yml.dist``.
-   O arquivo ``parameters.yml`` é ignorado pelo git (veja acima), de modo que as configurações específicas da máquina, 
-   como senhas de banco de dados, não sejam comitadas. Criando o arquivo ``parameters.yml.dist``, 
+4. Copie ``app/config/parameters.ini`` para ``app/config/parameters.ini.dist``.
+   O arquivo ``parameters.ini`` é ignorado pelo git (veja acima), de modo que as configurações específicas da máquina, 
+   como senhas de banco de dados, não sejam comitadas. Criando o arquivo ``parameters.ini.dist``, 
    novos desenvolvedores podem, rapidamente, clonar o projeto, copiar este arquivo para
-   ``parameters.yml``, personalizá-lo e iniciar o desenvolvimento.
+   ``parameters.ini``, personalizá-lo e iniciar o desenvolvimento.
 
 5. Inicialize o seu repositório git:
 
@@ -68,6 +68,38 @@ git local:
 Neste ponto, você tem um projeto Symfony2 totalmente funcional que está corretamente
 comitado com o git. Você pode iniciar imediatamente o desenvolvimento, comitando as novas
 alterações em seu repositório git.
+
+.. tip::
+
+    Após executar o comando:
+
+    .. code-block:: bash
+
+        $ php bin/vendors install
+
+    seu projeto irá conter um histórico git completo de todos os bundles 
+    e bibliotecas definidos no arquivo ``deps``. Ele pode ter até 100 MB!
+    Se você salvar as versões atuais de todas as suas dependências com o comando:
+
+    .. code-block:: bash
+
+        $ php bin/vendors lock
+
+    então você pode remover o histórico de diretórios git com o seguinte comando:
+
+    .. code-block:: bash
+
+        $ find vendor -name .git -type d | xargs rm -rf
+
+    O comando remove todos os diretórios ``.git`` contidos dentro do 
+    diretório ``vendor``.
+
+    Se você deseja atualizar os bundles definidos no arquivo ``deps`` após isto, você
+    terá que reinstalá-los:
+
+    .. code-block:: bash
+
+        $ php bin/vendors install --reinstall
 
 Você pode continuar acompanhando o capítulo :doc:`/book/page_creation`
 para saber mais sobre como configurar e desenvolver dentro da sua aplicação.

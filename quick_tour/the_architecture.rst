@@ -65,19 +65,19 @@ O autoloading do PHP pode ser configurado via ``app/autoload.php``::
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'          => array(__DIR__.'/../vendor/symfony/symfony/src', __DIR__.'/../vendor/bundles'),
+        'Symfony'          => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
         'Sensio'           => __DIR__.'/../vendor/bundles',
-        'JMS'              => __DIR__.'/../vendor/jms/',
-        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine/common/lib',
-        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine/dbal/lib',
-        'Doctrine'         => __DIR__.'/../vendor/doctrine/orm/lib',
-        'Monolog'          => __DIR__.'/../vendor/monolog/monolog/src',
-        'Assetic'          => __DIR__.'/../vendor/kriswallsmith/assetic/src',
-        'Metadata'         => __DIR__.'/../vendor/jms/metadata/src',
+        'JMS'              => __DIR__.'/../vendor/bundles',
+        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
+        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
+        'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
+        'Monolog'          => __DIR__.'/../vendor/monolog/src',
+        'Assetic'          => __DIR__.'/../vendor/assetic/src',
+        'Metadata'         => __DIR__.'/../vendor/metadata/src',
     ));
     $loader->registerPrefixes(array(
-        'Twig_Extensions_' => __DIR__.'/../vendor/twig/extensions/lib',
-        'Twig_'            => __DIR__.'/../vendor/twig/twig/lib',
+        'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
+        'Twig_'            => __DIR__.'/../vendor/twig/lib',
     ));
 
     // ...
@@ -162,13 +162,14 @@ ou PHP. Esta é a configuração padrão:
 
     # app/config/config.yml
     imports:
-        - { resource: parameters.yml }
+        - { resource: parameters.ini }
         - { resource: security.yml }
 
     framework:
         #esi:             ~
         #translator:      { fallback: "%locale%" }
         secret:          "%secret%"
+        charset:         UTF-8
         router:          { resource: "%kernel.root_dir%/config/routing.yml" }
         form:            true
         csrf_protection: true
@@ -176,6 +177,7 @@ ou PHP. Esta é a configuração padrão:
         templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
         default_locale:  "%locale%"
         session:
+            default_locale: "%locale%"
             auto_start:     true
 
     # Twig Configuration
@@ -187,8 +189,6 @@ ou PHP. Esta é a configuração padrão:
     assetic:
         debug:          "%kernel.debug%"
         use_controller: false
-        bundles:        [ ]
-        # java: /usr/bin/java
         filters:
             cssrewrite: ~
             # closure:
@@ -201,7 +201,6 @@ ou PHP. Esta é a configuração padrão:
         dbal:
             driver:   "%database_driver%"
             host:     "%database_host%"
-            port:     "%database_port%"
             dbname:   "%database_name%"
             user:     "%database_user%"
             password: "%database_password%"

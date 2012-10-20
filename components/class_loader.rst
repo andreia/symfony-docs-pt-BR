@@ -34,9 +34,6 @@ Você pode instalar o componente de várias formas diferentes:
 Uso
 ---
 
-.. versionadded:: 2.1
-   O método ``useIncludePath`` foi adicionado no Symfony 2.1.
-
 Registrar o autoloader :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
 é simples::
 
@@ -45,9 +42,6 @@ Registrar o autoloader :class:`Symfony\\Component\\ClassLoader\\UniversalClassLo
     use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
-
-    // You can search the include_path as a last resort.
-    $loader->useIncludePath(true);
 
     // ... register namespaces and prefixes here - see below
 
@@ -77,11 +71,11 @@ ou
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespaces`
 ::
 
-    $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/symfony/src');
+    $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
-        'Monolog' => __DIR__.'/../vendor/monolog/monolog/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
+        'Monolog' => __DIR__.'/../vendor/monolog/src',
     ));
 
     $loader->register();
@@ -92,11 +86,11 @@ ou
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefixes`
 ::
 
-    $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/twig/lib');
+    $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
 
     $loader->registerPrefixes(array(
-        'Swift_' => __DIR__.'/vendor/swiftmailer/swiftmailer/lib/classes',
-        'Twig_'  => __DIR__.'/vendor/twig/twig/lib',
+        'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
+        'Twig_'  => __DIR__.'/vendor/twig/lib',
     ));
 
     $loader->register();
@@ -111,10 +105,10 @@ em uma lista de localização para facilitar o vendoring de um sub-conjunto de c
 para projetos grandes::
 
     $loader->registerNamespaces(array(
-        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/common/lib',
-        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine/migrations/lib',
-        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/dbal/lib',
-        'Doctrine'                   => __DIR__.'/vendor/doctrine/orm/lib',
+        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine-common/lib',
+        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
+        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine-dbal/lib',
+        'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
     ));
 
     $loader->register();

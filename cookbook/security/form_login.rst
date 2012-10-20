@@ -113,14 +113,6 @@ diretamente a página de login), então, o usuário é redirecionado para a pág
 que é ``/`` (ou seja, a homepage). Você pode alterar esse comportamento
 de várias formas.
 
-.. note::
-
-    Como mencionado, por padrão, o usuário é redirecionado para a página que ele solicitou
-    originalmente. Às vezes, isso pode causar problemas, como, por exemplo, uma requisição AJAX 
-    em background "aparece" sendo a última URL visitada, fazendo com que o usuário seja
-    redirecionado para lá. Para informações sobre como controlar esse comportamento, consulte
-    :doc:`/cookbook/security/target_path`.
-
 Alterando a Página Padrão
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -248,10 +240,6 @@ isso configurando o ``use_referer`` para true (o padrão é false):
                 )),
             ),
         ));
-
-.. versionadded:: 2.1
-    A partir da versão 2.1, se o referer for igual à opção ``login_path``, 
-    o usuário será redirecionado para ``default_target_path``.
 
 Controlando a URL de redirecionamento dentro do Formulário
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

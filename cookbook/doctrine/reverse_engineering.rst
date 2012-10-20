@@ -50,7 +50,7 @@ gravado é ligado a um post gravado graças a uma chave estrangeira.
 
 Antes de começar a receita, verifique se seus parâmetros de conexão com banco
 de dados estão configurados corretamente no arquivo
-``app/config/parameters.yml`` (ou onde quer que sua configuração de banco de
+``app/config/parameters.ini`` (ou onde quer que sua configuração de banco de
 dados é mantida) e que você tenha inicializado um bundle que irá receber sua
 futura classe de entidade. NEste tutorial, vamos supor que um
 ``AcmeBlogBundle`` existe e está localizado na pasta ``src/Acme/BlogBundle``.
@@ -94,6 +94,13 @@ O arquivo de metadados gerado ``BlogPost.dcm.xml`` é semelhante a isto:
         <lifecycle-callbacks/>
       </entity>
     </doctrine-mapping>
+
+.. note::
+
+    Caso possuir relacionamentos ``oneToMany`` entre suas entidades,
+    você precisará editar os arquivos ``xml`` ou ``yml`` gerados para adicionar
+    uma seção sobre as entidades específicas para ``oneToMany`` definindo as
+    partes ``inversedBy`` e ``mappedBy``.
 
 Uma vez que os arquivos de metados foram gerados, você pode pedir para Doctrine
 importar o esquema e construir as classes de entidade relacionadas com a
@@ -175,4 +182,4 @@ O último comando gerou todos os getters e setters para todas as propriedades
 das duas classes de entidade ``BlogPost`` e ``BlogComment``. As entidades
 geradas agora estão prontas para serem usadas. Divirta-se!
 
-.. _`Doctrine tools documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/tools.html#reverse-engineering
+.. _`Doctrine tools documentation`: .. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/tools.html#reverse-engineering

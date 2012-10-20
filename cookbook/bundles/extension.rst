@@ -482,54 +482,6 @@ e merge avançado. Você pode ler mais sobre isso na :doc:`documentação do Com
 Você também pode vê-lo em ação verificando algumas das classes de Configuração do núcleo,
 tais como a `Configuração do FrameworkBundle`_ ou a `Configuração do TwigBundle`_.
 
-Dump de Configuração Padrão
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    O comando ``config:dump-reference`` foi adicionado no Symfony 2.1 
-
-O comando ``config:dump-reference`` permite que a configuração padrão de um bundle
-seja impressa no console em YAML.
-
-Enquanto a configuração do bundle está localizada no local padrão
-(``YourBundle\DependencyInjection\Configuration``) e não tem um
-``__constructor()`` ele vai funcionar automaticamente.  Se você tem algo
-diferente a sua classe ``Extension`` terá que sobrescrever o
-método ``Extension::getConfiguration()``.  Fazendo ele retornar uma instância de sua
-``Configuration``.
-
-Comentários e exemplos podem ser adicionados aos nós de configuração utilizando os
-métodos ``->info()`` e ``->example()``::
-
-    // src/Acme/HelloBundle/DependencyExtension/Configuration.php
-    namespace Acme\HelloBundle\DependencyInjection;
-
-    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-    use Symfony\Component\Config\Definition\ConfigurationInterface;
-
-    class Configuration implements ConfigurationInterface
-    {
-        public function getConfigTreeBuilder()
-        {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('acme_hello');
-
-            $rootNode
-                ->children()
-                    ->scalarNode('my_type')
-                        ->defaultValue('bar')
-                        ->info('what my_type configures')
-                        ->example('example setting')
-                    ->end()
-                ->end()
-            ;
-
-            return $treeBuilder;
-        }
-
-Este texto aparece como comentários yaml na saída do comando 
-``config:dump-reference``.
-
 .. index::
    pair: Convenção; Configuração
 
