@@ -54,7 +54,7 @@ Comece criando classes simples de tipo de formulário para ``CompanyType`` e ``C
 
     class CompanyType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilder $builder, array $options)
         {
             $builder
                 ->add('name', 'text')
@@ -71,7 +71,7 @@ Comece criando classes simples de tipo de formulário para ``CompanyType`` e ``C
 
     class CustomerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilder $builder, array $options)
         {
             $builder
                 ->add('firstName', 'text')
@@ -90,7 +90,7 @@ para localidade (``Location``)::
 
     class LocationType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilder $builder, array $options)
         {
             $builder
                 ->add('address', 'textarea')
@@ -99,11 +99,11 @@ para localidade (``Location``)::
                 ->add('country', 'text');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function getDefaultOptions(array $options)
         {
-            $resolver->setDefaults(array(
-                'virtual' => true
-            ));
+            return array(
+                'virtual' => true,
+            );
         }
 
         public function getName()
@@ -118,27 +118,23 @@ Mas, com certeza, queremos um tipo de formulário próprio para lidar com a loca
 
 A opção de campo de formulário ``virtual`` é a solução.
 
-Podemos definir a opção ``'virtual' => true`` no método ``setDefaultOptions()``
+Podemos definir a opção ``'virtual' => true`` no método ``getDefaultOptions()``
 da ``LocationType`` e começar a usá-lo diretamente nos dois tipos de formulários originais.
 
 Verifique o resultado::
 
     // CompanyType
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('foo', new LocationType(), array(
-            'data_class' => 'Acme\HelloBundle\Entity\Company'
-        ));
+        $builder->add('foo', new LocationType());
     }
 
 .. code-block:: php
 
     // CustomerType
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('bar', new LocationType(), array(
-            'data_class' => 'Acme\HelloBundle\Entity\Customer'
-        ));
+        $builder->add('bar', new LocationType());
     }
 
 Com a opção virtual definida para false (comportamento padrão) , o Componente de Formulário

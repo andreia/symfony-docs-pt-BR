@@ -102,15 +102,14 @@ Agora que você já tem o transformador construído, você só precisa adicioná
 campo `issue` de alguma forma.
 
     Você também pode usar transformadores sem criar um novo tipo de formulário personalizado
-    chamando ``addModelTransformer`` (ou ``addViewTransformer`` - ver
-    `Transformadores de Modelo e Visão`_) ) em qualquer builder de campo::
+    chamando ``prependNormTransformer`` (ou ``appendClientTransformer`` - ver
+    `Transformadores de Norma e Cliente`_) ) em qualquer builder de campo::
 
-        use Symfony\Component\Form\FormBuilderInterface;
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
         class TaskType extends AbstractType
         {
-            public function buildForm(FormBuilderInterface $builder, array $options)
+            public function buildForm(FormBuilder $builder, array $options)
             {
                 // ...
 
@@ -121,7 +120,7 @@ campo `issue` de alguma forma.
                 // add a normal text field, but add our transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
-                        ->addModelTransformer($transformer)
+                        ->prependNormTransformer($transformer)
                 );
             }
 
@@ -153,57 +152,52 @@ sua mensagem de erro pode ser controlada com a opção do campo ``invalid_messag
         // ISTO ESTÁ ERRADO - O TRANSFORMADOR SERÁ APLICADA A TODO O FORMULÁRIO
         // Veja o exemplo acima para o código correto
         $builder->add('issue', 'text')
-            ->addModelTransformer($transformer);
+            ->prependNormTransformer($transformer);
 
-Transformadores de Modelo e Visão
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Transformadores de Norma e Cliente
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    Os nomes e método de transformadores foram alterados no Symfony 2.1.
-    ``prependNormTransformer`` tornou-se ``addModelTransformer`` e ``appendClientTransformer``
-    tornou-se ``addViewTransformer``.
-
-No exemplo acima, o transformador foi utilizado como um transformador de "modelo".
+No exemplo acima, o transformador foi utilizado como um transformador de "norma".
 De fato, existem dois tipos diferentes de transformadores e três tipos 
 diferentes de dados subjacentes.
 
 Em qualquer formulário, os 3 tipos de dados possíveis são os seguintes:
 
-1) **Dados do modelo** - Estes são os dados no formato usado em sua aplicação
+1) **Dados da App** - Estes são os dados no formato usado em sua aplicação
 (ex., um objeto ``Issue``). Se você chamar ``Form::getData`` ou ``Form::setData``, 
-você está lidando com os dados do "modelo".
+você está lidando com os dados da "app".
 
 2) **Dados Normalizados** - Esta é uma versão normalizada de seus dados, e é comumente
-o mesmo que os dados do "modelo" (apesar de não no nosso exemplo). Geralmente ele não é 
+o mesmo que os dados da "app" (apesar de não no nosso exemplo). Geralmente ele não é 
 usado diretamente.
 
-3) **Dados da Visão** - Este é o formato que é usado para preencher os campos do 
+3) **Dados do Cliente** - Este é o formato que é usado para preencher os campos do 
 formulário. É também o formato no qual o usuário irá enviar os dados. Quando 
-você chama ``Form::bind($data)``, o ``$data`` está no formato de dados da "visão".
+você chama ``Form::bind($data)``, o ``$data`` está no formato de dados do "cliente".
 
 Os 2 tipos diferentes de transformadores ajudam a converter de e para cada um destes
 tipos de dados:
 
-**Transformadores de Modelo**:
-    - ``transform``: "model data" => "norm data"
-    - ``reverseTransform``: "norm data" => "model data"
+**Transformadores de Norma**:
+    - ``transform``: "app data" => "norm data"
+    - ``reverseTransform``: "norm data" => "app data"
 
-**Transformadores de Visão**:
-    - ``transform``: "norm data" => "view data"
-    - ``reverseTransform``: "view data" => "norm data"
+**Transformadores de Cliente**:
+    - ``transform``: "norm data" => "client data"
+    - ``reverseTransform``: "client data" => "norm data"
 
 O transformador que você vai precisar depende de sua situação.
 
-Para utilizar o transformador de visão, chame ``addViewTransformer``.
+Para utilizar o transformador de cliente, chame ``appendClientTransformer``.
 
 Então, por que nós usamos o transformador de modelo?
 ----------------------------------------------------
 
 No nosso exemplo, o campo é um campo ``text``, e nós sempre esperamos que um campo 
-texto seja um formato escalar simples, nos formatos "normalizado" e "visão". Por 
-esta razão, o transformador mais apropriado é o transformador de "modelo" (que 
+texto seja um formato escalar simples, nos formatos "normalizado" e "cliente". Por 
+esta razão, o transformador mais apropriado é o transformador de "norma" (que 
 converte de/para o formato *normalizado* - número de issue string - para o formato 
-*modelo* - objeto `Issue`).
+*app* - objeto `Issue`).
 
 A diferença entre os transformadores é sutil e você deve sempre pensar
 sobre o que o dado "normalizado" para um campo deve realmente ser. Por exemplo, o 
@@ -229,10 +223,9 @@ Primeiro, crie a classe do tipo de campo personalizado::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormBuilder;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class IssueSelectorType extends AbstractType
     {
@@ -249,20 +242,20 @@ Primeiro, crie a classe do tipo de campo personalizado::
             $this->om = $om;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilder $builder, array $options)
         {
             $transformer = new IssueToNumberTransformer($this->om);
-            $builder->addModelTransformer($transformer);
+            $builder->prependNormTransformer($transformer);
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function getDefaultOptions(array $options)
         {
-            $resolver->setDefaults(array(
+            return array(
                 'invalid_message' => 'The selected issue does not exist',
-            ));
+            );
         }
 
-        public function getParent()
+        public function getParent(array $options)
         {
             return 'text';
         }
@@ -301,11 +294,11 @@ Agora, sempre que você precisa usar o seu tipo de campo especial ``issue_select
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormBuilder;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilder $builder, array $options)
         {
             $builder
                 ->add('task')
