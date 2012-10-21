@@ -103,7 +103,7 @@ campo `issue` de alguma forma.
 
     Você também pode usar transformadores sem criar um novo tipo de formulário personalizado
     chamando ``prependNormTransformer`` (ou ``appendClientTransformer`` - ver
-    `Transformadores de Norma e Cliente`_) ) em qualquer builder de campo::
+    `Transformadores Normalizado e Cliente`_) ) em qualquer builder de campo::
 
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
@@ -154,10 +154,10 @@ sua mensagem de erro pode ser controlada com a opção do campo ``invalid_messag
         $builder->add('issue', 'text')
             ->prependNormTransformer($transformer);
 
-Transformadores de Norma e Cliente
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Transformadores Normalizado e Cliente
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-No exemplo acima, o transformador foi utilizado como um transformador de "norma".
+No exemplo acima, o transformador foi utilizado como um transformador "normalizado".
 De fato, existem dois tipos diferentes de transformadores e três tipos 
 diferentes de dados subjacentes.
 
@@ -178,11 +178,11 @@ você chama ``Form::bind($data)``, o ``$data`` está no formato de dados do "cli
 Os 2 tipos diferentes de transformadores ajudam a converter de e para cada um destes
 tipos de dados:
 
-**Transformadores de Norma**:
+**Transformadores Normalizado**:
     - ``transform``: "app data" => "norm data"
     - ``reverseTransform``: "norm data" => "app data"
 
-**Transformadores de Cliente**:
+**Transformadores Cliente**:
     - ``transform``: "norm data" => "client data"
     - ``reverseTransform``: "client data" => "norm data"
 
@@ -190,12 +190,12 @@ O transformador que você vai precisar depende de sua situação.
 
 Para utilizar o transformador de cliente, chame ``appendClientTransformer``.
 
-Então, por que nós usamos o transformador de modelo?
-----------------------------------------------------
+Então, por que nós usamos o transformador "normalizado"?
+--------------------------------------------------------
 
 No nosso exemplo, o campo é um campo ``text``, e nós sempre esperamos que um campo 
 texto seja um formato escalar simples, nos formatos "normalizado" e "cliente". Por 
-esta razão, o transformador mais apropriado é o transformador de "norma" (que 
+esta razão, o transformador mais apropriado é o transformador "normalizado" (que 
 converte de/para o formato *normalizado* - número de issue string - para o formato 
 *app* - objeto `Issue`).
 
