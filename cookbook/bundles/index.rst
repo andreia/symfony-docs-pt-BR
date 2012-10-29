@@ -6,4 +6,5 @@ Bundles
 
     best_practices
     inheritance
+    override
     extension
