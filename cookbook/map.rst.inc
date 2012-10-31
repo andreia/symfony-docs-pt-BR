@@ -16,6 +16,10 @@
 
   * :doc:`/cookbook/cache/varnish`
 
+* :doc:`/cookbook/configuration/index`
+
+  * :doc:`/cookbook/configuration/apache_router`
+
 * :doc:`/cookbook/doctrine/index`
 
   * :doc:`/cookbook/doctrine/common_extensions`
