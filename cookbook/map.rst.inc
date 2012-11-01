@@ -18,6 +18,7 @@
 
 * :doc:`/cookbook/configuration/index`
 
+  * :doc:`/cookbook/configuration/environments`
   * :doc:`/cookbook/configuration/apache_router`
 
 * :doc:`/cookbook/doctrine/index`
