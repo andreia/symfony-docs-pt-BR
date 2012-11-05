@@ -10,6 +10,7 @@ Cookbook
     doctrine/index
     form/index
     validation/index
+    configuration/index
     bundles/index
     email/index
     security/index
