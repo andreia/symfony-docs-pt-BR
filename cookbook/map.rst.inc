@@ -24,6 +24,10 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
 
+* **Console Commands**
+
+  * :doc:`/cookbook/console/console_command`
+
 * :doc:`/cookbook/doctrine/index`
 
   * :doc:`/cookbook/doctrine/common_extensions`
