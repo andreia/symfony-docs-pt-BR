@@ -172,7 +172,7 @@ seguinte (MySQL):
 PostgreSQL
 ~~~~~~~~~~
 
-For PostgreSQL, the statement should look like this:
+Para o PostgreSQL, a declaração deve ficar assim:
 
 .. code-block:: sql
 
