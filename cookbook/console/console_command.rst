@@ -14,8 +14,8 @@ Registrando os Comandos Automaticamente
 Para disponibilizar os comandos de console automaticamente com o Symfony2, adicione um
 diretório ``Command`` dentro de seu bundle e crie um arquivo php com o sufixo
 ``Command.php`` para cada comando que você deseja fornecer. Por exemplo, se você
-deseja estender o ``AcmeDemoBundle`` (disponível na Edicação Standard do 
-Symfony) para cumprimentar-nos a partir da linha de comando, crie o ``GreetCommand.php``
+deseja estender o ``AcmeDemoBundle`` (disponível na Edição Standard do Symfony)
+para cumprimentar-nos a partir da linha de comando, crie o ``GreetCommand.php``
 e adicione o seguinte código::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
