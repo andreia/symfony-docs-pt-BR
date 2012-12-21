@@ -33,6 +33,7 @@
 * :doc:`/cookbook/controller/index`
 
   * :doc:`/cookbook/controller/error_pages`
+  * :doc:`/cookbook/controller/service`
 
 * :doc:`/cookbook/doctrine/index`
 
