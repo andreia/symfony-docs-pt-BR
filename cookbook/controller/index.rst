@@ -5,3 +5,4 @@ Controlador
     :maxdepth: 2
 
     error_pages
+    service
