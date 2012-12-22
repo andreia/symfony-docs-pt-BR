@@ -35,6 +35,10 @@
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
 
+* **Depuração**
+
+  * :doc:`/cookbook/debugging`
+
 * :doc:`/cookbook/doctrine/index`
 
   * :doc:`/cookbook/doctrine/common_extensions`
