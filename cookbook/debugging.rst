@@ -41,7 +41,7 @@ O front controller ``app_dev.php``, por padrão, é o seguinte::
 
 Para deixar o seu depurador ainda mais feliz, desabilite todos os caches de classe PHP,
 removendo a chamada para ``loadClassCache()`` e substituindo as declarações require como
-abaixo.
+abaixo::
 
     // ...
 
