@@ -9,7 +9,7 @@ controlar cada requisição que venha de uma aplicação Symfony2. Na realidade,
 o controller delega muito do trabalho pesado para outros lugares então aquele
 código pode ser testado e reusado. Quando um controller precisa gerar HTML,
 CSS e qualquer outro conteúdo, ele entrega o trabalho para o engine de template.
-Nesse capítulo, você irá aprendder como escrever templates poderosas que podem ser
+Nesse capítulo, você irá aprender como escrever templates poderosas que podem ser
 usada para retornar conteúdo para o usuário, preencher corpo de e-mail, e mais. Você 
 irá aprender atalhos, maneiras espertas de extender templates e como reusar código
 de template.
