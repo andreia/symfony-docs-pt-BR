@@ -47,8 +47,8 @@ template em *PHP* - um arquivo de texto analisado pelo PHP que contém uma mistu
 .. index:: Twig; Introdução
 
 Mas Symfony2 empacota até mesmo uma linguagem muito poderosa de template chamada `Twig`_.
-Twig permit a você escrever templates consisos e legíveis que são mais amigáveis
-para web designers e, e de uma certa forma, mais poderosos que templates de PHP:
+Twig permite a você escrever templates consisos e legíveis que são mais amigáveis
+para web designers e, de certa forma, mais poderosos que templates de PHP:
 
 .. code-block:: html+jinja
 
@@ -68,7 +68,7 @@ para web designers e, e de uma certa forma, mais poderosos que templates de PHP:
         </body>
     </html>
 
-Twig degine dois tipos de sintaxe especiais:
+Twig define dois tipos de sintaxe especiais:
 
 * ``{{ ... }}``: "Diga algo": exibe uma variável ou o resultado de uma
   expressão para o template;
@@ -98,7 +98,7 @@ por padrão. Você pode até mesmo `adicionar suas próprias extensões`_ para o
     nele com ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
 
 Como você verá através da documentação, Twig também suporta funções
-e nova funções podem ser facilmente adicionadas. Por exemplo. a seguinte função usa
+e nova funções podem ser facilmente adicionadas. Por exemplo, a seguinte função usa
 uma tag padrão ``for``  e a função ``cycle`` para então imprimir dez tags div, alternando
 entre classes ``odd`` e ``even``:
 
@@ -149,7 +149,7 @@ ambiente, como ``dev`` ou ``prod``), e em alguns casos pode ser útil durante
 a depuração. Veja :ref:`environments-summary` para mais informações de
 ambientes.
 
-Quando o modo ``debug`` é abilitado (comum no ambiente ``dev``), um template
+Quando o modo ``debug`` é habilitado (comum no ambiente ``dev``), um template
 Twig será automaticamente recompilado quando mudanças são feitas nele. Isso
 signitica que durante o desenvolvimento você pode alegremente fazer mudanças para um template Twig
 e instântaneamente ver as mudanças sem precisar se preocupar sobre limpar qualquer
