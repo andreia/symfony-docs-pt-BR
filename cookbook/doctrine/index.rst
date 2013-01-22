@@ -4,6 +4,7 @@ Doctrine
 .. toctree::
     :maxdepth: 2
 
+    file_uploads
     common_extensions
     event_listeners_subscribers
     dbal

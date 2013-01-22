@@ -1,9 +1,9 @@
 .. index::
-   single: Doctrine; Ouvintes de Eventos e Assinantes
+   single: Doctrine; Ouvintes e Assinantes de Eventos
 
 .. _doctrine-event-config:
 
-Como registrar Ouvintes de Eventos e Assinantes
+Como Registrar Ouvintes e Assinantes de Eventos
 ===============================================
 
 O Doctrine contém um valioso sistema de evento que dispara eventos quando quase tudo
