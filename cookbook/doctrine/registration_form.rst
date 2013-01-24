@@ -1,8 +1,8 @@
 .. index::
-   single: Doctrine; Formulário de Registro Simples
-   single: Formulário; Formulário de Registro Simples
+   single: Doctrine; Formulário Simples de Registro
+   single: Formulário; Formulário Simples de Registro
 
-Como implementar um Formulário de Registro Simples
+Como Implementar um Formulário Simples de Registro
 ==================================================
 
 Alguns formulários possuem campos extras cujos valores não precisam ser armazenados no
@@ -10,8 +10,8 @@ banco de dados. Por exemplo, você pode criar um formulário de registo com algu
 campos extras (como um campo checkbox "termos de aceite") e incorporar o formulário
 que realmente armazena as informações da conta.
 
-O modelo simples ``User``
--------------------------
+O modelo ``User``
+-----------------
 
 Você tem uma entidade simples ``User`` mapeada para o banco de dados::
 
@@ -85,10 +85,10 @@ da classe.
     implementar a :ref:`UserInterface<book-security-user-entity>` do
     componente de segurança.
 
-Criar um Formulário para o Modelo
----------------------------------
+Criando um Formulário para o Modelo
+-----------------------------------
 
-Em seguida, crie o formulário para modelo ``User``::
+Em seguida, crie o formulário para o modelo ``User``::
 
     // src/Acme/AccountBundle/Form/Type/UserType.php
     namespace Acme\AccountBundle\Form\Type;
@@ -130,8 +130,8 @@ classe de dados (ou seja, a sua entidade ``User``).
 Incorporando o Formulário do User no Formulário de Registro
 -----------------------------------------------------------
 
-O formulário que você vai usar para a página de registo não é o mesmo que o formulário
-usado apenas para modificar o ``User`` (ou seja, ``UserType``). O formulário de registro
+O formulário que você vai usar para a página de registo não será o mesmo usado
+para modificar o ``User`` (ou seja, ``UserType``). O formulário de registro
 conterá novos campos como o "aceitar os termos", cujo valor não
 será armazenado no banco de dados.
 
