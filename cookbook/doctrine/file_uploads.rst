@@ -192,7 +192,7 @@ ficará em branco.
 
 Uma maneira fácil de lidar com o upload do arquivo é movê-lo pouco antes da entidade ser
 persistida e, em seguida, definir a propriedade ``path`` de acordo. Comece chamando
-o novo método ``upload() `` na classe ``Document``, que você vai criar
+o novo método ``upload()`` na classe ``Document``, que você vai criar
 no momento para lidar com o upload do arquivo::
 
     if ($form->isValid()) {
