@@ -61,6 +61,7 @@
 
   * :doc:`/cookbook/event_dispatcher/before_after_filters`
   * :doc:`/cookbook/event_dispatcher/class_extension`
+  * :doc:`/cookbook/event_dispatcher/method_behavior`
 
 * :doc:`/cookbook/form/index`
 
