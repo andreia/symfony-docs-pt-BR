@@ -70,9 +70,9 @@ importantes:
   o atributo ``multiple`` no campo ``select``. Veja `Criando um template para o Campo`_
   para mais detalhes.
 
-* ``setDefaultOptions()`` - Define opções para o seu tipo do formulário, que
+* ``getDefaultOptions()`` - Define opções para o seu tipo do formulário, que
   podem ser usadas no ``buildForm()`` e no ``buildView()``. Há várias
-  opções comuns a todos os campos (veja :doc:`/reference/forms/types/form`),
+  opções comuns a todos os campos (veja `FieldType`_),
   mas você pode criar quaisquer outras que você precisar aqui.
 
 .. tip::
@@ -80,7 +80,7 @@ importantes:
     Se você está criando um campo que consiste de muitos campos, então não se esqueça
     de definir o seu tipo "pai" como ``form`` ou algo que estenda ``form``.
     Além disso, se você precisar modificar a "visão" de qualquer um dos tipos filho
-    a partir de seu tipo pai, use o método ``finishView()``.
+    a partir de seu tipo pai, use o método ``buildViewBottomUp()``.
 
 O método ``getName()`` retorna um identificador que deve ser único na
 sua aplicação. Isto é usado em vários lugares, como ao personalizar
