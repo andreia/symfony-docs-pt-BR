@@ -66,6 +66,7 @@
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/data_transformers`
+  * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/use_virtuals_forms`
 
 * :doc:`/cookbook/request/index`
