@@ -4,7 +4,7 @@
 Como Modificar Formulários dinamicamente usando Eventos de Formulário
 =====================================================================
 
-Antes de saltar direitamente para a geração dinâmica de formulário, vamos fazer uma revisão rápida
+Antes de saltar diretamente para a geração dinâmica de formulário, vamos fazer uma revisão rápida
 do como uma classe de formulário parece::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
