@@ -67,6 +67,7 @@
 
   * :doc:`/cookbook/form/data_transformers`
   * :doc:`/cookbook/form/dynamic_form_modification`
+  * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/create_form_type_extension`
   * :doc:`/cookbook/form/use_virtuals_forms`
