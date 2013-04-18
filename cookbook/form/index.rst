@@ -4,6 +4,7 @@ Formulário
 .. toctree::
     :maxdepth: 2
 
+    form_customization
     data_transformers
     dynamic_form_modification
     form_collections

@@ -65,6 +65,7 @@
 
 * :doc:`/cookbook/form/index`
 
+  * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/data_transformers`
   * :doc:`/cookbook/form/dynamic_form_modification`
   * :doc:`/cookbook/form/form_collections`
