@@ -1,12 +1,12 @@
 ﻿.. index::
-   single: Formulário; Renderização ppersonalizada de formulário
+   single: Formulário; Renderização personalizada de formulário
 
 Como personalizar a Renderização de Formulários
 ===============================================
 
 O Symfony dispõe de uma grande variedade de maneiras para personalizar como um formulário é renderizado.
 Neste guia, você vai aprender a personalizar cada parte possível do seu
-formulário com o menor esforço possível, se você usa o Twig ou PHP como sua
+formulário com o menor esforço, se você usa o Twig ou PHP como sua
 templating engine.
 
 Noções Básicas sobre a Renderização de Formulários
