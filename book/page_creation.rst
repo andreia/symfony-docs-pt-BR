@@ -1,75 +1,74 @@
 .. index::
-   single: Page creation
+   single: Criação de páginas
 
-Creating Pages in Symfony2
+Criando Páginas no Symfony2
 ==========================
 
-Creating a new page in Symfony2 is a simple two-step process:
+Criar uma nova página em Symfony2 é um processo simples em dois passos:
 
-* *Create a route*: A route defines the URL (e.g. ``/about``) to your page
-  and specifies a controller (which is a PHP function) that Symfony2 should
-  execute when the URL of an incoming request matches the route pattern;
+* *Criar uma rota*: Uma rota define a URL (ex: ``/about``) para sua página
+  e especifica um controller (que é uma função PHP) que Symfony2 deveria
+  executar quando a URL de uma requisição de entrada corresponder a um padrão da rota;
+  
+* *Criar um controller*: Um controller é uma função PHP que pega a requisição
+  de entrada e transforma ela em um objeto ``Response`` do Symfony2 que é retornado
+  ao usuário.
+  
+Essa simples abordagem é linda porque corresponde à forma que a Web trabalha.
+Cada interação na Web é inicializada por uma requisição HTTP. A tarefa de sua
+aplicação é simplesmente interpretar a requisição e retornar a requisição 
+HTTP apropriada.
 
-* *Create a controller*: A controller is a PHP function that takes the incoming
-  request and transforms it into the Symfony2 ``Response`` object that's
-  returned to the user.
+Symfony2 segue a filosofia e fornece você com ferramentas e convenções para
+manter sua aplicação organizada conforme ela cresce em usuários e complexidade.
 
-This simple approach is beautiful because it matches the way that the Web works.
-Every interaction on the Web is initiated by an HTTP request. The job of
-your application is simply to interpret the request and return the appropriate
-HTTP response.
-
-Symfony2 follows this philosophy and provides you with tools and conventions
-to keep your application organized as it grows in users and complexity.
-
-Sounds simple enough? Let's dive in!
+Parece simples o bastante ? Vamos vasculhar !
 
 .. index::
-   single: Page creation; Example
+   single: Criação de Página; Exemplo
 
-The "Hello Symfony!" Page
+A Página "Hello Symfony!" 
 -------------------------
 
-Let's start with a spin off of the classic "Hello World!" application. When
-you're finished, the user will be able to get a personal greeting (e.g. "Hello Symfony")
-by going to the following URL:
+Vamos começar com uma versão derivada da clássica aplicação "Hello World!". Quando
+você estiver pronto, o usuário será capaz de obter uma saudação pessoal (ex: "Hello Symfony")
+ao acessar a seguinte URL:
 
 .. code-block:: text
 
     http://localhost/app_dev.php/hello/Symfony
 
-Actually, you'll be able to replace ``Symfony`` with any other name to be
-greeted. To create the page, follow the simple two-step process.
+Na verdade, você será capaz de substituir ``Symfony`` com qualquer outro nome para
+ser saudado. Para criar a página, siga o simples processo em dois passos.
 
 .. note::
+    
+    O tutorial presume que você realmente fez o download do Symfony2 e configurou
+    seu servidor web. A URL acima presume que   ``localhost`` aponta para o diretório
+    ``web`` de seu novo projeto do Symfony2. Para informações detalhadas
+    deste processo, veja :doc:`Installing Symfony2</book/installation>`.
 
-    The tutorial assumes that you've already downloaded Symfony2 and configured
-    your webserver. The above URL assumes that ``localhost`` points to the
-    ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the :doc:`Installing Symfony2</book/installation>`.
-
-Before you begin: Create the Bundle
+Antes de você começar: Crie o Pacote
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you begin, you'll need to create a *bundle*. In Symfony2, a :term:`bundle`
-is like a plugin, except that all of the code in your application will live
-inside a bundle.
+Antes de você começar, você irá precisar criar um *pacote*. Em Symfony2, um :term:`bundle`
+é como um plugin, exceto que todo o código em sua aplicação irá residir dentro de um pacote.
 
-A bundle is nothing more than a directory that houses everything related
-to a specific feature, including PHP classes, configuration, and even stylesheets
-and Javascript files (see :ref:`page-creation-bundles`).
+Um pacote é nada mais que um diretório que abriga tudo relacionado a uma funcionalidade
+específica, incluindo classes PHP, configuração, e mesmo arquivos em estilo cascata e Javascript 
+(veja :ref:`page-creation-bundles`).
 
-To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
-build in this chapter), run the following command and follow the on-screen
-instructions (use all of the default options):
+Para criar um pacote chamado ``AcmeHelloBundle`` (um pacote de execução que você irá
+construir nesse capítulo), corra o seguinte comando e siga as instruções na tela (use 
+todas as opções padrão):
 
 .. code-block:: bash
 
     php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
 
-Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
-A line is also automatically added to the ``app/AppKernel.php`` file so that
-the bundle is registered with the kernel::
+Atrás dos bastidores, um diretório é criado para o pacote em ``src/Acme/HelloBundle``.
+Uma linha é também automaticamente adicionada ao arquivo ``app/AppKernel.php`` então
+aquele pacote é registrado com o kernel::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -83,14 +82,15 @@ the bundle is registered with the kernel::
         return $bundles;
     }
 
-Now that you have a bundle setup, you can begin building your application
-inside the bundle.
+Agora que você tem uma configuração de pacote, você pode começar a construir sua
+aplicação dentro do pacote.
 
-Step 1: Create the Route
+Step 1: Crie a Rota
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the routing configuration file in a Symfony2 application is
-located at ``app/config/routing.yml``. Like all configuration in Symfony2,
+Por padrão, o arquivo de configuração de rota em uma aplicação Symfony2 é
+localizado em ``app/config/routing.yml``. Como todas as configurações em Symfony2,
+você também pode escolher usar XML ou PHP 
 you can also choose to use XML or PHP out of the box to configure routes.
 
 If you look at the main routing file, you'll see that Symfony already added
@@ -131,13 +131,13 @@ an entry when you generated the ``AcmeHelloBundle``:
 
         return $collection;
 
-This entry is pretty basic: it tells Symfony to load routing configuration
-from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeHelloBundle``.
-This means that you place routing configuration directly in ``app/config/routing.yml``
-or organize your routes throughout your application, and import them from here.
+Essa entrada é bem básica: ela informa o Symfony a carregar a configuração de rota do
+arquivo ``Resources/config/routing.yml`` que reside dentro de ``AcmeHelloBundle``.
+Isto significa que você insere a configuração de rota diretamente em ``app/config/routing.yml``
+ou organizar suas rotas através de sua aplicação, e importá-las de lá.
 
-Now that the ``routing.yml`` file from the bundle is being imported, add
-the new route that defines the URL of the page that you're about to create:
+Agora que o arquivo ``routing.yml`` do pacote é também importado, adicione a 
+nova rota que define a URL da página que você irá criar:
 
 .. configuration-block::
 
@@ -175,32 +175,32 @@ the new route that defines the URL of the page that you're about to create:
 
         return $collection;
 
-The routing consists of two basic pieces: the ``pattern``, which is the URL
-that this route will match, and a ``defaults`` array, which specifies the
-controller that should be executed. The placeholder syntax in the pattern
-(``{name}``) is a wildcard. It means that ``/hello/Ryan``, ``/hello/Fabien``
-or any other similar URL will match this route. The ``{name}`` placeholder
-parameter will also be passed to the controller so that you can use its value
-to personally greet the user.
+A rota consiste de duas partes básicas: o ``pattern``, que é a URL
+que essa rota irá corresponder, e um array ``defaults``, que especifica o 
+controller que deveria ser executado. A sintaxe do espaço reservado no padrão
+(``{name}``) é um coringa. Isso significa que ``/hello/Ryan``, ``/hello/Fabien``
+ou qualquer outra URL similar irá combinar com essa rota. O parâmetro de espaço reservado 
+``{name}`` irá também ser passado ao controller então você pode usar este valor
+para pessoalmente cumprimentar o usuário.
 
 .. note::
+   
+  O sistema de rota tem muito mais grandes funcionalidades para criar 
+  estruturas URL flexíveis e poderosas em sua aplicação. Para mais detalhes, veja
+  tudo sobre o capítulo :doc:`Routing </book/routing>`.
 
-  The routing system has many more great features for creating flexible
-  and powerful URL structures in your application. For more details, see
-  the chapter all about :doc:`Routing </book/routing>`.
-
-Step 2: Create the Controller
+Step 2: Criando o Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a URL such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``AcmeHelloBundle:Hello:index`` controller is executed
-by the framework. The second step of the page-creation process is to create
-that controller.
+Quando uma URL como``/hello/Ryan`` é manipulada pela aplicação, a rota ``hello``
+é combinada e o controller ``AcmeHelloBundle:Hello:index`` é executada
+pelo framework. O segundo passo da página de criação é criar aquele 
+controller.
 
-The controller - ``AcmeHelloBundle:Hello:index`` is the *logical* name of
-the controller, and it maps to the ``indexAction`` method of a PHP class
-called ``Acme\HelloBundle\Controller\Hello``. Start by creating this file
-inside your ``AcmeHelloBundle``::
+O controller - ``AcmeHelloBundle:Hello:index`` é o nome *lógico* do
+controller, e ele mapeia o método ``indexAction`` de uma classe PHP
+chamada ``Acme\HelloBundle\Controller\Hello``. Comece a criar esse arquivo
+dentro de ``AcmeHelloBundle``::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
@@ -211,14 +211,14 @@ inside your ``AcmeHelloBundle``::
     {
     }
 
-In reality, the controller is nothing more than a PHP method that you create
-and Symfony executes. This is where your code uses information from the request
-to build and prepare the resource being requested. Except in some advanced
-cases, the end product of a controller is always the same: a Symfony2 ``Response``
-object.
+Na verdade, o controller é nada mais que um método PHP que você cria e 
+o Symfony executa. Isso é onde seu código usa informação da requisição
+para construir e preparar o recurso sendo requisitado. Exceto em alguns casos 
+avançados, o produto final de um controller é sempre o mesmo: um objeto 
+Symfony2 ``Response``.
 
-Create the ``indexAction`` method that Symfony will execute when the ``hello``
-route is matched::
+Crie o método ``indexAction`` que o Symfony irá executar quando a rota ``hello``
+for correspondida::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -231,48 +231,48 @@ route is matched::
         }
     }
 
-The controller is simple: it creates a new ``Response`` object, whose first
-argument is the content that should be used in the response (a small HTML
-page in this example).
+O controller é simples: ele cria um novo objeto ``Response``, cujo primeiro
+argumento é um conteúdo que deve ser usado em uma resposta (uma pequena
+página HTML neste exemplo).
 
-Congratulations! After creating only a route and a controller, you already
-have a fully-functional page! If you've setup everything correctly, your
-application should greet you:
+Parabéns! Após criar somente uma rota e um controller, você realmente
+rem uma página totalmente funcional ! Se você configurou tudo corretamente, sua
+aplicação deverá cumprimentar você:
 
 .. code-block:: text
 
     http://localhost/app_dev.php/hello/Ryan
 
 .. tip::
-
-    You can also view your app in the "prod" :ref:`environment<environments-summary>`
-    by visiting:
+    
+    Você também pode ver sua aplicação no "prod":ref:`environment<environments-summary>`
+    ao visitar:
 
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
     
-    If you get an error, it's likely because you need to clear your cache
-    by running:
+    Se você tiver um erro, isto é comum porque você precisa limpar o cache
+    ao executar:
     
     .. code-block:: bash
 
         php app/console cache:clear --env=prod --no-debug
 
-An optional, but common, third step in the process is to create a template.
+Um terceiro passo opcional,mas comum, no processo é criar um template.
 
 .. note::
-
-   Controllers are the main entry point for your code and a key ingredient
-   when creating pages. Much more information can be found in the
+    
+   Controllers são o ponto de entrada principal para seu código e um ingrediente
+   chave quando criar páginas. Muito mais informações podem ser encontradas em
    :doc:`Controller Chapter </book/controller>`.
 
-Optional Step 3: Create the Template
+Passo Opcional 3: Criar o Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Templates allows you to move all of the presentation (e.g. HTML code) into
-a separate file and reuse different portions of the page layout. Instead
-of writing the HTML inside the controller, render a template instead:
+Templates permitem a você mover todas as apresentações (ex: código HTML) em
+um arquivo separado e reusar porções diferentes do layout da página. Ao invés
+de escrever o HTML dentro do controller, gere um template:
 
 .. code-block:: php
     :linenos:
@@ -294,35 +294,34 @@ of writing the HTML inside the controller, render a template instead:
     }
 
 .. note::
-
-   In order to use the ``render()`` method, your controller must extend the
-   ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class (API
+    Em ordem de usar o método ``render()``, seu controller deve estender a classe
+   ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` (API
    docs: :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`),
-   which adds shortcuts for tasks that are common inside controllers. This
-   is done in the above example by adding the ``use`` statement on line 4
-   and then extending ``Controller`` on line 6.
+   que adiciona atalhos para tarefas que são comum dentro de controllers. Isso
+   é feito no exemplo acima ao adicionar a sentença ``use`` na linha 4
+   e então estender a ``Controller`` na linha 6.
 
-The ``render()`` method creates a ``Response`` object filled with the content
-of the given, rendered template. Like any other controller, you will ultimately
-return that ``Response`` object.
+O método ``render()`` cria um objeto ``Response`` coberto com o conteúdo de
+um template dado, gerado. Como qualquer outro controller, você irá ultimamente
+retornar o objeto ``Response``.
 
-Notice that there are two different examples for rendering the template.
-By default, Symfony2 supports two different templating languages: classic
-PHP templates and the succinct but powerful `Twig`_ templates. Don't be
-alarmed - you're free to choose either or even both in the same project.
+Perceba que existem dois exemplos diferentes de gerar a template.
+Por padrão, Symfony2 suporta duas linguagens diferentes de template: templates
+PHP clássicas e as sucintas mas poderosas templates `Twig`_. Não fique
+alarmado - você é livre para escolher uma ou mesmo ambas no mesmo projeto.
 
-The controller renders the ``AcmeHelloBundle:Hello:index.html.twig`` template,
-which uses the following naming convention:
+O controller manipula o template ``AcmeHelloBundle:Hello:index.html.twig``,
+o qual usa a seguinte convenção de nome:
 
     **BundleName**:**ControllerName**:**TemplateName**
 
-This is the *logical* name of the template, which is mapped to a physical
-location using the following convention.
+Esse é o nome *lógico* do template, o qual é mapeado para uma localização
+física usando a seguinte convenção.
 
     **/path/to/BundleName**/Resources/views/**ControllerName**/**TemplateName**
 
-In this case, ``AcmeHelloBundle`` is the bundle name, ``Hello`` is the
-controller, and ``index.html.twig`` the template:
+Neste caso, ``AcmeHelloBundle`` é o nome do pacote, ``Hello`` é o
+controller, e ``index.html.twig`` o template:
 
 .. configuration-block::
 
@@ -343,20 +342,20 @@ controller, and ``index.html.twig`` the template:
 
         Hello <?php echo $view->escape($name) ?>!
 
-Let's step through the Twig template line-by-line:
+Vamos detalhar através do template Twig linha-a-linha:
 
-* *line 2*: The ``extends`` token defines a parent template. The template
-  explicitly defines a layout file inside of which it will be placed.
+* *line 2*: O token ``extends`` define um template pai. O template
+  explicitamente define um arquivo de layout dentro do qual irá ser colocado.
+  
+* *line 4*: O token ``block`` diz que tudo dentro deveria ser colocado dentro de um
+  bloco chamado ``body``. Como você verá, isto é responsabilidade do
+  template pai (``base.html.twig``) para ultimamente transformar o bloco
+  chamado ``body``.
 
-* *line 4*: The ``block`` token says that everything inside should be placed
-  inside a block called ``body``. As you'll see, it's the responsibility
-  of the parent template (``base.html.twig``) to ultimately render the
-  block called ``body``.
-
-The parent template, ``::base.html.twig``, is missing both the **BundleName**
-and **ControllerName** portions of its name (hence the double colon (``::``)
-at the beginning). This means that the template lives outside of the bundles
-and in the ``app`` directory:
+No template pai, ``::base.html.twig``, está faltando tanto as porções do nome de **BundleName**
+como **ControllerName** (por isso o duplo dois pontos (``::``)
+no começo). Isso significa que o template reside fora dos pacotes e dentro do 
+diretório ``app``:
 
 .. configuration-block::
 
@@ -394,49 +393,48 @@ and in the ``app`` directory:
             </body>
         </html>
 
-The base template file defines the HTML layout and renders the ``body`` block
-that you defined in the ``index.html.twig`` template. It also renders a ``title``
-block, which you could choose to define in the ``index.html.twig`` template.
-Since you did not define the ``title`` block in the child template, it defaults
-to "Welcome!".
+O arquivo de template base define o layout de HTML e gera o bloco ``body`` que
+você definiu no template ``index.html.twig``. Ele também gera um bloco ``title``
+, no qual você poderia escolher definir no template ``index.html.twig``.
+Desde que você não defina o bloco ``title`` no template filho, o padrão será "Welcome!".
 
-Templates are a powerful way to render and organize the content for your
-page. A template can render anything, from HTML markup, to CSS code, or anything
-else that the controller may need to return.
+Templates são um modo poderoso de gerar e organizar o conteúdo para sua 
+página. Um template pode gerar tudo, de marcação HTML, para código CSS, ou algo mais
+que o controller precise retornar.
 
-In the lifecycle of handling a request, the templating engine is simply
-an optional tool. Recall that the goal of each controller is to return a
-``Response`` object. Templates are a powerful, but optional, tool for creating
-the content for that ``Response`` object.
+No ciclo de vida do controle de uma requisição, a engine de template é simplesmente
+uma ferramenta opcional. Rechamar o objetido de cada controller é retornar um objeto
+``Response``. Templates são ferramentas poderosas, mas opcionais , para criar o 
+conteúdo para o objeto ``Response``.
 
 .. index::
    single: Directory Structure
 
-The Directory Structure
+A Estrutura de Diretório
 -----------------------
 
-After just a few short sections, you already understand the philosophy behind
-creating and rendering pages in Symfony2. You've also already begun to see
-how Symfony2 projects are structured and organized. By the end of this section,
-you'll know where to find and put different types of files and why.
+Após umas poucas seções, você realmente entende a filosofia por trás da criação
+e transformação de páginas no Symfony2. Você também começou a perceber como os projetos
+do Symfony2 são estruturados e organizados. No final desta seção,
+você saberá onde achar e colocar diferentes tipos de arquivos e o porquê.
 
-Though entirely flexible, by default, each Symfony :term:`application` has
-the same basic and recommended directory structure:
+Apesar de inteiramente flexível, por padrão, cada Symfony :term:`application` tem
+a mesma estrutura básica e recomendada de estrutura de diretórios:
 
-* ``app/``: This directory contains the application configuration;
+* ``app/``: Este diretório contém a configuração da aplicação;
 
-* ``src/``: All the project PHP code is stored under this directory;
+* ``src/``: Todos os códigos do projeto PHP são armazenados neste diretório;
 
-* ``vendor/``: Any vendor libraries are placed here by convention;
+* ``vendor/``: Qualquer bibliotecas vendor são colocadas aqui por convenção;
 
-* ``web/``: This is the web root directory and contains any publicly accessible files;
+* ``web/``: Esse é o diretório web raiz e contém qualquer arquivo acessível publicamente;
 
-The Web Directory
+O Diretório Web
 ~~~~~~~~~~~~~~~~~
 
-The web root directory is the home of all public and static files including
-images, stylesheets, and JavaScript files. It is also where each
-:term:`front controller` lives::
+O diretório web raiz é a origem de todos os arquivos públicos e estáticos incluindo
+imagens, folhas de estilo, e os arquivos Javascript. É lá também onde cada
+:term:`front controller` fica::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -448,126 +446,126 @@ images, stylesheets, and JavaScript files. It is also where each
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-The front controller file (``app.php`` in this example) is the actual PHP
-file that's executed when using a Symfony2 application and its job is to
-use a Kernel class, ``AppKernel``, to bootstrap the application.
+O arquivo de front controller (``app.php`` neste examplo) é o verdadeiro arquivo PHP
+que é executado quando usa a aplicação Symfony2 application e é o trabalho dele usar
+uma classe Kernel, ``AppKernel``, para iniciar a aplicação.
 
 .. tip::
 
-    Having a front controller means different and more flexible URLs than
-    are used in a typical flat PHP application. When using a front controller,
-    URLs are formatted in the following way:
+    Ter um front controller significa URLs diferentes e mais flexíveis que as 
+    usadas em uma aplicação PHP pura. Ao usar um front controller,
+    URLs são formatadas da seguinte forma:
 
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
 
-    The front controller, ``app.php``, is executed and the "internal:" URL
-    ``/hello/Ryan`` is routed internally using the routing configuration.
-    By using Apache ``mod_rewrite`` rules, you can force the ``app.php`` file
-    to be executed without needing to specify it in the URL:
+    O front controller, ``app.php``, é executado e a "internal:" URL
+    ``/hello/Ryan`` é roteada internamente usando a configuração de rota.
+    Ao usar as regras ``mod_rewrite`` do Apache , você pode forçar o arquivo ``app.php`` 
+    para ser executado sem a necessidade de especificá-la na URL:
 
     .. code-block:: text
 
         http://localhost/hello/Ryan
 
-Though front controllers are essential in handling every request, you'll
-rarely need to modify or even think about them. We'll mention them again
-briefly in the `Environments`_ section.
+Apesar de front controllers serem essenciais em manipular cada requisição, você irá
+raramente precisar modificar ou mesmo pensar neles. Nós iremos mencioná-los novamente
+em breve na seção `Environments`_.
 
-The Application (``app``) Directory
+O Diretório de Aplicação (``app``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As you saw in the front controller, the ``AppKernel`` class is the main entry
-point of the application and is responsible for all configuration. As such,
-it is stored in the ``app/`` directory.
+Como você viu no front controller, a classe ``AppKernel`` no ponto de entrada
+principal da aplicação e é responsável por todas as configurações. Por padrão,
+é armazenado no diretório ``app/``.
 
-This class must implement two methods that define everything that Symfony
-needs to know about your application. You don't even need to worry about
-these methods when starting - Symfony fills them in for you with sensible
-defaults.
+Essa classe deve implementar dois métodos que definem tudo que Symfony
+precisa saber sobre sua aplicação. Você nem precisa mesmo se preocupar sobre
+esses métodos ao iniciar - Symfony preenche eles para você com padrões coerentes.
 
-* ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (see :ref:`page-creation-bundles`);
+* ``registerBundles()``: Retorna um vetor de todos os pacotes necessários para rodar a
+  aplicação (see :ref:`page-creation-bundles`);
 
-* ``registerContainerConfiguration()``: Loads the main application configuration
-  resource file (see the `Application Configuration`_ section).
+* ``registerContainerConfiguration()``: Carrega o arquivo de recurso da configuração 
+   da aplicação principal (veja a seção `Application Configuration`_).
 
-In day-to-day development, you'll mostly use the ``app/`` directory to modify
-configuration and routing files in the ``app/config/`` directory (see
-`Application Configuration`_). It also contains the application cache
-directory (``app/cache``), a log directory (``app/logs``) and a directory
-for application-level resource files, such as templates (``app/Resources``).
-You'll learn more about each of these directories in later chapters.
+No desenvolvimento do dia-a-dia, você irá usar bastante o diretório ``app/`` para 
+modificar arquivos de configuração e rotas no diretório ``app/config/`` (veja
+`Application Configuration`_). Ele também contém o diretório de cache da aplicação
+(``app/cache``), um diretório de log (``app/logs``) e um diretório
+para arquivos de recursos de nível de aplicação, como os templates (``app/Resources``).
+Você irá aprender mais sobre cada um desses diretórios nos últimos capítulos.
 
 .. _autoloading-introduction-sidebar:
 
-.. sidebar:: Autoloading
+.. sidebar:: Autocarregamento
 
-    When Symfony is loading, a special file - ``app/autoload.php`` - is included.
-    This file is responsible for configuring the autoloader, which will autoload
-    your application files from the ``src/`` directory and third-party libraries
-    from the ``vendor/`` directory.
+    Quando Symfony está carregando, um arquivo especial - ``app/autoload.php`` - é incluído.
+    Esse arquivo é responsável por configurar o autoloader, que irá auto-carregar
+    seus arquivos de aplicação do diretório ``src/`` e bibliotecas de terceiros do
+    diretório ``vendor/``.
 
-    Because of the autoloader, you never need to worry about using ``include``
-    or ``require`` statements. Instead, Symfony2 uses the namespace of a class
-    to determine its location and automatically includes the file on your
-    behalf the instant you need a class.
-
-    The autoloader is already configured to look in the ``src/`` directory
-    for any of your PHP classes. For autoloading to work, the class name and
-    path to the file have to follow the same pattern:
-
+    Por causa do autoloader, você nunca irá precisar se preocupar sobre usar cláusulas ``include``
+    ou ``require``. Ao invés disso, Symfony2 usa o namespace de uma classe para
+    determinar sua localização e automaticamente incluir o arquivo no momento que você precisar da classe
+    , para sua segurança.
+    
+    O autoloader é realmente configurado para verificar no diretório ``src/`` para
+    qualquer uma de suas classes PHP. Para o autocarregamento funcionar, o nome da classe 
+    e o atalho para o arquivo tem que seguir omesmo padrão:
+    
     .. code-block:: text
 
         Class Name:
             Acme\HelloBundle\Controller\HelloController
         Path:
             src/Acme/HelloBundle/Controller/HelloController.php
-
-    Typically, the only time you'll need to worry about the ``app/autoload.php``
-    file is when you're including a new third-party library in the ``vendor/``
-    directory. For more information on autoloading, see
+    
+    Tipicamente, o único momento que você precisará se preocupar sobre o 
+    arquivo ``app/autoload.php`` é quando você estará incluindo uma nova biblioteca
+    de terceiros no diretório ``vendor/``. Para mais informações no autocarregamento, veja
     :doc:`How to autoload Classes</cookbook/tools/autoloader>`.
 
-The Source (``src``) Directory
+O Diretório de Recursos (``src``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Put simply, the ``src/`` directory contains all of the actual code (PHP code,
-templates, configuration files, stylesheets, etc) that drives *your* application.
-When developing, the vast majority of your work will be done inside one or
-more bundles that you create in this directory.
+Coloque simplesmente, o diretório ``src/`` contém todo o código de verdade (código PHP,
+templates, arquivos de configuração, folhas de estilo, etc) que comanda *sua* aplicação.
+Enquanto estiver desenvolvendo, a vasta maioria de seu trabalho será feita dentro de um ou
+mais pacotes que você cria nesse diretório.
 
-But what exactly is a :term:`bundle`?
+Mas o que é exatamente um :term:`pacote`?
 
 .. _page-creation-bundles:
 
-The Bundle System
+O Sistema de Pacotes
 -----------------
 
-A bundle is similar to a plugin in other software, but even better. The key
-difference is that *everything* is a bundle in Symfony2, including both the
-core framework functionality and the code written for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
-to use pre-built features packaged in `third-party bundles`_ or to distribute
-your own bundles. It makes it easy to pick and choose which features to enable
-in your application and to optimize them the way you want.
+Um pacote é similar a um plugin em outro software, mas até mesmo melhor. A diferença-chave
+é que *tudo* é um pacote no Symfony2, incluindo ambas as funcionalidades centrais do
+framework e o código escrito para sua aplicação.
+Pacotes são cidadãos de primeira classe no Symfony2. Isso dá a você a flexibilidade para
+usar funcionalidades pré-montadas englobadas em `third-party bundles`_ ou para distribuir
+seus próprios pacotes. Ele torna fácil para selecionar e escolher qual funcionalidade habilitar
+em sua aplicação e para otimizá-los da forma que você quer.
 
 .. note::
 
-   While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles</cookbook/bundles/best_practices>`.
+   Quando você for aprender as bases aqui, uma entrada inteira do livro de receitas é dedicado para
+   a organização e as melhores práticas de:doc:`pacotes</cookbook/bundles/best_practices>`.
 
-A bundle is simply a structured set of files within a directory that implement
-a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
-a bundle for user management (many of these exist already as open source
-bundles). Each directory contains everything related to that feature, including
-PHP files, templates, stylesheets, JavaScripts, tests and anything else.
-Every aspect of a feature exists in a bundle and every feature lives in a
-bundle.
+Um pacote é simplesmente um conjunto estruturado de arquivos dentro de um diretório que implementa
+uma única funcionalidade. Você poderia criar um ``BlogBundle``, um ``ForumBundle`` ou
+um pacote para gerenciamento de usuário (muitos desses realmente existem como pacote de código
+aberto).
+Cada diretório contém tudo relacionado àquela funcionalidade, incluindo arquivos PHP, templates,
+folhas de estilo, Javascripts, testes e qualquer coisa mais.
+Cada aspecto de uma funcionalidade existe em um pacote e cada funcionalidade fica dentro de 
+um pacote.
 
-An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``AppKernel`` class::
+Uma aplicação é feita por pacotes definidos no método ``registerBundles()``
+da classe ``AppKernel`` ::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -594,31 +592,31 @@ method of the ``AppKernel`` class::
         return $bundles;
     }
 
-With the ``registerBundles()`` method, you have total control over which bundles
-are used by your application (including the core Symfony bundles).
+Com o método ``registerBundles()`` , você tem controle total sobre quais pacotes são 
+usados por sua aplicação (incluindo os pacotes centrais do Symfony).
 
 .. tip::
+    
+    Um pacote pode residir *em qualquer lugar* desde que possa ser autocarregado (pelo
+   autoloader configurado em ``app/autoload.php``).
 
-   A bundle can live *anywhere* as long as it can be autoloaded (via the
-   autoloader configured at ``app/autoload.php``).
-
-Creating a Bundle
+Criando um Pacote
 ~~~~~~~~~~~~~~~~~
 
-The Symfony Standard Edition comes with a handy task that creates a fully-functional
-bundle for you. Of course, creating a bundle by hand is pretty easy as well.
+O Symfony Standard Edition vêm com uma tarefa conveniente que cria um pacote inteiramente funcional
+para você. É claro, criar um pacote na mão é muito fácil também.
 
-To show you how simple the bundle system is, create a new bundle called
-``AcmeTestBundle`` and enable it.
+Para mostrar a você o quão simple o sistema de pacotes é, crie um novo pacote
+chamado ``AcmeTestBundle`` e habilite ele.
 
 .. tip::
 
-    The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g. ``ABCTestBundle``
-    for some company named ``ABC``).
+    A porção ``Acme`` é só um nome bobo que poderia ser substituído por algum nome 
+    de "vendedor" que represente você ou sua organização (ex: ``ABCTestBundle``
+    para alguma empresa chamada ``ABC``).
 
-Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
-called ``AcmeTestBundle.php``::
+Comece criando um diretório ``src/Acme/TestBundle/`` e adicionando um novo arquivo
+chamado ``AcmeTestBundle.php``::
 
     // src/Acme/TestBundle/AcmeTestBundle.php
     namespace Acme\TestBundle;
@@ -631,15 +629,14 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions<bundles-naming-conventions>`.
-   You could also choose to shorten the name of the bundle to simply ``TestBundle``
-   by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
+   O nome``AcmeTestBundle`` segue o padrão :ref:`Convenção para nomes de pacotes<bundles-naming-conventions>`.
+   Você poderia também escolher encurtar o nome do pacote para simplesmente ``TestBundle``
+   ao nomear essa classe``TestBundle`` (e nomeando o arquivo ``TestBundle.php``).
 
-This empty class is the only piece you need to create the new bundle. Though
-commonly empty, this class is powerful and can be used to customize the behavior
-of the bundle.
+Essa classe vazia é a única peça que você precisa para criar o novo pacote. Apesar de normalmente
+vazia, essa classe é poderosa e pode ser usada para personalizar o comportamento do pacote.
 
-Now that you've created the bundle, enable it via the ``AppKernel`` class::
+Agora que você criou o pacote, abilite-o via classe ``AppKernel`` ::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -655,65 +652,63 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
         return $bundles;
     }
 
-And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
-be used.
+E enquanto não fizer algo ainda,  ``AcmeTestBundle`` está pronto para
+ser usado.
 
-And as easy as this is, Symfony also provides a command-line interface for
-generating a basic bundle skeleton:
+E tão simples quanto é, Symfony também providencia uma interface por linha de comando para
+gerar um esqueleto de um pacote básico:
 
 .. code-block:: bash
 
     php app/console generate:bundle --namespace=Acme/TestBundle
 
-The bundle skeleton generates with a basic controller, template and routing
-resource that can be customized. You'll learn more about Symfony2's command-line
-tools later.
+O esqueleto do pacote gera um controller básico, template e recurso para rota que
+pode ser personalizado. Você irá aprender mais sobre ferramentas de linha de comando do
+Symfony2 mais tarde.
 
 .. tip::
 
-   Whenever creating a new bundle or using a third-party bundle, always make
+   Quando sempre criar um novo pacote ou usar um pacote de terceiros, always make
    sure the bundle has been enabled in ``registerBundles()``. When using
    the ``generate:bundle`` command, this is done for you.
 
-Bundle Directory Structure
+Estrutura de Diretório de Pacotes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The directory structure of a bundle is simple and flexible. By default, the
-bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Take a look at ``AcmeHelloBundle``, as it contains
-some of the most common elements of a bundle:
+A estrutura de diretório de um pacote é simples e flexível. Por padrão, o sistema de pacote
+segue um conjunto de convenções que ajudam a manter o código consistente entre todos
+os pacotes do Symfony2. Dê uma olhada em ``AcmeHelloBundle``, pois contém 
+alguns dos elementos mais comuns de um pacote:
 
-* ``Controller/`` contains the controllers of the bundle (e.g. ``HelloController.php``);
+* ``Controller/`` contém todos os controllers do pacote (ex: ``HelloController.php``);
 
-* ``Resources/config/`` houses configuration, including routing configuration
+* ``Resources/config/`` abriga configurações, incluindo configurações de rota
   (e.g. ``routing.yml``);
 
-* ``Resources/views/`` holds templates organized by controller name (e.g.
+* ``Resources/views/`` contém templates organizados pelo nome do controller (ex:
   ``Hello/index.html.twig``);
 
-* ``Resources/public/`` contains web assets (images, stylesheets, etc) and is
-  copied or symbolically linked into the project ``web/`` directory via
-  the ``assets:install`` console command;
+* ``Resources/public/`` contém assets web (imagens, folhas de estilo, etc) e é
+  copiada ou simbolicamente vinculada dentro do projeto ``web/`` directory via
+  comando de console ``assets:install`` ;
 
-* ``Tests/`` holds all tests for the bundle.
+* ``Tests/`` contém todos os testes para o pacote.
 
-A bundle can be as small or large as the feature it implements. It contains
-only the files you need and nothing else.
+Um pacote pode ser pequeno ou grande conforme as funcionalidades que implementa. Contém
+só os arquivos que você precisa e nada mais.
 
-As you move through the book, you'll learn how to persist objects to a database,
-create and validate forms, create translations for your application, write
-tests and much more. Each of these has their own place and role within the
-bundle.
+Conforme avançamos pelo livro, você aprenderá como persistir objetos para um banco de dados,
+criar e validar formulários, criar traduções para sua aplicação, escrever testes e muito mais.
+Cada um desses tem seu próprio local e papel dentro do pacote.
 
-Application Configuration
+Configurações de aplicação
 -------------------------
 
-An application consists of a collection of bundles representing all of the
-features and capabilities of your application. Each bundle can be customized
-via configuration files written in YAML, XML or PHP. By default, the main
-configuration file lives in the ``app/config/`` directory and is called
-either ``config.yml``, ``config.xml`` or ``config.php`` depending on which
-format you prefer:
+Uma aplicação consiste de uma coleção de pacotes representando todas as funcionalidades
+e capacidades de sua aplicação. Cada pacote pode ser personalizado via arquivos de 
+configuração escritos em  YAML, XML ou PHP. Por padrão, o arquivo de configuração 
+padrão fica no diretório ``app/config/`` e é chamado ou ``config.yml``, ``config.xml`` 
+ou ``config.php`` dependendo do formato que você preferir:
 
 .. configuration-block::
 
@@ -799,95 +794,95 @@ format you prefer:
 
 .. note::
 
-   You'll learn exactly how to load each file/format in the next section
+   Você irá aprender exatamento como carregar cada arquivo/formato na próxima seção
    `Environments`_.
 
-Each top-level entry like ``framework`` or ``twig`` defines the configuration
-for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
-routing, templating, and other core systems.
+Cada entrada de nível superior como ``framework`` ou ``twig`` define a configuração para
+um pacote particular. Por exemplo,  a chave ``framework`` define a configuração para
+o núcleo Symfony  ``FrameworkBundle`` e inclui configuração para as rotas, templates
+e outros sistemas núcleo.
 
-For now, don't worry about the specific configuration options in each section.
-The configuration file ships with sensible defaults. As you read more and
-explore each part of Symfony2, you'll learn about the specific configuration
-options of each feature.
+Neste momento, não se preocupe sobre uma opção de configuração específica em cada sessão.
+O arquivo de configuração é encaminhado com padrões sensatos. Conforme você ler mais e
+explorar cada parte de Symfony2, você irá aprender sobre a configuração específica
+de cada funcionalidade.
 
 .. sidebar:: Configuration Formats
 
-    Throughout the chapters, all configuration examples will be shown in all
-    three formats (YAML, XML and PHP). Each has its own advantages and
-    disadvantages. The choice of which to use is up to you:
+	Através dos capítulos, todas as configurações de exemplo serão exibidas
+	em todos os três formatos (YAML, XML e PHP). Cada um tem suas vantagens
+	e desvantagens. A escolha de qual utilizar é sua:
+	
+    * *YAML*: Simples, claro e legível;
 
-    * *YAML*: Simple, clean and readable;
+    * *XML*: Mais poderoso que YAML algumas vezes e suporta autocompletar da IDE;
 
-    * *XML*: More powerful than YAML at times and supports IDE autocompletion;
-
-    * *PHP*: Very powerful but less readable than standard configuration formats.
+    * *PHP*: Mais poderoso mas menos legível que os formatos de configuração padrão.
 
 .. index::
    single: Environments; Introduction
 
 .. _environments-summary:
 
-Environments
+Ambientes
 ------------
 
-An application can run in various environments. The different environments
-share the same PHP code (apart from the front controller), but use different
-configuration. For instance, a ``dev`` environment will log warnings and
-errors, while a ``prod`` environment will only log errors. Some files are
-rebuilt on each request in the ``dev`` environment (for the developer's convenience),
-but cached in the ``prod`` environment. All environments live together on
-the same machine and execute the same application.
+Uma aplicação pode executar em vários ambientes. Os ambientes diferentes
+dividem o mesmo código PHP (independente do front controller), mas usam
+configurção diferente. Por instância, um ambiente ``dev`` irá exibir alertas
+e erros, enquanto um ambiente  ``prod`` irá somente logar erros. Alguns arquivos são
+reconstruídos em cada solicitação no ambiente``dev`` (para conveniência do desenvolvedor),
+mas armazenados no ambiente ``prod`` . Todos os ambientes convivem juntos na mesma
+máquina e executam a mesma aplicação.
 
-A Symfony2 project generally begins with three environments (``dev``, ``test``
-and ``prod``), though creating new environments is easy. You can view your
-application in different environments simply by changing the front controller
-in your browser. To see the application in the ``dev`` environment, access
-the application via the development front controller:
+Um projeto Symfony2 geralmente começa com três ambientes (``dev``, ``test``
+e ``prod``), apesar que criar novos ambientes é fácil. Você pode visualizar sua
+aplicação em diferentes ambientes simplesmente mudando o front controller
+no seu navegador. Para ver a aplicação no ambiente ``dev`` , accesse a 
+aplicação com o front controller de desenvolvimento:
 
 .. code-block:: text
 
     http://localhost/app_dev.php/hello/Ryan
 
-If you'd like to see how your application will behave in the production environment,
-call the ``prod`` front controller instead:
+Se você gostaria de visualizar como sua aplicação irá se comportar no ambiente de produção,
+ao invés disto ,chame o front controller ``prod``:
 
 .. code-block:: text
 
     http://localhost/app.php/hello/Ryan
 
-Since the ``prod`` environment is optimized for speed; the configuration,
-routing and Twig templates are compiled into flat PHP classes and cached.
-When viewing changes in the ``prod`` environment, you'll need to clear these
-cached files and allow them to rebuild::
+Como o ambiente ``prod`` é otimizado para velocidade; a configuração, rota
+e templates Twig são compilados em classes de PHP puro e armazenados.
+Quando visualizar mudanças no ambiente ``prod``, você irá precisar limpar esses
+arquivos armazenados e permitir reconstruir eles:
 
     php app/console cache:clear --env=prod --no-debug
 
 .. note::
 
-   If you open the ``web/app.php`` file, you'll find that it's configured explicitly
-   to use the ``prod`` environment::
+	Se você abrir  o arquivo ``web/app.php`` , você irá perceber que está explicitamente configurado 
+   para utilizar o ambiente ``prod``::
 
        $kernel = new AppKernel('prod', false);
-
-   You can create a new front controller for a new environment by copying
-   this file and changing ``prod`` to some other value.
+	
+	Você pode criar um novo front controller para um novo ambiente ao copiar
+	esse arquivo e mudando ``prod`` para algum outro valor.
 
 .. note::
-
-    The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter</book/testing>`
-    for more details.
+	
+	O ambiente ``test`` é usado para executar testes automatizados e não pode ser acessado
+	diretamente através do navegador. Veja :doc:`testing chapter</book/testing>`
+    para mais detalhes.
 
 .. index::
    single: Environments; Configuration
 
-Environment Configuration
+Configurações de ambiente
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``AppKernel`` class is responsible for actually loading the configuration
-file of your choice::
+A classe ``AppKernel`` é responsável por carregar de verdade o arquivo de configuração
+de sua escolha::
 
     // app/AppKernel.php
     public function registerContainerConfiguration(LoaderInterface $loader)
@@ -895,10 +890,10 @@ file of your choice::
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
 
-You already know that the ``.yml`` extension can be changed to ``.xml`` or
-``.php`` if you prefer to use either XML or PHP to write your configuration.
-Notice also that each environment loads its own configuration file. Consider
-the configuration file for the ``dev`` environment.
+Você realmente sabe que a extensão ``.yml`` pode ser mudada para ``.xml`` ou
+``.php`` se você preferir usar ou XML ou PHP para escrever sua configuração.
+Perceba também que cada ambiente carrega seu próprio arquivo de configuração. Considere
+o arquivo de configuração para o ambiente ``dev``.
 
 .. configuration-block::
 
@@ -940,46 +935,45 @@ the configuration file for the ``dev`` environment.
 
         // ...
 
-The ``imports`` key is similar to a PHP ``include`` statement and guarantees
-that the main configuration file (``config.yml``) is loaded first. The rest
-of the file tweaks the default configuration for increased logging and other
-settings conducive to a development environment.
+A chave ``imports`` é similar à sentença ``include`` do PHP e garante
+que o arquivo de configuração principal (``config.yml``) seja carregado primeiro. O resto
+do arquivo modifica a configuração padrão para registro de log melhorado e outras
+configurações condizentes para um ambiente de produção.
 
-Both the ``prod`` and ``test`` environments follow the same model: each environment
-imports the base configuration file and then modifies its configuration values
-to fit the needs of the specific environment. This is just a convention,
-but one that allows you to reuse most of your configuration and customize
-just pieces of it between environments.
+Ambos os ambientes ``prod`` e ``test`` seguem o mesmo modelo: cada ambiente
+importa o arquivo de configuração base e então modifica os valores de configuração
+para ajustar as necessidades de um ambiente específico. Isso é apenas uma convenção,
+mas uma que permite você a reutilizar a maior parte de suas configurações e personalizar
+apenas pedaços do que está entre os ambientes.
 
-Summary
+Sumário
 -------
 
-Congratulations! You've now seen every fundamental aspect of Symfony2 and have
-hopefully discovered how easy and flexible it can be. And while there are
-*a lot* of features still to come, be sure to keep the following basic points
-in mind:
+Parabéns ! Você agora viu cada aspecto fundamental de Symfony2 e esperançosamente
+descobriu o quão fácil e flexivel pode ser. E enquanto existem *um monte* de funcionalidades
+por vir, esteja certo de manter os seguintes pontos em mente:
 
-* creating a page is a three-step process involving a **route**, a **controller**
-  and (optionally) a **template**.
+* criar uma página é um processo de três passos envolvendo uma **rota**, um **controller**
+  e (opcionalmente) um **template**.
 
-* each project contains just a few main directories: ``web/`` (web assets and
-  the front controllers), ``app/`` (configuration), ``src/`` (your bundles),
-  and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
-  used to help updated vendor libraries);
+* cada projeto contém apenas alguns poucos diretórios: ``web/`` (web assets e
+  o front controllers), ``app/`` (configuração), ``src/`` (seus pacotes),
+  e ``vendor/`` (código de terceiros) (existe também um diretório ``bin/`` que é
+  utilizado para ajudar com bibliotecas vendor atualizadas);
 
-* each feature in Symfony2 (including the Symfony2 framework core) is organized
-  into a *bundle*, which is a structured set of files for that feature;
+* Cada funcionalidade em Symfony2 (incluindo um núcleo do framework Symfony2) é organizado 
+  em um *pacote*, que é um conjunto de arquivos estruturados para aquela funcionalidade;
 
-* the **configuration** for each bundle lives in the ``app/config`` directory
-  and can be specified in YAML, XML or PHP;
+* A **configuração** para cada pacote reside no diretório ``app/config`` e
+  pode ser especificado em YAML, XML ou PHP;
 
-* each **environment** is accessible via a different front controller (e.g.
-  ``app.php`` and ``app_dev.php``) and loads a different configuration file.
+* cada **ambiente** é acessível por meio de um front controller diferente (ex:
+  ``app.php`` e ``app_dev.php``) e carrega uma configuração de arquivo diferente.
 
-From here, each chapter will introduce you to more and more powerful tools
-and advanced concepts. The more you know about Symfony2, the more you'll
-appreciate the flexibility of its architecture and the power it gives you
-to rapidly develop applications.
+A partir daqui, cada capítulo irá introduzir a você ferramentas mais e mais poderosas
+e conceitos avançados. Quanto mais souber sobre  Symfony2, mais irá apreciar a
+flexibilidade da arquitetura dela e o poder que fornecerá a você
+para desenvolber aplicações rapidamente.
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`third-party bundles`: http://symfony2bundles.org/
