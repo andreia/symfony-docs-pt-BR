@@ -74,6 +74,12 @@
   * :doc:`/cookbook/form/use_virtuals_forms`
   * :doc:`/cookbook/form/use_empty_data`
 
+* :doc:`/cookbook/logging/index`
+
+  * :doc:`/cookbook/logging/monolog`
+  * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/channels_handlers`
+
 * :doc:`/cookbook/request/index`
 
   * :doc:`/cookbook/request/mime_type`
