@@ -680,12 +680,11 @@ ser acompanhando com a seguinte configuração de rota:
 
 Apesar do fato que estas duas rotas tem padrões idênticos (``/contact``),
 a primeira rota irá aceitar somente requisições GET e a segunda rota irá somente
-aceitar requisiçõs POST.Isso significa que você pode exibir o formulário e enviar o
+aceitar requisiçõs POST. Isso significa que você pode exibir o formulário e enviar o
 formulário pela mesma URL, enquanto usa controladores distintos para as duas ações.
 
 .. note::
-    If no ``_method`` requirement is specified, the route will match on
-    *all* methods.
+    Se nenhum valor ``_method`` em ``requitement`` for especificado, a rota irá aceitar todos os metodos.
 
 Como os outros requisitos, o requisito ``_method`` é analisado como uma expressão
 regular. Para aceitar requisições ``GET`` *ou* ``POST``, você pode usar ``GET|POST``.
