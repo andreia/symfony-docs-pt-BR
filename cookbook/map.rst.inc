@@ -80,6 +80,10 @@
   * :doc:`/cookbook/logging/monolog_email`
   * :doc:`/cookbook/logging/channels_handlers`
 
+* :doc:`/cookbook/profiler/index`
+
+  * :doc:`/cookbook/profiler/data_collector`
+
 * :doc:`/cookbook/request/index`
 
   * :doc:`/cookbook/request/mime_type`
