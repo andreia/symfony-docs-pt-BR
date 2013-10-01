@@ -66,7 +66,7 @@ de recurso que desejar. O próprio nome do recurso não é realmente usado no ex
     namespace Acme\DemoBundle\Routing;
 
     use Symfony\Component\Config\Loader\LoaderInterface;
-    use Symfony\Component\Config\Loader\LoaderResolver;
+    use Symfony\Component\Config\Loader\LoaderResolverInterface;
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\RouteCollection;
 
@@ -110,7 +110,7 @@ de recurso que desejar. O próprio nome do recurso não é realmente usado no ex
             // and if you do, using the Loader base class is easier (see below)
         }
 
-        public function setResolver(LoaderResolver $resolver)
+        public function setResolver(LoaderResolverInterface $resolver)
         {
             // same as above
         }
