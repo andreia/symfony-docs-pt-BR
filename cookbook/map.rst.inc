@@ -90,6 +90,7 @@
 * :doc:`/cookbook/routing/index`
 
   * :doc:`/cookbook/routing/scheme`
+  * :doc:`/cookbook/routing/custom_route_loader`
 
 * **symfony1**
 
