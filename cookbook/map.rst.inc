@@ -90,6 +90,7 @@
 * :doc:`/cookbook/routing/index`
 
   * :doc:`/cookbook/routing/scheme`
+  * :doc:`/cookbook/routing/redirect_in_config`
   * :doc:`/cookbook/routing/custom_route_loader`
   * :doc:`/cookbook/routing/custom_route_loader`
 
