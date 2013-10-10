@@ -59,7 +59,7 @@ o marcador ``{_format}`` no padrão da rota::
 O controller agora será chamado por URLs parecidas com
 ``/demo/hello/Fabien.xml`` ou ``/demo/hello/Fabien.json``.
 
-A entrada ``requiriments`` define expressões regulares que os marcadores
+A entrada ``requirements`` define expressões regulares que os marcadores
 precisam casar. Nesse exemplo, se você tentar requisitar
 ``/demo/hello/Fabien.js`` irá receber um erro HTTP 404 pois a requisição
 não casa com o requisito ``_format``.
