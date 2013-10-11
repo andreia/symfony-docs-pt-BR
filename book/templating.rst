@@ -47,7 +47,7 @@ template em *PHP* - um arquivo de texto analisado pelo PHP que contém uma mistu
 .. index:: Twig; Introdução
 
 Mas Symfony2 empacota até mesmo uma linguagem muito poderosa de template chamada `Twig`_.
-Twig permite a você escrever templates consisos e legíveis que são mais amigáveis
+Twig permite a você escrever templates concisos e legíveis que são mais amigáveis
 para web designers e, de certa forma, mais poderosos que templates de PHP:
 
 .. code-block:: html+jinja
