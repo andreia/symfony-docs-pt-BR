@@ -275,8 +275,8 @@ A Jornada da Requisição até a Resposta
 
 Como o próprio HTTP, os objetos ``Request`` e ``Response`` são bastante simples.
 A parte difícil de se construir uma aplicação é escrever o que acontece entre eles.
-Em outras palavras, o trabalho de verdade é escrever o código que interpreta a
-a requisição e cria a resposta.
+Em outras palavras, o trabalho de verdade é escrever o código que interpreta a 
+requisição e cria a resposta.
 
 A sua aplicação provavelmente faz muitas coisas como enviar emails, tratar do
 envio de formulários, salvar coisas no banco de dados, renderizar páginas HTML e
