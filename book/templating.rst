@@ -151,8 +151,8 @@ ambientes.
 
 Quando o modo ``debug`` é habilitado (comum no ambiente ``dev``), um template
 Twig será automaticamente recompilado quando mudanças são feitas nele. Isso
-signitica que durante o desenvolvimento você pode alegremente fazer mudanças para um template Twig
-e instântaneamente ver as mudanças sem precisar se preocupar sobre limpar qualquer
+significa que durante o desenvolvimento você pode alegremente fazer mudanças para um template Twig
+e imediatamente ver as mudanças sem precisar se preocupar sobre limpar qualquer
 cache.
 
 Quando o modo ``debug`` é desabilitado (comum no ambiente ``prod``), entretanto,
