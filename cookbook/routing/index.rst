@@ -5,6 +5,7 @@ Roteamento
     :maxdepth: 2
 
     scheme
+    slash_in_parameter
     redirect_in_config
     method_parameters
     custom_route_loader
