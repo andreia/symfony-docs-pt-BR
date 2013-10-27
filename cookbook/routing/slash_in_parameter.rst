@@ -16,18 +16,18 @@ Configure a Rota
 ----------------
 
 Por padrão, o componente de roteamento do Symfony requer que os parâmetros correspondam
-com o seguinte padrão de expressão regular: ``[^/]+``. Isso significa que todos os caracteres
+com o seguinte path de expressão regular: ``[^/]+``. Isso significa que todos os caracteres
 são permitidos, exceto ``/``.
 
 Você deve explicitamente permitir que a ``/`` faça parte de seu parâmetro, especificando
-um padrão regex mais permissivo.
+um path regex mais permissivo.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         _hello:
-            pattern: /hello/{name}
+            path: /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
             requirements:
                 name: ".+"
@@ -40,7 +40,7 @@ um padrão regex mais permissivo.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_hello" pattern="/hello/{name}">
+            <route id="_hello" path="/hello/{name}">
                 <default key="_controller">AcmeDemoBundle:Demo:hello</default>
                 <requirement key="name">.+</requirement>
             </route>
