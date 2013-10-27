@@ -91,8 +91,9 @@
 * :doc:`/cookbook/routing/index`
 
   * :doc:`/cookbook/routing/scheme`
+  * :doc:`/cookbook/routing/slash_in_parameter`
   * :doc:`/cookbook/routing/redirect_in_config`
-  * :doc:`/cookbook/routing/custom_route_loader`
+  * :doc:`/cookbook/routing/method_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
 
 * **symfony1**
