@@ -10,3 +10,4 @@ Roteamento
     method_parameters
     service_container_parameters
     custom_route_loader
+    redirect_trailing_slash
