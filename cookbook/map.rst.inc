@@ -96,6 +96,7 @@
   * :doc:`/cookbook/routing/method_parameters`
   * :doc:`/cookbook/routing/service_container_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
+  * :doc:`/cookbook/routing/redirect_trailing_slash`
 
 * **symfony1**
 
