@@ -102,6 +102,7 @@
 * :doc:`/cookbook/security/index`
 
   * :doc:`/cookbook/security/acl`
+  * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/form_login`
 
 * :doc:`/cookbook/templating/index`
