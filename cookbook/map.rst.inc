@@ -103,6 +103,7 @@
 
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
+  * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/form_login`
 
 * :doc:`/cookbook/templating/index`

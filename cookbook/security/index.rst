@@ -6,4 +6,5 @@ Segurança
 
     acl
     acl_advanced
+    force_https
     form_login
