@@ -8,3 +8,4 @@ Segurança
     acl_advanced
     force_https
     form_login
+    custom_provider
