@@ -1,7 +1,6 @@
 * :doc:`/book/http_fundamentals`
 * :doc:`/book/from_flat_php_to_symfony2`
 * :doc:`/book/installation`
-* :doc:`/book/internals`
 * :doc:`/book/controller`
 * :doc:`/book/routing`
 * :doc:`/book/templating`
@@ -14,4 +13,5 @@
 * :doc:`/book/translation`
 * :doc:`/book/service_container`
 * :doc:`/book/performance`
+* :doc:`/book/internals`
 * :doc:`/book/stable_api`
