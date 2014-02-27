@@ -1,10 +1,10 @@
 .. index::
    pair: Assetic; Configuration reference
 
-AsseticBundle Configuration ("assetic")
+Configuração do AsseticBundle ("assetic")
 =======================================
 
-Full Default Configuration
+Configuração Completa Padrão
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
