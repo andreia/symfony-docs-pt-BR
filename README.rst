@@ -4,10 +4,24 @@ Contribuindo com a tradução da documentação oficial do Symfony2:
 Informando os documentos que deseja traduzir
 --------------------------------------------
 
-Para melhor organização, primeiro informe o(s) documento(s) que pretende ajudar na tradução e/ou revisão na planilha de tradutores/revisores:
-https://spreadsheets.google.com/ccc?key=0AtX-XMIXR2DAdFBMekh4UktObUNOMy1NX2RSMjJMUUE
+Informe o documento que irá traduzir abrindo um **issue** no repositório ( https://github.com/andreia/symfony-docs-pt-BR/issues/new ), e seguindo o padrão:
 
-Se ainda não possuir acesso de edição nesta planilha, solicitar o acesso para andreiabohner at gmail dot com.
+No título: 
+**[Traduzir | Revisar][Livro][Capítulo] nome-do-documento**
+
+- Se o documento ainda não foi traduzido, usar [Traduzir]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar [Revisar].
+
+Na descrição/comentário: 
+Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
+
+| P                          | R
+| -------------------------- | ---
+| Nova tradução?             | [sim|não]
+| Revisão?                   | [sim|não]
+| Revisão com nova tradução? | [sim|não]
+| Aplica para as versões     | [Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0]
+
+Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções (e precisariam de uma posterior revisão).
 
 Utilizando o Git e o Github
 ---------------------------
@@ -39,8 +53,19 @@ Utilizando o Git e o Github
 
     $ git push origin master
 
-7. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
-   Mais informações sobre o `Pull Request`_ 
+7. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. 
+
+    Para isso, basta converter o seu **Issue** criado anteriormente em um **Pull Request**:
+
+    Para facilitar o processo, primeiro instale esta excelente ferramenta (caso ainda não tenha instalado):
+
+    https://github.com/github/hub
+
+    E execute o comando abaixo, que irá associar o PR na branch atual ao issue número 42 (já existente):
+
+        $ hub pull-request -i 42
+
+    Segue uma outra referência sobre este assunto: http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/
 
 
 Mantendo seu repositório local atualizado
