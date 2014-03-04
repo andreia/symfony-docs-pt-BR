@@ -39,21 +39,27 @@ Utilizando o Git e o Github
 
    2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
 
-3. Copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
+3. Selecione a branch que você irá trabalhar, por exemplo, 2.4, 2.3, ...
+
+    $ git checkout 2.4
+
+4. Se for uma nova tradução, copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
     Pronto, agora é só trabalhar na tradução do(s) documento(s).
 
-4. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
+5. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
 
-5. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
+6. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
 
     $ git add <nome_do_arquivo>
     $ git commit –a –m "pt_BR translation"
 
-6. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
+7. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
 
-    $ git push origin master
+    $ git push origin <branch>
 
-7. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. 
+    onde <branch> é a branch em que você está trabalhando, por exemplo, 2.4, 2.3, ...
+
+8. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. 
 
     Para isso, basta converter o seu **Issue** criado anteriormente em um **Pull Request**:
 
