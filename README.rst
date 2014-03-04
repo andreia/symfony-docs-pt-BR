@@ -87,8 +87,13 @@ http://andreia.github.com/symfony-docs-pt-BR/
 Visualização dos documentos traduzidos
 --------------------------------------
 
-Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada no seguinte endereço:
-http://andreiabohner.org/symfony2docs/index.html
+Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada em:
+
+- Versão 2.4 - http://andreiabohner.org/symfony2docs/2.4/index.html
+- Versão 2.3 - http://andreiabohner.org/symfony2docs/2.3/index.html
+- Versão 2.2 - http://andreiabohner.org/symfony2docs/2.2/index.html
+- Versão 2.1 - http://andreiabohner.org/symfony2docs/2.1/index.html
+- Versão 2.0 - http://andreiabohner.org/symfony2docs/2.0/index.html
 
 Referências
 -----------
