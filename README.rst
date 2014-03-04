@@ -39,7 +39,7 @@ Utilizando o Git e o Github
 
    2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
 
-3. Selecione a branch que você irá trabalhar, por exemplo, 2.4, 2.3, ...
+3. Selecione a branch que você irá trabalhar, por exemplo, 2.4, 2.3, ... ::
 
     $ git checkout 2.4
 
