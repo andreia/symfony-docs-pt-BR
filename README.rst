@@ -4,10 +4,24 @@ Contribuindo com a tradução da documentação oficial do Symfony2:
 Informando os documentos que deseja traduzir
 --------------------------------------------
 
-Para melhor organização, primeiro informe o(s) documento(s) que pretende ajudar na tradução e/ou revisão na planilha de tradutores/revisores:
-https://spreadsheets.google.com/ccc?key=0AtX-XMIXR2DAdFBMekh4UktObUNOMy1NX2RSMjJMUUE
+Informe o documento que irá traduzir abrindo um **issue** no repositório ( https://github.com/andreia/symfony-docs-pt-BR/issues/new ), e seguindo o padrão:
 
-Se ainda não possuir acesso de edição nesta planilha, solicitar o acesso para andreiabohner at gmail dot com.
+No título: 
+**[Traduzir | Revisar][Livro][Capítulo] nome-do-documento**
+
+- Se o documento ainda não foi traduzido, usar [Traduzir]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar [Revisar].
+
+Na descrição/comentário: 
+Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
+
+    | P                          | R
+    | -------------------------- | ---
+    | Nova tradução?             | [sim|não]
+    | Revisão?                   | [sim|não]
+    | Revisão com nova tradução? | [sim|não]
+    | Aplica para as versões     | [Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0]
+
+Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções (e precisariam de uma posterior revisão).
 
 Utilizando o Git e o Github
 ---------------------------
@@ -25,22 +39,39 @@ Utilizando o Git e o Github
 
    2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
 
-3. Copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
+3. Selecione a branch que você irá trabalhar, por exemplo, 2.4, 2.3, ... ::
+
+    $ git checkout 2.4
+
+4. Se for uma nova tradução, copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
     Pronto, agora é só trabalhar na tradução do(s) documento(s).
 
-4. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
+5. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
 
-5. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
+6. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
 
     $ git add <nome_do_arquivo>
     $ git commit –a –m "pt_BR translation"
 
-6. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
+7. Atualize o seu repositório no servidor github com as alterações realizadas localmente::
 
-    $ git push origin master
+    $ git push origin <branch>
 
-7. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. Para isso, acesse a página do repositório original no github, em: https://github.com/andreia/symfony-docs-pt-BR e envie um pull request (clicando no botão "Pull Request"):
-   Mais informações sobre o `Pull Request`_ 
+    onde <branch> é a branch em que você está trabalhando, por exemplo, 2.4, 2.3, ...
+
+8. O último passo é informar sobre as suas alterações ao responsável pelo repositório de origem, para realizar um pull das alterações no repositório. 
+
+    Para isso, basta converter o seu **Issue** criado anteriormente em um **Pull Request**:
+
+    Para facilitar o processo, primeiro instale esta excelente ferramenta (caso ainda não tenha instalado):
+
+    https://github.com/github/hub
+
+    E execute o comando abaixo, que irá associar o PR na branch atual ao issue, por exemplo, número 42 já existente - substituindo 42 pelo número do seu issue:
+
+        $ hub pull-request -i 42
+
+    Segue uma outra referência sobre esse assunto: http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/
 
 
 Mantendo seu repositório local atualizado
@@ -87,8 +118,13 @@ http://andreia.github.com/symfony-docs-pt-BR/
 Visualização dos documentos traduzidos
 --------------------------------------
 
-Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada no seguinte endereço:
-http://andreiabohner.org/symfony2docs/index.html
+Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada em:
+
+- Versão 2.4 - http://andreiabohner.org/symfony2docs/2.4/index.html
+- Versão 2.3 - http://andreiabohner.org/symfony2docs/2.3/index.html
+- Versão 2.2 - http://andreiabohner.org/symfony2docs/2.2/index.html
+- Versão 2.1 - http://andreiabohner.org/symfony2docs/2.1/index.html
+- Versão 2.0 - http://andreiabohner.org/symfony2docs/2.0/index.html
 
 Referências
 -----------
