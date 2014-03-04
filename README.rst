@@ -14,12 +14,12 @@ No título:
 Na descrição/comentário: 
 Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
 
-| P                          | R
-| -------------------------- | ---
-| Nova tradução?             | [sim|não]
-| Revisão?                   | [sim|não]
-| Revisão com nova tradução? | [sim|não]
-| Aplica para as versões     | [Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0]
+    | P                          | R
+    | -------------------------- | ---
+    | Nova tradução?             | [sim|não]
+    | Revisão?                   | [sim|não]
+    | Revisão com nova tradução? | [sim|não]
+    | Aplica para as versões     | [Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0]
 
 Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções (e precisariam de uma posterior revisão).
 
@@ -61,11 +61,11 @@ Utilizando o Git e o Github
 
     https://github.com/github/hub
 
-    E execute o comando abaixo, que irá associar o PR na branch atual ao issue número 42 (já existente):
+    E execute o comando abaixo, que irá associar o PR na branch atual ao issue, por exemplo, número 42 já existente - substituindo 42 pelo número do seu issue:
 
         $ hub pull-request -i 42
 
-    Segue uma outra referência sobre este assunto: http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/
+    Segue uma outra referência sobre esse assunto: http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/
 
 
 Mantendo seu repositório local atualizado
