@@ -2,8 +2,8 @@
    single: Doctrine; ORM configuration reference
    single: Configuration reference; Doctrine ORM
 
-DoctrineBundle Configuration ("doctrine")
-=========================================
+Configuração do DoctrineBundle ("doctrine")
+===========================================
 
 .. configuration-block::
 
@@ -226,11 +226,10 @@ DoctrineBundle Configuration ("doctrine")
             </doctrine:config>
         </container>
 
-Configuration Overview
-----------------------
+Visão Geral da Configuração
+---------------------------
 
-This following configuration example shows all the configuration defaults that
-the ORM resolves to:
+O exemplo de configuração a seguir mostra toda a configuração padrão que o ORM interpreta para:
 
 .. code-block:: yaml
 
@@ -246,16 +245,16 @@ the ORM resolves to:
             query_cache_driver: array
             result_cache_driver: array
 
-There are lots of other configuration options that you can use to overwrite
-certain classes, but those are for very advanced use-cases only.
+Existem muitas outras opções de configuração que você pode usar para sobrescrever certas classes,
+mas essas são somente para casos de uso avançados.
 
-Caching Drivers
-~~~~~~~~~~~~~~~
+Fazendo Cache dos Drivers
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values "array", "apc", "memcache", "memcached",
-"xcache" or "service".
+Para realizar o cache dos drivers você pode especificar os valores "array", "apc", "memcache", "memcached",
+"xcache" ou "service".
 
-The following example shows an overview of the caching configurations:
+O exemplo a seguir mostra uma visão geral das configurações de cache:
 
 .. code-block:: yaml
 
@@ -272,38 +271,40 @@ The following example shows an overview of the caching configurations:
                 port: 11211
                 instance_class: Memcache
 
-Mapping Configuration
-~~~~~~~~~~~~~~~~~~~~~
+Mapeando a Configurção 
+~~~~~~~~~~~~~~~~~~~~~~
 
-Explicit definition of all the mapped entities is the only necessary
-configuration for the ORM and there are several configuration options that you
-can control. The following configuration options exist for a mapping:
+Definir explicitamente todas as entidades mapeadas é a única configuração
+necessário para o ORM e existem diversas outras opções de configurações que você
+pode controlar. As configurações abaixo existem para o mapeamento.
 
-* ``type`` One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``.
-  This specifies which type of metadata type your mapping uses.
+* ``type`` Em ``annotation``, ``xml``, ``yml``, ``php`` ou ``staticphp``.
+  Especifica que tipo de metadado seu mapeamento usa.
 
-* ``dir`` Path to the mapping or entity files (depending on the driver). If
-  this path is relative it is assumed to be relative to the bundle root. This
-  only works if the name of your mapping is a bundle name. If you want to use
-  this option to specify absolute paths you should prefix the path with the
-  kernel parameters that exist in the DIC (for example %kernel.root_dir%).
+* ``dir`` Caminho para o mapeamento ou para os arquivos de entidades (dependendo
+  do driver utilizado). Se esse caminho for relativo assume-se que ele seja relativo
+  à raiz do bundle. Isso somente irá funcionar se o nome do mapeamento for o mesmo
+  nome do próprio Bundle. Se você quiser usar essa opção para especificar um caminho
+  absoluto você deve prefixar esse caminho com os parâmetros de kernel que existe no
+  DIC (por exemplo %kernel.root_dir%).
 
-* ``prefix`` A common namespace prefix that all entities of this mapping
+* ``prefix`` Um prefixo comum que todas as entidades desse mapeamento compartilham
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
   application bundle called ``AcmeHelloBundle`` prefix would be
   ``Acme\HelloBundle\Entity``.
 
-* ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access. When using
-  a bundle the alias defaults to the bundle name.
+* ``alias`` O Doctrine oeferece uma forma para apelidar os nomes das entidades para algo
+  mais simples, ou seja, nomes mais curtos que serão usados nas instruções DQL ou no acesso
+  através dos repositórios. Quando usando um bundle o apelido padrão é igual ao nome do
+  bundle.
 
-* ``is_bundle`` This option is a derived value from ``dir`` and by default is
-  set to true if dir is relative proved by a ``file_exists()`` check that
-  returns false. It is false if the existence check returns true. In this case
-  an absolute path was specified and the metadata files are most likely in a
-  directory outside of a bundle.
+* ``is_bundle`` Essa opção é uma valor derivado de ``dir`` e true caso o diretório seja
+  relativo, sendo verificado por um retorno false do método ``file_exists()``. Ele será falso
+  se a verificação através do método retornar true. Nesse caso um caminho absoluto fois
+  especificado e os arquivos de metadados provavelmente estarão em algum diretório exterior
+  ao bundle.
 
 .. index::
     single: Configuration; Doctrine DBAL
@@ -311,13 +312,13 @@ can control. The following configuration options exist for a mapping:
 
 .. _`reference-dbal-configuration`:
 
-Doctrine DBAL Configuration
----------------------------
+Configurações do Doctrine DBAL
+------------------------------
 
-DoctrineBundle supports all parameters that default Doctrine drivers
-accept, converted to the XML or YAML naming standards that Symfony
-enforces. See the Doctrine `DBAL documentation`_ for more information.
-The following block shows all possible configuration keys:
+O DoctrineBundle suporta todos os parametros que os drivers padrões do doctrine aceitam,
+convertidos para os padrões de XML ou YAML encorajados pelo Symfony. Veja a seção 
+`DBAL documentation`_ para maiores informações.
+O bloco a seguir mostra todas as possiveis configurações:
 
 .. configuration-block::
 
@@ -380,8 +381,8 @@ The following block shows all possible configuration keys:
             </doctrine:dbal>
         </doctrine:config>
 
-If you want to configure multiple connections in YAML, put them under the
-``connections`` key and give them a unique name:
+Caso você queira configurar multiplas conecções com YAML, coloque-as dentro da chave
+``connections`` e forneça a elas um nome unico:
 
 .. code-block:: yaml
 
@@ -400,11 +401,11 @@ If you want to configure multiple connections in YAML, put them under the
                     password:         null
                     host:             localhost
 
-The ``database_connection`` service always refers to the *default* connection,
-which is the first one defined or the one configured via the
-``default_connection`` parameter.
+O serviço ``database_connection`` sempre se refere a conexão *default*,
+que a primeira definida ou a que esteja configurada através do parânetro
+``default_connection``.
 
-Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` is the name of the connection.
+Cada conexão também pode ser acessada pelo serviço ``doctrine.dbal.[name]_connection``
+onde ``[name]`` deve ser substituído pelo nome da conexão.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
