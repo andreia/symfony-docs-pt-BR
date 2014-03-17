@@ -271,7 +271,7 @@ O exemplo a seguir mostra uma visão geral das configurações de cache:
                 port: 11211
                 instance_class: Memcache
 
-Mapeando a Configurção 
+Mapeando a Configuração 
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Definir explicitamente todas as entidades mapeadas é a única configuração
@@ -297,12 +297,11 @@ pode controlar. As configurações abaixo existem para o mapeamento.
 
 * ``alias`` O Doctrine oeferece uma forma para apelidar os nomes das entidades para algo
   mais simples, ou seja, nomes mais curtos que serão usados nas instruções DQL ou no acesso
-  através dos repositórios. Quando usando um bundle o apelido padrão é igual ao nome do
-  bundle.
+  através dos repositórios. Ao usar um bundle o apelido padrão é igual ao nome do bundle.
 
 * ``is_bundle`` Essa opção é uma valor derivado de ``dir`` e true caso o diretório seja
   relativo, sendo verificado por um retorno false do método ``file_exists()``. Ele será falso
-  se a verificação através do método retornar true. Nesse caso um caminho absoluto fois
+  se a verificação através do método retornar true. Nesse caso um caminho absoluto foi
   especificado e os arquivos de metadados provavelmente estarão em algum diretório exterior
   ao bundle.
 
@@ -402,7 +401,7 @@ Caso você queira configurar multiplas conecções com YAML, coloque-as dentro d
                     host:             localhost
 
 O serviço ``database_connection`` sempre se refere a conexão *default*,
-que a primeira definida ou a que esteja configurada através do parânetro
+que a primeira definida ou a que esteja configurada através do parâmetro
 ``default_connection``.
 
 Cada conexão também pode ser acessada pelo serviço ``doctrine.dbal.[name]_connection``
