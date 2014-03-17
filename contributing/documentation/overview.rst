@@ -1,39 +1,39 @@
-Contribuinto para a Documentação
+Contribuindo para a Documentação
 ================================
 
 A documentação é tão importante quanto o código. Segue os mesmos princípios:
-DRY, testes, fácil manutenção, extensibilidade, otimização, e refatoração
+DRY, testes, fácil manutenção, extensibilidade, otimização, e refatoração,
 só para citar alguns. E claro, documentação tem erros, erros de digitação,
 difícil de ler tutoriais e mais.
 
 Contribuindo
 ------------
 
-Antes de contribuir, você precisa se familiarizar com :doc:`markup
-  language <format>` usado para a documentação.
+Antes de contribuir, você precisa se familiarizar com :doc:`linguagem de
+ marcação <format>` usada para a documentação.
 
-  A documentação Symfony2 é hospedada no GitHub:
+  A documentação Symfony2 está hospedada no GitHub:
 
 .. code-block:: text
 
     https://github.com/symfony/symfony-docs
 
-Se você quiser enviar uma patch, `fork`_ o repositório oficial no GitHub e
+Se você quiser enviar uma patch, faça um `fork`_ do repositório oficial no GitHub e
 clone seu fork:
 
 .. code-block:: bash
 
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
-De acordo com o código fonte do Symfony, o repositório de documentação é divida
-em multiplos branches, correspondentes às diferentes versões do Symfony em si.
+De acordo com o código fonte do Symfony, o repositório de documentação é divido
+em múltiplos branches, correspondentes às diferentes versões do Symfony em si.
 O branch ``master`` detém a documentação para o branch de desenvolvimento do
 código.
 
-A menos que você esteja documentando um feature que foi introduzida *após*
-Symfony 2.3 (ex. no Symfony 2.4), as alterações devem ser sempre baseadas no 
-branch 2.3. Para fazer isso, faça o checkout do branch 2.3 antes do próximo
-passo:
+A menos que você esteja documentando uma feature ou uma funcionalidade que foi
+introduzida *após* o Symfony 2.3 (ex. no Symfony 2.4), as alterações devem ser
+sempre baseadas no branch 2.3. Para fazer isso, faça o checkout do branch 2.3
+antes do próximo passo:
 
 .. code-block:: bash
 
@@ -68,14 +68,14 @@ mudar o branch base para ser 2.3 na página de visualização clicando no botão
 
 .. note::
 
-  Todas as alterações feitas para um branch (ex. 2.3) será incorporada a cada 
+  Todas as alterações feitas para um branch (ex. 2.3) serão incorporadas a cada
   "novo" branch (ex. 2.4, master, etc) para o próximo release semanal.
 
 GitHub abrange o tópico do `pull requests`_ em detalhes.
 
 .. note::
 
-    A documentação do Symfony2 é licensiado sob uma :doc:`Licença <license>`
+    A documentação do Symfony2 é licenciado sob uma :doc:`Licença <license>`
     Creative Commons Attribution-Share Alike 3.0 Unported.
 
 Você também pode prefixar o título do seu pull request em alguns casos:
