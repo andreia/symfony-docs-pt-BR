@@ -4,6 +4,7 @@ Segurança
 .. toctree::
     :maxdepth: 2
 
+    voters
     acl
     acl_advanced
     force_https
