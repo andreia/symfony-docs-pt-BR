@@ -104,6 +104,7 @@
 
 * :doc:`/cookbook/security/index`
 
+  * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
