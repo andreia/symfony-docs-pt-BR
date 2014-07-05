@@ -1,12 +1,12 @@
 .. index::
    single: Segurança; Voters para Permissão de Dados
 
-Como Usar os Voters para Verificar as Permissões do Usuário
-===========================================================
+Como Usar Voters para Verificar as Permissões do Usuário
+========================================================
 
 No Symfony2 você pode verificar a permissão para acessar dados usando o
-:doc:`módulo ACL </cookbook/security/acl>`, que pode ser demasiado
-para muitas aplicações. Uma solução muito mais fácil é trabalhar com voters personalizados, 
+:doc:`módulo ACL </cookbook/security/acl>`, entretanto ele pode ser demasiado
+para muitas aplicações. Uma solução muito mais fácil é trabalhar com voters personalizados,
 que são como instruções condicionais simples.
 
 .. seealso::
@@ -18,7 +18,7 @@ que são como instruções condicionais simples.
 
     Verifique o capítulo
     :doc:`autorização </components/security/authorization>`
-    para uma compreensão ainda mais aprofundada sobre os voters.
+    para uma compreensão mais aprofundada sobre os voters.
 
 Como o Symfony Utiliza os Voters
 --------------------------------
