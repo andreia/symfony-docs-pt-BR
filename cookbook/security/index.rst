@@ -9,6 +9,7 @@ Segurança
     acl
     acl_advanced
     force_https
+    firewall_restriction
     form_login
     custom_provider
     api_key_authentication
