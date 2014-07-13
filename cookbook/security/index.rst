@@ -12,3 +12,4 @@ Segurança
     form_login
     custom_provider
     api_key_authentication
+    csrf_in_login_form

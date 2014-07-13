@@ -111,6 +111,7 @@
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/csrf_in_login_form`
 
 * :doc:`/cookbook/templating/index`
 
