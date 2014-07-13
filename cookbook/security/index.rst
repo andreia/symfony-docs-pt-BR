@@ -11,8 +11,4 @@ Segurança
     force_https
     form_login
     custom_provider
-<<<<<<< HEAD
-=======
-    api_key_authentication
     csrf_in_login_form
->>>>>>> 84a432f... [pt_BR][Cookbook][Security][CSRF in Login Form] Translate into Portuguese
