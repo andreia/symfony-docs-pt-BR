@@ -104,6 +104,7 @@
 
 * :doc:`/cookbook/security/index`
 
+  * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/voters_data_permission`
   * :doc:`/cookbook/security/acl`
