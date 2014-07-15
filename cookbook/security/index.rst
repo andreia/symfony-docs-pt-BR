@@ -4,6 +4,7 @@ Segurança
 .. toctree::
     :maxdepth: 2
 
+    impersonating_user
     voters
     voters_data_permission
     acl
