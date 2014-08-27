@@ -13,5 +13,6 @@ Segurança
     firewall_restriction
     form_login
     custom_provider
+    custom_password_authenticator
     api_key_authentication
     csrf_in_login_form

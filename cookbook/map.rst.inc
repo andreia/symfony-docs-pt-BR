@@ -113,6 +113,7 @@
   * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/custom_password_authenticator`
   * :doc:`/cookbook/security/csrf_in_login_form`
 
 * :doc:`/cookbook/templating/index`
