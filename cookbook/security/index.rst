@@ -15,4 +15,5 @@ Segurança
     custom_provider
     custom_password_authenticator
     api_key_authentication
+    pre_authenticated
     csrf_in_login_form
