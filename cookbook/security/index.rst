@@ -13,4 +13,5 @@ Segurança
     form_login
     custom_provider
     pre_authenticated
+    target_path
     csrf_in_login_form
