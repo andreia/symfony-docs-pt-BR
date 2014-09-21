@@ -10,3 +10,4 @@ Segurança
     force_https
     form_login
     custom_provider
+    target_path
