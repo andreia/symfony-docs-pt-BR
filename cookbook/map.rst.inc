@@ -110,6 +110,7 @@
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/target_path`
 
 * :doc:`/cookbook/templating/index`
 
