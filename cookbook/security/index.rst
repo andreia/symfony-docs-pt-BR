@@ -12,4 +12,5 @@ Segurança
     force_https
     form_login
     custom_provider
+    pre_authenticated
     csrf_in_login_form
