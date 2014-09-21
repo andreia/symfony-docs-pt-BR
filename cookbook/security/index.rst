@@ -16,4 +16,5 @@ Segurança
     custom_password_authenticator
     api_key_authentication
     pre_authenticated
+    target_path
     csrf_in_login_form

@@ -115,6 +115,7 @@
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_password_authenticator`
   * :doc:`/cookbook/security/pre_authenticated`
+  * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
 
 * :doc:`/cookbook/templating/index`
