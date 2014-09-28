@@ -11,6 +11,7 @@ Segurança
     acl_advanced
     force_https
     form_login
+    securing_services
     custom_provider
     pre_authenticated
     target_path
