@@ -9,5 +9,6 @@ Segurança
     acl_advanced
     force_https
     form_login
+    securing_services
     custom_provider
     target_path
