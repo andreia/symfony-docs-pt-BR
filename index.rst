@@ -38,6 +38,16 @@ Cookbook
 
 Leia o :doc:`Cookbook </cookbook/index>`.
 
+Melhores Práticas
+-----------------
+
+.. toctree::
+    :hidden:
+
+    best_practices/index
+
+Leia as :doc:`Melhores Práticas Oficiais </best_practices/index>`.
+
 Componentes
 -----------
 
