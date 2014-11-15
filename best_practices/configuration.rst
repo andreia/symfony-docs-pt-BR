@@ -38,7 +38,7 @@ opções relacionadas à infraestrutura do banco de dados e servidor de e-mail:
 Essas opções não são definidas no arquivo ``app/config/config.yml`` porque
 elas não têm nada a ver com o comportamento da aplicação. Em outras palavras, a sua
 aplicação não se preocupa com a localização do seu banco de dados ou com as credenciais
-para acessá-lo, contanto que o banco de dados está configurado corretamente.
+para acessá-lo, contanto que o banco de dados esteja configurado corretamente.
 
 Parâmetros Canônicos
 ~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +69,7 @@ Configuração Relacionada à Aplicação
 
 O arquivo ``config.yml`` contém as opções usadas pela aplicação para modificar
 seu comportamento, como o remetente de notificações de e-mail, ou `feature toggles`_
-habilitado. Definir esses valores no arquivo `` parameters.yml``
+habilitado. Definir esses valores no arquivo ``parameters.yml``
 adicionaria uma camada extra de configuração que não é necessária, porque você não precisa
 ou quer que esses valores de configuração mudem em cada servidor.
 
@@ -164,14 +164,14 @@ através do arquivo ``services.yml`` e configuração semântica
 através de uma classe especial ``*Extension``.
 
 Embora a configuração semântica seja muito mais poderosa e ofereça bons recursos
-tais como validação de configuração, a quantidade de trabalho necessário para definir essa
+tal como a validação de configuração, a quantidade de trabalho necessário para definir essa
 configuração não vale a pena para bundles que não são destinados a serem compartilhados como
 bundles de terceiros.
 
 Movendo Opções Sensíveis Totalmente fora do Symfony
 ---------------------------------------------------
 
-Quando se tratar de opções sensíveis, como as credenciais de banco de dados, também recomendamos
+Quando se tratar de opções sensíveis, como credenciais do banco de dados, também recomendamos
 que você armazene elas fora do projeto Symfony e torne-as disponíveis
 através de variáveis ​​de ambiente. Saiba como fazer no seguinte artigo:
 `Como definir Parâmetros externos no Container de Serviço`_
