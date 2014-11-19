@@ -4,6 +4,7 @@ Melhores Práticas Oficiais do Symfony
 .. toctree::
     :hidden:
 
+    creating-the-project
     configuration
     business-logic
     controllers
