@@ -8,5 +8,6 @@ Melhores Práticas Oficiais do Symfony
     configuration
     business-logic
     controllers
+    forms
 
 .. include:: /best_practices/map.rst.inc
