@@ -1,0 +1,96 @@
+﻿Internacionalização
+===================
+
+Internacionalização e localização adaptam as aplicações e seus conteúdos
+para a região ou idioma específico dos usuários. No Symfony, esse é um recurso opt-in
+que precisa ser ativado antes de utilizar. Para fazer isso, remova o comentário da
+da configuração ``translator`` seguinte e defina a localidade da sua aplicação:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    framework:
+        # ...
+        translator: { fallback: "%locale%" }
+
+    # app/config/parameters.yml
+    parameters:
+        # ...
+        locale:     en
+
+Formato do Arquivo Origem de Tradução
+-------------------------------------
+
+O componente Translation do Symfony suporta vários formatos diferentes
+de tradução: PHP, Qt, ``.po``, ``.mo``, JSON, CSV, INI, etc.
+
+.. best-practice::
+
+    Use o formato XLIFF para os seus arquivos de tradução.
+
+De todos os formatos de tradução disponíveis, apenas o XLIFF e o gettext possuem amplo
+suporte nas ferramentas usadas por tradutores profissionais. E, uma vez que ele possui base
+no XML, você pode validar o conteúdo do arquivo XLIFF enquanto você o escreve.
+
+O Symfony 2.6 adicionou suporte para notas dentro dos arquivos XLIFF, tornando-os mais
+user-friendly para os tradutores. No final, boas traduções tratam de
+contexto, e essas notas XLIFF permitem definir esse contexto.
+
+.. tip::
+
+    O `JMSTranslationBundle`_, com licença Apache, oferece uma interface web para
+    visualizar e editar esses arquivos de tradução. Ele também tem extratores avançados
+    que podem ler o seu projeto e atualizar automaticamente os arquivos XLIFF.
+
+Localização do Arquivo Origem de Tradução
+-----------------------------------------
+
+.. best-practice::
+
+    Armazene os arquivos de tradução no diretório ``app/Resources/translations/``.
+
+Tradicionalmente, os desenvolvedores Symfony criavam esses arquivos no
+diretório ``Resources/translations/`` de cada bundle.
+
+Mas, uma vez que o diretório ``app/Resources/`` é considerado a localização global
+para os recursos da aplicação, armazenar as traduções no ``app/Resources/translations/``
+centraliza elas *e* lhes fornece prioridade sobre qualquer outro arquivo de tradução.
+Isso permite que você sobrescreva traduções definidas em bundles de terceiros.
+
+Chaves de Tradução
+------------------
+
+.. best-practice::
+
+    Sempre use chaves para traduções em vez de strings de conteúdo.
+
+Usar chaves simplifica o gerenciamento dos arquivos de tradução, porque você
+pode alterar o conteúdo original sem ter que atualizar todos os arquivo de
+tradução.
+
+As chaves devem sempre descrever seu *propósito* e *não* sua localização. Por
+exemplo, se um formulário tem um campo com a label "Username", então uma boa chave
+seria ``label.username`` e *não* ``edit_form.label.username``.
+
+Exemplo de Arquivo de Tradução
+------------------------------
+
+Aplicando todas as melhores práticas anteriores, o arquivo de tradução exemplo para
+Inglês na aplicação seria:
+
+.. code-block:: xml
+
+    <!-- app/Resources/translations/messages.en.xliff -->
+    <?xml version="1.0"?>
+    <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+        <file source-language="en" target-language="en" datatype="plaintext">
+            <body>
+                <trans-unit id="1">
+                    <source>title.post_list</source>
+                    <target>Post List</target>
+                </trans-unit>
+            </body>
+        </file>
+    </xliff>
+
+.. _`JMSTranslationBundle`: https://github.com/schmittjoh/JMSTranslationBundle
