@@ -1,7 +1,7 @@
 ﻿Formulários
 ===========
 
-Os formulários são um dos componentes mais mal utilizados do Symfony devido à sua grande abrangência e
+Os componente de formulário (Form) é um dos componentes mais mal utilizado do Symfony devido à sua grande abrangência e
 interminável lista de recursos. Neste capítulo vamos mostrar-lhe algumas das melhores
 práticas para que você possa aproveitar os formulários, mas também ter o trabalho feito rapidamente.
 
