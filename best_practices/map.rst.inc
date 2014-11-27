@@ -4,3 +4,4 @@
 * :doc:`/best_practices/controllers`
 * :doc:`/best_practices/forms`
 * :doc:`/best_practices/i18n`
+* :doc:`/best_practices/security`

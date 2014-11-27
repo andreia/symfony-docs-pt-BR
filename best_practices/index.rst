@@ -10,5 +10,6 @@ Melhores Práticas Oficiais do Symfony
     controllers
     forms
     i18n
+    security
 
 .. include:: /best_practices/map.rst.inc
