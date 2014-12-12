@@ -8,6 +8,7 @@ Melhores Práticas Oficiais do Symfony
     configuration
     business-logic
     controllers
+    templates
     forms
     i18n
     security
