@@ -12,5 +12,6 @@ Melhores Práticas Oficiais do Symfony
     forms
     i18n
     security
+    tests
 
 .. include:: /best_practices/map.rst.inc
