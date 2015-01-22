@@ -12,3 +12,4 @@ Formulário
     create_form_type_extension
     use_virtuals_forms
     use_empty_data
+    direct_submit
