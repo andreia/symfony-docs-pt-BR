@@ -72,6 +72,7 @@
   * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/create_form_type_extension`
+  * :doc:`/cookbook/form/inherit_data_option`
   * :doc:`/cookbook/form/use_virtuals_forms`
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
