@@ -1,3 +1,4 @@
+* :doc:`/best_practices/introduction`
 * :doc:`/best_practices/creating-the-project`
 * :doc:`/best_practices/configuration`
 * :doc:`/best_practices/business-logic`
