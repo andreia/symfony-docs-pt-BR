@@ -7,3 +7,4 @@ Console
     console_command
     usage
     generating_urls
+    commands_as_services
