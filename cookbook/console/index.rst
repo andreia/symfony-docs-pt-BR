@@ -6,4 +6,5 @@ Console
 
     console_command
     usage
+    sending_emails
     generating_urls
