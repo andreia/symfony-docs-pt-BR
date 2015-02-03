@@ -6,5 +6,6 @@ Console
 
     console_command
     usage
+    sending_emails
     generating_urls
     commands_as_services
