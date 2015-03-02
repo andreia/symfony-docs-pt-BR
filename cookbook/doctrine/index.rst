@@ -12,3 +12,4 @@ Doctrine
     multiple_entity_managers
     custom_dql_functions
     registration_form
+    console
