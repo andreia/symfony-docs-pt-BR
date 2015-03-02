@@ -54,6 +54,7 @@
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
   * :doc:`/cookbook/doctrine/custom_dql_functions`
   * :doc:`/cookbook/doctrine/registration_form`
+  * :doc:`/cookbook/doctrine/console`
 
 * :doc:`/cookbook/email/index`
 
