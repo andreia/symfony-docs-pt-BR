@@ -116,6 +116,10 @@
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
 
+* :doc:`/cookbook/session/index`
+
+  * :doc:`/cookbook/session/avoid_session_start`
+
 * **symfony1**
 
   * :doc:`/cookbook/symfony1`
