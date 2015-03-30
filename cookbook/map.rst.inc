@@ -118,6 +118,7 @@
 
 * :doc:`/cookbook/session/index`
 
+  * :doc:`/cookbook/session/limit_metadata_writes`
   * :doc:`/cookbook/session/avoid_session_start`
 
 * **symfony1**
