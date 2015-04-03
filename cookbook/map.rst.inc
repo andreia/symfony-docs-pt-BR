@@ -107,6 +107,13 @@
   * :doc:`/cookbook/routing/redirect_trailing_slash`
   * :doc:`/cookbook/routing/extra_information`
 
+* :doc:`/cookbook/session/index`
+
+  * :doc:`/cookbook/session/proxy_examples`
+  * :doc:`/cookbook/session/sessions_directory`
+  * :doc:`/cookbook/session/limit_metadata_writes`
+  * :doc:`/cookbook/session/avoid_session_start`
+
 * **symfony1**
 
   * :doc:`/cookbook/symfony1`
