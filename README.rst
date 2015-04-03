@@ -120,6 +120,9 @@ Visualização dos documentos traduzidos
 
 Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada em:
 
+- Versão 2.7 - http://andreiabohner.org/symfony2docs/2.7/index.html
+- Versão 2.6 - http://andreiabohner.org/symfony2docs/2.6/index.html
+- Versão 2.5 - http://andreiabohner.org/symfony2docs/2.5/index.html
 - Versão 2.4 - http://andreiabohner.org/symfony2docs/2.4/index.html
 - Versão 2.3 - http://andreiabohner.org/symfony2docs/2.3/index.html
 - Versão 2.2 - http://andreiabohner.org/symfony2docs/2.2/index.html
