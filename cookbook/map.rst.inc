@@ -162,6 +162,11 @@
 
   * :doc:`/cookbook/validation/custom_constraint`
 
+* :doc:`/cookbook/web_server/index`
+
+  * :doc:`/cookbook/web_server/built_in`
+  * (configuration) :doc:`/cookbook/configuration/web_server_configuration`
+
 * :doc:`/cookbook/workflow/index`
 
   * :doc:`/cookbook/workflow/new_project_git`
