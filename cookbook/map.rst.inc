@@ -141,6 +141,10 @@
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
 
+* **Serializer**
+
+  * :doc:`/cookbook/serializer`
+
 * :doc:`/cookbook/templating/index`
 
   * :doc:`/cookbook/templating/global_variables`
