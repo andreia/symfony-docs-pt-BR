@@ -5,3 +5,4 @@ Templating
     :maxdepth: 2
 
     global_variables
+    render_without_controller
