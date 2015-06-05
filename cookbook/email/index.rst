@@ -6,5 +6,6 @@ Email
 
     email
     gmail
+    cloud
     dev_environment
     spool
