@@ -4,23 +4,21 @@
 Validação
 =========
 
-Validação é uma tarefa muito comum em aplicações web. Dado inserido em formulário
-precisa ser validado. Dado também precisa ser revalidado antes de ser escrito 
-num banco de dados ou passado a um serviço web.
+Validação é uma tarefa muito comum em aplicações web. Dados inseridos em formulários
+precisam ser validados. Os dados também precisa ser revalidados antes de serem escritos 
+num banco de dados ou passados a um serviço web.
 
-Symfony2 vem acompanhado com um componente `Validator`_ que torna essa tarefa fácil e transparente.
-Esse componente é baseado na especificação `JSR303 Bean Validation`_. O quê ?
-Uma especificação Java no PHP? Você ouviu corretamente, mas não é tão ruim quanto parece.
-Vamos olhar como isso pode ser usado no PHP.
+O Symfony2 vem um componente `Validator`_ que torna essa tarefa fácil e transparente.
+Esse componente é baseado na especificação `JSR303 Bean Validation`_.
 
 .. index:
    single: Validação; As bases
 
-As bases da validação
+O básico da validação
 ---------------------
 
 A melhor forma de entender validação é vê-la em ação. Para começar, suponha 
-que você criou um bom e velho objeto PHP que você precisa usar em algum lugar da
+que você criou um plain-old-PHP que você precisa usar em algum lugar da
 sua aplicação:
 
 .. code-block:: php
@@ -35,10 +33,10 @@ sua aplicação:
 
 Até agora, essa é somente uma classe comum que serve para alguns propósitos
 dentro de sua aplicação. O objetivo da validação é avisar você se um dado de
-um objeto é válido ou não. Para esse trabalho, você irá configura uma lista
-de regras (chamada :ref:`constraints<validation-constraints>`) em que o objeto
-deve seguir em ordem para ser validado. Essas regras podem ser especificadas por
-um número de diferentes formatos (YAML, XML, annotations, ou PHP).
+um objeto é válido ou não. Para esse trabalho, você irá configur uma lista
+de regras (chamada :ref:`constraints<validation-constraints>`) que o objeto
+deve seguir para ser válido. Essas regras podem ser especificadas por vários
+formatos diferentes (YAML, XML, annotations, ou PHP).
 
 Por exemplo, para garantir que a propriedade ``$name`` não é vazia, adicione o
 seguinte: 
