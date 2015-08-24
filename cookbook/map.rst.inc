@@ -46,6 +46,13 @@
 
   * :doc:`/cookbook/debugging`
 
+* :doc:`/cookbook/deployment/index`
+
+  * :doc:`/cookbook/deployment/tools`
+  * :doc:`/cookbook/deployment/azure-website`
+  * :doc:`/cookbook/deployment/heroku`
+  * :doc:`/cookbook/deployment/platformsh`
+
 * :doc:`/cookbook/doctrine/index`
 
   * :doc:`/cookbook/doctrine/file_uploads`
