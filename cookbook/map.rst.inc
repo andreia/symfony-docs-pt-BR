@@ -103,6 +103,10 @@
 
   * :doc:`/cookbook/frontend/bower`
 
+* :doc:`/cookbook/install/index`
+
+  * :doc:`/cookbook/install/unstable_versions`
+
 * :doc:`/cookbook/logging/index`
 
   * :doc:`/cookbook/logging/monolog`
