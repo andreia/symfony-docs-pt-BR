@@ -159,6 +159,7 @@
   * :doc:`/cookbook/security/pre_authenticated`
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
+  * :doc:`/cookbook/security/named_encoders`
 
 * **Serializer**
 
