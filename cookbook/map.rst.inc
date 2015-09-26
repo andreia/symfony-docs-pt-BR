@@ -89,6 +89,10 @@
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
 
+* :doc:`/cookbook/install/index`
+
+  * :doc:`/cookbook/install/unstable_versions`
+
 * :doc:`/cookbook/logging/index`
 
   * :doc:`/cookbook/logging/monolog`
