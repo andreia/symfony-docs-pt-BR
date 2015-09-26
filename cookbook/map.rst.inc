@@ -99,6 +99,10 @@
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
 
+* :doc:`/cookbook/frontend/index`
+
+  * :doc:`/cookbook/frontend/bower`
+
 * :doc:`/cookbook/install/index`
 
   * :doc:`/cookbook/install/unstable_versions`
