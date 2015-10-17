@@ -9,11 +9,6 @@ Se você abrir o arquivo de configuração da sua aplicação (geralmente ``app/
 você verá seções de configuração diferentes, como ``framework``, ``twig`` and ``doctrine``.
 Cada uma dessas seções configura um bundle específico, te permitindo definir opções em um alto nível 
 e deixar o bundle fazer todas as mudanças complexas e de baixo nível baseado em suas configurações.
->>>>>>> ac3239e... [pt_BR][Cookbook][Bundles] Translate into Portuguese
-você verá um seções de configuração diferentes, como ``framework``,
-``twig`` and ``doctrine``. Cada uma dessas seções configura um bundle específico, te permitindo 
-definir opções em um alto nível e deixar o bundle fazer todas as mudanças complexas de baixo nível
-baseado em suas configurações.
 
 Por exemplo, a configuração a seguir diz ao FrameworkBundle que permita 
 a integração de form, o que envolve a definição de alguns serviços bem como
