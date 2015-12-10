@@ -4,7 +4,7 @@
 Como testar código que interage com Banco de dados
 ==================================================
 
-Se seu código interage com banco de dados, e.g. lê dados dele ou armazena dados
+Se seu código interage com banco de dados, ex. lê dados dele ou armazena dados
 nele, você precisa ajustar seus testes para levar isso em conta. Existem várias
 formas de lidar com isso. Em um teste de unidade, você pode criar um mock para
 um ``Repository`` e usá-lo para retornar objetos esperados. Em um teste funcional,
@@ -31,7 +31,7 @@ repositório.
     É mais trabalhoso para configurar, mas torna os testes mais fáceis, pois você
     precisar mockar apenas o repositório.
     
-Suponha que a classe que você quer testar se pareça com isso::
+Suponha que a classe que você quer testar se pareça com a seguinte::
 
     namespace AppBundle\Salary;
 
@@ -98,7 +98,7 @@ Uma vez que o ``ObjectManager`` é injetado na classe através do construtor,
     }
 
 Neste exemplo, você está construindo os mocks de dentro pra fora, primeiro criando
-o funcionário que é retornado pelo ``Repository``, que por sua vez é retornado pelo
+o employee que é retornado pelo ``Repository``, que por sua vez é retornado pelo
 ``EntityManager``. Desta forma, nenhuma classe real é envolvida nos testes.
 
 Alterando configurações do banco de dados para testes funcionais
@@ -148,5 +148,5 @@ a configuração padrão.
             ),
         ));
 
-Tenha certeza que seu banco de dados roda no localhost e tem o banco de dados
+Certifique-se que seu banco de dados roda no localhost e tem o banco de dados
 definido e as credenciais de usuários configuradas.
