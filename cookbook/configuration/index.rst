@@ -10,3 +10,4 @@ Configuração
     external_parameters
     pdo_session_storage
     apache_router
+    configuration_organization
