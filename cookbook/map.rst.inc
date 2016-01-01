@@ -28,6 +28,9 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
+  * :doc:`/cookbook/configuration/configuration_organization`
+  * (Doctrine) :doc:`/cookbook/doctrine/pdo_session_storage`
+  * (Doctrine) :doc:`/cookbook/doctrine/mongodb_session_storage`
 
 * :doc:`/cookbook/console/index`
 
