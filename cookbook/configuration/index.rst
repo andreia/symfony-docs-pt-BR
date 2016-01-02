@@ -5,6 +5,7 @@ Configuração
     :maxdepth: 2
 
     environments
+    micro-kernel-trait
     override_dir_structure
     using_parameters_in_dic
     external_parameters
