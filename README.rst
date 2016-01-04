@@ -1,5 +1,5 @@
-Contribuindo com a tradução da documentação oficial do Symfony2:
-================================================================
+Contribuindo com a tradução da documentação oficial do Symfony2
+===============================================================
 
 Informando os documentos que deseja traduzir
 --------------------------------------------
@@ -11,7 +11,9 @@ No título:
 
 - Se o documento ainda não foi traduzido, usar \[Traduzir\]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar \[Revisar\].
 
-Na descrição/comentário: 
+Na descrição/comentário
+~~~~~~~~~~~~~~~~~~~~~~~
+
 Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
 
     | P                          | R
