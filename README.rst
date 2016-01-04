@@ -28,16 +28,16 @@ Utilizando o Git e o Github
 
 1. Para começar, faça o fork do repositório master da tradução para o português no github:
 
-   1.1 Acessar o repositório master no github: https://github.com/andreia/symfony-docs-pt-BR
-   1.2 Clicar no botão fork
+  1.1 Acessar o repositório master no github: https://github.com/andreia/symfony-docs-pt-BR
+  1.2 Clicar no botão fork
 
 2. Agora, você irá "clonar" o projeto para a sua máquina local:
-   
-   2.1 Copiar a URL do repositório do seu fork, para utilizá-la com o comando git clone (por exemplo)::
+
+  2.1 Copiar a URL do repositório do seu fork, para utilizá-la com o comando git clone (por exemplo)::
 
     $ git clone git@github.com:seuusername/symfony-docs.git
 
-   2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
+  2.2 Após completar o clone do repositório, ele terá o nome remoto "origin". Não confundir, apesar do nome ser origin ele não está apontando para o repo master, mas sim para o seu fork no github.
 
 3. Selecione a branch que você irá trabalhar, por exemplo, 2.4, 2.3, ... ::
 
@@ -120,14 +120,16 @@ Visualização dos documentos traduzidos
 
 Para facilitar a revisão dos documentos, sempre que uma nova tradução é adicionada/modificada aqui no repositório ela é renderizada em:
 
-- Versão 2.7 - http://andreiabohner.org/symfony2docs/2.7/index.html
-- Versão 2.6 - http://andreiabohner.org/symfony2docs/2.6/index.html
-- Versão 2.5 - http://andreiabohner.org/symfony2docs/2.5/index.html
-- Versão 2.4 - http://andreiabohner.org/symfony2docs/2.4/index.html
-- Versão 2.3 - http://andreiabohner.org/symfony2docs/2.3/index.html
-- Versão 2.2 - http://andreiabohner.org/symfony2docs/2.2/index.html
-- Versão 2.1 - http://andreiabohner.org/symfony2docs/2.1/index.html
-- Versão 2.0 - http://andreiabohner.org/symfony2docs/2.0/index.html
+- [Versão 3.0](http://andreiabohner.org/symfony2docs/3.0/index.html)
+- [Versão 2.8](http://andreiabohner.org/symfony2docs/2.8/index.html)
+- [Versão 2.7](http://andreiabohner.org/symfony2docs/2.7/index.html)
+- [Versão 2.6](http://andreiabohner.org/symfony2docs/2.6/index.html)
+- [Versão 2.5](http://andreiabohner.org/symfony2docs/2.5/index.html)
+- [Versão 2.4](http://andreiabohner.org/symfony2docs/2.4/index.html)
+- [Versão 2.3](http://andreiabohner.org/symfony2docs/2.3/index.html)
+- [Versão 2.2](http://andreiabohner.org/symfony2docs/2.2/index.html)
+- [Versão 2.1](http://andreiabohner.org/symfony2docs/2.1/index.html)
+- [Versão 2.0](http://andreiabohner.org/symfony2docs/2.0/index.html)
 
 Referências
 -----------
