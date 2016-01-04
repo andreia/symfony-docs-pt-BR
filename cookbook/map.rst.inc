@@ -45,6 +45,7 @@
 
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
+  * :doc:`/cookbook/controller/upload_file`
 
 * **Depuração**
 
