@@ -4,31 +4,36 @@ Contribuindo com a tradução da documentação oficial do Symfony2
 Informando os documentos que deseja traduzir
 --------------------------------------------
 
-Informe o documento que irá traduzir abrindo um [issue no repositório](https://github.com/andreia/symfony-docs-pt-BR/issues/new), e seguindo o padrão:
+Informe o documento que irá traduzir abrindo um [issue no repositório](https://github.com/andreia/symfony-docs-pt-BR/issues/new), e seguindo os padrões abaixo.
 
-No título: 
-**\[Traduzir | Revisar\]\[Livro\]\[Capítulo\] nome-do-documento**
+No título
+~~~~~~~~~
 
-- Se o documento ainda não foi traduzido, usar \[Traduzir\]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar \[Revisar\].
+\[Traduzir \| Revisar\]\[Livro\]\[Capítulo\] nome-do-documento
 
-Na descrição/comentário
-~~~~~~~~~~~~~~~~~~~~~~~
+Se o documento ainda não foi traduzido, usar \[Traduzir\].
+Se for um documento já traduzido que está sendo revisado ou está
+sendo adicionada uma tradução faltante usar \[Revisar\].
+
+No comentário
+~~~~~~~~~~~~~
 
 Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
 
-    | P                          | R
-    | -------------------------- | ---
-    | Nova tradução?             | \[sim|não\]
-    | Revisão?                   | \[sim|não\]
-    | Revisão com nova tradução? | \[sim|não\]
-    | Aplica para as versões     | \[Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0\]
+P                          | R
+-------------------------- | ---
+Nova tradução?             | \[sim\|não\]
+Revisão?                   | \[sim\|não\]
+Revisão com nova tradução? | \[sim\|não\]
+Aplica para as versões     | \[Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0\]
 
-Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções e precisariam de uma posterior revisão.
+Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados
+trechos com novas traduções e precisariam de uma posterior revisão.
 
-Utilizando o Git e o Github
+Utilizando o Git e o GitHub
 ---------------------------
 
-1. Para começar, faça o fork do repositório master da tradução para o português no github:
+1. Para começar, faça o fork do repositório master da tradução para o português no GitHub:
 
   1.1 Acessar o [repositório no github](https://github.com/andreia/symfony-docs-pt-BR)
   1.2 Clicar no botão fork
@@ -47,7 +52,7 @@ Utilizando o Git e o Github
 
 4. Se for uma nova tradução, verifique antes se os mesmos já não foram traduzidos e copie o documento que você irá traduzir do repositório oficial [em inglês](https://github.com/symfony/symfony-docs). Pronto, agora é só trabalhar na tradução do documento.
 
-5. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local, que foi criado no passo 2.
+5. Copie o documento que você traduziu para os respectivos diretórios em seu repositório local, que foi criado no passo 2.
 
 6. Finalizadas as traduções e/ou revisões, adicione os novos documentos se for uma nova tradução, e faça o commit das alterações no seu repositório local::
 
@@ -64,15 +69,15 @@ Utilizando o Git e o Github
 
     Para isso, basta converter o seu **Issue** criado anteriormente em um **Pull Request**:
 
-    Para facilitar o processo, primeiro instale esta excelente ferramenta (caso ainda não tenha instalado):
+    Para facilitar o processo, primeiro instale esta excelente ferramenta:
 
     https://github.com/github/hub
 
-    E execute o comando abaixo, que irá associar o PR na branch atual ao issue, por exemplo, número 42 já existente - substituindo 42 pelo número do seu issue:
+    E execute o comando abaixo, que irá associar o PR na branch atual ao issue, por exemplo, número 42 já existente - substituindo 42 pelo número do seu issue::
 
         $ hub pull-request -i 42
 
-    Segue uma outra referência sobre esse assunto: http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/
+    Segue uma [outra referência sobre esse assunto](http://www.topbug.net/blog/2012/03/25/attach-a-pull-request-to-an-existing-github-issue/).
 
 
 Mantendo seu repositório local atualizado
