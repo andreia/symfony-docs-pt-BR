@@ -4,24 +4,24 @@ Contribuindo com a tradução da documentação oficial do Symfony2:
 Informando os documentos que deseja traduzir
 --------------------------------------------
 
-Informe o documento que irá traduzir abrindo um **issue** no repositório ( https://github.com/andreia/symfony-docs-pt-BR/issues/new ), e seguindo o padrão:
+Informe o documento que irá traduzir abrindo um [issue no repositório](https://github.com/andreia/symfony-docs-pt-BR/issues/new), e seguindo o padrão:
 
 No título: 
-**[Traduzir | Revisar][Livro][Capítulo] nome-do-documento**
+**\[Traduzir | Revisar\]\[Livro\]\[Capítulo\] nome-do-documento**
 
-- Se o documento ainda não foi traduzido, usar [Traduzir]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar [Revisar].
+- Se o documento ainda não foi traduzido, usar \[Traduzir\]. Se for um documento já traduzido que está sendo revisado ou está sendo adicionada uma tradução faltante usar \[Revisar\].
 
 Na descrição/comentário: 
 Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
 
     | P                          | R
     | -------------------------- | ---
-    | Nova tradução?             | [sim|não]
-    | Revisão?                   | [sim|não]
-    | Revisão com nova tradução? | [sim|não]
-    | Aplica para as versões     | [Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0]
+    | Nova tradução?             | \[sim|não\]
+    | Revisão?                   | \[sim|não\]
+    | Revisão com nova tradução? | \[sim|não\]
+    | Aplica para as versões     | \[Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0\]
 
-Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções (e precisariam de uma posterior revisão).
+Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados trechos com novas traduções e precisariam de uma posterior revisão.
 
 Utilizando o Git e o Github
 ---------------------------
@@ -33,7 +33,7 @@ Utilizando o Git e o Github
 
 2. Agora, você irá "clonar" o projeto para a sua máquina local:
 
-  2.1 Copiar a URL do repositório do seu fork, para utilizá-la com o comando git clone (por exemplo)::
+  2.1 Copiar a URL do repositório do seu fork, para utilizá-la com o comando git clone \(por exemplo\)::
 
     $ git clone git@github.com:seuusername/symfony-docs.git
 
@@ -43,12 +43,11 @@ Utilizando o Git e o Github
 
     $ git checkout 2.4
 
-4. Se for uma nova tradução, copie o(s) documento(s) que você irá traduzir (verifique se os mesmos já não foram traduzidos em https://github.com/andreia/symfony-docs-pt-BR) do repositório oficial em inglês ( https://github.com/symfony/symfony-docs ).
-    Pronto, agora é só trabalhar na tradução do(s) documento(s).
+4. Se for uma nova tradução, verifique antes se os mesmos já não foram traduzidos e copie o documento que você irá traduzir do repositório oficial [em inglês](https://github.com/symfony/symfony-docs). Pronto, agora é só trabalhar na tradução do documento.
 
-5. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local (o que você criou no passo 2).
+5. Copie o(s) documento(s) que você traduziu para os respectivos diretórios em seu repositório local, que foi criado no passo 2.
 
-6. Finalizadas as traduções e/ou revisões, adicione os novos documentos (se for uma nova tradução) e faça o commit das alterações no seu repositório local::
+6. Finalizadas as traduções e/ou revisões, adicione os novos documentos se for uma nova tradução, e faça o commit das alterações no seu repositório local::
 
     $ git add <nome_do_arquivo>
     $ git commit –a –m "pt_BR translation"
@@ -77,7 +76,7 @@ Utilizando o Git e o Github
 Mantendo seu repositório local atualizado
 -----------------------------------------
 
-Sempre antes de fazer as suas alterações locais, lembrar de executar o comando ``pull`` para manter atualizado o seu repositório local trazendo as alterações do repositório de origem (o repositório que você fez o fork)::
+Sempre antes de fazer as suas alterações locais, lembre de executar o comando ``pull`` para manter atualizado o seu repositório local trazendo as alterações do repositório de origem, ou seja, o repositório que você fez o fork::
 
     $ git remote add upstream git@github.com:andreia/symfony-docs-pt-BR.git
     $ git pull upstream master
@@ -90,11 +89,11 @@ Mensagens dos Commits
 ~~~~~~~~~~~~~~~~~~~~~
 
 As mensagens dos commits devem ser todas em INGLÊS e devem ter o seguinte prefixo:
-[pt_BR][Livro][Capítulo] seguido da mensagem do commit.
+\[Livro\]\[Capítulo\] seguido da mensagem do commit.
 Ex.: Se você estiver traduzindo o capítulo 'Validation' do livro, a mensagem do commit poderia ser semelhante a seguinte:
-[pt_BR][Book][Validation] Fix typo.
+\[Book\]\[Validation\] Fix typo.
 
-Dica: Escrevendo boas mensagens de commit: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
+Dica: [Escrevendo boas mensagens de commit](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
 
 Código
 ~~~~~~
@@ -104,16 +103,14 @@ Os códigos serão mantidos todos em inglês.
 Formato da documentação
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A documentação do Symfony2 utiliza a linguagem markup reStructuredText juntamente com o Sphinx. Segue a referência: http://symfony.com/doc/2.0/contributing/documentation/format.html
+A documentação do Symfony2 utiliza a linguagem markup [reStructuredText juntamente com o Sphinx](http://symfony.com/doc/2.0/contributing/documentation/format.html).
 Se preferir, existe um editor online, que pode auxiliar em: http://rst.ninjs.org/
-
-.. _`Pull Request`: http://help.github.com/pull-requests/
 
 Glossário
 ~~~~~~~~~
 
-Para mantermos consistente a tradução dos documentos, verifique no glossário os termos que não devem ser traduzidos e aqueles que devem seguir a mesma tradução:
-http://andreia.github.com/symfony-docs-pt-BR/
+Para mantermos consistente a tradução dos documentos, verifique no [glossário os termos](http://andreia.github.com/symfony-docs-pt-BR/)
+os que não devem ser traduzidos e aqueles que devem seguir a mesma tradução.
 
 Visualização dos documentos traduzidos
 --------------------------------------
@@ -134,5 +131,5 @@ Para facilitar a revisão dos documentos, sempre que uma nova tradução é adic
 Referências
 -----------
 
-- SSH issues: Guia contendo as soluções para os problemas mais comuns referentes a conexão SSH no GitHub (chave pública, ...): http://help.github.com/ssh-issues/
-- Mencionar alguém em um ``pull request`` ou ``issue``: https://github.com/blog/1004-mention-autocompletion
+- [SSH issues: Guia contendo as soluções para os problemas mais comuns referentes a conexão SSH no GitHub](http://help.github.com/ssh-issues/)
+- [Mencionar alguém em um ``pull request`` ou ``issue``](https://github.com/blog/1004-mention-autocompletion)
