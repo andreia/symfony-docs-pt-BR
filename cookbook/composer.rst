@@ -4,7 +4,7 @@
 Instalando o Composer
 =====================
 
-`Composer`_ é o gerenciador de dependências usado por aplicações PHP modernas. Use o Compositor
+`Composer`_ é o gerenciador de dependências usado por aplicações PHP modernas. Use o Composer
 para gerenciar dependências em suas aplicações Symfony e para instalar componentes Symfony
 em seus projetos PHP.
 
