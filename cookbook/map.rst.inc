@@ -142,23 +142,34 @@
 
   * :doc:`/cookbook/symfony1`
 
-* :doc:`/cookbook/security/index`
+* :doc:`Segurança Autenticação (Identificar/Logar o Usuário) </cookbook/security/index>`
 
+  * :doc:`/cookbook/security/form_login_setup`
+  * :doc:`/cookbook/security/entity_provider`
+  * :doc:`/cookbook/security/guard-authentication`
+  * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
-  * :doc:`/cookbook/security/voters`
-  * :doc:`/cookbook/security/voters_data_permission`
-  * :doc:`/cookbook/security/acl`
-  * :doc:`/cookbook/security/acl_advanced`
-  * :doc:`/cookbook/security/force_https`
-  * :doc:`/cookbook/security/firewall_restriction`
   * :doc:`/cookbook/security/form_login`
-  * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_password_authenticator`
+  * :doc:`/cookbook/security/api_key_authentication`
+  * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/pre_authenticated`
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
+  * :doc:`/cookbook/security/multiple_user_providers`
+  * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
+
+* :doc:`Segurança Autorização (Negar Acesso) </cookbook/security/index>`
+
+  * :doc:`/cookbook/security/voters`
+  * :doc:`/cookbook/security/acl`
+  * :doc:`/cookbook/security/acl_advanced`
+  * :doc:`/cookbook/security/force_https`
+  * :doc:`/cookbook/security/securing_services`
+  * :doc:`/cookbook/security/access_control`
 
 * **Serializer**
 
