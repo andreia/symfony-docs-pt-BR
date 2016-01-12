@@ -18,6 +18,7 @@ Autenticação (Identificar/Logar o Usuário)
     target_path
     csrf_in_login_form
     multiple_user_providers
+    host_restriction
 
 Autorização (Negar Acesso)
 --------------------------
