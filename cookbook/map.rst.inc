@@ -157,6 +157,7 @@
 * :doc:`/cookbook/templating/index`
 
   * :doc:`/cookbook/templating/global_variables`
+  * :doc:`/cookbook/templating/twig_extension`
   * :doc:`/cookbook/templating/render_without_controller`
 
 * :doc:`/cookbook/validation/index`
