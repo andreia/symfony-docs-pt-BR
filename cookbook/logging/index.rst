@@ -6,4 +6,5 @@ Log
 
     monolog
     monolog_email
+    monolog_console
     channels_handlers
