@@ -192,6 +192,12 @@
   * :doc:`/cookbook/templating/twig_extension`
   * :doc:`/cookbook/templating/render_without_controller`
 
+* :doc:`/cookbook/upgrade/index`
+
+  * :doc:`/cookbook/upgrade/patch_version`
+  * :doc:`/cookbook/upgrade/minor_version`
+  * :doc:`/cookbook/upgrade/major_version`
+
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
