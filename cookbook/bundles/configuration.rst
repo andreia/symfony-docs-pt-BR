@@ -1,6 +1,6 @@
 .. index::
-   single: Configuration; Semantic
-   single: Bundle; Extension configuration
+    single: Configuration; Semantic
+    single: Bundle; Extension configuration
 
 Como criar configuração amigável para um Bundle
 =================================================
@@ -274,7 +274,7 @@ alcançado usando uma extensão pré-fixada. Para mais detalhes, veja
 :doc:`/cookbook/bundles/prepend_extension`.
 
 Imprimir a configuração
-----------------------
+-----------------------
 
 O comando ``config:dump-reference`` imprimi a configuração padrão de um
 bundle no console usando o formato Yaml.

@@ -1,26 +1,26 @@
 .. index::
-   single: Doctrine; Extensões comuns
+   single: Doctrine; ExtensÃµes comuns
 
-Como usar as extensões do Doctrine: Timestampable, Sluggable, Translatable, etc.
+Como usar as extensÃµes do Doctrine: Timestampable, Sluggable, Translatable, etc.
 ================================================================================
 
-O Doctrine2 é muito flexível e a comunidade já criou um série de extensões do 
-Doctrine úteis para ajudar você com tarefas comuns relacionadas a entidades.
+O Doctrine2 Ã© muito flexÃ­vel e a comunidade jÃ¡ criou um sÃ©rie de extensÃµes do 
+Doctrine Ãºteis para ajudar vocÃª com tarefas comuns relacionadas a entidades.
 
 Uma biblioteca em particular - a biblioteca `DoctrineExtensions`_ - fornece
-funcionalidade de integração para os comportamentos `Sluggable`_, `Translatable`_, 
+funcionalidade de integraÃ§Ã£o para os comportamentos `Sluggable`_, `Translatable`_, 
 `Timestampable`_, `Loggable`_, `Tree`_ e `Sortable`_.
 
-O uso de cada uma destas extensões é explicado no repositório.
+O uso de cada uma destas extensÃµes Ã© explicado no repositÃ³rio.
 
-No entanto, para instalar/ativar cada extensão você deve se registrar e ativar um
+No entanto, para instalar/ativar cada extensÃ£o vocÃª deve se registrar e ativar um
 :doc:`Listener de Evento</cookbook/doctrine/event_listeners_subscribers>`.
-Para fazer isso, você tem duas opções:
+Para fazer isso, vocÃª tem duas opÃ§Ãµes:
 
 #. Usar o `StofDoctrineExtensionsBundle`_, que integra a biblioteca acima.
 
-#. Implementar este serviço diretamente seguindo a documentação para a integração
-   com o Symfony2: `Instalando extensões Gedmo Doctrine2 no Symfony2`_
+#. Implementar este serviÃ§o diretamente seguindo a documentaÃ§Ã£o para a integraÃ§Ã£o
+   com o Symfony2: `Instalando extensÃµes Gedmo Doctrine2 no Symfony2`_
 
 .. _`DoctrineExtensions`: https://github.com/l3pp4rd/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
@@ -30,4 +30,4 @@ Para fazer isso, você tem duas opções:
 .. _`Loggable`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/loggable.md
 .. _`Tree`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/tree.md
 .. _`Sortable`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/sortable.md
-.. _`Instalando extensões Gedmo Doctrine2 no Symfony2`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/symfony2.md
+.. _`Instalando extensÃµes Gedmo Doctrine2 no Symfony2`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/symfony2.md

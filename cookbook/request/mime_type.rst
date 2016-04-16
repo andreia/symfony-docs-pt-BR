@@ -2,7 +2,7 @@
    single: Request; Add a request format and mime type
 
 Como registrar um novo Formato de Requisição e de Mime Type
-==================================================
+===========================================================
 
 Todo ``Request`` possui um "formato" (e.g. ``html``, ``json``), que é usado
 para determinar o tipo de conteúdo a ser retornado pelo ``Response``. Na
@@ -16,7 +16,7 @@ entrada podem ser facilmente adicionados. Este documento irá mostrar como
 você pode adicionar o formato ``jsonp`` e seu MIME type correspondente.
 
 Criando um ``kernel.request`` Listener
--------------------------------------
+--------------------------------------
 
 A chave para definir um novo MIME type é criar uma classe que irá "ouvir" o
 evento ``kernel.request`` enviado pelo kernel do Symfony. O evento
@@ -42,7 +42,7 @@ em seu projeto::
     }
 
 Registrando seu Listener
--------------------------
+------------------------
 
 Como para qualquer outro listener, você precisa adicioná-lo em um arquivo de
 configuração e registrá-lo como um listerner adicionando a tag

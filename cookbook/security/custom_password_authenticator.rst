@@ -18,7 +18,7 @@ O Authenticator de Senha
 Primeiro, crie uma nova classe que implementa
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventualmente, isso permitirá criar uma lógica personalizada para autenticar
-o usuário.
+o usuário::
 
     // src/Acme/HelloBundle/Security/TimeAuthenticator.php
     namespace Acme\HelloBundle\Security;

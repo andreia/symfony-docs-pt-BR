@@ -2,7 +2,7 @@
     single: Cache; Varnish
 
 Como usar Varnish para aumentar a velocidade do meu Website
-=========================================
+===========================================================
 
 Pelo cache do Symfony2 usar os cache headers padrões do HTTP, o
 :ref:`symfony-gateway-cache` pode facilmente se substituido por qualquer por qualquer outro
@@ -14,7 +14,7 @@ Includes<edge-side-includes>` (ESI).
     single: Varnish; configuration
 
 Configuração
--------------
+------------
 
 Como visto anteriormente, Symfony2 é esperto o bastente para detectar se fala com um
 proxy reverso que compreende ESI ou não. Ele trabalha fora da caixa quando você
@@ -65,7 +65,7 @@ existir ao menos uma tag ESI, verificando o cabeçalho ``Surrogate-Control`` que
     single: Varnish; Invalidation
 
 Invalidação do Cache
-------------------
+--------------------
 
 Você nunca deverá precisar invalidar os dados em cache porque a invalidação é colocada
 nativamente nos modelos de cache HTTP (veja :ref:`http-cache-invalidation`).

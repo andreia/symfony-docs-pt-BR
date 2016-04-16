@@ -52,7 +52,7 @@ O front controller pode ser escolhido ao requisitar as URLs da seguinte forma:
 
 .. code-block:: text
 
-     http://localhost/app_dev.php/some/path/...
+    http://localhost/app_dev.php/some/path/...
 
 Como você pode ver, essa URL contém o script PHP para ser usado como front
 controller. Você pode usar isso para mudar facilmente o front controller ou usar

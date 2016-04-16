@@ -2,7 +2,7 @@
    single: Templating
 
 Criando e usando Templates
-============================
+==========================
 
 Como você sabe o :doc:`controller </book/controller>` é responsável por
 controlar cada requisição que venha de uma aplicação Symfony2. Na realidade,
@@ -140,7 +140,7 @@ Durante este capítulo, exemplos de template serão mostrados tanto em Twig como
    pair: Twig; Cache
 
 Cache do Template Twig
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 Twig é rápido. Cada template Twig é compilado para uma classe nativa PHP
 que é processada na execução. As classes compiladas são localizadas no
@@ -163,7 +163,7 @@ se regenerem. Lembre de fazer isso quando distribuir sua aplicação.
    single: Templating; Inheritance
 
 Herança e Layouts de Template
---------------------------------
+-----------------------------
 
 Mais frequentemente que não, templates compartilham elementos comuns em um projeto, como o
 header, footer, sidebar ou outros. Em Symfony2,  nós gostamos de pensar sobre esse
@@ -355,7 +355,7 @@ Quando trabalhar com herança de template, aqui estão algumas dicas para guarda
 .. _template-naming-locations:
 
 Nomeação de Template e Localizações
------------------------------
+-----------------------------------
 
 Por padrão, templates podem residir em duas localizações diferentes:
 
@@ -413,8 +413,8 @@ ao colocar um template de mesmo nome no diretório
     Esperançosamente, a sintaxe de nomeação de template parece familiar - é a mesma convenção
     para nomeação usada para referir para :ref:`controller-string-syntax`.
 
-Sufixo de Template 
-~~~~~~~~~~~~~~~
+Sufixo de Template
+~~~~~~~~~~~~~~~~~~
 
 O formato **bundle**:**controller**:**template** de cada template especifica
 *onde* o arquivo de template está localizado. Cada nome de template também tem duas expressões
@@ -445,7 +445,7 @@ ou qualquer outro formato. Para mais informaçõess, leia a seção :ref:`templa
    single: Templating; Helpers
 
 Tags e Helpers
-----------------
+--------------
 
 Você já entende as bases do templates, como eles são chamados e como usar 
 herança de template. As partes mais difíceis estão realmente atrás de você. Nesta
@@ -469,7 +469,7 @@ pouco mais.
 .. _including-templates:
 
 Incluir outras Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Você irá frequntemente querer incluir a mesma template ou fragmento de código em várias
 páginas diferentes. Por exemplo, em uma aplicação com "artigos de notícias", a exibição
@@ -689,7 +689,7 @@ na configuração da sua aplicação:
    single: Templating; Vinculação às páginas
 
 Vinculação às Páginas
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 Criar links para outras página em sua aplicação é uma das tarefas mais 
 comuns para um template. Ao invés de fazer um hardcode nas URLs nos templates, use a
@@ -806,7 +806,7 @@ corretamente:
    single: Templating; Vinculando os assets
 
 Vinculando os Assets
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Templates podem frequentemente referir a imagens, Javascript, folhas de estilo e outros
 recursos. Claro você poderia fazer um hardcode do atalho desses assets (ex: ``/images/logo.png``),
@@ -846,7 +846,7 @@ parecer como ``/images/logo.png?v2``. Para mais informações, veja a opção de
    single: Javascripts; Incluindo Javascripts
 
 Incluindo Folhas de Estilo e Javascript no Twig
----------------------------------------------
+-----------------------------------------------
 
 Nenhum site seria completo sem incluir arquivos Javascript e folhas de estilo.
 Em Symfony, a inclusão desses assets é elegantemente manipulada ao tirar
@@ -924,8 +924,8 @@ O resultado final é uma página que inclui ambas as folhas de estilo
 .. index::
    single: Templating; O Serviço de Templating
 
-Configurando e usando o Serviço ``templating`` 
-------------------------------------------------
+Configurando e usando o Serviço ``templating``
+----------------------------------------------
 
 O coração do sistema de template em Symfony2 é o template ``Engine``.
 Este objeto especial é responsável por manipular templates e retornar
@@ -991,7 +991,7 @@ Várias opções de configuração estão disponíveis e estão cobertos em
 .. _overriding-bundle-templates:
 
 Sobrepondo Templates de Pacote
----------------------------
+------------------------------
 
 A comunidade Symfony2 orgulha-se de si própria em criar e manter pacotes
 de alta qualidade (veja `Symfony2Bundles.org`_) para um grande número de funcionalidades diferentes.
@@ -1047,7 +1047,7 @@ do pacote podem ser sobrepostos ao colocá-los no sub-diretório correto
     single; Template; Overriding exception templates
 
 Sobrepondo Templates Centrais
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Como o framework Symfony é um pacote por si só, templates centrais podem ser
 sobrepostos da mesma forma. Por exemplo, o núcleo ``TwigBundle`` contém
@@ -1060,7 +1060,7 @@ para, você adivinhou, o diretório
    single: Templating; Three-level inheritance pattern
 
 Herança de Três Níveis
------------------------
+----------------------
 
 Um modo comum de usar herança é usar uma aproximação em três níveis. Este
 método trabalha perfeitamente com três tipos diferentes de templates que nós
@@ -1116,7 +1116,7 @@ layout base de aplicação.
    single: Templating; Saída para escape
 
 Saída para escape
----------------
+-----------------
 
 Quando gerar HTML de um template, sempre há um risco que uma variável de 
 template pode gerar HTML involutário ou codigo do lado cliente perigoso. O resultado
@@ -1359,7 +1359,7 @@ que está à sua disposição. Em alguns casos, você pode não precisar modific
 e em Symfony2, isso é absolutamente legal.
 
 Aprenda mais do Cookbook
-----------------------------
+------------------------
 
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
