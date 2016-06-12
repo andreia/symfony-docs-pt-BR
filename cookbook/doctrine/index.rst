@@ -13,4 +13,5 @@ Doctrine
     custom_dql_functions
     resolve_target_entity
     registration_form
+    pdo_session_storage
     console

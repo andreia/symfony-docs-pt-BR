@@ -71,6 +71,7 @@
   * :doc:`/cookbook/doctrine/custom_dql_functions`
   * :doc:`/cookbook/doctrine/resolve_target_entity`
   * :doc:`/cookbook/doctrine/registration_form`
+  * :doc:`/cookbook/doctrine/pdo_session_storage`
   * :doc:`/cookbook/doctrine/console`
 
 * :doc:`/cookbook/email/index`
