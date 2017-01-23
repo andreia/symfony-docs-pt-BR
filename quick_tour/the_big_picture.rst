@@ -1,28 +1,28 @@
 Panorama Geral
 ==============
 
-Comece a usar o Symfony2 em 10 minutos! Este capítulo irá orientá-lo através de alguns
-dos conceitos mais importantes por trás do Symfony2 e explicar como você poderá
+Comece a usar o Symfony em 10 minutos! Este capítulo irá orientá-lo através de alguns
+dos conceitos mais importantes por trás do Symfony e explicar como você poderá
 iniciar rapidamente, mostrando-lhe um projeto simples em ação.
 
 Se você já usou um framework web antes, você deve se sentir em casa com
-o Symfony2. Se não, bem-vindo à uma nova forma de desenvolver aplicações web!
+o Symfony. Se não, bem-vindo à uma nova forma de desenvolver aplicações web!
 
 .. tip::
 
     Quer saber por que e quando você precisa usar um framework? Leia o documento "`Symfony
     em 5 minutos`_" .
 
-Baixando o Symfony2
+Baixando o Symfony
 -------------------
 
 Primeiro, verifique se você tem um servidor web instalado e configurado (como
 o Apache) com a versão mais recente possível do PHP (é recomendado o PHP 5.3.8 ou 
 mais recente).
 
-Pronto? Comece fazendo o download da "`Edição Standard do Symfony2`_", uma :term:`distribuição`
+Pronto? Comece fazendo o download da "`Edição Standard do Symfony`_", uma :term:`distribuição`
 do Symfony que é pré-configurada para os casos de uso mais comuns e
-contém também um código que demonstra como usar Symfony2 (obtenha o arquivo
+contém também um código que demonstra como usar Symfony (obtenha o arquivo
 com os *vendors* incluídos para começar ainda mais rápido).
 
 Após descompactar o arquivo no seu diretório raiz do servidor web, você deve
@@ -87,7 +87,7 @@ ter um diretório ``Symfony/`` parecido com o seguinte:
 Verificando a configuração
 --------------------------
 
-O Symfony2 vem com uma interface visual para teste da configuração do servidor que ajuda a evitar 
+O Symfony vem com uma interface visual para teste da configuração do servidor que ajuda a evitar 
 algumas dores de cabeça que originam da má configuração do servidor Web ou do PHP. Use a seguinte
 URL para ver o diagnóstico para a sua máquina:
 
@@ -109,16 +109,13 @@ URL para ver o diagnóstico para a sua máquina:
 Se houver quaisquer questões pendentes informadas, corrija-as. Você também pode 
 ajustar a sua configuração, seguindo todas as recomendações. Quando tudo estiver
 certo, clique em "*Bypass configuration and go to the Welcome page*" para solicitar
-a sua primeira página "real" do Symfony2:
+a sua primeira página "real" do Symfony:
 
 .. code-block:: text
 
     http://localhost/app_dev.php/
 
-O Symfony2 lhe dá as boas vindas e parabeniza-o por seu trabalho até agora!
-
-.. image:: /images/quick_tour/welcome.jpg
-   :align: center
+O Symfony lhe dá as boas vindas e parabeniza-o por seu trabalho até agora!
 
 Compreendendo os Fundamentos
 ----------------------------
@@ -132,19 +129,16 @@ precisa aprender alguns conceitos e termos fundamentais.
 .. tip::
 
     Quer uma prova de que o uso de um framework é melhor do que misturar tudo
-    no mesmo script? Leia o capítulo ":doc:`/book/from_flat_php_to_symfony2`"
+    no mesmo script? Leia o capítulo ":doc:`/book/from_flat_php_to_Symfony`"
     do livro.
 
 A distribuição vem com um código de exemplo que você pode usar para aprender mais sobre 
-os principais conceitos do Symfony2. Vá para a seguinte URL para ser cumprimentado pelo
-Symfony2 (substitua *Fabien* pelo seu primeiro nome):
+os principais conceitos do Symfony. Vá para a seguinte URL para ser cumprimentado pelo
+Symfony (substitua *Fabien* pelo seu primeiro nome):
 
 .. code-block:: text
 
     http://localhost/app_dev.php/demo/hello/Fabien
-
-.. image:: /images/quick_tour/hello_fabien.png
-   :align: center
 
 O que está acontecendo aqui? Vamos dissecar a URL:
 
@@ -161,7 +155,7 @@ do usuário (``/demo/hello/Fabien``) para o *recurso* associado à ela
 Roteamento
 ~~~~~~~~~~
 
-O Symfony2 encaminha a solicitação para o código que lida com ela, tentando corresponder a
+O Symfony encaminha a solicitação para o código que lida com ela, tentando corresponder a
 URL solicitada contra alguns padrões configurados. Por predefinição, esses padrões
 (chamados de rotas) são definidos no arquivo de configuração ``app/config/routing.yml``.
 Quando você está no :ref:`ambiente<quick-tour-big-picture-environments>` ``dev`` - 
@@ -190,8 +184,8 @@ será executado. Na próxima seção, você vai aprender exatamente o que isso s
 
 .. tip::
 
-    A Edição Standard do Symfony2 usa `YAML`_ para seus arquivos de configuração,
-    mas o Symfony2 também suporta XML, PHP e anotações nativamente. Os diferentes 
+    A Edição Standard do Symfony usa `YAML`_ para seus arquivos de configuração,
+    mas o Symfony também suporta XML, PHP e anotações nativamente. Os diferentes 
     formatos são compatíveis e podem ser utilizados alternadamente dentro de uma
     aplicação. Além disso, o desempenho de sua aplicação não depende do
     formato de configuração que você escolher, pois tudo é armazenado em cache na
@@ -215,12 +209,12 @@ pode criar a resposta manualmente, com base na solicitação::
 
 .. note::
 
-    O Symfony2 engloba a Especificação HTTP, que são as regras que regem
+    O Symfony engloba a Especificação HTTP, que são as regras que regem
     toda a comunicação na Web. Leia o capítulo ":doc:`/book/http_fundamentals`"
     do livro para aprender mais sobre ela e o poder que
     isso acrescenta.
 
-O Symfony2 escolhe o controlador com base no valor ``_controller`` da
+O Symfony escolhe o controlador com base no valor ``_controller`` da
 configuração de roteamento: ``AcmeDemoBundle:Welcome:index``. Esta string é o
 *nome lógico* do controlador, e ela referencia o método ``indexAction`` da
 classe ``Acme\DemoBundle\Controller\WelcomeController``::
@@ -271,7 +265,7 @@ retornar o conteúdo de uma imagem JPG com um cabeçalho ``Content-Type`` de ``i
     Estender a classe base ``Controller`` é opcional. De fato 
     um controlador pode ser uma função PHP simples ou até mesmo uma closure PHP.
     O capítulo ":doc:`O Controlador</book/controller>`" do livro lhe ensina
-    tudo sobre os controladores do Symfony2.
+    tudo sobre os controladores do Symfony.
 
 O nome do template, ``AcmeDemoBundle:Welcome:index.html.twig``, é o *nome lógico* 
 do template e faz referência ao arquivo ``Resources/views/Welcome/index.html.twig`` 
@@ -290,7 +284,7 @@ Agora, dê uma olhada novamente na configuração de roteamento e encontre a cha
         type:     annotation
         prefix:   /demo
 
-O Symfony2 pode ler/importar as informações de roteamento de diferentes arquivos escritos
+O Symfony pode ler/importar as informações de roteamento de diferentes arquivos escritos
 em YAML, XML, PHP ou até mesmo incorporado em anotações PHP. Aqui, o *nome lógico* do
 arquivo é ``@AcmeDemoBundle/Controller/DemoController.php`` e refere-se
 ao arquivo ``src/Acme/DemoBundle/Controller/DemoController.php`` . Neste
@@ -322,7 +316,7 @@ você pode ver, o seu valor pode ser obtido através do argumento do método ``$
 .. note::
 
     Mesmo as anotações não sendo suportadas nativamente pelo PHP, você as usará
-    extensivamente no Symfony2 como uma forma conveniente de configurar o comportamento
+    extensivamente no Symfony como uma forma conveniente de configurar o comportamento
     do framework e manter a configuração próxima ao código.
 
 Se você verificar o código do controlador, poderá ver que em vez de
@@ -357,16 +351,16 @@ template ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig`` (ou
         <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-Por padrão, o Symfony2 usa o `Twig`_ como seu template engine, mas você também pode usar
+Por padrão, o Symfony usa o `Twig`_ como seu template engine, mas você também pode usar
 templates tradicionais PHP se você escolher. No próximo capítulo apresentaremos como
-os templates funcionam no Symfony2.
+os templates funcionam no Symfony.
 
 Bundles
 ~~~~~~~
 
 Você pode ter se perguntado por que a palavra :term:`bundle` é usada em muitos nomes que
 vimos até agora. Todo o código que você escreve para a sua aplicação está organizado em
-bundles. Na forma de falar do Symfony2, um bundle é um conjunto estruturado de arquivos (arquivos PHP,
+bundles. Na forma de falar do Symfony, um bundle é um conjunto estruturado de arquivos (arquivos PHP,
 folhas de estilo, JavaScripts, imagens, ...) que implementam uma funcionalidade única (um
 blog, um fórum, ...) e que podem ser facilmente compartilhados com outros desenvolvedores. Até
 agora, manipulamos um bundle, ``AcmeDemoBundle``. Você vai aprender
@@ -377,20 +371,22 @@ mais sobre bundles no último capítulo deste tutorial.
 Trabalhando com Ambientes
 -------------------------
 
-Agora que você tem uma compreensão melhor de como funciona o Symfony2, verifique 
-a parte inferior de qualquer página renderizada com o Symfony2. Você deve observar uma pequena
-barra com o logotipo do Symfony2. Isso é chamado de "Barra de ferramentas para Debug Web" e
+Agora que você tem uma compreensão melhor de como funciona o Symfony, verifique 
+a parte inferior de qualquer página renderizada com o Symfony. Você deve observar uma pequena
+barra com o logotipo do Symfony. Isso é chamado de "Barra de ferramentas para Debug Web" e
 é a melhor amiga do desenvolvedor.
 
-.. image:: /images/quick_tour/web_debug_toolbar.png
+.. image:: /_images/quick_tour/web_debug_toolbar.png
    :align: center
+   :class: with-browser
 
 Mas, o que você vê inicialmente é apenas a ponta do iceberg; clique sobre o estranho
-número hexadecimal para revelar mais uma ferramenta de depuração muito útil do Symfony2:
+número hexadecimal para revelar mais uma ferramenta de depuração muito útil do Symfony:
 o profiler.
 
-.. image:: /images/quick_tour/profiler.png
+.. image:: /_images/quick_tour/profiler.png
    :align: center
+   :class: with-browser
 
 É claro, você não vai querer mostrar essas ferramentas quando implantar a sua aplicação
 em produção. É por isso que você vai encontrar um outro front controller no
@@ -424,7 +420,7 @@ ainda melhor:
     o *AcmeDemoBundle* está habilitado somente no ambiente dev e suas rotas importam
     o *app/config/routing_dev.yml*.
 
-Para fazer a sua aplicação responder mais rápido, o Symfony2 mantém um cache sob o
+Para fazer a sua aplicação responder mais rápido, o Symfony mantém um cache sob o
 diretório ``app/cache/``. No ambiente de desenvolvimento (``app_dev.php``),
 esse cache é liberado automaticamente sempre que fizer alterações em qualquer código ou
 configuração. Mas esse não é o caso do ambiente de produção
@@ -452,13 +448,13 @@ habilitando a barra de ferramentas para debug web.
 Considerações Finais
 --------------------
 
-Parabéns! Você já teve a sua primeira amostra de código do Symfony2. Isso não foi tão
+Parabéns! Você já teve a sua primeira amostra de código do Symfony. Isso não foi tão
 difícil, foi? Há muito mais para explorar, mas, você já deve ter notado como
-o Symfony2 torna muito fácil implementar web sites de forma melhor e mais rápida. 
-Se você está ansioso para aprender mais sobre o Symfony2, mergulhe na próxima seção:
+o Symfony torna muito fácil implementar web sites de forma melhor e mais rápida. 
+Se você está ansioso para aprender mais sobre o Symfony, mergulhe na próxima seção:
 ":doc:`A Visão<the_view>`".
 
-.. _Edição Standard do Symfony2:       http://symfony.com/download
+.. _Edição Standard do Symfony:       http://symfony.com/download
 .. _Symfony em 5 minutos:              http://symfony.com/symfony-in-five-minutes
 .. _Separação de Responsabilidades:    http://en.wikipedia.org/wiki/Separation_of_concerns
 .. _YAML:                              http://www.yaml.org/

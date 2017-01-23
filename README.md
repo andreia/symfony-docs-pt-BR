@@ -1,13 +1,8 @@
-Contribuindo com a tradução da documentação oficial do Symfony2
-===============================================================
+Contribuindo com a tradução da documentação oficial do Symfony
+==============================================================
 
-Informando os documentos que deseja traduzir
---------------------------------------------
-
-Informe o documento que irá traduzir abrindo um [issue no repositório](https://github.com/andreia/symfony-docs-pt-BR/issues/new), e seguindo os padrões abaixo.
-
-No título
-~~~~~~~~~
+Título
+~~~~~~
 
 \[Traduzir \| Revisar\]\[Livro\]\[Capítulo\] nome-do-documento
 
@@ -15,8 +10,8 @@ Se o documento ainda não foi traduzido, usar \[Traduzir\].
 Se for um documento já traduzido que está sendo revisado ou está
 sendo adicionada uma tradução faltante usar \[Revisar\].
 
-No comentário
-~~~~~~~~~~~~~
+Comentário
+~~~~~~~~~~
 
 Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
 

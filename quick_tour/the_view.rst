@@ -1,9 +1,9 @@
-A View
-======
+A Visão
+=======
 
-Depois de ler a primeira parte desse tutorial, você decidiu que o Symfony2
+Depois de ler a primeira parte desse tutorial, você decidiu que o Symfony
 vale pelo menos mais 10 minutos? Boa escolha! Nessa segunda parte, você vai
-aprender sobre o sistema de template do Symfony2, o `Twig`_. Ele é um sistema
+aprender sobre o sistema de template do Symfony, o `Twig`_. Ele é um sistema
 de templates para PHP flexível, rápido e seguro. Ele faz com que seus templates
 sejam mais legíveis e concisos e também os torna mais amigáveis para os web
 designers.
@@ -11,7 +11,7 @@ designers.
 .. note::
 
     Em vez do Twig, você também pode usar :doc:`PHP </cookbook/templating/PHP>`
-    para os seus templates. Ambos são suportados pelo Symfony2.
+    para os seus templates. Ambos são suportados pelo Symfony.
 
 
 Familiarizando-se com o Twig
@@ -103,7 +103,7 @@ Decorando os Templates
 ----------------------
 
 É frequente em um projeto que os templates compartilhem elementos comuns, como
-os bem-conhecidos cabeçalho e rodapé. No Symfony2, gostamos de enxergar essa
+os bem-conhecidos cabeçalho e rodapé. No Symfony, gostamos de enxergar essa
 situação de uma forma diferente: um template pode ser decorado por outro.
 Funciona exatamente do mesmo jeito que nas classes PHP: a herança de templates
 permite que se construa o template base "layout", que contém todos os elementos
@@ -151,7 +151,7 @@ Usando Tags, Filtros e Funções
 ------------------------------
 
 Uma das melhores funcionalidades do Twig é sua extensibilidade por meio de
-tags, filtros e funções. O Symfony2 já vem com muitos desses embutidos
+tags, filtros e funções. O Symfony já vem com muitos desses embutidos
 facilitando o trabalho do designer de templates.
 
 Incluindo outros Templates
@@ -254,7 +254,7 @@ Incluindo Assets: imagens, JavaScripts e folhas de estilo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 O que seria da Internet sem as imagens, os JavaScripts e as folhas de estilo?
-O Symfony2 fornece a função ``asset`` para lidar com eles de forma fácil:
+O Symfony fornece a função ``asset`` para lidar com eles de forma fácil:
 
 .. code-block:: jinja
 
@@ -281,14 +281,14 @@ e actions, é muito fácil organizar seus templates de uma maneira lógica e
 extensível. No entanto se você não estiver confortável com o Twig sempre
 poderá usar templates PHP no Symfony sem problemas.
 
-Você está trabalhando com o Symfony2 há apenas 20 minutos, mas já pode fazer
-coisas incríveis com ele. Esse é o poder do Symfony2. Aprender a base é fácil,
+Você está trabalhando com o Symfony há apenas 20 minutos, mas já pode fazer
+coisas incríveis com ele. Esse é o poder do Symfony. Aprender a base é fácil,
 e logo você aprenderá que essa simplicidade está escondida debaixo de uma
 arquitetura muito flexível.
 
 Mas eu já estou me adiantando. Primeiro, você precisa aprender mais sobre o
 controller e esse é exatamente o assunto da :doc:`próxima parte do tutorial<the_controller>`.
-Pronto para mais 10 minutos de Symfony2?
+Pronto para mais 10 minutos de Symfony?
 
 .. _Twig:          http://twig.sensiolabs.org/
 .. _documentação:  http://twig.sensiolabs.org/documentation
