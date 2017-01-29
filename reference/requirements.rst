@@ -1,10 +1,10 @@
 .. index::
    single: Requisitos
    
-Requisitos para o funcionamento do Symfony2
-===========================================
+Requisitos para o funcionamento do Symfony
+==========================================
 
-Para funcionar o Symfony2, seu sistema precisa seguir uma lista de requisitos. Você pode
+Para funcionar o Symfony, seu sistema precisa seguir uma lista de requisitos. Você pode
 facilmente verificar se o sistema passa por todos os requisitos executando o ``web/config.php``
 em sua distribuição Symfony. Uma vez que a CLI geralmente utiliza um arquivo de 
 configuração ``php.ini`` diferente, também é uma boa idéia verificar as necessidades a partir 

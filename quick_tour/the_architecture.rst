@@ -4,15 +4,15 @@ A Arquitetura
 Você é meu herói! Quem imaginaria que você ainda estaria aqui após as
 três primeiras partes? Seus esforços serão bem recompensados ​​em breve. As três 
 primeiras partes não contemplaram profundamente a arquitetura do framework. 
-Porque ela faz o Symfony2 destacar-se na multidão de frameworks, vamos mergulhar 
+Porque ela faz o Symfony destacar-se na multidão de frameworks, vamos mergulhar 
 na arquitetura agora.
 
 Compreendendo a estrutura de diretório
 --------------------------------------
 
-A estrutura de diretório de uma :term:`aplicação` do Symfony2 é bastante flexível,
+A estrutura de diretório de uma :term:`aplicação` do Symfony é bastante flexível,
 mas a estrutura do diretório da distribuição *Standard Edition* reflete
-a estrutura típica e recomendada de uma aplicação Symfony2:
+a estrutura típica e recomendada de uma aplicação Symfony:
 
 * ``app/``: A configuração da aplicação;
 * ``src/``: O código PHP do projeto;
@@ -97,18 +97,18 @@ seu servidor ou localmente em seus projetos.
 .. note::
 
     Se você quiser saber mais sobre a flexibilidade do autoloader 
-    do Symfony2, leia o capítulo ":doc:`/components/class_loader`".
+    do Symfony, leia o capítulo ":doc:`/components/class_loader`".
 
 Compreendendo o Sistema dos Bundles
 -----------------------------------
 
-Esta seção apresenta um dos maiores e mais poderosos recursos do Symfony2, 
+Esta seção apresenta um dos maiores e mais poderosos recursos do Symfony, 
 o sistema de :term:`bundle`.
 
 Um bundle é como um plugin em outro software. Então por que ele é chamado de
-*bundle* de não de *plugin*? Porque *tudo* é um bundle no Symfony2, desde as 
+*bundle* de não de *plugin*? Porque *tudo* é um bundle no Symfony, desde as 
 funcionalidades do núcleo do framework até o código que você escreve para a sua
-aplicação. Os bundles são cidadãos de primeira classe no Symfony2. Isso lhe fornece
+aplicação. Os bundles são cidadãos de primeira classe no Symfony. Isso lhe fornece
 a flexibilidade de usar funcionalidades pré-construídas que vêm em bundles de terceiros
 ou distribuir os seus próprios bundles. Isso torna mais fácil a tarefa de escolher quais
 recursos que serão habilitados na sua aplicação e otimizá-los da maneira que desejar.
@@ -271,7 +271,7 @@ Nomes Lógicos de Arquivos
 .........................
 
 Quando você quer fazer referência à um arquivo de um bundle, use esta notação:
-``@BUNDLE_NAME/path/to/file``; o Symfony2 irá resolver ``@BUNDLE_NAME``
+``@BUNDLE_NAME/path/to/file``; o Symfony irá resolver ``@BUNDLE_NAME``
 para o caminho real do bundle. Por exemplo, o caminho lógico
 ``@AcmeDemoBundle/Controller/DemoController.php`` seria convertido para
 ``src/Acme/DemoBundle/Controller/DemoController.php``, pois o Symfony conhece
@@ -305,7 +305,7 @@ primeiro verificar a classe ``WelcomeController`` em ``AcmeNewBundle`` e, se
 ela não existir, então irá verificar o ``AcmeDemoBundle``. Isto significa que um bundle 
 pode sobrescrever quase qualquer parte de outro bundle!
 
-Você entende agora porque o Symfony2 é tão flexível? Compartilhe os seus bundles entre
+Você entende agora porque o Symfony é tão flexível? Compartilhe os seus bundles entre
 aplicações, armazene-os localmente ou globalmente, a escolha é sua.
 
 .. _using-vendors:
@@ -315,18 +315,18 @@ Usando os Vendors
 
 São grandes as probabilidades de que a sua aplicação dependerá de bibliotecas de terceiros. 
 Estas devem ser armazenadas no diretório ``vendor/``. Este diretório já contém
-as bibliotecas do Symfony2, a biblioteca do SwiftMailer, o ORM Doctrine, o sistema de 
+as bibliotecas do Symfony, a biblioteca do SwiftMailer, o ORM Doctrine, o sistema de 
 template Twig e algumas outras bibliotecas e bundles de terceiros.
 
 Entendendo o Cache e Logs
 -------------------------
 
-O Symfony2 é provavelmente um dos mais rápidos frameworks full-stack atualmente. Mas como
+O Symfony é provavelmente um dos mais rápidos frameworks full-stack atualmente. Mas como
 pode ser tão rápido se ele analisa e interpreta dezenas de arquivos YAML e XML para
 cada pedido? A velocidade é, em parte, devido ao seu sistema de cache. A configuração
 da aplicação é analisada somente no primeiro pedido e depois compilada em código PHP 
 comum, que é armazenado no diretório ``app/cache/``. No ambiente de desenvolvimento, 
-o Symfony2 é inteligente o suficiente para liberar o cache quando você altera um
+o Symfony é inteligente o suficiente para liberar o cache quando você altera um
 arquivo. Mas, no ambiente de produção, é sua a responsabilidade de limpar
 o cache quando você atualizar o seu código ou alterar sua configuração.
 
@@ -357,12 +357,12 @@ Considerações finais
 --------------------
 
 Me chame de louco, mas, depois de ler esta parte, você deve estar confortável em
-mover as coisas e fazer o Symfony2 trabalhar para você. Tudo no Symfony2 é projetado 
+mover as coisas e fazer o Symfony trabalhar para você. Tudo no Symfony é projetado 
 para sair do seu caminho. Portanto, sinta-se livre para renomear e mover os diretórios
 como você desejar.
 
 E isso é tudo para o início rápido. Desde testes até o envio de e-mails, você ainda
-precisa aprender muito para se tornar um mestre no Symfony2. Pronto para aprofundar nestes
+precisa aprender muito para se tornar um mestre no Symfony. Pronto para aprofundar nestes
 tópicos agora? Não procure mais - vá para o :doc:`/book/index` oficial e escolha 
 qualquer tema que você desejar.
 

@@ -1,9 +1,9 @@
-O Controller
-============
+O Controlador
+=============
 
 Ainda está com a gente depois das primeiras duas partes? Então você já está se
-tornando um viciado no Symfony2! Sem mais delongas, vamos descobrir o que os
-controllers podem fazer por você.
+tornando um viciado no Symfony! Sem mais delongas, vamos descobrir o que os
+controladores podem fazer por você.
 
 Usando Formatos
 ---------------
@@ -11,7 +11,7 @@ Usando Formatos
 Atualmente, uma aplicação web deve ser capaz de entregar mais do que apenas 
 páginas HTML. Desde XML para feeds RSS ou Web Services, até JSON para
 requisições Ajax, existem muitos formatos diferentes para escolher. Dar suporte
-para esses formatos no Symfony2 é simples. É só ajustar a rota, como aqui que
+para esses formatos no Symfony é simples. É só ajustar a rota, como aqui que
 acrescentando um valor padrão ``xml`` para a variável ``_format``::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
@@ -28,7 +28,7 @@ acrescentando um valor padrão ``xml`` para a variável ``_format``::
     }
 
 Usando o formato de requisição (como definido pelo valor ``_format``), o
-Symfony2 automaticamente seleciona o template correto, nesse caso o
+Symfony automaticamente seleciona o template correto, nesse caso o
 ``hello.xml.twig``:
 
 .. code-block:: xml+php
@@ -38,7 +38,7 @@ Symfony2 automaticamente seleciona o template correto, nesse caso o
         <name>{{ name }}</name>
     </hello>
 
-Isso é tudo. Para os formatos padrão, o Symfony2 também irá escolher
+Isso é tudo. Para os formatos padrão, o Symfony também irá escolher
 automaticamente o melhor cabeçalho ``Content-Type`` para a resposta. Se você
 quiser dar suporte para diferentes formatos numa única action, em vez disso use
 o marcador ``{_format}`` no padrão da rota::
@@ -56,7 +56,7 @@ o marcador ``{_format}`` no padrão da rota::
         return array('name' => $name);
     }
 
-O controller agora será chamado por URLs parecidas com
+O controlador agora será chamado por URLs parecidas com
 ``/demo/hello/Fabien.xml`` ou ``/demo/hello/Fabien.json``.
 
 A entrada ``requirements`` define expressões regulares que os marcadores
@@ -87,7 +87,7 @@ o objeto ``Response`` daquela sub-requisição::
 Pegando informação da Requisição
 --------------------------------
 
-Além dos valores dos marcadores de rota, o controller tem acesso ao objeto
+Além dos valores dos marcadores de rota, o controlador tem acesso ao objeto
 ``Request``::
 
     $request = $this->getRequest();
@@ -115,18 +115,18 @@ Persistindo os Dados na Sessão
 Mesmo o protocolo HTTP sendo stateless (não tendo monitoração de estado), o
 Symfony fornece um objeto interessante que representa o cliente (seja ele uma
 pessoa real utilizando um navegador, um bot ou um web service). Entre duas
-requisições, o Symfony2 guarda os atributos num cookie usando sessões nativas
+requisições, o Symfony guarda os atributos num cookie usando sessões nativas
 do PHP.
 
 É fácil guardar e recuperar a informação da sessão a partir de qualquer
-controller::
+controlador::
 
     $session = $this->getRequest()->getSession();
 
     // guarda um atributo para reutilização na próxima requisição do usuário
     $session->set('foo', 'bar');
 
-    // em outro controller para outra requisição
+    // em outro controlador para outra requisição
     $foo = $session->get('foo');
 
     // usa um valor default se a chave não existe
@@ -135,7 +135,7 @@ controller::
 Você pode guardar pequenas mensagens que ficarão disponíveis apenas para a
 próxima requisição::
 
-    // guarda uma mensagem para a próxima requisição somente (em um controller)
+    // guarda uma mensagem para a próxima requisição somente (em um controlador)
     $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
     // exibe quaisquer mensagens no próximo pedido (no template)
@@ -208,7 +208,7 @@ você será automaticamente redirecionado para o formulário de login pois o
 recurso é protegido por um ``firewall``.
 
 Você também pode forçar a action para requisitar uma permissão especial usando
-a annotation ``@Secure`` no controller::
+a annotation ``@Secure`` no controlador::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -226,12 +226,12 @@ a annotation ``@Secure`` no controller::
 
 Agora, se autentique como ``user`` (que não tem a permissão ``ROLE_ADMIN``)
 e, a partir da página protegida hello, clique no link "Hello resource secured".
-O Symfony2 deve retornar um erro HTTP 403, indicando que o usuário está
+O Symfony deve retornar um erro HTTP 403, indicando que o usuário está
 "proibido" de acessar o recurso.
 
 .. note::
 
-    A camada de segurança do Symfony2 é bem flexível e vem com muitos serviços
+    A camada de segurança do Symfony é bem flexível e vem com muitos serviços
     de usuários (como no Doctrine ORM) e autenticação (como HTTP básico, HTTP
     digest ou certificados X509). Leia o capítulo ":doc:`/book/security`" do
     livro para mais informação de como usá-los e configurá-los.
@@ -241,7 +241,7 @@ Fazendo Cache dos Recursos
 --------------------------
 
 A medida que seu site começa a ter mais tráfego, você vai querer evitar fazer a
-geração dos mesmos recursos várias e várias vezes. O Symfony2 usa cabeçalhos de
+geração dos mesmos recursos várias e várias vezes. O Symfony usa cabeçalhos de
 cache HTTP para gerenciar o cache dos recursos. Para estratégias simples de
 cache, use a annotation conveniente ``@Cache()``::
 
@@ -263,7 +263,7 @@ Nesse exemplo, o recurso ficará em cache por um dia. Mas você também pode
 usar validações em vez de expiração, ou uma combinação de ambos, se isso se
 encaixar melhor nas suas necessidades.
 
-O cache de recursos é gerenciado pelo proxy reverso embutido no Symfony2. Mas
+O cache de recursos é gerenciado pelo proxy reverso embutido no Symfony. Mas
 como o cache é gerenciado usando cabeçalhos de cache HTTP normais, você pode
 substituir o proxy reverso com o Varnish ou o Squid e estender a sua aplicação
 de forma fácil.
@@ -271,7 +271,7 @@ de forma fácil.
 .. note::
 
 	Mas como se virar se você não puder fazer cache de páginas inteiras? O
-	Symfony2 continua tendo a solução, via Edge Side Includes (ESI), que
+	Symfony continua tendo a solução, via Edge Side Includes (ESI), que
 	são suportados nativamente. Aprenda mais sobre isso lendo o capítulo
 	":doc:`/book/http_cache`" do livro.
 
@@ -281,5 +281,5 @@ Considerações Finais
 Isso foi tudo, e acho que não gastamos nem 10 minutos. Fizemos uma breve
 introdução aos bundles na primeira parte e todas as funcionalidades sobre as
 quais aprendemos até agora são parte do bundle núcleo do framework.
-Graças aos bundles, tudo no Symfony2 pode ser estendido ou substituído.
+Graças aos bundles, tudo no Symfony pode ser estendido ou substituído.
 Esse é o tema da :doc:`próxima parte do tutorial<the_architecture>`.

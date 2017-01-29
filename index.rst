@@ -1,42 +1,67 @@
-Documentação do Symfony2 
-========================
+.. _symfony2-documentation:
+
+Documentação do Symfony
+=======================
+
+.. toctree::
+    :hidden:
+
+    changelog
 
 Guia de Início Rápido
 ---------------------
 
-Inicie rapidamente no Symfony2 com o :doc:`Guia de Início Rápido <quick_tour/index>`:
+Inicie rapidamente no Symfony com o :doc:`Guia de Início Rápido <quick_tour/index>`:
 
 .. toctree::
     :hidden:
 
     quick_tour/index
 
-* :doc:`quick_tour/the_big_picture` >
-* :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_big_picture`
+* :doc:`quick_tour/the_view`
+* :doc:`quick_tour/the_controller`
 * :doc:`quick_tour/the_architecture`
 
-Livro
------
-
-Mergulhe no Symfony2 com os tópicos guia:
+Primeiros Passos
+----------------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
-    book/index
+    getting_started/index
 
-.. include:: /book/map.rst.inc
-
-Cookbook
---------
+Tópicos
+-------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
-    cookbook/index
-
-Leia o :doc:`Cookbook </cookbook/index>`.
+    assetic
+    bundles
+    console
+    doctrine
+    debug
+    deployment
+    email
+    event_dispatcher
+    expressions
+    forms
+    frontend
+    http_cache
+    logging
+    performance
+    profiler
+    request
+    routing
+    security
+    session
+    setup
+    serializer
+    service_container
+    testing
+    translation
+    validation
 
 Melhores Práticas
 -----------------
@@ -70,22 +95,10 @@ Obtenha respostas rapidamente com os documentos de referência:
 
 .. include:: /reference/map.rst.inc
 
-Bundles
--------
-
-A Edição Standard do Symfony vem com alguns bundles. Saiba mais sobre eles:
-
-.. toctree::
-    :hidden:
-
-    bundles/index
-
-.. include:: /bundles/map.rst.inc
-
 Contribuindo
 ------------
 
-Contribua com o Symfony2:
+Contribua com o Symfony:
 
 .. toctree::
     :hidden:
@@ -93,3 +106,15 @@ Contribua com o Symfony2:
     contributing/index
 
 .. include:: /contributing/map.rst.inc
+
+Crie o seu Próprio Framework
+----------------------------
+
+Quer criar o seu próprio framework com base no Symfony?
+
+.. toctree::
+    :hidden:
+
+    create_framework/index
+
+.. include:: /create_framework/map.rst.inc
