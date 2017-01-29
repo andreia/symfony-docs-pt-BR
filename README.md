@@ -1,28 +1,6 @@
 Contribuindo com a tradução da documentação oficial do Symfony
 ==============================================================
 
-### Título
-
-`[Traduzir | Revisar ][Livro][Capítulo] nome-do-documento`
-
-Se o documento ainda não foi traduzido, usar `[Traduzir]`.
-Se for um documento já traduzido que está sendo revisado ou está
-sendo adicionada uma tradução faltante usar `[Revisar]`.
-
-### Comentário
-
-Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
-
-P                          | R
--------------------------- | ---
-Nova tradução?             | \[sim\|não\]
-Revisão?                   | \[sim\|não\]
-Revisão com nova tradução? | \[sim\|não\]
-Aplica para as versões     | \[Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0\]
-
-Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados
-trechos com novas traduções e precisam de uma nova revisão.
-
 Utilizando o Git e o GitHub
 ---------------------------
 
@@ -95,6 +73,30 @@ Sempre antes de fazer as suas alterações locais, lembre de executar o comando 
 
 Padrões a serem seguidos durante a tradução
 -------------------------------------------
+
+### Formato do Pull Request
+
+#### Título
+
+`[Traduzir | Revisar ][Livro][Capítulo] nome-do-documento`
+
+Se o documento ainda não foi traduzido, usar `[Traduzir]`.
+Se for um documento já traduzido que está sendo revisado ou está
+sendo adicionada uma tradução faltante usar `[Revisar]`.
+
+#### Comentário
+
+Usar a tabela abaixo no topo do comentário e logo em seguida outros comentários, se necessário.
+
+P                          | R
+-------------------------- | ---
+Nova tradução?             | \[sim\|não\]
+Revisão?                   | \[sim\|não\]
+Revisão com nova tradução? | \[sim\|não\]
+Aplica para as versões     | \[Número das versões do Symfony onde se aplica, ex. todas, 2.2+, 2.0\]
+
+Informar **sim** em **Revisão com nova tradução** para os documentos que já haviam sido traduzidos mas que foram acrescentados
+trechos com novas traduções e precisam de uma nova revisão.
 
 ### Mensagens dos Commits
 
