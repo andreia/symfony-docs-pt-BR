@@ -1,27 +1,27 @@
-* **Code**
+* **Código**
 
   * :doc:`Bugs </contributing/code/bugs>`
   * :doc:`Patches </contributing/code/patches>`
-  * :doc:`Reviewing Issues and Patches </contributing/community/reviews>`
-  * :doc:`Maintenance </contributing/code/maintenance>`
-  * :doc:`The Core Team </contributing/code/core_team>`
-  * :doc:`Security </contributing/code/security>`
-  * :doc:`Tests </contributing/code/tests>`
-  * :doc:`Backwards Compatibility </contributing/code/bc>`
-  * :doc:`Coding Standards</contributing/code/standards>`
-  * :doc:`Code Conventions</contributing/code/conventions>`
+  * :doc:`Revisando Issues e Patches </contributing/community/reviews>`
+  * :doc:`Manutenção </contributing/code/maintenance>`
+  * :doc:`O Time Principal </contributing/code/core_team>`
+  * :doc:`Segurança </contributing/code/security>`
+  * :doc:`Testes </contributing/code/tests>`
+  * :doc:`Compatibilidade com Versões Anteriores </contributing/code/bc>`
+  * :doc:`Padrões de Codificação</contributing/code/standards>`
+  * :doc:`Convenções de Código</contributing/code/conventions>`
   * :doc:`Git</contributing/code/git>`
-  * :doc:`License </contributing/code/license>`
+  * :doc:`Licença </contributing/code/license>`
 
-* **Documentation**
+* **Documentação**
 
-  * :doc:`Overview </contributing/documentation/overview>`
-  * :doc:`Format </contributing/documentation/format>`
-  * :doc:`Documentation Standards </contributing/documentation/standards>`
-  * :doc:`License </contributing/documentation/license>`
+  * :doc:`Visão Geral </contributing/documentation/overview>`
+  * :doc:`Formato </contributing/documentation/format>`
+  * :doc:`Padrões da Documentação </contributing/documentation/standards>`
+  * :doc:`Licença </contributing/documentation/license>`
 
-* **Community**
+* **Comunidade**
 
-  * :doc:`Release Process </contributing/community/releases>`
-  * :doc:`Community Reviews </contributing/community/reviews>`
-  * :doc:`Other Resources </contributing/community/other>`
+  * :doc:`Processo de Release </contributing/community/releases>`
+  * :doc:`Revisões da Comunidade </contributing/community/reviews>`
+  * :doc:`Outros Recursos </contributing/community/other>`
