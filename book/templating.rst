@@ -832,9 +832,9 @@ então os atalhos interpretados deveriam ser ``/images/logo.png``. Mas se sua ap
 reside em um sub-diretório (ex: http://example.com/my_app), cada caminho do asset 
 deveria interpretar com o diretório (e.g. ``/my_app/images/logo.png``). A função
 ``asset`` toma conta disto ao determinar como sua aplicação está
-sendo usada e gerando os atalhos de acordo com o correto.
+sendo usada e gerando os atalhos de acordo com o caminho correto.
 
-Adicionalmente, se você usar função asset, Symfony pode automaticamente
+Adicionalmente, se você usar função ``asset``, Symfony pode automaticamente
 anexar uma string de consulta para asset, em detrimento de garantir que assets
 estáticos atualizados não serão armazenados quando distribuídos. Por exemplo, ``/images/logo.png`` poderia
 parecer como ``/images/logo.png?v2``. Para mais informações, veja a opção de configuração 
@@ -856,8 +856,8 @@ vantagem das heranças de template do Symfony.
     
     Esta seção irá ensinar você a filosofia por trás disto, incluindo folha de estilo
     e asset Javascript em Symfony. Symfony também engloba outra biblioteca,
-    chamada Assetic, que segue essa filosofia mas também permite você fazer mais coisas
-    muito interessantes com esses assets. Para mais informações sobre
+    chamada Assetic, que segue essa filosofia mas também permite você fazer coisas
+    muito mais interessantes com esses assets. Para mais informações sobre
     usar Assetic veja :doc:`/cookbook/assetic/asset_management`.
 
 Comece adicionando dois blocos a seu template base que irá abrigar seus assets:
