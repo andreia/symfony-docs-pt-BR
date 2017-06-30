@@ -832,7 +832,7 @@ então os atalhos interpretados deveriam ser ``/images/logo.png``. Mas se sua ap
 reside em um sub-diretório (ex: http://example.com/my_app), cada caminho do asset 
 deveria interpretar com o diretório (e.g. ``/my_app/images/logo.png``). A função
 ``asset`` toma conta disto ao determinar como sua aplicação está
-sendo usada e gerando os atalhos de acordo com o correto.
+sendo usada e gerando os atalhos de acordo com o caminho correto.
 
 Adicionalmente, se você usar função asset, Symfony pode automaticamente
 anexar uma string de consulta para asset, em detrimento de garantir que assets
