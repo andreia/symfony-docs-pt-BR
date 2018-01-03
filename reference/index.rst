@@ -4,6 +4,7 @@ Documentos de Referência
 .. toctree::
     :hidden:
 
+    configuration/assetic
     configuration/monolog
 
     forms/types
