@@ -1,17 +1,23 @@
-Como usar o Assetic para otimização de imagem com funções do Twig 
-=================================================================
+.. index::
+   single: Assetic; Otimização de Imagens
+
+Como Usar o Assetic para Otimização de imagens com Funções do Twig
+==================================================================
+
+.. include:: /assetic/_standard_edition_warning.rst.inc
 
 Dentre os seus vários filtros, o Assetic possui quatro que podem ser utilizados para a otimização 
-de imagens on-the-fly. Isso permite obter os benefícios de tamanhos menores dos arquivos
-sem ter que usar um editor de imagens para processar cada imagem. Os resultados são armazenados 
-em cache e pode ser feito o dump para produção de modo que não há impacto no desempenho
+de imagens on-the-fly. Isso permite obter os benefícios de tamanhos menores de arquivos
+sem ter que usar um editor de imagens para processar cada imagem. Os resultados
+são armazenados em cache e pode ser feito o dump para produção de modo que não haja impacto no desempenho
 para seus usuários finais.
 
-Usando o jpegoptim
+Usando o Jpegoptim
 ------------------
 
-`Jpegoptim`_ é um utilitário para otimizar arquivos JPEG. Para usá-lo com o Assetic,
-adicione o seguinte na configuração do Assetic:
+`Jpegoptim`_ é um utilitário para otimizar arquivos JPEG. Para usá-lo com o Assetic, certifique-se
+de já tê-lo instalado em seu sistema, e então configure sua localização
+usando a opção ``bin`` do filtro ``jpegoptim``:
 
 .. configuration-block::
 
@@ -26,11 +32,21 @@ adicione o seguinte na configuração do Assetic:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -43,37 +59,32 @@ adicione o seguinte na configuração do Assetic:
             ),
         ));
 
-.. note::
-
-    Observe que, para usar o jpegoptim, você deve instalá-lo em seu
-    sistema. A opção ``bin`` aponta para a localização do binário compilado.
-
 Ele agora pode ser usado em um template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
-        {% image '@AcmeFooBundle/Resources/public/images/example.jpg'
-            filter='jpegoptim' output='/images/example.jpg'
-        %}
-        <img src="{{ asset_url }}" alt="Example"/>
+        {% image '@AppBundle/Resources/public/images/example.jpg'
+            filter='jpegoptim' output='/images/example.jpg' %}
+            <img src="{{ asset_url }}" alt="Example"/>
         {% endimage %}
 
     .. code-block:: html+php
 
-        <?php foreach ($view['assetic']->images(
-            array('@AcmeFooBundle/Resources/public/images/example.jpg'),
-            array('jpegoptim')) as $url): ?>
-        <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
-        <?php endforeach; ?>
+        <?php foreach ($view['assetic']->image(
+            array('@AppBundle/Resources/public/images/example.jpg'),
+            array('jpegoptim')
+        ) as $url): ?>
+            <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
+        <?php endforeach ?>
 
-Removendo todos os dados EXIF
+Removendo Todos os Dados EXIF
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Por padrão, a execução desse filtro remove apenas algumas das informações meta
-armazenadas no arquivo. Os dados EXIF ​​e comentários não são removidos, mas você pode
-removê-los usando a opção ``strip_all``:
+Por padrão, o filtro ``jpegoptim`` remove apenas algumas das meta informações armazenadas
+na imagem. Para remover todos os dados EXIF e comentários, configure a opção ``strip_all``
+para ``true``:
 
 .. configuration-block::
 
@@ -89,12 +100,22 @@ removê-los usando a opção ``strip_all``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                strip_all="true" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    strip-all="true" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -102,19 +123,19 @@ removê-los usando a opção ``strip_all``:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin'       => 'path/to/jpegoptim',
                     'strip_all' => 'true',
                 ),
             ),
         ));
 
-Diminuindo a qualidade máxima
+Diminuindo a Qualidade Máxima
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Por padrão, o nível de qualidade do JPEG não é afetado. Você pode ganhar reduções 
-adicionais no tamanho dos arquivos ao ajustar a configuração de qualidade máxima 
-para um valor inferior ao nível atual das imagens. Isto irá, claro, custar a
-qualidade de imagem:
+Por padrão, o filtro ``jpegoptim`` não altera o nível de qualidade da imagem
+JPEG. Use a opção ``max`` para configurar a qualidade máxima (numa
+escala de ``0`` a ``100``). A redução no tamanho do arquivo da imagem será, claro,
+ao custo da sua qualidade:
 
 .. configuration-block::
 
@@ -130,12 +151,22 @@ qualidade de imagem:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim"
-                max="70" />
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim"
+                    max="70" />
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -149,12 +180,12 @@ qualidade de imagem:
             ),
         ));
 
-Sintaxe curta: Função Twig 
+Sintaxe Curta: Função Twig
 --------------------------
 
-Se você estiver usando o Twig, é possível conseguir tudo isso com uma sintaxe 
-curta, ao habilitar e usar uma função especial do Twig. Comece adicionando 
-a seguinte configuração:
+Se você estiver usando o Twig, é possível conseguir tudo isso com uma sintaxe
+curta, ao habilitar e usar uma função especial do Twig. Comece adicionando a
+seguinte configuração:
 
 .. configuration-block::
 
@@ -172,15 +203,25 @@ a seguinte configuração:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
-                    name="jpegoptim" />
-            </assetic:twig>
-        </assetic:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
+                    name="jpegoptim"
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:function
+                        name="jpegoptim" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -193,18 +234,17 @@ a seguinte configuração:
             ),
             'twig' => array(
                 'functions' => array('jpegoptim'),
-                ),
             ),
         ));
 
-O template Twig pode agora ser alterado para o seguinte:
+O template do Twig agora pode ser alterado para o seguinte:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
-    <img src="{{ jpegoptim('@AcmeFooBundle/Resources/public/images/example.jpg') }}"
-         alt="Example"/>
+    <img src="{{ jpegoptim('@AppBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
 
-Você pode especificar o diretório de saída na configuração da seguinte forma:
+Você também pode especificar o diretório de saída para imagens no arquivo de configuração do
+Assetic:
 
 .. configuration-block::
 
@@ -222,16 +262,26 @@ Você pode especificar o diretório de saída na configuração da seguinte form
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config>
-            <assetic:filter
-                name="jpegoptim"
-                bin="path/to/jpegoptim" />
-            <assetic:twig>
-                <assetic:twig_function
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/assetic
+                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+
+            <assetic:config>
+                <assetic:filter
                     name="jpegoptim"
-                    output="images/*.jpg" />
-            </assetic:twig>
-        </assetic:config>
+                    bin="path/to/jpegoptim" />
+                <assetic:twig>
+                    <assetic:function
+                        name="jpegoptim"
+                        output="images/*.jpg" />
+                </assetic:twig>
+            </assetic:config>
+        </container>
 
     .. code-block:: php
 
@@ -245,10 +295,16 @@ Você pode especificar o diretório de saída na configuração da seguinte form
             'twig' => array(
                 'functions' => array(
                     'jpegoptim' => array(
-                        output => 'images/*.jpg'
+                        'output' => 'images/*.jpg',
                     ),
                 ),
             ),
         ));
 
+.. tip::
+
+    Você pode comprimir e manipular imagens carregadas por upload usando o
+    bundle `LiipImagineBundle`_ da comunidade.
+
 .. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
+.. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle
