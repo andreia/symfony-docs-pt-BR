@@ -1,5 +1,5 @@
 .. index::
-   pair: Assetic; Referência das Configurações
+   pair: Assetic; Referência da Configuração
 
 Configuração do AsseticBundle ("assetic")
 =========================================
@@ -7,7 +7,7 @@ Configuração do AsseticBundle ("assetic")
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
 Configuração Padrão Completa
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
 

@@ -1,15 +1,15 @@
 .. index::
    single: Assetic; Aplicar filtros
 
-Como aplicar um filtro do Assetic a uma extensão de arquivo específica
+Como Aplicar um Filtro do Assetic a uma Extensão de Arquivo Específica
 ======================================================================
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
-Os filtros do ``Assetic`` podem ser aplicados em arquivos individuais, grupos de arquivos ou até mesmo,
+Os filtros do Assetic podem ser aplicados em arquivos individuais, grupos de arquivos ou até mesmo,
 como você verá aqui, em arquivos que possuem uma extensão específica. Para mostrar como
-lidar com cada opção, vamos supor que você deseja usar o filtro ``CoffeeScript`` do
-``Assetic``, que compila arquivos ``CoffeeScript`` em JavaScript.
+lidar com cada opção, vamos supor que você deseja usar o filtro CoffeeScript do
+Assetic, que compila arquivos CoffeeScript em JavaScript.
 
 A configuração principal contém apenas os caminhos para ``coffee``, ``node`` e ``node_modules``.
 Um exemplo de configuração pode ser assim:
@@ -61,10 +61,10 @@ Um exemplo de configuração pode ser assim:
             ),
         ));
 
-Filtrando um único arquivo
+Filtrando um Único Arquivo
 --------------------------
 
-Agora você pode servir um único arquivo ``CoffeeScript`` como JavaScript a partir de seus
+Agora você pode servir um único arquivo CoffeeScript como JavaScript a partir de seus
 templates:
 
 .. configuration-block::
@@ -84,13 +84,13 @@ templates:
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-Isso é tudo o que é necessário para compilar este arquivo ``CoffeeScript`` e servi-lo  
+Isso é tudo o que é necessário para compilar este arquivo CoffeeScript e servi-lo
 como JavaScript compilado.
 
-Filtrando vários arquivos
+Filtrando Vários Arquivos
 -------------------------
 
-Você também pode combinar vários arquivos ``CoffeeScript`` em um único arquivo de saída:
+Você também pode combinar vários arquivos CoffeeScript em um único arquivo de saída:
 
 .. configuration-block::
 
@@ -118,15 +118,15 @@ Ambos os arquivos agora serão servidos como um único arquivo compilado em Java
 
 .. _assetic-apply-to:
 
-Filtrando com base em uma extensão de arquivo
+Filtrando com Base em uma Extensão de Arquivo
 ---------------------------------------------
 
-Uma das grandes vantagens de usar o ``Assetic`` é minimizar o número de arquivos
-``asset`` para reduzir as requisições HTTP. Para aproveitar isso ao máximo, seria
-bom combinar *todos* os seus arquivos JavaScript e ``CoffeeScript`` juntos,
+Uma das grandes vantagens de usar o Assetic é minimizar o número de arquivos
+asset para reduzir as requisições HTTP. Para aproveitar isso ao máximo, seria
+bom combinar *todos* os seus arquivos JavaScript e CoffeeScript juntos,
 uma vez que todos serão servidos como JavaScript. Infelizmente, apenas
 adicionar os arquivos JavaScript aos arquivos a serem combinados como mostrado acima não
-funcionará, pois os arquivos JavaScript comuns não sobreviverão à compilação do ``CoffeeScript``.
+funcionará, pois os arquivos JavaScript comuns não sobreviverão à compilação do CoffeeScript.
 
 Esse problema pode ser evitado usando a opção ``apply_to``, que permite
 especificar que filtro deverá ser sempre aplicado a determinadas extensões de arquivo.
@@ -185,8 +185,8 @@ os arquivos ``.coffee``:
 
 Com esta opção, você não precisa mais especificar o filtro ``coffee`` no
 template. Você também pode listar os arquivos JavaScript comuns, todos os quais serão
-combinados e renderizados como um único arquivo JavaScript (com apenas os arquivos ``.coffee`` 
-sendo passados pelo filtro ``CoffeeScript``):
+combinados e renderizados como um único arquivo JavaScript (com apenas os arquivos ``.coffee``
+sendo passados pelo filtro CoffeeScript):
 
 .. configuration-block::
 
