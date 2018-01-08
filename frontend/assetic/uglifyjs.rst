@@ -1,71 +1,71 @@
 .. index::
    single: Assetic; UglifyJS
 
-How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)
-=========================================================
+Como Minificar Arquivos CSS/JS (Usando UglifyJS e UglifyCSS)
+============================================================
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
-`UglifyJS`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
-to combine and minify JavaScript assets so that they require less HTTP requests
-and make your site load faster. `UglifyCSS`_ is a CSS compressor/beautifier
-that is very similar to UglifyJS.
+O `UglifyJS`_ é um kit de ferramentas de análise/compressão/embelezamento de JavaScript. Ele pode ser usado
+para combinar e minificar assets JavaScript para que eles exijam menos requisições HTTP
+e façam seu site carregar mais rápido. O `UglifyCSS`_ é um compressor/embelezador CSS
+muito semelhante ao UglifyJS.
 
-In this article, the installation, configuration and usage of UglifyJS is
-shown in detail. UglifyCSS works pretty much the same way and is only
-talked about briefly.
+Neste artigo, a instalação, configuração e uso do UglifyJS são
+mostrados em detalhes. O UglifyCSS funciona da mesma forma e é apenas
+mencionado brevemente.
 
-Install UglifyJS
-----------------
+Instalando o UglifyJS
+---------------------
 
-UglifyJS is available as a `Node.js`_ module. First, you need to `install Node.js`_
-and then, decide the installation method: global or local.
+O UglifyJS está disponível como um módulo do `Node.js`_. Primeiro, você precisa `instalar o Node.js`_
+e então decidir o método de instalação: global ou local.
 
-Global Installation
-~~~~~~~~~~~~~~~~~~~
+Instalação Global
+~~~~~~~~~~~~~~~~~
 
-The global installation method makes all your projects use the very same UglifyJS
-version, which simplifies its maintenance. Open your command console and execute
-the following command (you may need to run it as a root user):
+O método de instalação global faz com que todos os seus projetos usem exatamente a mesma versão do
+UglifyJS, o que simplifica sua manutenção. Abra seu console de comando e execute
+o seguinte comando (você pode precisar executá-lo como um usuário root):
 
 .. code-block:: terminal
 
     $ npm install -g uglify-js
 
-Now you can execute the global ``uglifyjs`` command anywhere on your system:
+Agora você pode executar o comando global ``uglifyjs`` em qualquer lugar do seu sistema:
 
 .. code-block:: terminal
 
     $ uglifyjs --help
 
-Local Installation
-~~~~~~~~~~~~~~~~~~
+Instalação Local
+~~~~~~~~~~~~~~~~
 
-It's also possible to install UglifyJS inside your project only, which is useful
-when your project requires a specific UglifyJS version. To do this, install it
-without the ``-g`` option and specify the path where to put the module:
+Também é possível instalar o UglifyJS apenas dentro do seu projeto, o que é útil
+quando seu projeto requer uma versão específica do UglifyJS. Para fazer isso, instale-o
+sem a opção ``-g`` e especifique o caminho onde instalará o módulo:
 
 .. code-block:: terminal
 
     $ cd /path/to/your/symfony/project
     $ npm install uglify-js --prefix app/Resources
 
-It is recommended that you install UglifyJS in your ``app/Resources`` folder and
-add the ``node_modules`` folder to version control. Alternatively, you can create
-an npm `package.json`_ file and specify your dependencies there.
+É recomendado que você instale o UglifyJS na sua pasta ``app/Resources`` e
+adicione a pasta ``node_modules`` ao controle de versão. Alternativamente, você pode criar
+um arquivo `package.json`_ do npm e especificar suas dependências lá.
 
-Now you can execute the ``uglifyjs`` command that lives in the ``node_modules``
-directory:
+Agora você pode executar o comando ``uglifyjs`` disponível no diretório
+``node_modules``:
 
 .. code-block:: terminal
 
     $ "./app/Resources/node_modules/.bin/uglifyjs" --help
 
-Configure the ``uglifyjs2`` Filter
-----------------------------------
+Configurando o Filtro ``uglifyjs2``
+-----------------------------------
 
-Now we need to configure Symfony to use the ``uglifyjs2`` filter when processing
-your JavaScripts:
+Agora precisamos configurar o Symfony para usar o filtro ``uglifyjs2`` ao processar
+seus JavaScripts:
 
 .. configuration-block::
 
@@ -112,26 +112,26 @@ your JavaScripts:
 
 .. note::
 
-    The path where UglifyJS is installed may vary depending on your system.
-    To find out where npm stores the ``bin`` folder, execute the following command:
+    O caminho onde o UglifyJS está instalado pode variar dependendo do seu sistema.
+    Para descobrir onde o npm mantém a pasta ``bin``, execute o seguinte comando:
 
     .. code-block:: terminal
 
         $ npm bin -g
 
-    It should output a folder on your system, inside which you should find
-    the UglifyJS executable.
+    Ele deve exibir uma pasta em seu sistema, dentro da qual você deve encontrar
+    o executável do UglifyJS.
 
-    If you installed UglifyJS locally, you can find the ``bin`` folder inside
-    the ``node_modules`` folder. It's called ``.bin`` in this case.
+    Se você instalou o UglifyJS localmente, você pode encontrar a pasta ``bin`` dentro
+    da pasta ``node_modules``. Ela é chamada ``.bin`` neste caso.
 
-You now have access to the ``uglifyjs2`` filter in your application.
+Você agora tem acesso ao filtro ``uglifyjs2`` em sua aplicação.
 
-Configure the ``node`` Binary
------------------------------
+Configurando o Binário ``node``
+-------------------------------
 
-Assetic tries to find the node binary automatically. If it cannot be found, you
-can configure its location using the ``node`` key:
+O Assetic tenta encontrar o binário node automaticamente. Se ele não puder ser encontrado, você
+pode configurar sua localização usando a chave ``node``:
 
 .. configuration-block::
 
@@ -177,11 +177,11 @@ can configure its location using the ``node`` key:
             ),
         ));
 
-Minify your Assets
-------------------
+Minificando seus Assets
+-----------------------
 
-In order to apply UglifyJS on your assets, add the ``filter`` option in the
-asset tags of your templates to tell Assetic to use the ``uglifyjs2`` filter:
+Para aplicar o UglifyJS em seus assets, adicione a opção ``filter`` nas
+tags de asset dos seus templates para dizer ao Assetic para usar o filtro ``uglifyjs2``:
 
 .. configuration-block::
 
@@ -202,21 +202,21 @@ asset tags of your templates to tell Assetic to use the ``uglifyjs2`` filter:
 
 .. note::
 
-    The above example assumes that you have a bundle called AppBundle and your
-    JavaScript files are in the ``Resources/public/js`` directory under your
-    bundle. However you can include your JavaScript files no matter where they are.
+    O exemplo acima assume que você tem um bundle chamado AppBundle e seus
+    arquivos JavaScript estão no diretório ``Resources/public/js`` do seu
+    bundle. Entretanto, você pode incluir seus arquivos JavaScript, não importa onde eles estejam.
 
-With the addition of the ``uglifyjs2`` filter to the asset tags above, you
-should now see minified JavaScripts coming over the wire much faster.
+Com a adição do filtro ``uglifyjs2`` às tags de asset acima, você
+agora deve ver os JavaScripts minificados sendo carregados muito mais rápido.
 
-Disable Minification in Debug Mode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Desativando a Minificação no Modo de Depuração
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Minified JavaScripts are very difficult to read, let alone debug. Because of
-this, Assetic lets you disable a certain filter when your application is in
-debug (e.g. ``app_dev.php``) mode. You can do this by prefixing the filter name
-in your template with a question mark: ``?``. This tells Assetic to only
-apply this filter when debug mode is off (e.g. ``app.php``):
+Os JavaScripts minificados são muito difíceis de ler, e mais ainda de depurar. Por
+isso, o Assetic permite desabilitar um certo filtro quando a sua aplicação está no
+modo de depuração (por exemplo, ``app_dev.php``). Você pode fazer isso prefixando o nome do filtro
+em seu template com um ponto de interrogação: ``?``. Isto diz ao Assetic para aplicar
+esse filtro apenas quando o modo de depuração estiver desligado. (por exemplo, ``app.php``):
 
 .. configuration-block::
 
@@ -235,21 +235,21 @@ apply this filter when debug mode is off (e.g. ``app.php``):
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-To try this out, switch to your ``prod`` environment (``app.php``). But before
-you do, don't forget to :ref:`clear your cache <page-creation-prod-cache-clear>`
-and :ref:`dump your assetic assets <assetic-dump-prod>`.
+Para testar isso, mude para o seu ambiente ``prod`` (``app.php``). Mas antes
+de mudar, não se esqueça de :ref:`limpar seu cache <page-creation-prod-cache-clear>`
+e :ref:`fazer o dump dos assets do assetic <assetic-dump-prod>`.
 
 .. tip::
 
-    Instead of adding the filters to the asset tags, you can also configure which
-    filters to apply for each file in your application configuration file.
-    See :ref:`assetic-apply-to` for more details.
+    Em vez de adicionar o filtro às tags de asset, você também pode configurar quais
+    filtros aplicar em cada arquivo no arquivo de configuração da sua aplicação.
+    Consulte :ref:`assetic-apply-to` para mais detalhes.
 
-Install, Configure and Use UglifyCSS
-------------------------------------
+Instalando, Configurando e Usando o UglifyCSS
+---------------------------------------------
 
-The usage of UglifyCSS works the same way as UglifyJS. First, make sure
-the node package is installed:
+O uso do UglifyCSS funciona da mesma maneira que o UglifyJS. Primeiro, certifique-se de que
+o pacote do node está instalado:
 
 .. code-block:: terminal
 
@@ -260,7 +260,7 @@ the node package is installed:
     $ cd /path/to/your/symfony/project
     $ npm install uglifycss --prefix app/Resources
 
-Next, add the configuration for this filter:
+Em seguida, adicione a configuração para este filtro:
 
 .. configuration-block::
 
@@ -302,8 +302,8 @@ Next, add the configuration for this filter:
             ),
         ));
 
-To use the filter for your CSS files, add the filter to the Assetic ``stylesheets``
-helper:
+Para usar o filtro em seus arquivos CSS, adicione o filtro ao helper ``stylesheets``
+do Assetic:
 
 .. configuration-block::
 
@@ -323,12 +323,12 @@ helper:
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach ?>
 
-Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
-``?`` (i.e. ``?uglifycss``), the minification will only happen when you're
-not in debug mode.
+Assim como com o filtro ``uglifyjs2``, se você prefixar o nome do filtro com
+``?`` (isto é, ``?uglifycss``), a minificação irá ocorrer apenas quando você
+não estiver em modo de depuração.
 
 .. _`UglifyJS`: https://github.com/mishoo/UglifyJS
 .. _`UglifyCSS`: https://github.com/fmarcia/UglifyCSS
 .. _`Node.js`: https://nodejs.org/
-.. _`install Node.js`: https://nodejs.org/
+.. _`instalar o Node.js`: https://nodejs.org/
 .. _`package.json`: http://browsenpm.org/package.json

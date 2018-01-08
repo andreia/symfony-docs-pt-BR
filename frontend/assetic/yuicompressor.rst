@@ -144,7 +144,7 @@ Desativando a Minificação no Modo de Depuração
 ----------------------------------------------
 
 Os JavaScripts e as folhas de estilo minificados são muito difíceis de ler, e mais ainda de
-depurar. Devido a isso, o Assetic permite desabilitar um certo filtro quando a sua
+depurar. Por isso, o Assetic permite desabilitar um certo filtro quando a sua
 aplicação está no modo de depuração. Você pode fazer isso prefixando o nome do filtro
 em seu template com um ponto de interrogação: ``?``. Isto diz ao Assetic para aplicar
 esse filtro apenas quando o modo de depuração estiver desligado.
@@ -168,7 +168,7 @@ esse filtro apenas quando o modo de depuração estiver desligado.
 
 .. tip::
 
-    Em vez de adicionar o filtro às tags de asset, você pode também habilitá-lo
+    Em vez de adicionar o filtro às tags de asset, você também pode habilitá-lo
     globalmente adicionando o atributo ``apply_to`` à configuração do filtro, por
     exemplo, no filtro ``yui_js`` adicione ``apply_to: "\.js$"``. Para aplicar o filtro
     apenas em produção, adicione isso ao arquivo ``config_prod``, em vez do
