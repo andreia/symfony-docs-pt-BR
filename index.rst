@@ -37,7 +37,6 @@ Tópicos
 .. toctree::
     :maxdepth: 1
 
-    assetic
     bundles
     console
     doctrine

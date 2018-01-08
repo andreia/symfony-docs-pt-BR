@@ -858,7 +858,7 @@ vantagem das heranças de template do Symfony.
     e asset Javascript em Symfony. Symfony também engloba outra biblioteca,
     chamada Assetic, que segue essa filosofia mas também permite você fazer mais coisas
     muito interessantes com esses assets. Para mais informações sobre
-    usar Assetic veja :doc:`/cookbook/assetic/asset_management`.
+    usar Assetic veja :doc:`/frontend/assetic/asset_management`.
 
 Comece adicionando dois blocos a seu template base que irá abrigar seus assets:
 uma chamada  ``stylesheets`` dentro da tag ``head`` e outra chamada ``javascripts``
