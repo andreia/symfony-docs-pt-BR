@@ -1,46 +1,46 @@
 .. index::
     single: Front-end; Assetic, Bootstrap
 
-Combining, Compiling and Minimizing Web Assets with PHP Libraries
-=================================================================
+Combinando, Compilando e Minificando Assets Web com Bibliotecas PHP
+===================================================================
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
-The official Symfony Best Practices recommend to use Assetic to
-:doc:`manage web assets </best_practices/web-assets>`, unless you are
-comfortable with JavaScript-based front-end tools.
+As Melhores Práticas Oficiais do Symfony recomendam o uso do Assetic para
+:doc:`gerenciar assets web </best_practices/web-assets>`, a menos que você se sinta
+confortável com ferramentas front-end baseadas em JavaScript.
 
-Even if those JavaScript-based solutions are the most suitable ones from a
-technical point of view, using pure PHP alternative libraries can be useful in
-some scenarios:
+Mesmo se estas soluções baseadas em JavaScript forem as mais adequadas do
+ponto de vista técnico, o uso de bibliotecas alternativas em PHP puro pode ser útil em
+alguns cenários:
 
-* If you can't install or use ``npm`` and the other JavaScript solutions;
-* If you prefer to limit the amount of different technologies used in your
-  applications;
-* If you want to simplify application deployment.
+* Se você não pode instalar ou usar o ``npm`` e as outras soluções JavaScript;
+* Se você prefere limitar a quantidade de tecnologias diferentes usadas em suas
+  aplicações;
+* Se você quer simplificar a implantação da aplicação.
 
-In this article, you'll learn how to combine and minimize CSS and JavaScript files
-and how to compile Sass files using PHP-only libraries with Assetic.
+Neste artigo, você aprenderá como combinar e minificar arquivos CSS e JavaScript
+e como compilar arquivos Sass usando bibliotecas puramente em PHP com o Assetic.
 
-Installing the Third-Party Compression Libraries
-------------------------------------------------
+Instalando as Bibliotecas de Compressão de Terceiros
+----------------------------------------------------
 
-Assetic includes a lot of ready-to-use filters, but it doesn't include their
-associated libraries. Therefore, before enabling the filters used in this article,
-you must install two libraries. Open a command console, browse to your project
-directory and execute the following commands:
+O Assetic inclui vários filtros prontos para usar, mas não inclui as bibliotecas associadas
+a estes filtros. Portanto, antes de habilitar os filtros usados neste artigo,
+você deve instalar duas bibliotecas. Abra um console de comando, navegue até o diretório do seu
+projeto e execute os seguintes comandos:
 
 .. code-block:: terminal
 
     $ composer require leafo/scssphp
     $ composer require patchwork/jsqueeze
 
-Organizing your Web Asset Files
--------------------------------
+Organizando seus Arquivos Asset Web
+-----------------------------------
 
-This example will include a setup using the Bootstrap CSS framework, jQuery, FontAwesome
-and some regular CSS and JavaScript application files (called ``main.css`` and
-``main.js``). The recommended directory structure for this set-up looks like this:
+Este exemplo irá incluir uma configuração usando o framework Bootstrap, jQuery, FontAwesome
+e alguns arquivos CSS e JavaScript comuns da aplicação (chamados ``main.css`` e
+``main.js``). A estrutura de diretório recomendada para esta configuração parece com a seguinte:
 
 .. code-block:: text
 
@@ -69,10 +69,10 @@ and some regular CSS and JavaScript application files (called ``main.css`` and
         │   └── _variables.scss
         └── font-awesome.scss
 
-Combining and Minimizing CSS Files and Compiling SCSS Files
------------------------------------------------------------
+Combinando e Minificando Arquivos CSS e Compilando Arquivos SCSS
+----------------------------------------------------------------
 
-First, configure a new ``scssphp`` Assetic filter:
+Primeiro, configure um novo filtro ``scssphp`` do Assetic:
 
 .. configuration-block::
 
@@ -115,13 +115,13 @@ First, configure a new ``scssphp`` Assetic filter:
             ),
         ));
 
-The value of the ``formatter`` option is the fully qualified class name of the
-formatter used by the filter to produce the compiled CSS file. Using the
-compressed formatter will minimize the resulting file, regardless of whether
-the original files are regular CSS files or SCSS files.
+O valor da opção ``formatter`` é o nome de classe totalmente qualificado do
+formatador usado pelo filtro para produzir o arquivo CSS compilado. O uso do
+formatador compactado irá minificar o arquivo resultante, independentemente dos
+arquivos originais serem arquivos CSS comuns ou arquivos SCSS.
 
-Next, update your Twig template to add the ``{% stylesheets %}`` tag defined
-by Assetic:
+Em seguida, atualize seu template Twig para adicionar a tag ``{% stylesheets %}`` definida
+pelo Assetic:
 
 .. code-block:: html+twig
 
@@ -139,14 +139,14 @@ by Assetic:
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
 
-This simple configuration compiles, combines and minifies the SCSS files into a
-regular CSS file that's put in ``web/css/app.css``. This is the only CSS file
-which will be served to your visitors.
+Esta simples configuração compila, combina e minifica os arquivos SCSS em um
+arquivo CSS comum que é colocado em ``web/css/app.css``. Este é o único arquivo CSS
+que será servido aos seus visitantes.
 
-Combining and Minimizing JavaScript Files
------------------------------------------
+Combinando e Minificando Arquivos JavaScript
+--------------------------------------------
 
-First, configure a new ``jsqueeze`` Assetic filter as follows:
+Primeiro, configure um novo filtro ``jsqueeze`` do Assetic da seguinte maneira:
 
 .. configuration-block::
 
@@ -186,8 +186,8 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
             ),
         ));
 
-Next, update the code of your Twig template to add the ``{% javascripts %}`` tag
-defined by Assetic:
+Em seguida, atualize o código do seu template Twig para adicionar a tag ``{% javascripts %}``
+definida pelo Assetic:
 
 .. code-block:: html+twig
 
@@ -204,10 +204,10 @@ defined by Assetic:
         </body>
     </html>
 
-This simple configuration combines all the JavaScript files, minimizes the contents
-and saves the output in the ``web/js/app.js`` file, which is the one that is
-served to your visitors.
+Esta simples configuração combina todos os arquivos JavaScript, minifica o conteúdo
+e salva a saída no arquivo ``web/js/app.js``, que é o arquivo
+servido aos seus visitantes.
 
-The leading ``?`` character in the ``jsqueeze`` filter name tells Assetic to only
-apply the filter when *not* in ``debug`` mode. In practice, this means that you'll
-see unminified files while developing and minimized files in the ``prod`` environment.
+O caractere ``?`` inicial no nome do filtro ``jsqueeze`` diz ao Assetic para aplicar
+o filtro apenas quando *não estiver* em modo ``debug``. Na prática, isso significa que você
+verá arquivos não minificados enquanto desenvolve e arquivos minificados no ambiente ``prod``.
