@@ -27,7 +27,7 @@ usando a opção ``bin`` do filtro ``jpegoptim``:
         assetic:
             filters:
                 jpegoptim:
-                    bin: path/to/jpegoptim
+                    bin: caminho/para/jpegoptim
 
     .. code-block:: xml
 
@@ -44,7 +44,7 @@ usando a opção ``bin`` do filtro ``jpegoptim``:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="caminho/para/jpegoptim" />
             </assetic:config>
         </container>
 
@@ -54,7 +54,7 @@ usando a opção ``bin`` do filtro ``jpegoptim``:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin' => 'caminho/para/jpegoptim',
                 ),
             ),
         ));
@@ -94,7 +94,7 @@ para ``true``:
         assetic:
             filters:
                 jpegoptim:
-                    bin: path/to/jpegoptim
+                    bin: caminho/para/jpegoptim
                     strip_all: true
 
     .. code-block:: xml
@@ -112,7 +112,7 @@ para ``true``:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim"
+                    bin="caminho/para/jpegoptim"
                     strip-all="true" />
             </assetic:config>
         </container>
@@ -123,7 +123,7 @@ para ``true``:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin'       => 'path/to/jpegoptim',
+                    'bin'       => 'caminho/para/jpegoptim',
                     'strip_all' => 'true',
                 ),
             ),
@@ -145,7 +145,7 @@ ao custo da sua qualidade:
         assetic:
             filters:
                 jpegoptim:
-                    bin: path/to/jpegoptim
+                    bin: caminho/para/jpegoptim
                     max: 70
 
     .. code-block:: xml
@@ -163,7 +163,7 @@ ao custo da sua qualidade:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim"
+                    bin="caminho/para/jpegoptim"
                     max="70" />
             </assetic:config>
         </container>
@@ -174,7 +174,7 @@ ao custo da sua qualidade:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin' => 'caminho/para/jpegoptim',
                     'max' => '70',
                 ),
             ),
@@ -195,7 +195,7 @@ seguinte configuração:
         assetic:
             filters:
                 jpegoptim:
-                    bin: path/to/jpegoptim
+                    bin: caminho/para/jpegoptim
             twig:
                 functions:
                     jpegoptim: ~
@@ -215,7 +215,7 @@ seguinte configuração:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="caminho/para/jpegoptim" />
                 <assetic:twig>
                     <assetic:function
                         name="jpegoptim" />
@@ -229,7 +229,7 @@ seguinte configuração:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin' => 'caminho/para/jpegoptim',
                 ),
             ),
             'twig' => array(
@@ -254,7 +254,7 @@ Assetic:
         assetic:
             filters:
                 jpegoptim:
-                    bin: path/to/jpegoptim
+                    bin: caminho/para/jpegoptim
             twig:
                 functions:
                     jpegoptim: { output: images/*.jpg }
@@ -274,7 +274,7 @@ Assetic:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="caminho/para/jpegoptim" />
                 <assetic:twig>
                     <assetic:function
                         name="jpegoptim"
@@ -289,7 +289,7 @@ Assetic:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin' => 'caminho/para/jpegoptim',
                 ),
             ),
             'twig' => array(

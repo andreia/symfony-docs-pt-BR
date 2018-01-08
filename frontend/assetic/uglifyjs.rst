@@ -47,7 +47,7 @@ sem a opção ``-g`` e especifique o caminho onde instalará o módulo:
 
 .. code-block:: terminal
 
-    $ cd /path/to/your/symfony/project
+    $ cd /caminho/para/seu/projeto/symfony
     $ npm install uglify-js --prefix app/Resources
 
 É recomendado que você instale o UglifyJS na sua pasta ``app/Resources`` e
@@ -75,7 +75,7 @@ seus JavaScripts:
         assetic:
             filters:
                 uglifyjs2:
-                    # the path to the uglifyjs executable
+                    # o caminho para o executável uglifyjs
                     bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
@@ -91,7 +91,7 @@ seus JavaScripts:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
-                <!-- bin: the path to the uglifyjs executable -->
+                <!-- bin: o caminho para o executável uglifyjs -->
                 <assetic:filter
                     name="uglifyjs2"
                     bin="/usr/local/bin/uglifyjs" />
@@ -104,7 +104,7 @@ seus JavaScripts:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'uglifyjs2' => array(
-                    // the path to the uglifyjs executable
+                    // o caminho para o executável uglifyjs
                     'bin' => '/usr/local/bin/uglifyjs',
                 ),
             ),
@@ -139,11 +139,11 @@ pode configurar sua localização usando a chave ``node``:
 
         # app/config/config.yml
         assetic:
-            # the path to the node executable
+            # o caminho para o executável node
             node: /usr/bin/nodejs
             filters:
                 uglifyjs2:
-                    # the path to the uglifyjs executable
+                    # o caminho para o executável uglifyjs
                     bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
@@ -172,7 +172,7 @@ pode configurar sua localização usando a chave ``node``:
         $container->loadFromExtension('assetic', array(
             'node'      => '/usr/bin/nodejs',
             'uglifyjs2' => array(
-                // the path to the uglifyjs executable
+                // o caminho para o executável uglifyjs
                 'bin' => '/usr/local/bin/uglifyjs',
             ),
         ));
@@ -253,11 +253,11 @@ o pacote do node está instalado:
 
 .. code-block:: terminal
 
-    # global installation
+    # instalação global
     $ npm install -g uglifycss
 
-    # local installation
-    $ cd /path/to/your/symfony/project
+    # instalação local
+    $ cd /caminho/para/seu/projeto/symfony
     $ npm install uglifycss --prefix app/Resources
 
 Em seguida, adicione a configuração para este filtro:

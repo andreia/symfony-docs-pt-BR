@@ -8,7 +8,7 @@ Como Minificar JavaScripts e Folhas de Estilo com o YUI Compressor
 
     O YUI Compressor `não é mais mantido pela Yahoo`_. É por isso que você é
     **fortemente aconselhado a evitar o uso dos utilitários YUI**, a menos que seja estritamente necessário.
-    Leia :doc:`/frontend/assetic/uglifyjs` para uma alternativa moderna e atualizada.
+    Consulte :doc:`/frontend/assetic/uglifyjs` para uma alternativa moderna e atualizada.
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
