@@ -3,15 +3,10 @@
 Documentação do Symfony
 =======================
 
-.. toctree::
-    :hidden:
+Tour Rápido
+-----------
 
-    changelog
-
-Guia de Início Rápido
----------------------
-
-Inicie rapidamente no Symfony com o :doc:`Guia de Início Rápido <quick_tour/index>`:
+Comece rapidamente com o :doc:`Tour Rápido <quick_tour/index>` do Symfony:
 
 .. toctree::
     :hidden:
@@ -19,12 +14,11 @@ Inicie rapidamente no Symfony com o :doc:`Guia de Início Rápido <quick_tour/in
     quick_tour/index
 
 * :doc:`quick_tour/the_big_picture`
-* :doc:`quick_tour/the_view`
-* :doc:`quick_tour/the_controller`
+* :doc:`quick_tour/flex_recipes`
 * :doc:`quick_tour/the_architecture`
 
-Primeiros Passos
-----------------
+Começando
+---------
 
 .. toctree::
     :maxdepth: 2
@@ -37,22 +31,19 @@ Tópicos
 .. toctree::
     :maxdepth: 1
 
-    assetic
     bundles
     console
     doctrine
-    debug
     deployment
     email
     event_dispatcher
-    expressions
     forms
     frontend
     http_cache
     logging
+    messenger
     performance
     profiler
-    request
     routing
     security
     session
@@ -62,6 +53,7 @@ Tópicos
     testing
     translation
     validation
+    workflow
 
 Melhores Práticas
 -----------------
@@ -81,12 +73,12 @@ Componentes
 
     components/index
 
-Leia a documentação sobre os :doc:`Componentes </components/index>`.
+Leia a documentação dos :doc:`Componentes </components/index>`.
 
 Documentos de Referência
 ------------------------
 
-Obtenha respostas rapidamente com os documentos de referência:
+Obtenha respostas rapidamente com documentos de referência:
 
 .. toctree::
     :hidden:
@@ -98,7 +90,7 @@ Obtenha respostas rapidamente com os documentos de referência:
 Contribuindo
 ------------
 
-Contribua com o Symfony:
+Contribua para o Symfony:
 
 .. toctree::
     :hidden:
@@ -107,10 +99,10 @@ Contribua com o Symfony:
 
 .. include:: /contributing/map.rst.inc
 
-Crie o seu Próprio Framework
-----------------------------
+Crie seu Próprio Framework
+--------------------------
 
-Quer criar o seu próprio framework com base no Symfony?
+Quer criar seu próprio framework baseado no Symfony?
 
 .. toctree::
     :hidden:

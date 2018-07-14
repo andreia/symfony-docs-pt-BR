@@ -1,0 +1,9 @@
+Os Componentes
+==============
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    using_components
+    *

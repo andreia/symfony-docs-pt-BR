@@ -1,5 +1,5 @@
-Primeiros Passos
-----------------
+Começando
+---------
 
 .. toctree::
     :maxdepth: 1

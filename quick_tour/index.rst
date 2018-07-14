@@ -1,10 +1,9 @@
-Guia de Início Rápido
-=====================
+O Tour Rápido
+=============
 
 .. toctree::
    :maxdepth: 1
 
    the_big_picture
-   the_view
-   the_controller
+   flex_recipes
    the_architecture
